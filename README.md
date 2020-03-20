@@ -89,9 +89,7 @@
 
 ![profile_pic](https://user-images.githubusercontent.com/29545214/77186635-8b600600-6b16-11ea-9a7e-2f529acca19a.jpeg)
 
-## 정준권
-
-:heavy_check_mark: 학번: 20152857
+## 정준권 (20152857)
 
 :heavy_check_mark: 역할: 안드로이드 백엔드 로직 설계 및 구축
 
