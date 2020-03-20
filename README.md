@@ -1,3 +1,5 @@
+![thumbnail](https://lh5.googleusercontent.com/proxy/r5D7LX7gbvXfuJU1SFAfCM1SerPt0KcBvR_R0qpXO_fsa39nwCKhyGE0UQbFP99XpSMRuPWrckLRnkoU747FW6EHY1_Gqf1xzhXYhJnIqIHizuhbBX3fh0sgdxbpIwJrDtC9g-uELzM-xYNfiw=s0-d)
+
 # Welcome to GitHub
 
 캡스톤 팀 생성을 축하합니다.
@@ -33,6 +35,76 @@
 프로젝트 소개하는 영상을 추가하세요
 
 ### 3. 팀 소개
+
+![thumbnail](https://user-images.githubusercontent.com/29545214/77140932-80798700-6abe-11ea-93f0-d7bd7643719a.jpeg)
+
+## 맹산하
+
+:heavy_check_mark: 학번: 20171619
+
+:heavy_check_mark: 역할: 팀장, 인스타그램 크롤링 api 서버 구축 및 api 코어 로직 개발
+
+:heavy_check_mark: Github: https://github.com/joshua-dev
+
+:heavy_check_mark: E-mail: msh01175@gmail.com
+
+
+
+![thumbnail](https://user-images.githubusercontent.com/29545214/77140952-94bd8400-6abe-11ea-857b-b4958d4b3279.jpeg)
+
+## 강길웅
+
+:heavy_check_mark: 학번: 20152791
+
+:heavy_check_mark: 역할: 백엔드 (파일 공유 서버 구축 및 앱 데이터 로직)
+
+:heavy_check_mark: Github: https://github.com/wooooong9
+
+:heavy_check_mark: E-mail: smostr@kookmin.ac.kr
+
+
+
+![thumbnail](https://user-images.githubusercontent.com/29545214/77141000-c33b5f00-6abe-11ea-85d8-fbb5a5ec6378.jpeg)
+
+## 김사라
+
+:heavy_check_mark: 학번: 20162819
+
+:heavy_check_mark: 역할: 프론트엔드 (디자인 및 이벤트 핸들링)
+
+:heavy_check_mark: Github: https://github.com/20162819
+
+:heavy_check_mark: E-mail: goddnsdl0716@kookmin.ac.k
+
+
+
+![thumbnail](https://user-images.githubusercontent.com/29545214/77140835-38f2fb00-6abe-11ea-9b9d-4e5540005cdc.jpeg)
+
+## 이정현
+
+:heavy_check_mark: 학번: 20152852
+
+:heavy_check_mark: 역할: 프론트엔드 (UI, 이벤트 핸들링)
+
+:heavy_check_mark: Github: https://github.com/labiss96
+
+:heavy_check_mark: E-mail: labiss96@kookmin.ac.kr
+
+
+
+![thumbnail](https://user-images.githubusercontent.com/29545214/77141029-d4846b80-6abe-11ea-9c8c-4a1f3d9c5284.jpeg)
+
+## 정준권
+
+:heavy_check_mark: 학번: 20152857
+
+:heavy_check_mark: 역할: 안드로이드 백엔드 로직 설계 및 구축
+
+:heavy_check_mark: Github: https://github.com/script-brew
+
+:heavy_check_mark: E-mail: junkwon96@kookmin.ac.kr
+
+
 
 팀을 소개하세요.
 
