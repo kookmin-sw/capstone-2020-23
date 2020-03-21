@@ -1,7 +1,9 @@
 ![thumbnail](https://lh5.googleusercontent.com/proxy/r5D7LX7gbvXfuJU1SFAfCM1SerPt0KcBvR_R0qpXO_fsa39nwCKhyGE0UQbFP99XpSMRuPWrckLRnkoU747FW6EHY1_Gqf1xzhXYhJnIqIHizuhbBX3fh0sgdxbpIwJrDtC9g-uELzM-xYNfiw=s0-d)
 
+# [MOAYO](https://kookmin-sw.github.io/capstone-2020-23/)
+
 [![slack](https://img.shields.io/badge/chat%20on-Slack-53185A)](https://capstone23workspace.slack.com/)
-[![notion](https://img.shields.io/badge/spec-Notion-35363A)](https://www.notion.so/3104747980504e4f81534dd2bd7fe2f3?v=4a5307b734614ed8ab34155dd90d4dd3)
+[![notion](https://img.shields.io/badge/spec-Notion-35363A)](https://www.notion.so/capstone23workspace)
 
 ## 팀소개 및 페이지를 꾸며주세요.
 
@@ -18,8 +20,6 @@
   - 수정후 팀페이지 확인하여 점검.
 
 
-
-**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2020-23/
 
 
 
