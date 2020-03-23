@@ -42,8 +42,6 @@
 
   무엇보다 여러 검색어를 동시에 넣어 검색할 수 없다는 것은 큰 아쉬움으로 남는다.
 
-  ***
-
   그래서 우리는 카테고리를 분류해서 검색하고, 검색한 결과를 모아 도감의 형태로 보여주고 공유할 수 있는 서비스 '모아요'를 만들기로 했다.
 
 ***
@@ -178,7 +176,25 @@
 
 :heavy_check_mark: E-mail: junkwon96@kookmin.ac.kr
 
----
+***
+
+# *Abstract*
+
+  It is very familiar and important to us to gather and see what interests you, and to gather and express my interests.
+
+  It is very familiar to us to connect to SNS every day, like the posts you like, and see the posts that look interesting.
+
+  If you choose the most popular one among these SNS, it is definitely Instagram.
+
+  However, Instagram is suitable for posting posts, but not for collecting and viewing or saving what I am interested in.
+
+  If you search for something on the Search tab, there are too many irrelevant feeds, and even if you save a post, you won't be able to categorize it, and you won't be able to share it.
+
+  Most of all, it is a pity that you cannot search by putting multiple search terms at the same time.
+
+  So, we decided to create a service called 'Moayo', which categorizes and searches categories, and collects and displays the search results in the form of illustrated books.
+
+***
 
 # 4. 사용법
 
