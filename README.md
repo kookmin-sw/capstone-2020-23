@@ -5,26 +5,9 @@
 [![slack](https://img.shields.io/badge/chat%20on-Slack-53185A)](https://capstone23workspace.slack.com/)
 [![notion](https://img.shields.io/badge/spec-Notion-35363A)](https://www.notion.so/capstone23workspace)
 
-## 팀소개 및 페이지를 꾸며주세요.
-
-- 프로젝트 소개
-  - 프로젝트 설치방법 및 데모, 사용방법, 프리뷰등을 readme.md에 작성.
-  - Api나 사용방법등 내용이 많을경우 wiki에 꾸미고 링크 추가.
-
-- 팀페이지 꾸미기
-  - 프로젝트 소개 및 팀원 소개
-
-- GitHub Pages 리파지토리 Settings > Options > GitHub Pages 
-  - Source를 marster branch
-  - Theme Chooser에서 태마선택
-  - 수정후 팀페이지 확인하여 점검.
 
 
-
-
-
-
-# **Intro.**
+# 프로젝트 소개
 
 * ## 개요
 
@@ -34,7 +17,7 @@
 
   매일매일 SNS에 접속해서 마음에 드는 게시물에 좋아요를 누르고, 재미있어 보이는 게시물을 보는 것은 우리에게 아주 익숙하다.
 
-  이런 SNS 중 요새 가장 대세인 걸 꼽으라면, 단연 인스타그램이다.
+  이런 SNS 중 요새 가장 대세인 걸 꼽으라면, 단연 **인스타그램**이다.
 
   그런데 인스타그램은 게시물을 올리기에는 적합하지만, 내가 관심 있는 것을 모아서 보거나 저장하기에는 적절하지 않다.
 
@@ -43,6 +26,8 @@
   무엇보다 여러 검색어를 동시에 넣어 검색할 수 없다는 것은 큰 아쉬움으로 남는다.
 
   그래서 우리는 카테고리를 분류해서 검색하고, 검색한 결과를 모아 도감의 형태로 보여주고 공유할 수 있는 서비스 '모아요'를 만들기로 했다.
+
+  '모아요' ('MoaYo') 는 사용자가 관심 있는 카테고리에 대해 게시글들을 모아서 불러온다는 의미와 나의 ('My') 라는 의미를 담고 있다.
 
 ***
 
@@ -107,22 +92,56 @@
     - 다른유저들의 도감에 좋아요가 가능하며, 좋아요 수는 인기순 정렬에 반영된다.
 
 
+
 ***
 
 
-# 2. 소개 영상
 
-프로젝트 소개하는 영상을 추가하세요
+# *Abstract*
+
+  It is very familiar and important to us to gather and see what interests you, and to gather and express my interests.
+
+  It is very familiar to us to connect to SNS every day, like the posts you like, and see the posts that look interesting.
+
+  If you choose the most popular one among these SNS, it is definitely **Instagram**.
+
+  However, Instagram is suitable for posting posts, but not for collecting and viewing or saving what I am interested in.
+
+  If you search for something on the Search tab, there are too many irrelevant feeds, and even if you save a post, you won't be able to categorize it, and you won't be able to share it.
+
+  Most of all, it is a pity that you cannot search by putting multiple search terms at the same time.
+
+  So, we decided to create a service called 'MoaYo', which categorizes and searches categories, and collects and displays the search results in the form of illustrated books.
+
+'MoaYo' contains the meaning of collecting and loading posts for the categories that the user is interested in, and of 'MY'.
 
 
 
-# **Who we are**
+***
+
+
+
+# 소개 영상
+
+- **TODO**
+
+
+
+***
+
+
+
+# 팀 소개
+
+
+![professor_profile_pic](professor.png)
+
 
 ![profile_pic](https://user-images.githubusercontent.com/29545214/77186349-14c30880-6b16-11ea-8e8d-629b71268499.jpeg)
 
 ## 맹산하 (20171619)
 
-:heavy_check_mark: 역할: 팀장, 인스타그램 크롤링 api 서버 구축 및 api 코어 로직 개발
+:heavy_check_mark: 역할: 팀장, 인스타그램 크롤링 api 서버 구축 및 데이터 코어 로직 개발
 
 :heavy_check_mark: Github: https://github.com/joshua-dev
 
@@ -134,7 +153,7 @@
 
 ## 강길웅 (20152791)
 
-:heavy_check_mark: 역할: 백엔드 (파일 공유 서버 구축 및 앱 데이터 로직)
+:heavy_check_mark: 역할: 공유 api 서버 구축 및 앱 데이터 로직 개발
 
 :heavy_check_mark: Github: https://github.com/wooooong9
 
@@ -146,7 +165,7 @@
 
 ## 김사라 (20162819)
 
-:heavy_check_mark: 역할: 프론트엔드 (디자인 및 이벤트 핸들링)
+:heavy_check_mark: 역할: UI/UX 디자인 기획 및 설계, 프론트엔드 이벤트 핸들링
 
 :heavy_check_mark: Github: https://github.com/20162819
 
@@ -158,7 +177,7 @@
 
 ## 이정현 (20152852)
 
-:heavy_check_mark: 역할: 프론트엔드 (UI, 이벤트 핸들링)
+:heavy_check_mark: 역할: UI/UX 디자인 적용 및 구현, 프론트엔드 이벤트 핸들링
 
 :heavy_check_mark: Github: https://github.com/labiss96
 
@@ -170,7 +189,7 @@
 
 ## 정준권 (20152857)
 
-:heavy_check_mark: 역할: 안드로이드 백엔드 로직 설계 및 구축
+:heavy_check_mark: 역할: 안드로이드 백엔드 로직 설계 및 구현
 
 :heavy_check_mark: Github: https://github.com/script-brew
 
@@ -178,30 +197,14 @@
 
 ***
 
-# *Abstract*
 
-  It is very familiar and important to us to gather and see what interests you, and to gather and express my interests.
 
-  It is very familiar to us to connect to SNS every day, like the posts you like, and see the posts that look interesting.
+# 사용법
 
-  If you choose the most popular one among these SNS, it is definitely Instagram.
-
-  However, Instagram is suitable for posting posts, but not for collecting and viewing or saving what I am interested in.
-
-  If you search for something on the Search tab, there are too many irrelevant feeds, and even if you save a post, you won't be able to categorize it, and you won't be able to share it.
-
-  Most of all, it is a pity that you cannot search by putting multiple search terms at the same time.
-
-  So, we decided to create a service called 'Moayo', which categorizes and searches categories, and collects and displays the search results in the form of illustrated books.
-
-***
-
-# 4. 사용법
-
-소스코드제출시 설치법이나 사용법을 작성하세요.
+- **TODO**
 
 
 
-# 5. 기타
+# 기타
 
-추가적인 내용은 자유롭게 작성하세요.
+- **TODO**
