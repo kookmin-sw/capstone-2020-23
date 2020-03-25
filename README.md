@@ -1,4 +1,4 @@
-![logo](https://lh5.googleusercontent.com/proxy/r5D7LX7gbvXfuJU1SFAfCM1SerPt0KcBvR_R0qpXO_fsa39nwCKhyGE0UQbFP99XpSMRuPWrckLRnkoU747FW6EHY1_Gqf1xzhXYhJnIqIHizuhbBX3fh0sgdxbpIwJrDtC9g-uELzM-xYNfiw=s0-d)
+<img src="https://user-images.githubusercontent.com/29545214/77552135-7f998880-6ef6-11ea-8796-d9bd3bdc992b.png" width="720" height="405">
 
 # [**MOAYO**](https://kookmin-sw.github.io/capstone-2020-23/)
 
@@ -35,9 +35,10 @@
 
   <br>
 
-  * 도감 생성
+  * ### 도감 생성
   
-    ![wire-frame-pic1](wire-frame-pic1.png)
+    <img src="https://user-images.githubusercontent.com/42925501/77553810-a062dd80-6ef8-11ea-9dc4-56253b96bd11.png" width="640" height="360">
+    <br><br>
 
     - 도감 생성 메뉴를 통해 유저의 커스텀 도감을 **카테고리 별로** 만들 수 있다.
     - 카테고리 입력란에 원하는 키워드를 입력 시, 관련된 **추천 키워드**가 표시된다.
@@ -48,12 +49,13 @@
 
   <br>
 
-  * 도감 관리
+  * ### 도감 관리
   
-    * 도감 관리 메뉴
+    * ### 도감 관리 메뉴
 
-      ![wire-frame-pic2](wire-frame-pic2.png)
-      
+      <img src="https://user-images.githubusercontent.com/42925501/77553921-c4262380-6ef8-11ea-99e6-ca082c95d898.png" width="640" height="360">
+      <br><br>
+
       - 도감관리 메뉴 접근 시, 유저가 생성한 도감 리스트와 스크랩 한 컬렉션들을 확인할 수
 있다.
       - 도감 리스트에 표시되는 각 도감의 명칭은 사용자가 지정한 1차 키워드이다.
@@ -65,9 +67,10 @@
 
     <br>
     
-    * 게시물 리스트
+    * ### 게시물 리스트
       
-      ![wire-frame-pic3](wire-frame-pic3.png)
+      <img src="https://user-images.githubusercontent.com/42925501/77553868-b375ad80-6ef8-11ea-8017-c42cdaf3480d.png" width="640" height="360">
+      <br><br>
 
       - 게시물들은 **카드 형식**으로 나열된다.
 
@@ -84,10 +87,11 @@
     
   <br>
 
-  * 도감 공유
+  * ### 도감 공유
 
-    ![wire-frame-pic4](wire-frame-pic4.png)
-  
+    <img src="https://user-images.githubusercontent.com/42925501/77553943-c9836e00-6ef8-11ea-805a-de8b5bda1575.png" width="640" height="360">
+    <br><br>
+
     - 도감관리 메뉴의 공유하기 탭을 통해 유저의 도감을 공유할 수 있으며, 공유된 도감 리스트를
 관리 할 수 있다.
 
