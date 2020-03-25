@@ -192,7 +192,7 @@
 <img src="https://user-images.githubusercontent.com/29545214/77186609-80a57100-6b16-11ea-9f42-a52effe15266.jpeg" width="300" height="300">
 <br><br>
 
-:heavy_check_mark: 역할: UI/UX 디자인 적용 및 구현, 프론트엔드 이벤트 핸들링
+:heavy_check_mark: UI/UX 디자인 적용 및 구현, 프론트엔드 이벤트 핸들링
 <br><br>
 :heavy_check_mark: [GitHub](https://github.com/labiss96)
 <br><br>
