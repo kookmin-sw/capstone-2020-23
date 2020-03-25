@@ -148,10 +148,11 @@
 
 <img src="https://user-images.githubusercontent.com/29545214/77186349-14c30880-6b16-11ea-8e8d-629b71268499.jpeg" width="300" height="300">
 <br><br>
+
 :heavy_check_mark: 팀장, 인스타그램 크롤링 api 서버 구축 및 데이터 코어 로직 개발
-
+<br><br>
 :heavy_check_mark: [GitHub](https://github.com/joshua-dev)
-
+<br><br>
 :heavy_check_mark: msh01175@gmail.com
 
 <br><br>
@@ -160,10 +161,11 @@
 
 <img src="https://user-images.githubusercontent.com/29545214/77186529-5eabee80-6b16-11ea-8482-6ab68f04daa5.jpeg" width="300" height="300">
 <br><br>
+
 :heavy_check_mark: 공유 api 서버 구축 및 앱 데이터 로직 개발
-
+<br><br>
 :heavy_check_mark: [GitHub](https://github.com/wooooong9)
-
+<br><br>
 :heavy_check_mark: smostr@kookmin.ac.kr
 
 <br><br>
@@ -172,10 +174,11 @@
 
 <img src="https://user-images.githubusercontent.com/29545214/77186575-71bebe80-6b16-11ea-8496-cb7997b8718a.jpeg" width="300" height="300">
 <br><br>
+
 :heavy_check_mark: UI/UX 디자인 기획 및 설계, 프론트엔드 이벤트 핸들링
-
+<br><br>
 :heavy_check_mark: [GitHub](https://github.com/20162819)
-
+<br><br>
 :heavy_check_mark: goddnsdl0716@kookmin.ac.kr
 
 <br><br>
@@ -184,10 +187,11 @@
 
 <img src="https://user-images.githubusercontent.com/29545214/77186609-80a57100-6b16-11ea-9f42-a52effe15266.jpeg" width="300" height="300">
 <br><br>
+
 :heavy_check_mark: 역할: UI/UX 디자인 적용 및 구현, 프론트엔드 이벤트 핸들링
-
+<br><br>
 :heavy_check_mark: [GitHub](https://github.com/labiss96)
-
+<br><br>
 :heavy_check_mark: labiss96@kookmin.ac.kr
 
 <br><br>
@@ -196,24 +200,17 @@
 
 <img src="https://user-images.githubusercontent.com/29545214/77186635-8b600600-6b16-11ea-9a7e-2f529acca19a.jpeg" width="300" height="300">
 <br><br>
+
 :heavy_check_mark: 안드로이드 백엔드 로직 설계 및 구현
-
+<br><br>
 :heavy_check_mark: [GitHub](https://github.com/script-brew)
-
+<br><br>
 :heavy_check_mark: junkwon96@kookmin.ac.kr
 
 
 <br><br>
 
 
-# 사용법
-
-- **TODO**
-
-
-<br><br>
-
-
-# 기타
+# 5. 사용법
 
 - **TODO**
