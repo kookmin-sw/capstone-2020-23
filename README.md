@@ -212,11 +212,3 @@
 :heavy_check_mark: [GitHub](https://github.com/script-brew)
 <br><br>
 :heavy_check_mark: junkwon96@kookmin.ac.kr
-
-
-<br><br>
-
-
-# 5. 사용법
-
-- **TODO**
