@@ -1,9 +1,11 @@
 <img src="https://user-images.githubusercontent.com/29545214/77552135-7f998880-6ef6-11ea-8796-d9bd3bdc992b.png" width="720" height="405">
 
-# [**MOAYO**](https://kookmin-sw.github.io/capstone-2020-23/)
+<br>
 
-[![slack](https://img.shields.io/badge/chat%20on-Slack-53185A)](https://capstone23workspace.slack.com/)
-[![notion](https://img.shields.io/badge/spec-Notion-35363A)](https://www.notion.so/capstone23workspace)
+[![teampage](https://img.shields.io/badge/-TeamPage-181717?logo=GitHub)](https://kookmin-sw.github.io/capstone-2020-23/)
+<br><br>
+[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/)
+[![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
 
 <br><br>
 
@@ -128,7 +130,7 @@
 
 # 3. 소개 영상
 
-- **TODO**
+[![intro](https://img.shields.io/badge/-Click!-FF0000?logo=YouTube)](https://youtu.be/prg8dxmJ_Wk)
 
 
 <br><br>
