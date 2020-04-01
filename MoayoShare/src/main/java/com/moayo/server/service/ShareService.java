@@ -1,24 +1,24 @@
 package com.moayo.server.service;
 
-import com.moayo.server.Entity.Book;
+import com.moayo.server.dao.BookDao;
+import com.moayo.server.model.BookModel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.io.InputStream;
 
 @Service
 public class ShareService {
 
     DocumentBuilderFactory docFactory;
     DocumentBuilder docBuilder;
+
+    @Autowired
+    private BookDao dao;
 
     public JSONObject jsonParser(String body){
         try{
@@ -32,31 +32,10 @@ public class ShareService {
         }
     }
 
-    public Document xmlParser(InputStream body){
-        if(docBuilder == null){
-            if(docFactory == null){
-                docFactory = DocumentBuilderFactory.newInstance();
-            }
-            try {
-                docBuilder = docFactory.newDocumentBuilder();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-        }
 
-        try {
-            Document doc = docBuilder.parse(body);
-            return doc;
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Exception log add.
-        return null;
-    }
-
-    public void uploadBook(Book book){
+    public void loadBook(){
+        // load test
+        BookModel model = dao.getBook(1);
 
     }
 }
