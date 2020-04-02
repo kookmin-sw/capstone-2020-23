@@ -7,9 +7,11 @@
     <select id="getBook" resultType="com.moayo.server.model.BookModel">
         select * from tb_book where co_no=#{no}
     </select>
-
+    <select id="getBookByWriter" resultType="HashMap" parameterType="String">
+        select * from tb_book where co_writer=#{writer}
+    </select>
     <insert id="insertBook" parameterType="com.moayo.server.model.BookModel">
-        insert into tb_book values(#{co_no},#{co_title},#{co_tag},#{co_password},#{co_writer},#{co_url})
+        INSERT INTO `tb_book` (`co_title`, `co_tag`, `co_password`, `co_writer`,`co_url`) VALUES (,#{co_title},#{co_tag},#{co_password},#{co_writer},#{co_url});
     </insert>
     <update id="updateBook" parameterType="com.moayo.server.model.BookModel">
         UPDATE tb_book SET `co_title` = #{co_title}, `co_tag` = #{co_tag}, `co_password` = #{co_password}, `co_writer` = #{co_writer}, `co_url` = #{co_url} WHERE (`co_no` = #{co_no})
