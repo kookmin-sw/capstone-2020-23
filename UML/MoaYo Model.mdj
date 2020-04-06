@@ -1,0 +1,85 @@
+{
+	"_type": "Project",
+	"_id": "AAAAAAFF+h6SjaM2Hec=",
+	"name": "MoaYo_Model",
+	"ownedElements": [
+		{
+			"_type": "UMLModel",
+			"_id": "AAAAAAFF+qBWK6M3Z8Y=",
+			"_parent": {
+				"$ref": "AAAAAAFF+h6SjaM2Hec="
+			},
+			"name": "MoaYo",
+			"ownedElements": [
+				{
+					"_type": "UMLClassDiagram",
+					"_id": "AAAAAAFF+qBtyKM79qY=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Main",
+					"defaultDiagram": true
+				},
+				{
+					"_type": "UMLUseCaseDiagram",
+					"_id": "AAAAAAFxT007sfFWnH0=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "MoaYo_UseCase",
+					"ownedViews": [
+						{
+							"_type": "UMLFrameView",
+							"_id": "AAAAAAFxT02Qv/Fa7F0=",
+							"_parent": {
+								"$ref": "AAAAAAFxT007sfFWnH0="
+							},
+							"model": {
+								"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAFxT02Qv/Fb5D0=",
+									"_parent": {
+										"$ref": "AAAAAAFxT02Qv/Fa7F0="
+									},
+									"font": "Arial;13;0",
+									"left": 172.14990234375,
+									"top": 61,
+									"width": 40.99658203125,
+									"height": 13,
+									"text": "MoaYo"
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAFxT02QwPFcsW4=",
+									"_parent": {
+										"$ref": "AAAAAAFxT02Qv/Fa7F0="
+									},
+									"font": "Arial;13;1",
+									"left": 117,
+									"top": 61,
+									"width": 50.14990234375,
+									"height": 13,
+									"text": "package"
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 112,
+							"top": 56,
+							"width": 537,
+							"height": 481,
+							"nameLabel": {
+								"$ref": "AAAAAAFxT02Qv/Fb5D0="
+							},
+							"frameTypeLabel": {
+								"$ref": "AAAAAAFxT02QwPFcsW4="
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
