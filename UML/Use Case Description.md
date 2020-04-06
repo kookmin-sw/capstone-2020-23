@@ -13,7 +13,7 @@
     </tr>
     <tr>
     	<th>Actors</th>
-    	<td colspan = 2>Primary actor: User<br/>Secondary actor: Database</td>
+    	<td colspan = 2>Primary actor : User<br/>Secondary actor : Database</td>
     </tr>
     <tr>
     	<th>Related Use Case</th>
@@ -49,15 +49,16 @@
         	4.2 시스템은 생성된 카테고리 객체에 입력된 값들을 추가한다.<br/>
         	5.2 시스템은 3차 카테고리 입력 화면을 띄어준다.<br/>
         	6.2 시스템은 생성된 카테고리 객체에 입력된 값들을 추가한다.<br/>
-        	7.2 시스템은 생성된 카테고리를 데이터베이스에 보낸다.<br/>
-        	7.3 데이터베이스는 카테고리를 테이블에 저장한다.
+        	7.2 시스템은 생성된 카테고리를 데이터베이스에 저장한다.<br/>
         </td>
     </tr>
     <tr>
     	<th>Exception Conditions</th>
     	<td colspan = 2>
             4a.1 사용자가 카테고리를 삭제하는 경우<br/>
-        	4a.1.1 시스템은 해당 카테고리를 삭제한다.</td>
+        	4a.1.1 시스템은 해당 카테고리를 삭제한다.<br/>
+        	7a.2 시스템과 데이터베이스의 연결이 끊길 경우<br/>
+        	7a.2.1 시스템은 에러 메시지를 출력하고, 해당 카테고리를 임시 저장한다.</td>
     </tr>
 </table>
 
@@ -68,27 +69,28 @@
     </tr>
     <tr>
         <th>Triggering Event</th>
-        <td colspan = 2></td>
+        <td colspan = 2>사용자가 도감 수정 버튼을 누른다.</td>
     </tr>
     <tr>
     	<th>Brief Description</th>
-    	<td colspan = 2></td>
+    	<td colspan = 2>사용자가 도감 수정 버튼을 눌러서 해당 도감의 카테고리를 수정한다.</td>
     </tr>
     <tr>
     	<th>Actors</th>
-    	<td colspan = 2>Primary actor: <br/>Secondary actor: </td>
+    	<td colspan = 2>Primary actor : User<br/>Secondary actor : Database</td>
     </tr>
     <tr>
     	<th>Related Use Case</th>
-    	<td colspan = 2></td>
+    	<td colspan = 2>도감 생성, 도감 보기</td>
     </tr>
     <tr>
     	<th>Preconditions</th>
-    	<td colspan = 2></td>
+    	<td colspan = 2>1. 생성된 도감이 존재해야 한다.<br/>
+        				2. 사용자가 해당 도감을 가지고 있어야 한다.</td>
     </tr>
     <tr>
     	<th>Postconditions</th>
-    	<td colspan = 2></td>
+    	<td colspan = 2>1. 도감의 내용이 수정된다. 수정된 도감이 데이터베이스에 갱신된다.</td>
     </tr>
     <tr>
         <th rowspan = 2>Flow of Activities</th>
@@ -96,99 +98,128 @@
         <th>System</th>
     </tr>
     <tr>
-    	<td></td>
-    	<td></td>
+    	<td>
+        	1.1 사용자가 나의 도감 탭을 누른다.<br/>
+        	2.1 사용자가 도감을 선택한다.<br/>
+        	3.1 사용자가 수정하고 싶은 카테고리를 수정한다.<br/>
+        	4.1 사용자가 Update 버튼을 누른다.</td>
+    	<td>
+        	1.2 시스템은 나의 도감 화면을 띄어준다.<br/>
+        	2.2 시스템은 해당 객체를 데이터베이스에서 찾는다.<br/>
+            2.3 시스템은 해당 도감에 관련된 화면을 띄어준다.<br/>
+        	4.2 시스템은 해당 객체의 내용을 수정한다.<br/>
+            4.3 시스템은 수정된 해당 객체를 데이테베이스에 갱신한다.<br/>
+        	</td>
     </tr>
     <tr>
     	<th>Exception Conditions</th>
-    	<td colspan = 2></td>
+    	<td colspan = 2>4.3a 시스템과 데이터베이스의 연결이 끊긴 경우<br/>
+        				4.3a.1 시스템은 에러 메시지를 출력하고, 해당 객체를 임시저장한다.</td>
     </tr>
 </table>
 
 <table>
     <tr>
-    	<td>Use Case</td>
+    	<th>Use Case</th>
         <td colspan = 2>도감 삭제</td>
     </tr>
     <tr>
-        <td>Triggering Event</td>
-        <td colspan = 2></td>
+        <th>Triggering Event</th>
+        <td colspan = 2>사용자가 도감 삭제 버튼을 누른다.</td>
     </tr>
     <tr>
-    	<td>Brief Description</td>
-    	<td colspan = 2></td>
+    	<th>Brief Description</th>
+    	<td colspan = 2>사용자가 도감 삭제 버튼을 눌러서 해당 도감을 삭제한다.</td>
     </tr>
     <tr>
-    	<td>Actors</td>
-    	<td colspan = 2>Primary actor: <br/>Secondary actor: </td>
+    	<th>Actors</th>
+    	<td colspan = 2>Primary actor : User<br/>Secondary actor : Database</td>
     </tr>
     <tr>
-    	<td>Related Use Case</td>
-    	<td colspan = 2></td>
+    	<th>Related Use Case</th>
+    	<td colspan = 2>도감 생성, 도감 보기</td>
     </tr>
     <tr>
-    	<td>Preconditions</td>
-    	<td colspan = 2></td>
+    	<th>Preconditions</th>
+    	<td colspan = 2>해당 도감이 존재해야 한다.<br/>
+        				사용자가 해당 도감을 가지고 있어야 한다.</td>
     </tr>
     <tr>
-    	<td>Postconditions</td>
-    	<td colspan = 2></td>
+    	<th>Postconditions</th>
+    	<td colspan = 2>해당 도감이 삭제된다. 삭제된 도감은 데이터베이스에서 삭제된다.</td>
     </tr>
     <tr>
-        <td rowspan = 2>Flow of Activities</td>
-       	<td>Actor</td>
-        <td>System</td>
+        <th rowspan = 2>Flow of Activities</th>
+       	<th>Actor</th>
+        <th>System</th>
     </tr>
     <tr>
-    	<td></td>
-    	<td></td>
+    	<td>
+            1.1 사용자가 나의 도감 탭을 누른다.<br/>
+        	2.1 사용자가 도감을 선택한다.<br/>
+        	3.1 사용자가 Delete 버튼을 누른다.<br/>
+        </td>
+    	<td>
+        	1.2 시스템은 나의 도감 화면을 띄어준다.<br/>
+        	2.2 시스템은 해당 객체를 데이터베이스에서 찾는다.<br/>
+        	2.3 시스템은 해당 도감에 관련된 화면을 띄어준다.<br/>
+        	3.2 시스템은 해당 객체를 데이터베이스에서 삭제한다.<br/>
+    	</td>
     </tr>
     <tr>
-    	<td>Exception Conditions</td>
-    	<td colspan = 2></td>
+    	<th>Exception Conditions</th>
+    	<td colspan = 2>
+        	3.3a 시스템과 데이터베이스의 연결이 끊긴 경우<br/>
+        	3.3a.1 시스템은 에러 메시지를 출력하고, 해당 객체를 임시 저장한다.</td>
     </tr>
 </table>
 
 <table>
     <tr>
-    	<td>Use Case</td>
+    	<th>Use Case</th>
         <td colspan = 2>도감 보기</td>
     </tr>
     <tr>
-        <td>Triggering Event</td>
-        <td colspan = 2></td>
+        <th>Triggering Event</th>
+        <td colspan = 2>사용자가 나의 도감 탭에서 도감을 누른다.</td>
     </tr>
     <tr>
-    	<td>Brief Description</td>
-    	<td colspan = 2></td>
+    	<th>Brief Description</th>
+    	<td colspan = 2>사용자가 나의 도감 탭에서 도감을 눌러 도감에 대한 정보를 확인한다.</td>
     </tr>
     <tr>
-    	<td>Actors</td>
-    	<td colspan = 2>Primary actor: <br/>Secondary actor: </td>
+    	<th>Actors</th>
+    	<td colspan = 2>Primary actor: User <br/>Secondary actor: Database, Crawler server</td>
     </tr>
     <tr>
-    	<td>Related Use Case</td>
-    	<td colspan = 2></td>
+    	<th>Related Use Case</th>
+    	<td colspan = 2>도감 생성, 도감 데이터 가져오기</td>
     </tr>
     <tr>
-    	<td>Preconditions</td>
-    	<td colspan = 2></td>
+    	<th>Preconditions</th>
+    	<td colspan = 2>해당 도감이 존재해야 한다.<br/>
+        				사용자가 해당 도감을 가지고 있어야 한다.</td>
     </tr>
     <tr>
-    	<td>Postconditions</td>
-    	<td colspan = 2></td>
+    	<th>Postconditions</th>
+    	<td colspan = 2>사용자가 도감에 관련된 게시물을 확인한다.<br/></td>
     </tr>
     <tr>
-        <td rowspan = 2>Flow of Activities</td>
-       	<td>Actor</td>
-        <td>System</td>
+        <th rowspan = 2>Flow of Activities</th>
+       	<th>Actor</th>
+        <th>System</th>
     </tr>
     <tr>
-    	<td></td>
-    	<td></td>
+    	<td>
+        	1.1 사용자가 메인 화면에서 도감을 클릭한다.<br/>
+        	2.1 사용자가 탭을 눌러서 다른 카테고리를 선택한다.
+        </td>
+    	<td>
+        	1.2 시스템은 해당 도감에 관련된 게시물을 띄어준다.<br/>
+        	2.2 시스템은 해당 카테고리에 관련된 게시물을 띄어준다.</td>
     </tr>
     <tr>
-    	<td>Exception Conditions</td>
+    	<th>Exception Conditions</th>
     	<td colspan = 2></td>
     </tr>
 </table>
