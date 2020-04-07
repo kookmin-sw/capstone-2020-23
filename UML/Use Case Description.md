@@ -173,7 +173,6 @@
         	3.3a.1 시스템은 에러 메시지를 출력하고, 해당 객체를 임시 저장한다.</td>
     </tr>
 </table>
-
 <table>
     <tr>
     	<th>Use Case</th>
@@ -223,94 +222,104 @@
     	<td colspan = 2></td>
     </tr>
 </table>
-
 <table>
     <tr>
-    	<td>Use Case</td>
+    	<th>Use Case</th>
         <td colspan = 2>도감 데이터 가져오기</td>
     </tr>
     <tr>
-        <td>Triggering Event</td>
+        <th>Triggering Event</th>
+        <td colspan = 2>사용자가 메인 화면에서 도감을 누른다.</td>
+    </tr>
+    <tr>
+    	<th>Brief Description</th>
+    	<td colspan = 2>사용자가 메인 화면에서 도감을 누르면, 도감에 관련된 게시물을 인스타크램에서 가져온다.</td>
+    </tr>
+    <tr>
+    	<th>Actors</th>
+    	<td colspan = 2>Primary actor: User<br/>Secondary actor: Crawler server</td>
+    </tr>
+    <tr>
+    	<th>Related Use Case</th>
+    	<td colspan = 2>도감 보기</td>
+    </tr>
+    <tr>
+    	<th>Preconditions</th>
+    	<td colspan = 2>해당 도감이 생성되어 있어야 한다.<br/></td>
+    </tr>
+    <tr>
+    	<th>Postconditions</th>
+    	<td colspan = 2>시스템은 도감에 관련된 게시물을 가져온다.<br/>
+        				사용자는 도감에 관련된 게시물을 볼 수 있다.</td>
+    </tr>
+    <tr>
+        <th rowspan = 2>Flow of Activities</th>
+       	<th>Actor</th>
+        <th>System</th>
+    </tr>
+    <tr>
+    	<td>
+        	1.1 사용자는 메인 화면에서 도감을 누른다.<br/>
+        </td>
+    	<td>
+        	1.2 시스템은 선택된 도감을 데이터베이스에 찾는다.<br/>
+        	1.3 시스템은 찾은 도감 객체를 크롤러 서버에 Json형태로 요청한다.<br/>
+        	1.4 시스템은 받은 데이터를 토대로 게시물 객체들을 생성한다.<br/>
+        	1.5 시스템은 받은 게시물과 사용가 저장한 게시물을 화면에 띄어준다.</td>
+    </tr>
+    <tr>
+    	<th>Exception Conditions</th>
+    	<td colspan = 2>
+        	1a.3 도감에 해당하는 게시물이 없을 때<br/>
+        	1a.3.1 시스템은 해당 도감의 검색결과에 대한 에러 메시지를 출력한다.</td>
+    </tr>
+</table>
+
+
+<table>
+    <tr>
+    	<th>Use Case</th>
+        <td colspan = 2>내 도감 공유</td>
+    </tr>
+    <tr>
+        <th>Triggering Event</th>
         <td colspan = 2></td>
     </tr>
     <tr>
-    	<td>Brief Description</td>
+    	<th>Brief Description</th>
     	<td colspan = 2></td>
     </tr>
     <tr>
-    	<td>Actors</td>
+    	<th>Actors</th>
     	<td colspan = 2>Primary actor: <br/>Secondary actor: </td>
     </tr>
     <tr>
-    	<td>Related Use Case</td>
+    	<th>Related Use Case</th>
     	<td colspan = 2></td>
     </tr>
     <tr>
-    	<td>Preconditions</td>
+    	<th>Preconditions</th>
     	<td colspan = 2></td>
     </tr>
     <tr>
-    	<td>Postconditions</td>
+    	<th>Postconditions</th>
     	<td colspan = 2></td>
     </tr>
     <tr>
-        <td rowspan = 2>Flow of Activities</td>
-       	<td>Actor</td>
-        <td>System</td>
+        <th rowspan = 2>Flow of Activities</th>
+       	<th>Actor</th>
+        <th>System</th>
     </tr>
     <tr>
-    	<td></td>
-    	<td></td>
+    	<th></td>
+    	<th></td>
     </tr>
     <tr>
-    	<td>Exception Conditions</td>
+    	<th>Exception Conditions</th>
     	<td colspan = 2></td>
     </tr>
 </table>
 
-<table>
-    <tr>
-    	<td>Use Case</td>
-        <td colspan = 2>내 도감 공유</td>
-    </tr>
-    <tr>
-        <td>Triggering Event</td>
-        <td colspan = 2></td>
-    </tr>
-    <tr>
-    	<td>Brief Description</td>
-    	<td colspan = 2></td>
-    </tr>
-    <tr>
-    	<td>Actors</td>
-    	<td colspan = 2>Primary actor: <br/>Secondary actor: </td>
-    </tr>
-    <tr>
-    	<td>Related Use Case</td>
-    	<td colspan = 2></td>
-    </tr>
-    <tr>
-    	<td>Preconditions</td>
-    	<td colspan = 2></td>
-    </tr>
-    <tr>
-    	<td>Postconditions</td>
-    	<td colspan = 2></td>
-    </tr>
-    <tr>
-        <td rowspan = 2>Flow of Activities</td>
-       	<td>Actor</td>
-        <td>System</td>
-    </tr>
-    <tr>
-    	<td></td>
-    	<td></td>
-    </tr>
-    <tr>
-    	<td>Exception Conditions</td>
-    	<td colspan = 2></td>
-    </tr>
-</table>
 
 <table>
     <tr>
