@@ -1,18 +1,27 @@
 package com.capstone.moayo.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryNode {
     private String title;
     private CategoryNode parent;
-    private List<Category> lowLevel;
+    private List<CategoryNode> lowLevel;
     private int level;
+
+    public CategoryNode(String title, CategoryNode parent, int level) {
+        this.title = title;
+        this.parent = parent;
+        this.level = level;
+
+        lowLevel = new ArrayList<CategoryNode>();
+    }
 
     public void setLevel(int level) {
         this.level = level;
     }
 
-    public void setLowLevel(List<Category> lowLevel) {
+    public void setLowLevel(List<CategoryNode> lowLevel) {
         this.lowLevel = lowLevel;
     }
 
@@ -32,7 +41,7 @@ public class CategoryNode {
         return level;
     }
 
-    public List<Category> getLowLevel() {
+    public List<CategoryNode> getLowLevel() {
         return lowLevel;
     }
 

@@ -7,6 +7,13 @@ public class Content {
     private String hashtag;
     private int like;
 
+    public Content(String url, String info, String hashtag, int like) {
+        this.url = url;
+        this.info = info;
+        this.hashtag = hashtag;
+        this.like = like;
+    }
+
     private String categoryInfo;
 
     public void setCategoryInfo(String categoryInfo) {
