@@ -15,14 +15,6 @@
         android:background="#2030"
         android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/categoryOpen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="도감 열기" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,15 +40,6 @@
             android:layout_marginTop="23dp"
             android:text="도감이 될 화면"
             android:textSize="24dp" />
-
-        <Button
-            android:id="@+id/categoryClose"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:text="드로어 닫기" />
 
     </RelativeLayout>
 
