@@ -13,7 +13,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String create(Category category) {
-        return null;
+        return "it's fine";
     }
 
     @Override
