@@ -23,21 +23,26 @@ public class ConcreteDataBindingService implements DataBindingService {
 
     @Override
     public List<Content> requestData(Category category) {
-        JSONObject dogam = new JSONObject();
+        JSONObject stream = new JSONObject();
+
 
         try {
-            for(CategoryNode parent : category.getRoot().getLowLevel()) {
-                String title = parent.getTitle();
-                JSONArray lowlevel = new JSONArray();
-                for(CategoryNode currentCategory : parent.getLowLevel()) {
-                    lowlevel.put(currentCategory.getTitle());
+            for(CategoryNode node : category.getRoot().getLowLevel()) {
+                JSONArray second_tags = new JSONArray();
+                second_tags.put(node.getTitle());
+                stream.put("second_layer", second_tags);
+                for(CategoryNode node2 : node.getLowLevel()) {
+                    JSONArray third_tags = new JSONArray();
+                    third_tags.put(node2.getTitle());
+                    stream.put("third_layer", third_tags);
+                    List<Content> contents = dataBindingStorage.request(stream);
+
                 }
-                dogam.put(title, lowlevel);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return dataBindingStorage.request(dogam);
+        return null;
     }
 
 

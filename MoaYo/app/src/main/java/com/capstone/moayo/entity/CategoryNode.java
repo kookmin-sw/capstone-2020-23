@@ -9,12 +9,15 @@ public class CategoryNode {
     private List<CategoryNode> lowLevel;
     private int level;
 
+    private List<Content> contents;
+
     public CategoryNode(String title, CategoryNode parent, int level) {
         this.title = title;
         this.parent = parent;
         this.level = level;
 
         lowLevel = new ArrayList<CategoryNode>();
+        contents = new ArrayList<>();
     }
 
     public void setLevel(int level) {
@@ -48,4 +51,8 @@ public class CategoryNode {
     public String getTitle() {
         return title;
     }
+
+    public List<Content> getContents() { return contents; }
+
+    public void setContents(List<Content> contents) { this.contents = contents; }
 }
