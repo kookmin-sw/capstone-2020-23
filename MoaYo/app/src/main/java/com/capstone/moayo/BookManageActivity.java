@@ -32,7 +32,7 @@ public class BookManageActivity extends AppCompatActivity {
 
         //ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager) ;
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager()) ;
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter) ;
 
     }

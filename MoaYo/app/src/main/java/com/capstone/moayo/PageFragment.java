@@ -1,24 +1,23 @@
 package com.capstone.moayo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
-
 public class PageFragment extends Fragment {
 
-    private String book_info;
+    private String[] book_info;
 
 
-    public static PageFragment create(String book) {
+    public static PageFragment create(String[] book) {
         PageFragment fragment = new PageFragment();
         Bundle args = new Bundle();
-        args.putString("book", book);
+        args.putStringArray("book", book);
         fragment.setArguments(args);
         return fragment;
     }
@@ -26,7 +25,7 @@ public class PageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        book_info = getArguments().getString("book");
+        book_info = getArguments().getStringArray("book");
     }
 
     @Override
@@ -34,8 +33,16 @@ public class PageFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.page, container, false);
 
-        TextView bookView = (TextView) rootView.findViewById(R.id.title);
-        bookView.setText(book_info);
+
+        for(int i = 1; i <= book_info.length; ++i) {
+            int bookID = getResources().getIdentifier("bookBtn" + i, "id", getContext().getPackageName());
+            Button bookBtnView = (Button) rootView.findViewById(bookID);
+            bookBtnView.setText(book_info[i-1]);
+        }
+
+
+
         return rootView;
     }
 }
+
