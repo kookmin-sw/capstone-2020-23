@@ -63,7 +63,7 @@ public class ResultActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
 
-            case R.id.myCate:
+            case R.id.myBook:
             {
                 //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.resultDisplay);

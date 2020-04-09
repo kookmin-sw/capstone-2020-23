@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +35,32 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
+        TextView createBook = (TextView) findViewById(R.id.createBook);
+        TextView shareBook = (TextView) findViewById(R.id.shareBook);
+        TextView myBook = (TextView) findViewById(R.id.myBook);
 
+        createBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        shareBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "ShareMenuActivity로 이동함", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        myBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "BookManageActivity", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //ResultActivity로 이동하는 임시 버튼
         Button temp = (Button) findViewById(R.id.tempButton);
 
         temp.setOnClickListener(new View.OnClickListener() {

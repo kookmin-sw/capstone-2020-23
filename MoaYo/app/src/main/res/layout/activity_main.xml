@@ -30,22 +30,22 @@
 <!--    </androidx.appcompat.widget.Toolbar>-->
 
 
-    <RelativeLayout
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/mainToolBar"
-        android:background="#2030">
+        android:background="#2030"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <!--ResultActivity로 이동하기 위한 임시 버튼-->
         <Button
             android:id="@+id/tempButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="move ResultActivity"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_gravity="center"
+            android:text="move ResultActivity" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/mainMenu"
@@ -57,13 +57,55 @@
         android:layout_gravity="start">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="23dp"
-            android:text="메인화면의 메뉴"
-            android:textSize="24dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/create_Book"
+            android:textSize="25dp"
+            android:drawableLeft="@drawable/ic_create_black_24dp"
+            android:drawablePadding="5dp"
+            android:id="@+id/createBook" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/share_Book"
+            android:textSize="25dp"
+            android:drawableLeft="@drawable/ic_share_black_24dp"
+            android:drawablePadding="5dp"
+            android:id="@+id/shareBook"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/my_Book"
+            android:textSize="25dp"
+            android:drawableLeft="@drawable/ic_folder_shared_black_24dp"
+            android:drawablePadding="5dp"
+            android:id="@+id/myBook"/>
+
+        <View
+            android:layout_width="190dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:text="About"
+            android:textSize="25dp"
+            android:drawableLeft="@drawable/ic_error_black_24dp"
+            android:drawablePadding="5dp"
+            android:id="@+id/about"/>
 
 
     </LinearLayout>
