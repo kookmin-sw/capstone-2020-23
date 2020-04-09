@@ -2,6 +2,8 @@ package com.capstone.moayo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -22,33 +26,25 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
-//        //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
-//        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.resultDisplay);
-//
-//        //사용자 도감 탭 화면 객체 참조
-//        final View drawerView = (View) findViewById(R.id.categoryList);
-//
-//        //도감 리스트 화면을 열고 닫을 버튼 객체 참조
-//        Button btn_categoryOpen = (Button) findViewById(R.id.categoryOpen);
-//        Button btn_categoryClose = (Button) findViewById(R.id.categoryClose);
-//
-//        //도감 리스트 화면 여는 버튼리스너
-//        btn_categoryOpen.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                drawerLayout.openDrawer(drawerView);
-//            }
-//        });
-//
-//        //도감 리스트 화면 닫는 버튼리스너
-//        btn_categoryClose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                drawerLayout.closeDrawer(drawerView);
-//            }
-//        });
+        // 리사이클러뷰에 표시할 데이터 리스트 생성.
+        ArrayList<String> list = new ArrayList<>();
+        for (int i=0; i<100; i++) {
+            list.add(String.format("TEXT %d", i)) ;
+        }
+
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView = findViewById(R.id.recycler1_result) ;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
+
+        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        Recycler1_result adapter = new Recycler1_result(list) ;
+        recyclerView.setAdapter(adapter) ;
     }
 
+
+
+
+    //액션바에 menu_resul.xml 내용 지정
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
@@ -74,10 +70,6 @@ public class ResultActivity extends AppCompatActivity {
             default:
                 onBackPressed();
                 return true;
-//            default:
-//                Toast.makeText(getApplicationContext(),"메뉴 Tab 펼쳐짐", Toast.LENGTH_LONG).show();
-//                return true;
-
         }
 
     }

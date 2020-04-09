@@ -33,7 +33,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2030"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -64,7 +63,7 @@
             android:text="@string/create_Book"
             android:textSize="25dp"
             android:drawableLeft="@drawable/ic_create_black_24dp"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:id="@+id/createBook" />
 
         <TextView
@@ -75,7 +74,7 @@
             android:text="@string/share_Book"
             android:textSize="25dp"
             android:drawableLeft="@drawable/ic_share_black_24dp"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:id="@+id/shareBook"/>
 
         <TextView
@@ -86,7 +85,7 @@
             android:text="@string/my_Book"
             android:textSize="25dp"
             android:drawableLeft="@drawable/ic_folder_shared_black_24dp"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:id="@+id/myBook"/>
 
         <View
@@ -104,7 +103,7 @@
             android:text="About"
             android:textSize="25dp"
             android:drawableLeft="@drawable/ic_error_black_24dp"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:id="@+id/about"/>
 
 
