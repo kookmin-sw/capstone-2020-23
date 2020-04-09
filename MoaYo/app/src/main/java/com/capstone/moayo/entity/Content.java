@@ -1,4 +1,4 @@
-package com.capstone.moayo.Entity;
+package com.capstone.moayo.entity;
 
 public class Content {
     // private Image img;

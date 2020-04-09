@@ -1,4 +1,4 @@
-package com.capstone.moayo.Entity;
+package com.capstone.moayo.entity;
 
 import java.util.ArrayList;
 import java.util.List;
