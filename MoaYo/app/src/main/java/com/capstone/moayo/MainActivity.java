@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CategoryService categoryService;
     private DataBindingService dataBindingService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

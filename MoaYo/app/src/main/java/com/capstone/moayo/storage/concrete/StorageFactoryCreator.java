@@ -1,5 +1,10 @@
 package com.capstone.moayo.storage.concrete;
 
+import android.content.Context;
+
+import com.capstone.moayo.dao.CategoryDao;
+import com.capstone.moayo.dao.ContentDao;
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.ContentStorage;
 import com.capstone.moayo.storage.DataBindingStorage;
@@ -10,6 +15,10 @@ public class StorageFactoryCreator implements StorageFactory{
     private CategoryStorage categoryStorage;
     private ContentStorage contentStorage;
     private DataBindingStorage dataBindingStorage;
+
+    private CategoryDao categoryDao;
+    private ContentDao contentDao;
+    private static DBHelper mDBHelper;
 
     public static synchronized StorageFactory getInstance() {
         if(instance == null) {
@@ -44,5 +53,12 @@ public class StorageFactoryCreator implements StorageFactory{
             dataBindingStorage = new ConcreteDataBindingStorage();
         }
         return dataBindingStorage;
+    }
+
+    @Override
+    public void initDao(Context context) {
+        mDBHelper = new DBHelper(context);
+        mDBHelper.open();
+        mDBHelper.create();
     }
 }

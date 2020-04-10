@@ -1,4 +1,4 @@
-package com.capstone.moayo.storage.sqlite;
+package com.capstone.moayo.dao.sqlite;
 
 import android.provider.BaseColumns;
 
