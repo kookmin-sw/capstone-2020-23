@@ -1,6 +1,7 @@
 package com.capstone.moayo.storage.concrete;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.ContentDao;
@@ -58,7 +59,9 @@ public class StorageFactoryCreator implements StorageFactory{
     @Override
     public void initDao(Context context) {
         mDBHelper = new DBHelper(context);
-        mDBHelper.open();
-        mDBHelper.create();
+        mDBHelper.init();
+        SQLiteDatabase db = mDBHelper.getWritableDB();
+        mDBHelper.create(db);
+        db.close();
     }
 }
