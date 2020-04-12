@@ -3,6 +3,7 @@ package com.capstone.moayo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.capstone.moayo.util.Exception.NotRootException;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn;
@@ -77,12 +79,15 @@ public class MainActivity extends AppCompatActivity {
         CategoryNodeDto root = new CategoryNodeDto("L1", null, 1);
         for(int i = 0; i < 3; i++) {
             CategoryNodeDto secondNode = new CategoryNodeDto("L2_" + i, root, 2);
+            root.getLowLayer().add(secondNode);
             for(int j = 0; j < 5; j++) {
                 CategoryNodeDto thirdNode = new CategoryNodeDto("L3+" + j, secondNode, 3);
                 secondNode.getLowLayer().add(thirdNode);
             }
-            root.getLowLayer().add(secondNode);
         }
+//        Gson gson = new Gson();
+//        String result = gson.toJson(root);
+//        Log.d("category", result);
         return root;
     }
 }

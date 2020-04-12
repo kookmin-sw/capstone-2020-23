@@ -45,10 +45,11 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                 categoryDao.insert(dbHelper, thirdNode.getLevel(), thirdNode.getParent().getId(),thirdNode.getTitle());
             }
         }
-        Gson gson = new Gson();
-
-        String result = gson.toJson(rootNode);
-        return result;
+//        Gson gson = new Gson();
+//
+//        String result = gson.toJson(category);
+//        Log.d("category", result);
+        return "Success";
 //        JSONObject object = new JSONObject();
 //        try {
 //            CategoryNode categoryNode = category.getRootNode();

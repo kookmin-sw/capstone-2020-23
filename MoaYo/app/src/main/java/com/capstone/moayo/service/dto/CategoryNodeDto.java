@@ -31,8 +31,9 @@ public class CategoryNodeDto {
                 CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
                 for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                     CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
+                    secondNode.getLowLayer().add(thirdNode);
                 }
-
+                rootNode.getLowLayer().add(secondNode);
             }
             return rootNode;
         }
