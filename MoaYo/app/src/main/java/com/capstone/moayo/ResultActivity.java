@@ -10,13 +10,13 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+
+import com.capstone.moayo.data.SampleData;
 
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +29,27 @@ public class ResultActivity extends AppCompatActivity {
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
         ArrayList<String> list = new ArrayList<>();
         for (int i=0; i<100; i++) {
-            list.add(String.format("TEXT %d", i)) ;
+            list.add(String.format("SAVE %d", i)) ;
         }
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = findViewById(R.id.recycler1_result) ;
+        RecyclerView recyclerView = findViewById(R.id.recycler1_result);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
 
         // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        Recycler1_result adapter = new Recycler1_result(list) ;
+        adapter_result1 adapter = new adapter_result1(list);
         recyclerView.setAdapter(adapter) ;
+
+
+        // 추천 게시물 리사이클러뷰 (리사이클러뷰 2)
+        RecyclerView recyclerView2 = findViewById(R.id.recycler2_result);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        adapter_result2 adapter2 = new adapter_result2();
+        recyclerView2.setAdapter(adapter2);
+
+        //아이템 로드
+        adapter2.setItems(new SampleData().getItems());
     }
 
 
