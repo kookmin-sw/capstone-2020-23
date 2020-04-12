@@ -1,5 +1,7 @@
 package com.capstone.moayo.service.concrete;
 
+import android.content.Context;
+
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.entity.Content;
@@ -17,8 +19,8 @@ import java.util.List;
 public class ConcreteDataBindingService implements DataBindingService {
     private DataBindingStorage dataBindingStorage;
 
-    public ConcreteDataBindingService() {
-        this.dataBindingStorage = StorageFactoryCreator.getInstance().requestDataBindingStorage();
+    public ConcreteDataBindingService(Context context) {
+        this.dataBindingStorage = StorageFactoryCreator.getInstance().requestDataBindingStorage(context);
     }
 
     @Override

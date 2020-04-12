@@ -1,5 +1,7 @@
 package com.capstone.moayo.service.concrete;
 
+import android.content.Context;
+
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.ContentService;
 import com.capstone.moayo.service.DataBindingService;
@@ -23,25 +25,25 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public CategoryService requestCategoryService() {
+    public CategoryService requestCategoryService(Context context) {
         if(categoryService == null) {
-            categoryService = new ConcreteCategoryService();
+            categoryService = new ConcreteCategoryService(context);
         }
         return categoryService;
     }
 
     @Override
-    public ContentService requestContentService() {
+    public ContentService requestContentService(Context context) {
         if(contentService == null) {
-            contentService = new ConcreteContentService();
+            contentService = new ConcreteContentService(context);
         }
         return contentService;
     }
 
     @Override
-    public DataBindingService requestDataBindingService() {
+    public DataBindingService requestDataBindingService(Context context) {
         if(dataBindingService == null) {
-            dataBindingService = new ConcreteDataBindingService();
+            dataBindingService = new ConcreteDataBindingService(context);
         }
 
         return dataBindingService;

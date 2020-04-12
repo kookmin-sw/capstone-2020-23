@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService();
-        dataBindingService = ServiceFactoryCreator.getInstance().requestDataBindingService();
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        dataBindingService = ServiceFactoryCreator.getInstance().requestDataBindingService(getApplicationContext());
         storageFactory = StorageFactoryCreator.getInstance();
 
         createBtn = findViewById(R.id.createBtn);

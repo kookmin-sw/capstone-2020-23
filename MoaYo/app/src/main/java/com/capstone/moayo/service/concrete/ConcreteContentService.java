@@ -1,5 +1,7 @@
 package com.capstone.moayo.service.concrete;
 
+import android.content.Context;
+
 import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.service.ContentService;
 import com.capstone.moayo.service.dto.ContentDto;
@@ -10,7 +12,7 @@ import java.util.List;
 public class ConcreteContentService implements ContentService {
     private ContentStorage contentStorage;
 
-    public ConcreteContentService() {
+    public ConcreteContentService(Context context) {
 
     }
 

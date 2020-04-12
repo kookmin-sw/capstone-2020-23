@@ -20,8 +20,8 @@ import java.util.List;
 public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
 
-    public ConcreteCategoryService() {
-        this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage();
+    public ConcreteCategoryService(Context context) {
+        this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage(context);
     }
 
     @Override

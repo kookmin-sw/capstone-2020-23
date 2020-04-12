@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryNode {
+    private int id;
     private String title;
     private CategoryNode parent;
     private List<CategoryNode> lowLayer;
     private int level;
 
-    private List<Content> contents;
 
     public CategoryNode() {
         this.title = null;
@@ -29,7 +29,6 @@ public class CategoryNode {
         this.level = level;
 
         lowLayer = new ArrayList<CategoryNode>();
-        contents = new ArrayList<>();
     }
 
     public CategoryNodeDto toCategoryNodeDto() {
@@ -37,23 +36,10 @@ public class CategoryNode {
         try {
             if(parent != null) throw new NotRootException();
             rootNode = new CategoryNodeDto(title, null, level);
-            List<ContentDto> contentDtos = new ArrayList<>();
             for(CategoryNode secondNode : lowLayer) {
                 CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
-                for(Content content : secondNode.getContents()) {
-                    ContentDto contentDto = content.toContentDto();
-                    contentDtos.add(contentDto);
-                }
-                secondNodeDto.setContents(contentDtos);
-                contentDtos.clear();
                 for(CategoryNode thirdNode : secondNode.getLowLayer()) {
                     CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
-                    for (Content content : thirdNode.getContents()) {
-                        ContentDto contentDto = content.toContentDto();
-                        contentDtos.add(contentDto);
-                    }
-                    thirdNodeDto.setContents(contentDtos);
-                    contentDtos.clear();
                 }
             }
         } catch (NotRootException e) {
@@ -63,6 +49,15 @@ public class CategoryNode {
         }
 
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setLevel(int level) {
         this.level = level;
     }
@@ -94,8 +89,4 @@ public class CategoryNode {
     public String getTitle() {
         return title;
     }
-
-    public List<Content> getContents() { return contents; }
-
-    public void setContents(List<Content> contents) { this.contents = contents; }
 }
