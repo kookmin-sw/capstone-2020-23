@@ -1,18 +1,24 @@
 package com.capstone.moayo.storage.concrete;
 
+import android.content.Context;
+
+import com.capstone.moayo.MainActivity;
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.storage.CategoryStorage;
+import com.capstone.moayo.storage.StorageFactory;
 
 import java.util.List;
 
 public class ConcreteCategoryStorage implements CategoryStorage {
 
-    public ConcreteCategoryStorage() {
-
+    public ConcreteCategoryStorage(Context context) {
+        StorageFactoryCreator.getInstance().initDao(context);
     }
 
     @Override
     public String create(Category category) {
+
         return "it's fine";
     }
 

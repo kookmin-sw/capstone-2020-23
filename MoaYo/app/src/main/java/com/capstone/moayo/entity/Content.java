@@ -1,11 +1,14 @@
 package com.capstone.moayo.entity;
 
+import com.capstone.moayo.service.dto.ContentDto;
+
 public class Content {
     // private Image img;
     private String url;
     private String info;
     private String hashtag;
     private int like;
+    private String categoryInfo;
 
     public Content(String url, String info, String hashtag, int like) {
         this.url = url;
@@ -14,7 +17,11 @@ public class Content {
         this.like = like;
     }
 
-    private String categoryInfo;
+    public ContentDto toContentDto() {
+        ContentDto contentDto = new ContentDto(url, info, hashtag, like);
+        contentDto.setCategoryInfo(categoryInfo);
+        return contentDto;
+    }
 
     public void setCategoryInfo(String categoryInfo) {
         this.categoryInfo = categoryInfo;
