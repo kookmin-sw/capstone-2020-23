@@ -1,5 +1,10 @@
 package com.capstone.moayo.entity;
 
+import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.ContentDto;
+import com.capstone.moayo.util.Exception.NotRootException;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,37 @@ public class CategoryNode {
         contents = new ArrayList<>();
     }
 
+    public CategoryNodeDto toCategoryNodeDto() {
+        CategoryNodeDto rootNode = null;
+        try {
+            if(parent != null) throw new NotRootException();
+            rootNode = new CategoryNodeDto(title, null, level);
+            List<ContentDto> contentDtos = new ArrayList<>();
+            for(CategoryNode secondNode : lowLayer) {
+                CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
+                for(Content content : secondNode.getContents()) {
+                    ContentDto contentDto = content.toContentDto();
+                    contentDtos.add(contentDto);
+                }
+                secondNodeDto.setContents(contentDtos);
+                contentDtos.clear();
+                for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                    CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
+                    for (Content content : thirdNode.getContents()) {
+                        ContentDto contentDto = content.toContentDto();
+                        contentDtos.add(contentDto);
+                    }
+                    thirdNodeDto.setContents(contentDtos);
+                    contentDtos.clear();
+                }
+            }
+        } catch (NotRootException e) {
+            e.printStackTrace();
+        } finally {
+            return rootNode;
+        }
+
+    }
     public void setLevel(int level) {
         this.level = level;
     }

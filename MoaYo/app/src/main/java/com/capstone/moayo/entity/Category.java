@@ -1,30 +1,37 @@
 package com.capstone.moayo.entity;
 
+import com.capstone.moayo.service.dto.CategoryDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Category{
-    private CategoryNode currentCategory;
-    private List<CategoryNode> categoryList;
+    private CategoryNode selectCategoryNode;
+    private CategoryNode rootNode;
 
-    public Category() {
-        this.categoryList = new ArrayList<>();
-        this.currentCategory = null;
+    public Category(CategoryNode rootNode) {
+        this.rootNode = rootNode;
+        this.selectCategoryNode = null;
     }
 
-    public CategoryNode getCurrentCategory() {
-        return currentCategory;
+    public CategoryDto toCategoryDto() {
+        CategoryDto categoryDto = new CategoryDto(rootNode.toCategoryNodeDto());
+        return categoryDto;
     }
 
-    public void setCurrentCategory(CategoryNode currentCategory) {
-        this.currentCategory = currentCategory;
+    public CategoryNode getSelectCategoryNode() {
+        return selectCategoryNode;
     }
 
-    public List<CategoryNode> getCategoryList() {
-        return categoryList;
+    public void setSelectCategoryNode(CategoryNode selectCategoryNode) {
+        this.selectCategoryNode = selectCategoryNode;
     }
 
-    public void setCategoryList(List<CategoryNode> categoryList) {
-        this.categoryList = categoryList;
+    public CategoryNode getRootNode() {
+        return rootNode;
+    }
+
+    public void setRootNode(CategoryNode rootNode) {
+        this.rootNode = rootNode;
     }
 }

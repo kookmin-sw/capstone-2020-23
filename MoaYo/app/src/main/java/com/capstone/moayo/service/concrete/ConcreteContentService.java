@@ -2,6 +2,7 @@ package com.capstone.moayo.service.concrete;
 
 import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.service.ContentService;
+import com.capstone.moayo.service.dto.ContentDto;
 import com.capstone.moayo.storage.ContentStorage;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public class ConcreteContentService implements ContentService {
     }
 
     @Override
-    public List<Content> findContentByHashtag(String hashtag) {
+    public List<Content> findContentByHashTag(String hashTag) {
+        return null;
+    }
+
+    @Override
+    public List<ContentDto> findContentByKeyWord(String keyword) {
         return null;
     }
 

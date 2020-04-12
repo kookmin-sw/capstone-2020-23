@@ -1,41 +1,41 @@
 package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.Category;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.util.Exception.NotRootException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDto {
-    private CategoryNodeDto currentCategory;
-    private List<CategoryNodeDto> root;
+    private CategoryNodeDto selectCategory;
+    private CategoryNodeDto rootNode;
 
-    public CategoryDto() {
-        this.root = new ArrayList<>();
-        this.currentCategory = null;
+    public CategoryDto(CategoryNodeDto rootNode) {
+        this.rootNode = rootNode;
+        this.selectCategory = null;
     }
 
     public Category toCategory() throws NotRootException {
-        Category category = new Category();
-        for(CategoryNodeDto node : root) {
-            category.getCategoryList().add(node.toCategoryNode());
-        }
+        Category category = new Category(rootNode.toCategoryNode());
+        category.setSelectCategoryNode(selectCategory.toCategoryNode());
+
         return category;
     }
 
-    public CategoryNodeDto getCurrentCategory() {
-        return currentCategory;
+    public CategoryNodeDto getSelectCategory() {
+        return selectCategory;
     }
 
-    public void setCurrentCategory(CategoryNodeDto currentCategory) {
-        this.currentCategory = currentCategory;
+    public void setSelectCategory(CategoryNodeDto selectCategory) {
+        this.selectCategory = selectCategory;
     }
 
-    public List<CategoryNodeDto> getRoot() {
-        return root;
+    public CategoryNodeDto getRootNode() {
+        return rootNode;
     }
 
-    public void setRoot(List<CategoryNodeDto> root) {
-        this.root = root;
+    public void setRootNode(CategoryNodeDto rootNode) {
+        this.rootNode = rootNode;
     }
 }

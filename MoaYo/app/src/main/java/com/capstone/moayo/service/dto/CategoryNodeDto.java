@@ -1,8 +1,10 @@
 package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.util.Exception.NotRootException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +29,22 @@ public class CategoryNodeDto {
             throw new NotRootException();
         } else {
             CategoryNode rootNode = new CategoryNode(title, null, level); // 1st node
+            List<Content> contents = new ArrayList<>();
+
             for (CategoryNodeDto secondNodeDto : lowLayer) {
                 CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
+                for(ContentDto contentDto : secondNodeDto.getContents()) {
+                    contents.add(contentDto.toContent());
+                }
+                secondNode.setContents(contents);
+                contents.clear();
                 for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                     CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
+                    for(ContentDto contentDto : thirdNodeDto.getContents()) {
+                        contents.add(contentDto.toContent());
+                    }
+                    thirdNode.setContents(contents);
+                    contents.clear();
                 }
 
             }
