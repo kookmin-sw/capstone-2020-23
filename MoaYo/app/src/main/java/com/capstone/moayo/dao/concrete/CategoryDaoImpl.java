@@ -62,5 +62,18 @@ public class CategoryDaoImpl implements CategoryDao {
         mDB.close();
         return c;
     }
+
+    @Override
+    public Cursor selectAll(DBHelper dbHelper) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM tb_category ;",null);
+        while(c.moveToNext()){
+            System.out.print(c.getInt(0));
+            System.out.println("/" + c.getString(1));
+        }
+        c.close();
+        mDB.close();
+        return c;
+    }
 }
 

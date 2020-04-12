@@ -22,4 +22,16 @@
         android:layout_height="wrap_content"
         android:text="requestData" />
 
+    <Button
+        android:id="@+id/DB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DBButton" />
+
+    <Button
+        android:id="@+id/DBdel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DBDELETE" />
+
 </LinearLayout>

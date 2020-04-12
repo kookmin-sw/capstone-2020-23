@@ -2,6 +2,7 @@ package com.capstone.moayo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -46,17 +47,31 @@ public class MainActivity extends AppCompatActivity {
 
         createBtn = findViewById(R.id.createBtn);
         requestDataBtn = findViewById(R.id.dataBtn);
-        DBButton = findViewById(R.id.createBtn);
+        DBButton = findViewById(R.id.DB);
+        Button DBDel = findViewById(R.id.DBdel);
 
-//        DBButton.setOnClickListener(v->{
-//            DBHelper mDBHelper = storageFactory.initDao(getApplicationContext());
-//            try{
-//                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
-//                ContentDao contentDao = ContentDaoImpl.getInstance();
-//            } catch (DaoObjectNullException e){
-//                System.out.println(e.getMessage());
-//            }
-//        });
+        DBHelper mDBHelper = storageFactory.initDao(this);
+
+        DBDel.setOnClickListener(v->{
+            try {
+                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
+//                if(categoryDao.delete(mDBHelper,1)){
+//                    Toast.makeText(this,"True",Toast.LENGTH_SHORT).show();
+//                }
+                categoryDao.selectAll(mDBHelper);
+            }catch(DaoObjectNullException e){
+                    System.out.print("");
+            }
+        });
+        DBButton.setOnClickListener(v->{
+            try{
+                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
+                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,1,0,"패션")),Toast.LENGTH_SHORT).show();
+            } catch (DaoObjectNullException e){
+                System.out.println(e.getMessage());
+            }
+
+        });
         createBtn.setOnClickListener(v -> {
             try {
                 CategoryNodeDto category = createCategory();
