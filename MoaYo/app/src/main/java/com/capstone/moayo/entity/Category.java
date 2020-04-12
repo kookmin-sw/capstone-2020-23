@@ -5,27 +5,26 @@ import java.util.List;
 
 public class Category{
     private CategoryNode currentCategory;
-    private CategoryNode root;
+    private List<CategoryNode> categoryList;
 
-    public Category(CategoryNode root) {
-        currentCategory = root;
-
-        this.root = root;
-    }
-
-    public void setCurrentCategory(CategoryNode currentCategory) {
-        this.currentCategory = currentCategory;
-    }
-
-    public void setRoot(CategoryNode root) {
-        this.root = root;
+    public Category() {
+        this.categoryList = new ArrayList<>();
+        this.currentCategory = null;
     }
 
     public CategoryNode getCurrentCategory() {
         return currentCategory;
     }
 
-    public CategoryNode getRoot() {
-        return root;
+    public void setCurrentCategory(CategoryNode currentCategory) {
+        this.currentCategory = currentCategory;
+    }
+
+    public List<CategoryNode> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<CategoryNode> categoryList) {
+        this.categoryList = categoryList;
     }
 }

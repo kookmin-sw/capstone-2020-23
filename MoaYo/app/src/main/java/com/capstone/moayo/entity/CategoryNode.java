@@ -6,17 +6,24 @@ import java.util.List;
 public class CategoryNode {
     private String title;
     private CategoryNode parent;
-    private List<CategoryNode> lowLevel;
+    private List<CategoryNode> lowLayer;
     private int level;
 
     private List<Content> contents;
+
+    public CategoryNode() {
+        this.title = null;
+        this.parent = null;
+        this.lowLayer = null;
+        this.level = 0;
+    }
 
     public CategoryNode(String title, CategoryNode parent, int level) {
         this.title = title;
         this.parent = parent;
         this.level = level;
 
-        lowLevel = new ArrayList<CategoryNode>();
+        lowLayer = new ArrayList<CategoryNode>();
         contents = new ArrayList<>();
     }
 
@@ -24,8 +31,12 @@ public class CategoryNode {
         this.level = level;
     }
 
-    public void setLowLevel(List<CategoryNode> lowLevel) {
-        this.lowLevel = lowLevel;
+    public List<CategoryNode> getLowLayer() {
+        return lowLayer;
+    }
+
+    public void setLowLayer(List<CategoryNode> lowLayer) {
+        this.lowLayer = lowLayer;
     }
 
     public void setParent(CategoryNode parent) {
@@ -42,10 +53,6 @@ public class CategoryNode {
 
     public int getLevel() {
         return level;
-    }
-
-    public List<CategoryNode> getLowLevel() {
-        return lowLevel;
     }
 
     public String getTitle() {

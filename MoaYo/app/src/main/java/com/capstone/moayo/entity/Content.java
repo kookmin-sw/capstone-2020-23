@@ -6,6 +6,7 @@ public class Content {
     private String info;
     private String hashtag;
     private int like;
+    private String categoryInfo;
 
     public Content(String url, String info, String hashtag, int like) {
         this.url = url;
@@ -14,7 +15,6 @@ public class Content {
         this.like = like;
     }
 
-    private String categoryInfo;
 
     public void setCategoryInfo(String categoryInfo) {
         this.categoryInfo = categoryInfo;
