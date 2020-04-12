@@ -57,11 +57,12 @@ public class StorageFactoryCreator implements StorageFactory{
     }
 
     @Override
-    public void initDao(Context context) {
+    public DBHelper initDao(Context context) {
         mDBHelper = new DBHelper(context);
         mDBHelper.init();
         SQLiteDatabase db = mDBHelper.getWritableDB();
         mDBHelper.create(db);
         db.close();
+        return mDBHelper;
     }
 }
