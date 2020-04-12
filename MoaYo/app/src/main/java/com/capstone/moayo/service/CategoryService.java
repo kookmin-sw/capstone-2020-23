@@ -10,9 +10,9 @@ import com.capstone.moayo.util.Exception.NotRootException;
 import java.util.List;
 
 public interface CategoryService {
-    public String createCategoryNode(CategoryNodeDto categoryNodeDto) throws NotRootException;
-    public List<CategoryDto> findCategoryNodeByTitle(String title);
-    public Category findCategoryNodeById(int id);
-    public String modifyCategoryNode(CategoryNodeDto categoryNodeDto);
-    public String deleteCategoryNode(int id);
+    public String createCategory(CategoryNodeDto categoryNodeDto) throws NotRootException;
+    public List<CategoryDto> findCategoryByTitle(String title);
+    public Category findCategoryById(int id);
+    public String modifyCategory(CategoryNodeDto categoryNodeDto);
+    public String deleteCategory(int id);
 }

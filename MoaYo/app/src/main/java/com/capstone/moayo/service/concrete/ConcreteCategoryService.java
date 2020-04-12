@@ -19,15 +19,13 @@ import java.util.List;
 
 public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
-    private ContentStorage contentStorage;
 
     public ConcreteCategoryService() {
         this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage();
-        this.contentStorage = StorageFactoryCreator.getInstance().requestContentStorage();
     }
 
     @Override
-    public String createCategoryNode(CategoryNodeDto categoryNodeDto) throws NotRootException {
+    public String createCategory(CategoryNodeDto categoryNodeDto) throws NotRootException {
         if(categoryNodeDto.getParent() != null) {
             throw new NotRootException();
         }
@@ -40,7 +38,7 @@ public class ConcreteCategoryService implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> findCategoryNodeByTitle(String title) {
+    public List<CategoryDto> findCategoryByTitle(String title) {
         List<Category> foundNodeList = categoryStorage.retrieveByTitle(title);
         List<CategoryDto> categoryDtoList = new ArrayList<>();
 
@@ -52,17 +50,17 @@ public class ConcreteCategoryService implements CategoryService {
     }
 
     @Override
-    public Category findCategoryNodeById(int id) {
+    public Category findCategoryById(int id) {
         return null;
     }
 
     @Override
-    public String modifyCategoryNode(CategoryNodeDto categoryNodeDto) {
+    public String modifyCategory(CategoryNodeDto categoryNodeDto) {
         return null;
     }
 
     @Override
-    public String deleteCategoryNode(int id) {
+    public String deleteCategory(int id) {
         return null;
     }
 }

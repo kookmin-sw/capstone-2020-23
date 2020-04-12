@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category{
+    private int id;
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
 
     public Category(CategoryNode rootNode) {
+        this.id = 0;
         this.rootNode = rootNode;
         this.selectCategoryNode = null;
     }
@@ -17,6 +19,14 @@ public class Category{
     public CategoryDto toCategoryDto() {
         CategoryDto categoryDto = new CategoryDto(rootNode.toCategoryNodeDto());
         return categoryDto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public CategoryNode getSelectCategoryNode() {

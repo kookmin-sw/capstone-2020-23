@@ -1,4 +1,4 @@
-package com.capstone.moayo.util;
+package com.capstone.moayo.util.retrofit;
 
 import com.capstone.moayo.entity.Content;
 
