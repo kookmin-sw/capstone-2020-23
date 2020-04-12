@@ -33,25 +33,25 @@ public class StorageFactoryCreator implements StorageFactory{
     }
 
     @Override
-    public CategoryStorage requestCategoryStorage() {
+    public CategoryStorage requestCategoryStorage(Context context) {
         if(categoryStorage == null) {
-            categoryStorage = new ConcreteCategoryStorage();
+            categoryStorage = new ConcreteCategoryStorage(context);
         }
         return categoryStorage;
     }
 
     @Override
-    public ContentStorage requestContentStorage() {
+    public ContentStorage requestContentStorage(Context context) {
         if(contentStorage == null) {
-            contentStorage = new ConcreteContentStorage();
+            contentStorage = new ConcreteContentStorage(context);
         }
         return contentStorage;
     }
 
     @Override
-    public DataBindingStorage requestDataBindingStorage() {
+    public DataBindingStorage requestDataBindingStorage(Context context) {
         if(dataBindingStorage == null) {
-            dataBindingStorage = new ConcreteDataBindingStorage();
+            dataBindingStorage = new ConcreteDataBindingStorage(context);
         }
         return dataBindingStorage;
     }

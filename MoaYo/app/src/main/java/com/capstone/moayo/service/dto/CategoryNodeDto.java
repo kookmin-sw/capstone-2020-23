@@ -13,7 +13,6 @@ public class CategoryNodeDto {
     private CategoryNodeDto parent;
     private List<CategoryNodeDto> lowLayer;
     private int level;
-    private List<ContentDto> contents;
 
     public CategoryNodeDto(String title, CategoryNodeDto parent, int level) {
         this.title = title;
@@ -21,7 +20,6 @@ public class CategoryNodeDto {
         this.level = level;
 
         this.lowLayer = new ArrayList<>();
-        this.contents = new ArrayList<>();
     }
 
     public CategoryNode toCategoryNode() throws NotRootException {
@@ -29,22 +27,10 @@ public class CategoryNodeDto {
             throw new NotRootException();
         } else {
             CategoryNode rootNode = new CategoryNode(title, null, level); // 1st node
-            List<Content> contents = new ArrayList<>();
-
             for (CategoryNodeDto secondNodeDto : lowLayer) {
                 CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
-                for(ContentDto contentDto : secondNodeDto.getContents()) {
-                    contents.add(contentDto.toContent());
-                }
-                secondNode.setContents(contents);
-                contents.clear();
                 for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                     CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
-                    for(ContentDto contentDto : thirdNodeDto.getContents()) {
-                        contents.add(contentDto.toContent());
-                    }
-                    thirdNode.setContents(contents);
-                    contents.clear();
                 }
 
             }
@@ -84,11 +70,4 @@ public class CategoryNodeDto {
         this.level = level;
     }
 
-    public List<ContentDto> getContents() {
-        return contents;
-    }
-
-    public void setContents(List<ContentDto> contents) {
-        this.contents = contents;
-    }
 }

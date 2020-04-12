@@ -25,7 +25,7 @@ public class CategoryDaoImpl implements CategoryDao {
         }
         return instance;
     }
-
+    @Override
     public long insert(DBHelper dbHelper,int level, int parent, String title){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();

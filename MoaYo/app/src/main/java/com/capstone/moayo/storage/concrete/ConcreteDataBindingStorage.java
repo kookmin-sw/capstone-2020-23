@@ -1,5 +1,6 @@
 package com.capstone.moayo.storage.concrete;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.capstone.moayo.entity.Content;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ConcreteDataBindingStorage implements DataBindingStorage {
     private InstagramService instagramService;
 
-    public ConcreteDataBindingStorage() {
+    public ConcreteDataBindingStorage(Context context) {
 //        instagramService = APIUtils.getInstagramService();
     }
 
