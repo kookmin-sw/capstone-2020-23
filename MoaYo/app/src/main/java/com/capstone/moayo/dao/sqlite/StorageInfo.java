@@ -5,16 +5,16 @@ import android.provider.BaseColumns;
 public final class StorageInfo{
     public static final class CreateStorage implements BaseColumns{
         // tb_category
-        public static final String ID = "co_id";
-        public static final String TITLE = "co_title";
-        public static final String PARENT = "co_parent";
-        public static final String LEVEL = "co_level";
+        public static final String CATEGORYID = "co_id";
+        public static final String CATEGORYTITLE = "co_title";
+        public static final String CATEGORYPARENT = "co_parent";
+        public static final String CATEGORYLEVEL = "co_level";
         public static final String _TABLENAME0 = "tb_category";
         public static final String _CREATE0 = "create table if not exists " + _TABLENAME0 +"(" +
-                ID + " integer primary key autoincrement, " +
-                TITLE + " text not null, "+
-                PARENT + " integer, "+
-                LEVEL + " integer not null );";
+                CATEGORYID + " integer primary key autoincrement, " +
+                CATEGORYTITLE + " text not null, "+
+                CATEGORYPARENT + " integer, "+
+                CATEGORYLEVEL + " integer not null );";
 
         // tb_content
         public static final String CID = "co_id";

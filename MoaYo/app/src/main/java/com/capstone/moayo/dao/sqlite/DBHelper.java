@@ -10,8 +10,7 @@ public class DBHelper {
 
     private static final String DATABASE_NAME = "MoayoStorage(SQLite).db";
     private static final int DATABASE_VERSION = 1;
-    private DatabaseHelper mDBHelper;
-    private static SQLiteDatabase mDB;
+    private static DatabaseHelper mDBHelper;
     private Context mCtx;
 
     private class DatabaseHelper extends SQLiteOpenHelper{
@@ -37,19 +36,24 @@ public class DBHelper {
         this.mCtx = context;
     }
 
-    public DBHelper open() throws SQLException{
+    public DBHelper init() throws SQLException{
         mDBHelper = new DatabaseHelper(mCtx,DATABASE_NAME,null,DATABASE_VERSION);
-        mDB = mDBHelper.getWritableDatabase();
         return this;
     }
 
-    public void create(){
+    public SQLiteDatabase getWritableDB(){
+        return mDBHelper.getWritableDatabase();
+    }
+
+    public SQLiteDatabase getReadableDB(){
+        return mDBHelper.getReadableDatabase();
+    }
+
+    public void create(SQLiteDatabase mDB){
         mDBHelper.onCreate(mDB);
     }
 
-    public void close(){
-        mDB.close();
-    }
+
 //
 //    // Insert DB
 //    public long insertColumn(String userid, String name, long age , String gender){
