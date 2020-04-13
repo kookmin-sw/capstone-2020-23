@@ -63,12 +63,15 @@ public class CategoryNode {
     }
 
     public List<CategoryNode> getLowLayer() {
-        return lowLayer;
+        if(lowLayer != null)
+            return lowLayer;
+        else {
+            this.lowLayer = new ArrayList<CategoryNode>();
+            return lowLayer;
+        }
     }
 
-    public void setLowLayer(List<CategoryNode> lowLayer) {
-        this.lowLayer = lowLayer;
-    }
+    public void setLowLayer(List<CategoryNode> lowLayer) {this.lowLayer = lowLayer;}
 
     public void setParent(CategoryNode parent) {
         this.parent = parent;

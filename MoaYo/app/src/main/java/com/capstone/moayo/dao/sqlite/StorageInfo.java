@@ -35,7 +35,7 @@ public final class StorageInfo{
                 URL + " text, " +
                 IMGURL + " text, " +
                 INFO + " text, " +
-                HASHTAG + "text, " +
+                HASHTAG + " text, " +
                 "constraint fk_parent foreign key(co_parent) references tb_category(co_id));";
 
         // tb_dogamlist
@@ -43,8 +43,8 @@ public final class StorageInfo{
         public static final String DOGAMTITLE = "co_title";
         public static final String DOGAMDESCRIPTION = "co_description";
         public static final String DOGAMPASSWORD = "co_password";
-        public static final String _DOTAMTABLENAME = "tb_dogamlist";
-        public static final String _DOGAMCREATE = "create table if not exists " + _DOTAMTABLENAME + "(" +
+        public static final String _DOGAMTABLENAME = "tb_dogamlist";
+        public static final String _DOGAMCREATE = "create table if not exists " + _DOGAMTABLENAME + "(" +
                 DOGAMID + " integer primary key autoincrement, " +
                 DOGAMTITLE + " text, " +
                 DOGAMDESCRIPTION + " text, " +

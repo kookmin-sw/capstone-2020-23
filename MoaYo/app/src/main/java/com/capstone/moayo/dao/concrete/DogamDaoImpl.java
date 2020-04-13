@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.capstone.moayo.dao.DogamDao;
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
 
@@ -30,7 +31,7 @@ public class DogamDaoImpl implements DogamDao {
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
         values.put(StorageInfo.CreateStorage.DOGAMDESCRIPTION,description);
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
-        long result =  mDB.insert(StorageInfo.CreateStorage._DOTAMTABLENAME,null,values);
+        long result =  mDB.insert(StorageInfo.CreateStorage._DOGAMTABLENAME,null,values);
         mDB.close();
         return result;
     }
@@ -43,7 +44,7 @@ public class DogamDaoImpl implements DogamDao {
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
         values.put(StorageInfo.CreateStorage.DOGAMDESCRIPTION,description);
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
-        boolean result = mDB.update(StorageInfo.CreateStorage._DOTAMTABLENAME,values,"co_id=" + id,null) > 0;
+        boolean result = mDB.update(StorageInfo.CreateStorage._DOGAMTABLENAME,values,"co_id=" + id,null) > 0;
         mDB.close();
         return result;
     }
@@ -51,29 +52,50 @@ public class DogamDaoImpl implements DogamDao {
     @Override
     public boolean delete(DBHelper dbHelper, int id) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
-        boolean result = mDB.delete(StorageInfo.CreateStorage._DOTAMTABLENAME,"co_id="+id,null) > 0;
+        boolean result = mDB.delete(StorageInfo.CreateStorage._DOGAMTABLENAME,"co_id="+id,null) > 0;
         mDB.close();
         return result;
     }
 
     @Override
-    public Cursor select(DBHelper dbHelper, int id) {
+    public DogamMapping selectById(DBHelper dbHelper, int id) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
-        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOTAMTABLENAME+" where co_id="+id+";",null);
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOGAMTABLENAME +" where co_id="+id+";",null);
+
+        DogamMapping dm = new DogamMapping();
+        dm.setId(c.getInt(0));
+        dm.setTitle(c.getString(1));
+        dm.setDesription(c.getString(2));
+        dm.setPassword(c.getString(3));
         mDB.close();
-        return c;
+
+        return dm;
     }
 
     @Override
-    public Cursor selectAll(DBHelper dbHelper) {
+    public DogamMapping selectByTitle(DBHelper dbHelper, String title) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
-        Cursor c = mDB.rawQuery("SELECT * FROM tb_dogamlist ;",null);
-        while(c.moveToNext()){
-            System.out.print(c.getInt(0));
-            System.out.println("/" + c.getString(1));
-        }
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOGAMTABLENAME +" where co_title='"+title+"';",null);
+        c.moveToFirst();
+        DogamMapping dm = new DogamMapping();
+        dm.setId(c.getInt(0));
+        dm.setTitle(c.getString(1));
+        dm.setDesription(c.getString(2));
+        dm.setPassword(c.getString(3));
         c.close();
         mDB.close();
-        return c;
+
+        return dm;
+    }
+
+    @Override
+    public DogamMapping[] selectAll(DBHelper dbHelper) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOGAMTABLENAME +" ;",null);
+        c.moveToFirst();
+        c.close();
+        mDB.close();
+
+        return null;
     }
 }

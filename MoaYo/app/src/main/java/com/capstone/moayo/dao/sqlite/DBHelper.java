@@ -29,7 +29,7 @@ public class DBHelper {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME0);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME1);
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._DOTAMTABLENAME);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._DOGAMTABLENAME);
             onCreate(sqLiteDatabase);
         }
     }

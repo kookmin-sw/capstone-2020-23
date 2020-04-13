@@ -67,12 +67,23 @@ public class MainActivity extends AppCompatActivity {
         });
         DBButton.setOnClickListener(v->{
             try{
-                DogamDao dogamDao = DogamDaoImpl.getInstance();
-                Toast.makeText(this,String.valueOf(dogamDao.insert(mDBHelper,"NewDogam","this is new Dogam",null)),Toast.LENGTH_SHORT).show();
 
-                dogamDao.selectAll(mDBHelper);
-//                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
-//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,1,0,"패션")),Toast.LENGTH_SHORT).show();
+                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
+                DogamDao dogamDao = DogamDaoImpl.getInstance();
+//                mDBHelper.upgrade(mDBHelper.getWritableDB());
+//                Toast.makeText(this,String.valueOf(dogamDao.insert(mDBHelper,"NewDogam","This is new Dogam",null)),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,1,1,"패션",1)),Toast.LENGTH_SHORT).show();
+//
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,2,1,"상의",1)),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,2,1,"하의",1)),Toast.LENGTH_SHORT).show();
+//
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,2,"아우터",1)),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,2,"조끼",1)),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,3,"청바지",1)),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,3,"슬렉",1)),Toast.LENGTH_SHORT).show();
+
+                categoryDao.selectByDogamId(mDBHelper,dogamDao.selectByTitle(mDBHelper,"NewDogam").getId());
+
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }

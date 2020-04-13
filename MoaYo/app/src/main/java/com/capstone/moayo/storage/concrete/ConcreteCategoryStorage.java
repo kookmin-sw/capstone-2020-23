@@ -36,15 +36,15 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String create(Category category) {
-        CategoryNode rootNode = category.getRootNode();
-        //1st node
-        categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle());
-        for(CategoryNode secondNode : rootNode.getLowLayer()) {
-            categoryDao.insert(dbHelper, secondNode.getLevel(), secondNode.getParent().getId(), secondNode.getTitle());
-            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                categoryDao.insert(dbHelper, thirdNode.getLevel(), thirdNode.getParent().getId(),thirdNode.getTitle());
-            }
-        }
+//        CategoryNode rootNode = category.getRootNode();
+//        //1st node
+//        categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle());
+//        for(CategoryNode secondNode : rootNode.getLowLayer()) {
+//            categoryDao.insert(dbHelper, secondNode.getLevel(), secondNode.getParent().getId(), secondNode.getTitle());
+//            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+//                categoryDao.insert(dbHelper, thirdNode.getLevel(), thirdNode.getParent().getId(),thirdNode.getTitle());
+//            }
+//        }
 //        Gson gson = new Gson();
 //
 //        String result = gson.toJson(category);

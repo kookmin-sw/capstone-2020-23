@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.capstone.moayo.dao.ContentDao;
+import com.capstone.moayo.dao.mapping.ContentMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
 import com.capstone.moayo.entity.Content;
@@ -26,7 +27,7 @@ public class ContentDaoImpl implements ContentDao {
         }
         return instance;
     }
-
+    @Override
     public long insert(DBHelper dbHelper, int parent,int level,String url,String imgUrl,String info,String hashTag){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
@@ -40,7 +41,7 @@ public class ContentDaoImpl implements ContentDao {
         mDB.close();
         return result;
     }
-
+    @Override
     public boolean update(DBHelper dbHelper,int id, int parent,int level,String url,String imgUrl,String info,String hashTag){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
@@ -55,18 +56,37 @@ public class ContentDaoImpl implements ContentDao {
         mDB.close();
         return result;
     }
-
+    @Override
     public boolean delete(DBHelper dbHelper,int id){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         boolean result = mDB.delete(StorageInfo.CreateStorage._TABLENAME1,"co_id="+id,null) > 0;
         mDB.close();
         return result;
     }
-    // 커서 이용한 뒤 close()할것.
-    public Cursor select(DBHelper dbHelper, int id){
+
+    @Override
+    public ContentMapping selectById(DBHelper dbHelper, int id) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_id="+id+";",null);
+        ContentMapping cm = new ContentMapping(c.getInt(0),c.getInt(1),c.getInt(2),c.getString(3),c.getString(4),c.getString(5),c.getString(6));
+        c.close();
         mDB.close();
-        return c;
+        return cm;
+    }
+
+    @Override
+    public ContentMapping[] selectByparent(DBHelper dbHelper, int parent) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_parent="+parent+";",null);
+        ContentMapping[] contentSet = new ContentMapping[c.getCount()];
+        int i = 0;
+        while(c.moveToNext()) {
+            ContentMapping cm = new ContentMapping(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3), c.getString(4), c.getString(5), c.getString(6));
+            contentSet[i] = cm;
+            i++;
+        }
+        c.close();
+        mDB.close();
+        return contentSet;
     }
 }
