@@ -9,12 +9,15 @@ public final class StorageInfo{
         public static final String CATEGORYTITLE = "co_title";
         public static final String CATEGORYPARENT = "co_parent";
         public static final String CATEGORYLEVEL = "co_level";
+        public static final String CATEGORYDOGAMID = "co_dogamId";
         public static final String _TABLENAME0 = "tb_category";
         public static final String _CREATE0 = "create table if not exists " + _TABLENAME0 +"(" +
                 CATEGORYID + " integer primary key autoincrement, " +
                 CATEGORYTITLE + " text not null, "+
                 CATEGORYPARENT + " integer, "+
-                CATEGORYLEVEL + " integer not null );";
+                CATEGORYLEVEL + " integer not null ,"+
+                CATEGORYDOGAMID + " integer not null," +
+                "constraint fk_dogamId foreign key(co_dogamId) references tb_dogamlist(co_id));";
 
         // tb_content
         public static final String CID = "co_id";
@@ -34,5 +37,17 @@ public final class StorageInfo{
                 INFO + " text, " +
                 HASHTAG + "text, " +
                 "constraint fk_parent foreign key(co_parent) references tb_category(co_id));";
+
+        // tb_dogamlist
+        public static final String DOGAMID = "co_id";
+        public static final String DOGAMTITLE = "co_title";
+        public static final String DOGAMDESCRIPTION = "co_description";
+        public static final String DOGAMPASSWORD = "co_password";
+        public static final String _DOTAMTABLENAME = "tb_dogamlist";
+        public static final String _DOGAMCREATE = "create table if not exists " + _DOTAMTABLENAME + "(" +
+                DOGAMID + " integer primary key autoincrement, " +
+                DOGAMTITLE + " text, " +
+                DOGAMDESCRIPTION + " text, " +
+                DOGAMPASSWORD + " text);";
     }
 }

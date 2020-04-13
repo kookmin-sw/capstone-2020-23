@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.ContentDao;
+import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
 import com.capstone.moayo.dao.concrete.ContentDaoImpl;
+import com.capstone.moayo.dao.concrete.DogamDaoImpl;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
@@ -58,16 +60,20 @@ public class MainActivity extends AppCompatActivity {
 //                if(categoryDao.delete(mDBHelper,1)){
 //                    Toast.makeText(this,"True",Toast.LENGTH_SHORT).show();
 //                }
-                categoryDao.selectAll(mDBHelper);
+//                categoryDao.selectAll(mDBHelper);
             }catch(DaoObjectNullException e){
                     System.out.print("");
             }
         });
         DBButton.setOnClickListener(v->{
             try{
-                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,1,0,"패션")),Toast.LENGTH_SHORT).show();
-            } catch (DaoObjectNullException e){
+                DogamDao dogamDao = DogamDaoImpl.getInstance();
+                Toast.makeText(this,String.valueOf(dogamDao.insert(mDBHelper,"NewDogam","this is new Dogam",null)),Toast.LENGTH_SHORT).show();
+
+                dogamDao.selectAll(mDBHelper);
+//                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
+//                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,1,0,"패션")),Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
                 System.out.println(e.getMessage());
             }
 

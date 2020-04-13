@@ -9,25 +9,27 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 public class DBHelper {
 
     private static final String DATABASE_NAME = "MoayoStorage(SQLite).db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static DatabaseHelper mDBHelper;
     private Context mCtx;
 
     private class DatabaseHelper extends SQLiteOpenHelper{
-        public DatabaseHelper(Context context, String name, CursorFactory factory, int version){
-            super(context,name,factory,version);
-        }
-
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE0);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE1);
+            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._DOGAMCREATE);
+        }
+
+        public DatabaseHelper(Context context, String name, CursorFactory factory, int version){
+            super(context,name,factory,version);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME0);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME1);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._DOTAMTABLENAME);
             onCreate(sqLiteDatabase);
         }
     }
@@ -40,6 +42,8 @@ public class DBHelper {
         mDBHelper = new DatabaseHelper(mCtx,DATABASE_NAME,null,DATABASE_VERSION);
         return this;
     }
+
+    public void upgrade(SQLiteDatabase mDB){mDBHelper.onUpgrade(mDB,1,2);}
 
     public SQLiteDatabase getWritableDB(){
         return mDBHelper.getWritableDatabase();
