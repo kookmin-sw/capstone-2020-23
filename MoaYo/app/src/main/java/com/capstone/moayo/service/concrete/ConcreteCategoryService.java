@@ -25,16 +25,19 @@ public class ConcreteCategoryService implements CategoryService {
     }
 
     @Override
-    public String createCategory(CategoryNodeDto categoryNodeDto) throws NotRootException {
-        if(categoryNodeDto.getParent() != null) {
-            throw new NotRootException();
+    public String createCategory(CategoryDto newCategoryDto){
+
+        try {
+            Category newCategory = newCategoryDto.toCategory();
+
+            String result = categoryStorage.create(newCategory);
+
+            return result;
+        } catch (NotRootException e) {
+            e.toString();
+        } finally {
+            return "";
         }
-        CategoryNode newCategoryNode = categoryNodeDto.toCategoryNode();
-        Category newCategory = new Category(newCategoryNode);
-
-        String result = categoryStorage.create(newCategory);
-
-        return result;
     }
 
     @Override

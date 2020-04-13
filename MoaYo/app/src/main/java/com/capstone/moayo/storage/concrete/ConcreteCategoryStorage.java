@@ -5,7 +5,10 @@ import android.util.Log;
 
 import com.capstone.moayo.MainActivity;
 import com.capstone.moayo.dao.CategoryDao;
+import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
+import com.capstone.moayo.dao.concrete.DogamDaoImpl;
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
@@ -23,12 +26,14 @@ import java.util.List;
 
 public class ConcreteCategoryStorage implements CategoryStorage {
     private CategoryDao categoryDao;
+    private DogamDao dogamDao;
     private DBHelper dbHelper;
 
     public ConcreteCategoryStorage(Context context) {
         try {
             dbHelper = StorageFactoryCreator.getInstance().initDao(context);
             categoryDao = CategoryDaoImpl.getInstance();
+            dogamDao = DogamDaoImpl.getInstance();
         } catch (DaoObjectNullException e) {
             e.printStackTrace();
         }
@@ -36,6 +41,10 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String create(Category category) {
+        //Insert Category Info using dogamDao in DogamTable
+        dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword());
+        CategoryNode rootNode = category.getRootNode();
+        categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), category.getId());
 //        CategoryNode rootNode = category.getRootNode();
 //        //1st node
 //        categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle());
@@ -49,36 +58,8 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 //
 //        String result = gson.toJson(category);
 //        Log.d("category", result);
+        Log.d("Category", category.toString());
         return "Success";
-//        JSONObject object = new JSONObject();
-//        try {
-//            CategoryNode categoryNode = category.getRootNode();
-//
-//            object.put("title", categoryNode.getTitle());
-//            object.put("parent", categoryNode.getParent());
-//            object.put("level", categoryNode.getLevel());
-//            JSONArray secondObject = new JSONArray();
-//            for(CategoryNode secondNode : categoryNode.getLowLayer()) {
-//                JSONObject secondNodeObject = new JSONObject();
-//                secondNodeObject.put("title", secondNode.getTitle());
-//                secondNodeObject.put("parent", secondNode.getParent());
-//                secondNodeObject.put("level", secondNode.getLevel());
-//                JSONArray thirdObject = new JSONArray();
-//                for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-//                    JSONObject thirdNodeObject = new JSONObject();
-//                    thirdNodeObject.put("title", thirdNode.getTitle());
-//                    thirdNodeObject.put("parent", thirdNode.getParent());
-//                    thirdNodeObject.put("level", thirdNode.getLevel());
-//                    thirdObject.put(thirdNodeObject.toString());
-//                }
-//                secondObject.put(secondNodeObject.toString());
-//            }
-//            object.put("layer", secondObject);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        Log.d("category", object.toString());
-//        return object.toString();
     }
 
     @Override
@@ -88,16 +69,40 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public Category retrieveById(int id) {
-        return null;
+        DogamMapping mapping = dogamDao.selectById(dbHelper, id);
+        CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, id);
+        Category foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
+        return foundCategory;
     }
 
     @Override
     public String update(Category category) {
-        return null;
+        boolean c_result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword());
+        if(c_result) {
+            CategoryNode rootNode = category.getRootNode();
+            c_result = categoryDao.update(dbHelper, rootNode.getId(), rootNode.getLevel(), 0, rootNode.getTitle(), category.getId());
+            if(c_result) {
+                for(CategoryNode secondNode : rootNode.getLowLayer()) {
+                    c_result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), category.getId());
+                    if(c_result) {
+                        for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                            c_result =categoryDao.update(dbHelper, thirdNode.getId(), thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), category.getId());
+                            if(!c_result) return "fail to update";
+                        }
+                    } else return "fail to update";
+                }
+            } else return "fail to update";
+
+        } else return "fail to update";
+        return "success to update";
     }
 
     @Override
     public String remove(int id) {
-        return null;
+        boolean result = categoryDao.delete(dbHelper, id);
+        if(result)
+            return "success to delete";
+        else
+            return "fail to delete";
     }
 }

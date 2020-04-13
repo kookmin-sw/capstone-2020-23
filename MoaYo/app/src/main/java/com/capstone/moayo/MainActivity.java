@@ -92,10 +92,11 @@ public class MainActivity extends AppCompatActivity {
         createBtn.setOnClickListener(v -> {
             try {
                 CategoryNodeDto category = createCategory();
-                String result = categoryService.createCategory(category);
+                CategoryDto categoryDto = new CategoryDto("first category", "this is sample category", "1234", category);
+                String result = categoryService.createCategory(categoryDto);
 
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-            } catch (NotRootException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -117,9 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 secondNode.getLowLayer().add(thirdNode);
             }
         }
-//        Gson gson = new Gson();
-//        String result = gson.toJson(root);
-//        Log.d("category", result);
         return root;
     }
 }

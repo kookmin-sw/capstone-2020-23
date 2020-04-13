@@ -92,4 +92,18 @@ public class CategoryNode {
     public String getTitle() {
         return title;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{\"id\" : ").append("\"").append(id).append("\"").append(",").
+                append("\"title\" : ").append("\"").append(title).append("\"").append(",").
+                append("\"level\" : ").append("\"").append(level).append("\"").append(",").
+                append("\"lowLayer\" : [");
+        for(CategoryNode lowNode : lowLayer) {
+            buffer.append(lowNode.toString());
+        }
+        buffer.append("]}");
+
+        return buffer.toString();
+    }
 }
