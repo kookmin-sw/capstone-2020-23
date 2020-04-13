@@ -17,13 +17,11 @@ public class CategoryNode {
 
 
     public CategoryNode() {
-        this.title = null;
-        this.parent = null;
-        this.lowLayer = null;
-        this.level = 0;
+        this.id = 0;
     }
 
     public CategoryNode(String title, CategoryNode parent, int level) {
+        this();
         this.title = title;
         this.parent = parent;
         this.level = level;
@@ -32,22 +30,15 @@ public class CategoryNode {
     }
 
     public CategoryNodeDto toCategoryNodeDto() {
-        CategoryNodeDto rootNode = null;
-        try {
-            if(parent != null) throw new NotRootException();
-            rootNode = new CategoryNodeDto(title, null, level);
-            for(CategoryNode secondNode : lowLayer) {
-                CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
-                for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                    CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
-                }
+        CategoryNodeDto rootNode = new CategoryNodeDto(title, null, level);
+        for(CategoryNode secondNode : lowLayer) {
+            CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
+            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
             }
-        } catch (NotRootException e) {
-            e.printStackTrace();
-        } finally {
-            return rootNode;
         }
 
+        return rootNode;
     }
 
     public int getId() {

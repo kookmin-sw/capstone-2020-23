@@ -45,19 +45,12 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword());
         CategoryNode rootNode = category.getRootNode();
         categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), category.getId());
-//        CategoryNode rootNode = category.getRootNode();
-//        //1st node
-//        categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle());
-//        for(CategoryNode secondNode : rootNode.getLowLayer()) {
-//            categoryDao.insert(dbHelper, secondNode.getLevel(), secondNode.getParent().getId(), secondNode.getTitle());
-//            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-//                categoryDao.insert(dbHelper, thirdNode.getLevel(), thirdNode.getParent().getId(),thirdNode.getTitle());
-//            }
-//        }
-//        Gson gson = new Gson();
-//
-//        String result = gson.toJson(category);
-//        Log.d("category", result);
+        for(CategoryNode secondNode : rootNode.getLowLayer()) {
+            categoryDao.insert(dbHelper, secondNode.getLevel(), secondNode.getParent().getId(), secondNode.getTitle(), category.getId());
+            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                categoryDao.insert(dbHelper, thirdNode.getLevel(), thirdNode.getParent().getId(),thirdNode.getTitle(), category.getId());
+            }
+        }
         Log.d("Category", category.toString());
         return "Success";
     }

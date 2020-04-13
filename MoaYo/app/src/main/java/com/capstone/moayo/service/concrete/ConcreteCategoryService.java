@@ -27,17 +27,11 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String createCategory(CategoryDto newCategoryDto){
 
-        try {
-            Category newCategory = newCategoryDto.toCategory();
+        Category newCategory = newCategoryDto.toCategory();
 
-            String result = categoryStorage.create(newCategory);
+        String result = categoryStorage.create(newCategory);
 
-            return result;
-        } catch (NotRootException e) {
-            e.toString();
-        } finally {
-            return "";
-        }
+        return result;
     }
 
     @Override

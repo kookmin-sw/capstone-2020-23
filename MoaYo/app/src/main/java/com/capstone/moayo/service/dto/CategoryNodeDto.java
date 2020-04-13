@@ -1,10 +1,8 @@
 package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
-import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.util.Exception.NotRootException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,21 +20,17 @@ public class CategoryNodeDto {
         this.lowLayer = new ArrayList<>();
     }
 
-    public CategoryNode toCategoryNode() throws NotRootException {
-        if(parent != null) {
-            throw new NotRootException();
-        } else {
-            CategoryNode rootNode = new CategoryNode(title, null, level); // 1st node
-            for (CategoryNodeDto secondNodeDto : lowLayer) {
-                CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
-                for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
-                    CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
-                    secondNode.getLowLayer().add(thirdNode);
-                }
-                rootNode.getLowLayer().add(secondNode);
+    public CategoryNode toCategoryNode(){
+        CategoryNode rootNode = new CategoryNode(title, null, level); // 1st node
+        for (CategoryNodeDto secondNodeDto : lowLayer) {
+            CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
+            for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
+                CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
+                secondNode.getLowLayer().add(thirdNode);
             }
-            return rootNode;
+            rootNode.getLowLayer().add(secondNode);
         }
+        return rootNode;
     }
 
     public String getTitle() {

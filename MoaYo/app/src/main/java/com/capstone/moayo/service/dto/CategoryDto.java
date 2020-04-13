@@ -19,13 +19,11 @@ public class CategoryDto {
         this.description = description;
         this.password = password;
         this.rootNode = rootNode;
-        this.selectCategory = null;
+        this.selectCategory = rootNode;
     }
 
-    public Category toCategory() throws NotRootException {
+    public Category toCategory() {
         Category category = new Category(title, description, password, rootNode.toCategoryNode());
-        category.setSelectCategoryNode(selectCategory.toCategoryNode());
-
         return category;
     }
 

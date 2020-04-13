@@ -22,7 +22,7 @@ public class Category{
         this.description = description;
         this.password = password;
         this.rootNode = rootNode;
-        this.selectCategoryNode = null;
+        this.selectCategoryNode = rootNode;
     }
 
     public CategoryDto toCategoryDto() {
