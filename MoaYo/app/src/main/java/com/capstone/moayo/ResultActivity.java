@@ -2,6 +2,7 @@ package com.capstone.moayo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,9 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.capstone.moayo.data.SampleData;
-
-import java.util.ArrayList;
+import com.capstone.moayo.data.RecommendData_Sample;
+import com.capstone.moayo.data.SavedData_Sample;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -24,32 +24,30 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
-        // 리사이클러뷰에 표시할 데이터 리스트 생성.
-        ArrayList<String> list = new ArrayList<>();
-        for (int i=0; i<100; i++) {
-            list.add(String.format("SAVE %d", i)) ;
-        }
 
+        // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         RecyclerView recyclerView = findViewById(R.id.recycler1_result);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
 
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        adapter_result1 adapter = new adapter_result1(list);
+        // 리사이클러뷰에 객체 지정.
+        adapter_result1 adapter = new adapter_result1();
         recyclerView.setAdapter(adapter) ;
+
+        adapter.setItems(new SavedData_Sample().getItems());
 
 
         // 추천 게시물 리사이클러뷰 (리사이클러뷰 2)
         RecyclerView recyclerView2 = findViewById(R.id.recycler2_result);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView2.setLayoutManager(new GridLayoutManager(this,3));
+
 
         adapter_result2 adapter2 = new adapter_result2();
         recyclerView2.setAdapter(adapter2);
 
         //아이템 로드
-        adapter2.setItems(new SampleData().getItems());
+        adapter2.setItems(new RecommendData_Sample().getItems());
     }
 
 

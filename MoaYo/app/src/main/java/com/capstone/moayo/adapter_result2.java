@@ -10,27 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.capstone.moayo.model.Movie;
+import com.capstone.moayo.model.NewPost;
 
 import java.util.ArrayList;
 
 public class adapter_result2 extends RecyclerView.Adapter<adapter_result2.ViewHolder> {
 
-    private ArrayList<Movie> items = new ArrayList<>();
+    private ArrayList<NewPost> items = new ArrayList<>();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivMovie;
-        TextView tvTitle, tvContent, tvGenre;
+        ImageView newPost;
+
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            ivMovie = itemView.findViewById(R.id.iv_item_movie);
-
-            tvTitle = itemView.findViewById(R.id.tv_item_movie_title);
-            tvContent = itemView.findViewById(R.id.tv_item_movie_content);
-            tvGenre = itemView.findViewById(R.id.tv_item_movie_genre);
+            newPost = itemView.findViewById(R.id.newPost);
         }
     }
 
@@ -49,13 +45,9 @@ public class adapter_result2 extends RecyclerView.Adapter<adapter_result2.ViewHo
     @Override
     public void onBindViewHolder(@NonNull adapter_result2.ViewHolder vh, int position) {
 
-        Movie item = items.get(position);
+        NewPost item = items.get(position);
 
-        Glide.with(vh.itemView.getContext()).load(item.getUrl()).into(vh.ivMovie);
-
-        vh.tvTitle.setText(item.getTitle());
-        vh.tvContent.setText(item.getContent());
-        vh.tvGenre.setText(item.getGenre());
+        Glide.with(vh.itemView.getContext()).load(item.getUrl()).into(vh.newPost);
 
     }
 
@@ -65,7 +57,7 @@ public class adapter_result2 extends RecyclerView.Adapter<adapter_result2.ViewHo
         return items.size();
     }
 
-    public void setItems(ArrayList<Movie> items) {
+    public void setItems(ArrayList<NewPost> items) {
         this.items = items;
     }
 

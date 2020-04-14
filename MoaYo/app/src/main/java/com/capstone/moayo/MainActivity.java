@@ -1,12 +1,11 @@
 package com.capstone.moayo;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.ToolbarWidgetWrapper;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,11 +13,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.capstone.moayo.data.MyBookData_Sample;
+import com.capstone.moayo.data.RecommendData_Sample;
+import com.capstone.moayo.data.SharedData_Sample;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         TextView shareBook = (TextView) findViewById(R.id.shareBook);
         TextView myBook = (TextView) findViewById(R.id.myBook);
 
+        ImageButton myBookPlus = (ImageButton) findViewById(R.id.myBookPlus);
+        ImageButton shareBookPlus = (ImageButton) findViewById(R.id.shareBookPlus);
+
+        //메뉴 탭의 환결설정 버튼을 임시로 ResultActivity로 이동하는 버튼으로 설정함
+        TextView setting = (TextView) findViewById(R.id.setting);
+
         createBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,20 +63,57 @@ public class MainActivity extends AppCompatActivity {
         myBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "BookManageActivity", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "BookManageActivity로 이동함", Toast.LENGTH_LONG).show();
             }
         });
 
-        //ResultActivity로 이동하는 임시 버튼
-        Button temp = (Button) findViewById(R.id.tempButton);
 
-        temp.setOnClickListener(new View.OnClickListener() {
+        //ResultActivity로 이동하기 위한 임시 버튼
+        setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });
+
+        myBookPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "BookManageActivity로 이동함", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        shareBookPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "ShareMenuActivity로 이동함", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView = findViewById(R.id.recycler1_main);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
+
+        // 리사이클러뷰에 객체 지정.
+        adapter_main1 adapter = new adapter_main1();
+        recyclerView.setAdapter(adapter) ;
+
+        adapter.setItems(new MyBookData_Sample().getItems());
+
+
+        // 추천 게시물 리사이클러뷰 (리사이클러뷰 2)
+        RecyclerView recyclerView2 = findViewById(R.id.recycler2_main);
+        recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
+
+
+        adapter_main2 adapter2 = new adapter_main2();
+        recyclerView2.setAdapter(adapter2);
+
+        //아이템 로드
+        adapter2.setItems(new SharedData_Sample().getItems());
 
     }
 
@@ -100,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.moveMY:
                 // User chose the "Settings" item, show the app settings UI
-                Toast.makeText(getApplicationContext(), "나의 도감으로 이동함", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "BookManageActivity로 이동함", Toast.LENGTH_LONG).show();
                 return true;
 
 //            default:
