@@ -1,15 +1,18 @@
 package com.capstone.moayo;
 
-import android.content.Context;
+//import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
 import androidx.fragment.app.Fragment;
 
-public class PageFragment extends Fragment {
+public class PageFragment extends Fragment implements OnClickListener {
 
     private String[] book_info;
 
@@ -19,6 +22,7 @@ public class PageFragment extends Fragment {
         Bundle args = new Bundle();
         args.putStringArray("book", book);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -38,11 +42,22 @@ public class PageFragment extends Fragment {
             int bookID = getResources().getIdentifier("bookBtn" + i, "id", getContext().getPackageName());
             Button bookBtnView = (Button) rootView.findViewById(bookID);
             bookBtnView.setText(book_info[i-1]);
+            bookBtnView.setOnClickListener(this);
         }
 
-
-
         return rootView;
+    }
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+        startActivity(intent);
+//        switch (id){
+//            case R.id.simple_button:
+//                break;
+//            case R.id
+//        }
     }
 }
 

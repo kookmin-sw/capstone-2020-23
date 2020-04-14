@@ -23,12 +23,6 @@ public class BookManageActivity extends AppCompatActivity {
 
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Spinner
-        Spinner bookTypeSpinner = (Spinner)findViewById(R.id.bookManageSpinner);
-        ArrayAdapter bookTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.book_manage_spinner, android.R.layout.simple_spinner_dropdown_item);
-        bookTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bookTypeSpinner.setAdapter(bookTypeAdapter);
 
         //ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager) ;
