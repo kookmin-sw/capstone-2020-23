@@ -12,15 +12,17 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 public class PageFragment extends Fragment implements OnClickListener {
 
-    private String[] book_info;
+    private ArrayList<CategoryNode> book_list;
 
 
-    public static PageFragment create(String[] book) {
+    public static PageFragment create(ArrayList book) {
         PageFragment fragment = new PageFragment();
         Bundle args = new Bundle();
-        args.putStringArray("book", book);
+        args.putSerializable("key", book);
         fragment.setArguments(args);
 
         return fragment;
@@ -29,7 +31,8 @@ public class PageFragment extends Fragment implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        book_info = getArguments().getStringArray("book");
+        book_list= (ArrayList<CategoryNode>) getArguments().getSerializable("key");
+
     }
 
     @Override
@@ -38,10 +41,11 @@ public class PageFragment extends Fragment implements OnClickListener {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.page, container, false);
 
 
-        for(int i = 1; i <= book_info.length; ++i) {
+        for(int i = 1; i <= book_list.size(); ++i) {
             int bookID = getResources().getIdentifier("bookBtn" + i, "id", getContext().getPackageName());
             Button bookBtnView = (Button) rootView.findViewById(bookID);
-            bookBtnView.setText(book_info[i-1]);
+            bookBtnView.setText(book_list.get(i-1).title);
+
             bookBtnView.setOnClickListener(this);
         }
 
@@ -50,14 +54,10 @@ public class PageFragment extends Fragment implements OnClickListener {
     @Override
     public void onClick(View v) {
         int id = v.getId();
-
+    
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
         startActivity(intent);
-//        switch (id){
-//            case R.id.simple_button:
-//                break;
-//            case R.id
-//        }
+
     }
 }
 
