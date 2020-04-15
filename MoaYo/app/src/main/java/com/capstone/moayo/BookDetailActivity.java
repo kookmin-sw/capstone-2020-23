@@ -1,101 +1,77 @@
 package com.capstone.moayo;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.SimpleExpandableListAdapter;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BookDetailActivity extends AppCompatActivity{
+
+    private ArrayList<BookData> createData() {
+        ArrayList<BookData> book_list = new ArrayList<>();
+        BookData book = new BookData("상의");
+        book.addChild("후드/집업");
+        book.addChild("맨투맨");
+        book.addChild("니트");
+
+        book_list.add(book);
+
+        return book_list;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
 
-        // lvl 2
-        ArrayList<HashMap<String, String>> groupData = new ArrayList<>();
-        // lvl 3
-        ArrayList<ArrayList<HashMap<String, String>>> childData = new ArrayList<>();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("패션");
 
-        // lvl 2에 요소를 추가
-        HashMap<String, String> groupA = new HashMap<>();
-        groupA.put("group", "상의");
-        HashMap<String, String> groupB = new HashMap<>();
-        groupB.put("group", "하의");
+        ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
+        //create Data
+        myList.setAdapter(new ExpandableAdapter(this, createData()));
 
-        groupData.add(groupA);
-        groupData.add(groupB);
+        //listener for child click
+        myList.setOnChildClickListener(myListItemClicked);
+        //listener for group click
+        myList.setOnGroupClickListener(myListGroupClicked);
 
-        // lvl 3에 요소를 추가
-        ArrayList<HashMap<String, String>> childListA = new ArrayList<>();
-
-        HashMap<String, String> childAA = new HashMap<>();
-        childAA.put("group", "상의");
-        childAA.put("name", "티셔츠");
-        childListA.add(childAA);
-
-        HashMap<String, String> childAB = new HashMap<>();
-        childAB.put("group", "상의");
-        childAB.put("name", "맨투맨");
-        childListA.add(childAB);
-
-        HashMap<String, String> childAC = new HashMap<>();
-        childAC.put("group", "상의");
-        childAC.put("name", "니트");
-        childListA.add(childAC);
-
-        HashMap<String, String> childAD = new HashMap<>();
-        childAD.put("group", "상의");
-        childAD.put("name", "후드/집업");
-        childListA.add(childAD);
-
-        childData.add(childListA);
-
-        // 자식 리스트에 요소를 추가한다. (2)
-        ArrayList<HashMap<String, String>> childListB = new ArrayList<>();
-
-        HashMap<String, String> childBA = new HashMap<>();
-        childBA.put("group", "하의");
-        childBA.put("name", "데님");
-        childListB.add(childBA);
-
-        HashMap<String, String> childBB = new HashMap<>();
-        childBB.put("group", "하의");
-        childBB.put("name", "트레이닝");
-        childListB.add(childBB);
-
-        HashMap<String, String> childBC = new HashMap<>();
-        childBC.put("group", "하의");
-        childBC.put("name", "조거");
-        childListB.add(childBC);
-
-        HashMap<String, String> childBD = new HashMap<>();
-        childBD.put("group", "하의");
-        childBD.put("name", "슬랙스");
-        childListB.add(childBD);
-
-        HashMap<String, String> childBE = new HashMap<>();
-        childBE.put("group", "하의");
-        childBE.put("name", "코튼");
-        childListB.add(childBE);
-
-        childData.add(childListB);
-
-        // 부모 리스트와 자식 리스트를 포함한 Adapter를 생성
-        SimpleExpandableListAdapter adapter = new SimpleExpandableListAdapter(
-                this, groupData,
-                android.R.layout.simple_expandable_list_item_1,
-                new String[] {"group"}, new int[] { android.R.id.text1},
-                childData, android.R.layout.simple_expandable_list_item_2,
-                new String[] {"name", "group"}, new int[] {android.R.id.text1, android.R.id.text2});
-
-        // ExpandableListView에 Adapter를 설정
-        ExpandableListView listView
-                = (ExpandableListView) findViewById(R.id.expandableListView);
-        listView.setAdapter(adapter);
     }
+
+    //child listener
+    private OnChildClickListener myListItemClicked =  new OnChildClickListener() {
+
+        public boolean onChildClick(ExpandableListView parent, View v,
+                                    int groupPosition, int childPosition, long id) {
+
+            //get the group header
+//            HeaderInfo headerInfo = deptList.get(groupPosition);
+            //get the child info
+//            DetailInfo detailInfo =  headerInfo.getProductList().get(childPosition);
+            //display it or do something with it
+//            Toast.makeText(getBaseContext(), "Clicked on Detail " + headerInfo.getName()
+//                    + "/" + detailInfo.getName(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "on click child!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+    };
+
+    //group listener
+    private OnGroupClickListener myListGroupClicked =  new OnGroupClickListener() {
+
+        public boolean onGroupClick(ExpandableListView parent, View v,
+                                    int groupPosition, long id) {
+//            Toast.makeText(getBaseContext(), "on click group!", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
+    };
 }

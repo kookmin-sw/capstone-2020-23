@@ -4,10 +4,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.drm.DrmStore;
+//import android.drm.DrmStore;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+//import android.widget.ArrayAdapter;
+//import android.widget.Spinner;
 
 public class BookManageActivity extends AppCompatActivity {
     private ViewPager viewPager ;
