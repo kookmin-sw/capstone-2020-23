@@ -30,12 +30,14 @@ public class BookDetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
 
+        CategoryNode rootNode = (CategoryNode) getIntent().getSerializableExtra("categoryNode");
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("패션");
+        actionBar.setTitle(rootNode.title);
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
-        myList.setAdapter(new ExpandableAdapter(this, createData()));
+        myList.setAdapter(new ExpandableAdapter(this, rootNode.lowLayer));
 
         //listener for child click
         myList.setOnChildClickListener(myListItemClicked);

@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class ExpandableAdapter extends BaseExpandableListAdapter {
     Context mContext;
-    ArrayList<BookData> mBookData;
+    ArrayList<CategoryNode> mBookData;
 
-    public ExpandableAdapter(Context context, ArrayList<BookData> book) {
+    public ExpandableAdapter(Context context, ArrayList<CategoryNode> book) {
         mContext = context;
         mBookData = book;
     }
@@ -45,7 +45,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         TextView text = (TextView)view.findViewById(R.id.text1);
-        text.setText(mBookData.get(groupPosition).lowLayer.get(childPosition));
+        text.setText(mBookData.get(groupPosition).lowLayer.get(childPosition).title);
 
 //        TextView sub_text = (TextView)view.findViewById(R.id.text2);
 //        sub_text.setText(mBookData.get(groupPosition).title);
