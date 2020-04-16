@@ -16,6 +16,7 @@ public class DBHelper {
     private class DatabaseHelper extends SQLiteOpenHelper{
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE0);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE1);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._DOGAMCREATE);

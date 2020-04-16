@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                 categoryDao.selectByDogamId(mDBHelper,dogamDao.selectByTitle(mDBHelper,"NewDogam").getId());
 
+
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
