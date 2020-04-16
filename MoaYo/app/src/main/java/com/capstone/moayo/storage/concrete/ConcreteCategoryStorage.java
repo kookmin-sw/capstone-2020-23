@@ -75,7 +75,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
             foundCategory = new Category(dogamMapping.getTitle(), dogamMapping.getDesription(), dogamMapping.getPassword(), foundCategoryNode);
         } catch (DogamNullException | NullCategoryException e) {
-            e.toString();
+            Log.d("error in storage",e.toString());
         }
 
         return foundCategory;
@@ -86,18 +86,20 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         Category foundCategory = null;
         try {
             DogamMapping mapping = dogamDao.selectById(dbHelper, id);
+            Log.d("mapping", String.format("%d",mapping.getId()));
             if(mapping == null) {
                 throw new DogamNullException();
             }
             CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, id);
+            Log.d("node", foundNode.toString());
             if(foundNode == null) {
                 throw new NullCategoryException();
             }
             foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
-
+            Log.d("found category", foundCategory.toString());
             return foundCategory;
         } catch (DogamNullException | NullCategoryException e) {
-            e.toString();
+            Log.d("error in storage", e.toString());
         } finally {
             return foundCategory;
         }
@@ -108,7 +110,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         boolean c_result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword());
         if(c_result) {
             CategoryNode rootNode = category.getRootNode();
-            c_result = categoryDao.update(dbHelper, rootNode.getId(), rootNode.getLevel(), 0, rootNode.getTitle(), category.getId());
+            c_result = categoryDao.update(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), category.getId());
             if(c_result) {
                 for(CategoryNode secondNode : rootNode.getLowLayer()) {
                     c_result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), category.getId());
@@ -127,10 +129,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String remove(int id) {
-        boolean result = categoryDao.delete(dbHelper, id);
-        if(result)
-            return "success to delete";
-        else
-            return "fail to delete";
+        String result = (categoryDao.delete(dbHelper, id) && dogamDao.delete(dbHelper, id) ? "success to delete" : "fail to delete");
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.capstone.moayo.service.concrete;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
@@ -57,14 +58,15 @@ public class ConcreteCategoryService implements CategoryService {
     public CategoryDto findCategoryById(int id) {
         try {
             Category foundCategory = categoryStorage.retrieveById(id);
-            if(foundCategory == null) {
-                throw new Exception();
-            }
+            Log.d("이거 왜 안 되냐고!!", foundCategory.toString());
+//            if(foundCategory == null) {
+//                throw new Exception();
+//            }
 
             CategoryDto foundCategoryDto = foundCategory.toCategoryDto();
             return foundCategoryDto;
         } catch (Exception e) {
-            e.toString();
+            Log.d("error in service", e.toString());
         }
 
         return null;
@@ -80,14 +82,14 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String deleteCategory(int id) {
         String result = "";
-        try {
-            Category foundCategory = categoryStorage.retrieveById(id);
-            if(foundCategory == null)
-                throw new NullCategoryException();
+//        try {
+//            Category foundCategory = categoryStorage.retrieveById(id);
+//            if(foundCategory == null)
+//                throw new NullCategoryException();
             result = categoryStorage.remove(id);
-        } catch (NullCategoryException e) {
-            e.toString();
-        }
+//        } catch (NullCategoryException e) {
+//            Log.d("error in service",e.toString());
+//        }
 
         return result;
     }

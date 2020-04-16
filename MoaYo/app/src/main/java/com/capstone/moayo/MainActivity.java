@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button requestDataBtn;
     private Button DBButton;
     private Button findBtn;
+    private Button deleteBtn;
 
     private CategoryService categoryService;
     private DataBindingService dataBindingService;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         DBButton = findViewById(R.id.DB);
         Button DBDel = findViewById(R.id.DBdel);
         findBtn = findViewById(R.id.findBtn);
+        deleteBtn = findViewById(R.id.deleteBtn);
 
         DBHelper mDBHelper = storageFactory.initDao(this);
 
@@ -107,10 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
         findBtn.setOnClickListener(v -> {
             try {
-                DogamDao dogamDao = DogamDaoImpl.getInstance();
-                dogamDao.delete(mDBHelper,1);
                 CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
                 Log.d("found category", category.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteBtn.setOnClickListener(v -> {
+            try {
+                String result = categoryService.deleteCategory(2);
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
