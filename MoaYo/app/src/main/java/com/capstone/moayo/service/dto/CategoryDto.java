@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDto {
+    private int id;
     private String title;
     private String description;
     private String password;
@@ -25,6 +26,14 @@ public class CategoryDto {
     public Category toCategory() {
         Category category = new Category(title, description, password, rootNode.toCategoryNode());
         return category;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -65,5 +74,14 @@ public class CategoryDto {
 
     public void setRootNode(CategoryNodeDto rootNode) {
         this.rootNode = rootNode;
+    }
+
+    public String toString() {
+        String result = String.format("{\"title\" : \"%s\"," +
+                                " \"description\" : \"%s\"," +
+                                " \"password\" : \"%s\"," +
+                                " \"rootNode\" : \"%s\"}", title, description, password, rootNode.toString());
+
+        return result;
     }
 }

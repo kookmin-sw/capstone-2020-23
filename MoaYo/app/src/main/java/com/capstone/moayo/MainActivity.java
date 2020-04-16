@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button createBtn;
     private Button requestDataBtn;
     private Button DBButton;
+    private Button findBtn;
 
     private CategoryService categoryService;
     private DataBindingService dataBindingService;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         requestDataBtn = findViewById(R.id.dataBtn);
         DBButton = findViewById(R.id.DB);
         Button DBDel = findViewById(R.id.DBdel);
+        findBtn = findViewById(R.id.findBtn);
 
         DBHelper mDBHelper = storageFactory.initDao(this);
 
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         createBtn.setOnClickListener(v -> {
             try {
                 CategoryNodeDto category = createCategory();
-                CategoryDto categoryDto = new CategoryDto("first category", "this is sample category", "1234", category);
+                CategoryDto categoryDto = new CategoryDto("sample dogam", "this is sample category", "1234", category);
                 String result = categoryService.createCategory(categoryDto);
 
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
@@ -100,6 +102,15 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        });
+
+        findBtn.setOnClickListener(v -> {
+            try {
+                CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
+                Log.d("found category", category.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
 //        requestDataBtn.setOnClickListener(v -> {

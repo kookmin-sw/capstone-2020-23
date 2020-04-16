@@ -65,4 +65,17 @@ public class CategoryNodeDto {
         this.level = level;
     }
 
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{\"title\" : ").append("\"").append(title).append("\"").append(",").
+                append("\"level\" : ").append("\"").append(level).append("\"").append(",").
+                append("\"lowLayer\" : [");
+        for(CategoryNodeDto lowNode : lowLayer) {
+            buffer.append(lowNode.toString());
+        }
+        buffer.append("]}");
+
+        return buffer.toString();
+    }
+
 }

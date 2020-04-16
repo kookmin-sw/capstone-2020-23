@@ -34,4 +34,10 @@
         android:layout_height="wrap_content"
         android:text="DBDELETE" />
 
+    <Button
+        android:id="@+id/findBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="find" />
+
 </LinearLayout>

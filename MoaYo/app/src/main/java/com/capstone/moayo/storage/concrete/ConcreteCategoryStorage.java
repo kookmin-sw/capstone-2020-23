@@ -16,6 +16,8 @@ import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
+import com.capstone.moayo.util.Exception.DogamNullException;
+import com.capstone.moayo.util.Exception.NullCategoryException;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -42,13 +44,16 @@ public class ConcreteCategoryStorage implements CategoryStorage {
     @Override
     public String create(Category category) {
         //Insert Category Info using dogamDao in DogamTable
-        dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword());
+        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword());
         CategoryNode rootNode = category.getRootNode();
-        categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), category.getId());
+        //insert 1th layer
+        int rootId = (int) categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId);
+        //insert 2nd layer
         for(CategoryNode secondNode : rootNode.getLowLayer()) {
-            categoryDao.insert(dbHelper, secondNode.getLevel(), secondNode.getParent().getId(), secondNode.getTitle(), category.getId());
+            int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId);
+            //insery 3rd layer
             for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                categoryDao.insert(dbHelper, thirdNode.getLevel(), thirdNode.getParent().getId(),thirdNode.getTitle(), category.getId());
+                categoryDao.insert(dbHelper, thirdNode.getLevel(), secondId,thirdNode.getTitle(), dogamId);
             }
         }
         Log.d("Category", category.toString());
@@ -56,16 +61,45 @@ public class ConcreteCategoryStorage implements CategoryStorage {
     }
 
     @Override
-    public List<Category> retrieveByTitle(String title) {
-        return null;
+    public Category retrieveByTitle(String title) {
+        Category foundCategory = null;
+        try {
+            DogamMapping dogamMapping = dogamDao.selectByTitle(dbHelper, title);
+            if(dogamMapping == null)
+                throw new DogamNullException();
+
+            CategoryNode foundCategoryNode = categoryDao.selectByDogamId(dbHelper, dogamMapping.getId());
+            if(foundCategoryNode == null)
+                throw new NullCategoryException();
+
+            foundCategory = new Category(dogamMapping.getTitle(), dogamMapping.getDesription(), dogamMapping.getPassword(), foundCategoryNode);
+        } catch (DogamNullException | NullCategoryException e) {
+            e.toString();
+        }
+
+        return foundCategory;
     }
 
     @Override
     public Category retrieveById(int id) {
-        DogamMapping mapping = dogamDao.selectById(dbHelper, id);
-        CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, id);
-        Category foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
-        return foundCategory;
+        Category foundCategory = null;
+        try {
+            DogamMapping mapping = dogamDao.selectById(dbHelper, id);
+            if(mapping == null) {
+                throw new DogamNullException();
+            }
+            CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, id);
+            if(foundNode == null) {
+                throw new NullCategoryException();
+            }
+            foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
+
+            return foundCategory;
+        } catch (DogamNullException | NullCategoryException e) {
+            e.toString();
+        } finally {
+            return foundCategory;
+        }
     }
 
     @Override

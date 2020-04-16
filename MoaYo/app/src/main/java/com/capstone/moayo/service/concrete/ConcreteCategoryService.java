@@ -13,6 +13,7 @@ import com.capstone.moayo.storage.ContentStorage;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.Exception.NotRootException;
+import com.capstone.moayo.util.Exception.NullCategoryException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,29 +36,59 @@ public class ConcreteCategoryService implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> findCategoryByTitle(String title) {
-        List<Category> foundNodeList = categoryStorage.retrieveByTitle(title);
-        List<CategoryDto> categoryDtoList = new ArrayList<>();
+    public CategoryDto findCategoryByTitle(String title) {
+        CategoryDto foundCategoryDto = null;
+        try {
+            Category foundCategory = categoryStorage.retrieveByTitle(title);
+            if(foundCategory == null)
+                throw new NullCategoryException();
 
-        for(Category foundCategory : foundNodeList) {
-            categoryDtoList.add(foundCategory.toCategoryDto());
+            foundCategoryDto = foundCategory.toCategoryDto();
+
+        } catch (NullCategoryException e) {
+            e.toString();
         }
 
-        return categoryDtoList;
+
+        return foundCategoryDto;
     }
 
     @Override
-    public Category findCategoryById(int id) {
+    public CategoryDto findCategoryById(int id) {
+        try {
+            Category foundCategory = categoryStorage.retrieveById(id);
+            if(foundCategory == null) {
+                throw new Exception();
+            }
+
+            CategoryDto foundCategoryDto = foundCategory.toCategoryDto();
+            return foundCategoryDto;
+        } catch (Exception e) {
+            e.toString();
+        }
+
         return null;
     }
 
     @Override
-    public String modifyCategory(CategoryNodeDto categoryNodeDto) {
+    public String modifyCategory(CategoryDto categoryDto) {
+        Category modifyCategory = categoryDto.toCategory();
+
         return null;
     }
 
     @Override
     public String deleteCategory(int id) {
-        return null;
+        String result = "";
+        try {
+            Category foundCategory = categoryStorage.retrieveById(id);
+            if(foundCategory == null)
+                throw new NullCategoryException();
+            result = categoryStorage.remove(id);
+        } catch (NullCategoryException e) {
+            e.toString();
+        }
+
+        return result;
     }
 }
