@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                 categoryDao.selectByDogamId(mDBHelper,dogamDao.selectByTitle(mDBHelper,"NewDogam").getId());
 
+
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -106,8 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
         findBtn.setOnClickListener(v -> {
             try {
-                CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
-                Log.d("found category", category.toString());
+                DogamDao dogamDao = DogamDaoImpl.getInstance();
+                dogamDao.delete(mDBHelper,1);
+//                CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
+//                Log.d("found category", category.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }

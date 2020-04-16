@@ -5,6 +5,8 @@ import android.provider.BaseColumns;
 public final class StorageInfo{
     public static final class CreateStorage implements BaseColumns{
         // tb_category
+        public static final String FOREIGNKEY_ON = "PRAGMA foreign_keys = ON;";
+
         public static final String CATEGORYID = "co_id";
         public static final String CATEGORYTITLE = "co_title";
         public static final String CATEGORYPARENT = "co_parent";
@@ -17,7 +19,7 @@ public final class StorageInfo{
                 CATEGORYPARENT + " integer, "+
                 CATEGORYLEVEL + " integer not null ,"+
                 CATEGORYDOGAMID + " integer not null," +
-                "constraint fk_dogamId foreign key(co_dogamId) references tb_dogamlist(co_id));";
+                "constraint fk_dogamId foreign key(co_dogamId) references tb_dogamlist(co_id) ON DELETE CASCADE );";
 
         // tb_content
         public static final String CID = "co_id";
@@ -36,7 +38,7 @@ public final class StorageInfo{
                 IMGURL + " text, " +
                 INFO + " text, " +
                 HASHTAG + " text, " +
-                "constraint fk_parent foreign key(co_parent) references tb_category(co_id));";
+                "constraint fk_parent foreign key(co_parent) references tb_category(co_id) ON DELETE CASCADE );";
 
         // tb_dogamlist
         public static final String DOGAMID = "co_id";

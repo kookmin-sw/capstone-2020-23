@@ -52,6 +52,7 @@ public class DogamDaoImpl implements DogamDao {
     @Override
     public boolean delete(DBHelper dbHelper, int id) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
+        mDB.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
         boolean result = mDB.delete(StorageInfo.CreateStorage._DOGAMTABLENAME,"co_id="+id,null) > 0;
         mDB.close();
         return result;
