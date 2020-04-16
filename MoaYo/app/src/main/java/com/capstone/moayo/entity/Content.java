@@ -8,7 +8,7 @@ public class Content {
     private String info;
     private String hashtag;
     private int like;
-    private String categoryInfo;
+    private int categoryNodeId;
 
     public Content(String url, String info, String hashtag, int like) {
         this.url = url;
@@ -19,17 +19,10 @@ public class Content {
 
     public ContentDto toContentDto() {
         ContentDto contentDto = new ContentDto(url, info, hashtag, like);
-        contentDto.setCategoryInfo(categoryInfo);
+
         return contentDto;
     }
 
-    public void setCategoryInfo(String categoryInfo) {
-        this.categoryInfo = categoryInfo;
-    }
-
-    public String getCategoryInfo() {
-        return categoryInfo;
-    }
 
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
@@ -61,5 +54,13 @@ public class Content {
 
     public String getUrl() {
         return url;
+    }
+
+    public int getCategoryNodeId() {
+        return categoryNodeId;
+    }
+
+    public void setCategoryNodeId(int categoryNodeId) {
+        this.categoryNodeId = categoryNodeId;
     }
 }
