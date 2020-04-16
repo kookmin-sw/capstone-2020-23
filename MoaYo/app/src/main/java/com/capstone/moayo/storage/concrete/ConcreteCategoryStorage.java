@@ -48,6 +48,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         CategoryNode rootNode = category.getRootNode();
         //insert 1th layer
         int rootId = (int) categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId);
+        categoryDao.update(dbHelper,rootId,rootNode.getLevel(),rootId,rootNode.getTitle(),dogamId);
         //insert 2nd layer
         for(CategoryNode secondNode : rootNode.getLowLayer()) {
             int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId);

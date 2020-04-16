@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 DogamDao dogamDao = DogamDaoImpl.getInstance();
                 dogamDao.delete(mDBHelper,1);
-//                CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
-//                Log.d("found category", category.toString());
+                CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
+                Log.d("found category", category.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
