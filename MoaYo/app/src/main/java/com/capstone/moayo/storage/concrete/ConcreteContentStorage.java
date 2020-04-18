@@ -2,8 +2,7 @@ package com.capstone.moayo.storage.concrete;
 
 import android.content.Context;
 
-import com.capstone.moayo.service.dto.ContentDto;
-import com.capstone.moayo.storage.CategoryStorage;
+import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.storage.ContentStorage;
 
 import java.util.List;
@@ -15,17 +14,17 @@ public class ConcreteContentStorage implements ContentStorage {
     }
 
     @Override
-    public List<ContentDto> findContentByNodeId() {
+    public List<PostDto> findContentByNodeId() {
         return null;
     }
 
     @Override
-    public List<ContentDto> findContentByDogamId() {
+    public List<PostDto> findContentByDogamId() {
         return null;
     }
 
     @Override
-    public ContentDto findContentById() {
+    public PostDto findContentById() {
         return null;
     }
 

@@ -3,7 +3,6 @@ package com.capstone.moayo.storage.concrete;
 import android.content.Context;
 import android.util.Log;
 
-import com.capstone.moayo.MainActivity;
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
@@ -12,19 +11,10 @@ import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
-import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.storage.CategoryStorage;
-import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
 import com.capstone.moayo.util.Exception.DogamNullException;
 import com.capstone.moayo.util.Exception.NullCategoryException;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 
 public class ConcreteCategoryStorage implements CategoryStorage {
     private CategoryDao categoryDao;
@@ -90,19 +80,17 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             if(mapping == null) {
                 throw new DogamNullException();
             }
-            CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, id);
-            Log.d("node", foundNode.toString());
+            CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, mapping.getId());
             if(foundNode == null) {
                 throw new NullCategoryException();
             }
             foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
             Log.d("found category", foundCategory.toString());
-            return foundCategory;
         } catch (DogamNullException | NullCategoryException e) {
             Log.d("error in storage", e.toString());
-        } finally {
-            return foundCategory;
         }
+
+        return foundCategory;
     }
 
     @Override
@@ -129,7 +117,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String remove(int id) {
-        String result = (categoryDao.delete(dbHelper, id) && dogamDao.delete(dbHelper, id) ? "success to delete" : "fail to delete");
+        String result = dogamDao.delete(dbHelper, id) ? "success to delete" : "fail to delete";
         return result;
     }
 }

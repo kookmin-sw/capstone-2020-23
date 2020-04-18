@@ -3,17 +3,13 @@ package com.capstone.moayo.service.concrete;
 import android.content.Context;
 
 import com.capstone.moayo.entity.Category;
-import com.capstone.moayo.entity.CategoryNode;
-import com.capstone.moayo.entity.Content;
+import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.DataBindingStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConcreteDataBindingService implements DataBindingService {
@@ -24,7 +20,7 @@ public class ConcreteDataBindingService implements DataBindingService {
     }
 
     @Override
-    public List<Content> requestData(Category category) {
+    public List<Post> requestData(Category category) {
         JSONObject stream = new JSONObject();
 
 

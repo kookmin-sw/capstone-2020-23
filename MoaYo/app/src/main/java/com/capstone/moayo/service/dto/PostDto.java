@@ -1,24 +1,25 @@
 package com.capstone.moayo.service.dto;
 
-import com.capstone.moayo.entity.Content;
+import com.capstone.moayo.entity.Post;
 
-public class ContentDto {
+public class PostDto {
     private String url;
     private String info;
     private String hashtag;
     private int like;
-    private String categoryInfo;
+    private int categoryNodeId;
 
-    public ContentDto(String url, String info, String hashtag, int like) {
+    public PostDto(String url, String info, String hashtag, int like) {
         this.url = url;
         this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
-    public Content toContent() {
-        Content content = new Content(url, info, hashtag, like);
-        content.setCategoryInfo(categoryInfo);
+    public Post toContent() {
+        Post content = new Post(url, info, hashtag, like);
+        content.setCategoryNodeId(categoryNodeId);
+
 
         return content;
     }
@@ -55,11 +56,11 @@ public class ContentDto {
         this.like = like;
     }
 
-    public String getCategoryInfo() {
-        return categoryInfo;
+    public int getCategoryNodeId() {
+        return categoryNodeId;
     }
 
-    public void setCategoryInfo(String categoryInfo) {
-        this.categoryInfo = categoryInfo;
+    public void setCategoryNodeId(int categoryNodeId) {
+        this.categoryNodeId = categoryNodeId;
     }
 }

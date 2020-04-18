@@ -8,7 +8,6 @@ import com.capstone.moayo.dao.ContentDao;
 import com.capstone.moayo.dao.mapping.ContentMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
-import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
 
 public class ContentDaoImpl implements ContentDao {

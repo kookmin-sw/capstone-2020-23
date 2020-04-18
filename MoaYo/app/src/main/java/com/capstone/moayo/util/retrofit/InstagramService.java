@@ -1,6 +1,6 @@
 package com.capstone.moayo.util.retrofit;
 
-import com.capstone.moayo.entity.Content;
+import com.capstone.moayo.entity.Post;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ public interface InstagramService {
     Call<List<String>> listResult(@Path("querys") String querys);
 
     @POST("/api/v1/crawl")
-    Call<List<Content>> listContents();
+    Call<List<Post>> listContents();
 
 }

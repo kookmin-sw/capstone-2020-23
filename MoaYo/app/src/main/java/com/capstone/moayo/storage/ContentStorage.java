@@ -1,14 +1,14 @@
 package com.capstone.moayo.storage;
 
-import com.capstone.moayo.service.dto.ContentDto;
+import com.capstone.moayo.service.dto.PostDto;
 
 import java.util.List;
 
 public interface ContentStorage {
     public String createContent();
-    public List<ContentDto> findContentByNodeId();
-    public List<ContentDto> findContentByDogamId();
-    public ContentDto findContentById();
+    public List<PostDto> findContentByNodeId();
+    public List<PostDto> findContentByDogamId();
+    public PostDto findContentById();
     public void modifyContent();
     public void removeContent();
 }

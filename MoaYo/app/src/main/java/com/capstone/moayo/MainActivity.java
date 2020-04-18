@@ -3,7 +3,6 @@ package com.capstone.moayo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,26 +10,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.capstone.moayo.dao.CategoryDao;
-import com.capstone.moayo.dao.ContentDao;
 import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
-import com.capstone.moayo.dao.concrete.ContentDaoImpl;
 import com.capstone.moayo.dao.concrete.DogamDaoImpl;
 import com.capstone.moayo.dao.sqlite.DBHelper;
-import com.capstone.moayo.entity.Category;
-import com.capstone.moayo.entity.CategoryNode;
-import com.capstone.moayo.entity.Content;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
-import com.capstone.moayo.util.Exception.NotRootException;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
 import com.capstone.moayo.util.Tag.RequestHttpConnection;
-import com.google.gson.Gson;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -141,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         });
         createBtn.setOnClickListener(v -> {
             try {
+                mDBHelper.upgrade(mDBHelper.getWritableDB());
                 CategoryNodeDto category = createCategory();
                 CategoryDto categoryDto = new CategoryDto("sample dogam", "this is sample category", "1234", category);
                 String result = categoryService.createCategory(categoryDto);
@@ -154,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
         findBtn.setOnClickListener(v -> {
             try {
-                CategoryDto category = categoryService.findCategoryByTitle("sample dogam");
+
+                CategoryDto category = categoryService.findCategoryById(1);
                 Log.d("found category", category.toString());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -163,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         deleteBtn.setOnClickListener(v -> {
             try {
-                String result = categoryService.deleteCategory(8);
+                String result = categoryService.deleteCategory(1);
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();

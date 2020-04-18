@@ -3,9 +3,8 @@ package com.capstone.moayo.storage.concrete;
 import android.content.Context;
 import android.util.Log;
 
-import com.capstone.moayo.entity.Content;
+import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.storage.DataBindingStorage;
-import com.capstone.moayo.util.retrofit.APIUtils;
 import com.capstone.moayo.util.retrofit.InstagramService;
 
 import org.json.JSONObject;
@@ -21,9 +20,9 @@ public class ConcreteDataBindingStorage implements DataBindingStorage {
     }
 
     @Override
-    public List<Content> request(JSONObject dogam) {
+    public List<Post> request(JSONObject dogam) {
 
-        List<Content> contents = new ArrayList<>();
+        List<Post> contents = new ArrayList<>();
         
         Log.d("dogam info", dogam.toString());
         return null;

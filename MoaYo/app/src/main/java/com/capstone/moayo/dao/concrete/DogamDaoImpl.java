@@ -61,13 +61,14 @@ public class DogamDaoImpl implements DogamDao {
     @Override
     public DogamMapping selectById(DBHelper dbHelper, int id) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
-        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOGAMTABLENAME +" where co_id="+id+";",null);
-
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOGAMTABLENAME +" where co_id='"+id+"';",null);
+        c.moveToFirst();
         DogamMapping dm = new DogamMapping();
         dm.setId(c.getInt(0));
         dm.setTitle(c.getString(1));
         dm.setDesription(c.getString(2));
         dm.setPassword(c.getString(3));
+        c.close();
         mDB.close();
 
         return dm;

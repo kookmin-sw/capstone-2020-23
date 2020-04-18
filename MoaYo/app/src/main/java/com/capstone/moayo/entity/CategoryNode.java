@@ -1,23 +1,25 @@
 package com.capstone.moayo.entity;
 
 import com.capstone.moayo.service.dto.CategoryNodeDto;
-import com.capstone.moayo.service.dto.ContentDto;
-import com.capstone.moayo.util.Exception.NotRootException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryNode {
     private int id;
     private String title;
+    private int level;
+    private List<String> hashtags;
+
     private CategoryNode parent;
     private List<CategoryNode> lowLayer;
-    private int level;
-
+    private List<Post> posts;
 
     public CategoryNode() {
         this.id = 0;
+        hashtags = new ArrayList<>();
+        lowLayer = new ArrayList<>();
+        posts = new ArrayList<>();
     }
 
     public CategoryNode(String title, CategoryNode parent, int level) {
@@ -25,17 +27,20 @@ public class CategoryNode {
         this.title = title;
         this.parent = parent;
         this.level = level;
-
-        lowLayer = new ArrayList<CategoryNode>();
     }
 
     public CategoryNodeDto toCategoryNodeDto() {
         CategoryNodeDto rootNode = new CategoryNodeDto(title, null, level);
+        rootNode.setId(id);
         for(CategoryNode secondNode : lowLayer) {
             CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
+            secondNodeDto.setId(secondNode.getId());
             for(CategoryNode thirdNode : secondNode.getLowLayer()) {
                 CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
+                thirdNodeDto.setId(thirdNode.getId());
+                secondNodeDto.getLowLayer().add(thirdNodeDto);
             }
+            rootNode.getLowLayer().add(secondNodeDto);
         }
 
         return rootNode;
@@ -51,6 +56,14 @@ public class CategoryNode {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public List<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(List<String> hashtags) {
+        this.hashtags = hashtags;
     }
 
     public List<CategoryNode> getLowLayer() {
@@ -82,6 +95,14 @@ public class CategoryNode {
 
     public String getTitle() {
         return title;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public String toString() {

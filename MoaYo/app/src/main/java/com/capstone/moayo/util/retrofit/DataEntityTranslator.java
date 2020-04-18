@@ -3,8 +3,10 @@ package com.capstone.moayo.util.retrofit;
 import android.database.Cursor;
 import android.util.Pair;
 
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -37,5 +39,49 @@ public class DataEntityTranslator {
                 root = p.second;
         }
         return root;
+    }
+
+    public CategoryNode cursorToNode(Cursor c) {
+        CategoryNode rootNode = null;
+        List<Pair<Integer, CategoryNode>> second_layer = new ArrayList<>();
+        List<Pair<Integer, CategoryNode>> third_layer = new ArrayList<>();
+        while(c.moveToNext()) {
+            CategoryNode node = new CategoryNode();
+            node.setId(c.getInt(0));
+            node.setTitle(c.getString(1));
+            node.setLevel(c.getInt(3));
+            Pair<Integer, CategoryNode> pair = new Pair<>(c.getInt(2), node);
+            switch (node.getLevel()) {
+                case 1:
+                    rootNode = node;
+                    break;
+                case 2:
+                    second_layer.add(pair);
+                    break;
+                case 3:
+                    third_layer.add(pair);
+                    break;
+                default:
+                    break;
+            }
+        }
+        c.close();
+        for(Pair<Integer, CategoryNode> second_pair : second_layer) {
+            CategoryNode secondNode = second_pair.second;
+            if(second_pair.first.equals(rootNode.getId())) {
+                rootNode.getLowLayer().add(secondNode);
+                secondNode.setParent(rootNode);
+                second_layer.remove(second_pair);
+            }
+            for(Pair<Integer, CategoryNode> third_pair : third_layer) {
+                CategoryNode thirdNode = third_pair.second;
+                if(third_pair.first.equals(secondNode.getId())) {
+                    secondNode.getLowLayer().add(thirdNode);
+                    thirdNode.setParent(secondNode);
+                    third_layer.remove(third_pair);
+                }
+            }
+        }
+        return rootNode;
     }
 }

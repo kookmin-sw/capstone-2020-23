@@ -2,28 +2,22 @@ package com.capstone.moayo.service.concrete;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.capstone.moayo.entity.Category;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.dto.CategoryDto;
-import com.capstone.moayo.service.dto.CategoryNodeDto;
-import com.capstone.moayo.service.dto.ContentDto;
 import com.capstone.moayo.storage.CategoryStorage;
-import com.capstone.moayo.storage.ContentStorage;
-import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
-import com.capstone.moayo.util.Exception.NotRootException;
 import com.capstone.moayo.util.Exception.NullCategoryException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
+    private Context applicationContext;
 
     public ConcreteCategoryService(Context context) {
         this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage(context);
+        applicationContext = context;
     }
 
     @Override
@@ -56,20 +50,19 @@ public class ConcreteCategoryService implements CategoryService {
 
     @Override
     public CategoryDto findCategoryById(int id) {
+        CategoryDto foundCategoryDto = null;
         try {
             Category foundCategory = categoryStorage.retrieveById(id);
-            Log.d("이거 왜 안 되냐고!!", foundCategory.toString());
-//            if(foundCategory == null) {
-//                throw new Exception();
-//            }
+            if(foundCategory == null) {
+                throw new NullCategoryException();
+            }
 
-            CategoryDto foundCategoryDto = foundCategory.toCategoryDto();
-            return foundCategoryDto;
-        } catch (Exception e) {
+            foundCategoryDto = foundCategory.toCategoryDto();
+        } catch (NullCategoryException e) {
             Log.d("error in service", e.toString());
         }
 
-        return null;
+        return foundCategoryDto;
     }
 
     @Override
@@ -82,14 +75,14 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String deleteCategory(int id) {
         String result = "";
-//        try {
-//            Category foundCategory = categoryStorage.retrieveById(id);
-//            if(foundCategory == null)
-//                throw new NullCategoryException();
+        try {
+            Category foundCategory = categoryStorage.retrieveById(id);
+            if(foundCategory == null)
+                throw new NullCategoryException();
             result = categoryStorage.remove(id);
-//        } catch (NullCategoryException e) {
-//            Log.d("error in service",e.toString());
-//        }
+        } catch (NullCategoryException e) {
+            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
         return result;
     }
