@@ -24,6 +24,7 @@
 
         <activity android:name=".BookManageActivity" android:parentActivityName=".MainActivity"/>
         <activity android:name=".BookDetailActivity" android:parentActivityName=".BookManageActivity"/>
+        <activity android:name=".BookFormActivity" android:parentActivityName=".MainActivity"/>
 
     </application>
 
