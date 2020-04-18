@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         deleteBtn.setOnClickListener(v -> {
             try {
-                String result = categoryService.deleteCategory(2);
+                String result = categoryService.deleteCategory(8);
                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
