@@ -18,4 +18,10 @@
 <!--        android:title="항목2"-->
 <!--        app:showAsAction="never"/>-->
 
+<!--    <item-->
+<!--        android:id="@+id/action_btn1"-->
+
+<!--        android:title="버튼1"-->
+<!--        app:showAsAction="always" />-->
+
 </menu>

@@ -10,26 +10,6 @@
 
 <!--    &lt;!&ndash;기존의 App Bar를 없애고 커스터마이징을 위해 Tool Bar설치&ndash;&gt;-->
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/mainToolBar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:background="@color/colorPrimary"-->
-<!--        android:theme="?attr/actionBarTheme">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/appName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@string/app_name"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--    </androidx.appcompat.widget.Toolbar>-->
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -197,3 +177,4 @@
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
+
