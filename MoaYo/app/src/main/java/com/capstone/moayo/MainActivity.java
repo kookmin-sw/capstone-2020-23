@@ -1,32 +1,26 @@
 package com.capstone.moayo;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.ContentValues;
-import android.os.AsyncTask;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.moayo.dao.CategoryDao;
-import com.capstone.moayo.dao.DogamDao;
-import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
-import com.capstone.moayo.dao.concrete.DogamDaoImpl;
-import com.capstone.moayo.dao.sqlite.DBHelper;
-import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.service.DataBindingService;
-import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
-import com.capstone.moayo.service.dto.CategoryDto;
-import com.capstone.moayo.service.dto.CategoryNodeDto;
-import com.capstone.moayo.storage.StorageFactory;
-import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
-import com.capstone.moayo.util.Exception.DaoObjectNullException;
-import com.capstone.moayo.util.Tag.RequestHttpConnection;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import com.capstone.moayo.Adapter.adapter_main1;
+import com.capstone.moayo.Adapter.adapter_main2;
+//import com.capstone.moayo.R;
+import com.capstone.moayo.data.MyBookData_Sample;
+import com.capstone.moayo.data.SharedData_Sample;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn;
@@ -44,142 +38,144 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        //리소스 파일에서 추가한 툴바를 앱바로 지정하기
+//        Toolbar mainToolBar = (Toolbar) findViewById(R.id.mainToolBar);
+//        setSupportActionBar(mainToolBar);
+//
+//        getSupportActionBar().setTitle(""); //앱바에서 제목을 없애고 activity_main.xml에서 설정한 제목이 뜨게 설정
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(R.layout.logo);
 
-        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-        dataBindingService = ServiceFactoryCreator.getInstance().requestDataBindingService(getApplicationContext());
-        storageFactory = StorageFactoryCreator.getInstance();
+        TextView createBook = (TextView) findViewById(R.id.createBook);
+        TextView shareBook = (TextView) findViewById(R.id.shareBook);
+        TextView myBook = (TextView) findViewById(R.id.myBook);
 
-        createBtn = findViewById(R.id.createBtn);
-        requestDataBtn = findViewById(R.id.dataBtn);
-        DBButton = findViewById(R.id.DB);
-        Button DBDel = findViewById(R.id.DBdel);
-        findBtn = findViewById(R.id.findBtn);
-        deleteBtn = findViewById(R.id.deleteBtn);
-        getTagBtn = findViewById(R.id.GetTag);
+        ImageButton myBookPlus = (ImageButton) findViewById(R.id.myBookPlus);
+        ImageButton shareBookPlus = (ImageButton) findViewById(R.id.shareBookPlus);
 
-        DBHelper mDBHelper = storageFactory.initDao(this);
+        //메뉴 탭의 환결설정 버튼을 임시로 ResultActivity로 이동하는 버튼으로 설정함
+        TextView setting = (TextView) findViewById(R.id.setting);
 
-        getTagBtn.setOnClickListener(v->{
-            // OOTD 대신 다른 태그 넣어서 확인해봐. 아직 한글은 안해봄, print로 출력하니 run에서 확인할 것.
-            String url = "https://www.tagsfinder.com/ko-kr/related/OOTD";
-            class NetworkTask extends AsyncTask<Void, Void, String> {
-
-                private String url;
-                private ContentValues values;
-
-                public NetworkTask(String url, ContentValues values) {
-
-                    this.url = url;
-                    this.values = values;
-                }
-
-                @Override
-                protected String doInBackground(Void... params) {
-
-                    String result; // 요청 결과를 저장할 변수.
-                    RequestHttpConnection requestHttpURLConnection = new RequestHttpConnection();
-                    result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
-
-                    return result;
-                }
-
-                @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-                    Document document = Jsoup.parse(s);
-                    Element result = document.getElementById("hashtagy");
-                    System.out.println(result);
-                }
-            }
-            NetworkTask networkTask = new NetworkTask(url,null);
-            networkTask.execute();
-        });
-
-        DBDel.setOnClickListener(v->{
-            try {
-                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
-//                if(categoryDao.delete(mDBHelper,1)){
-//                    Toast.makeText(this,"True",Toast.LENGTH_SHORT).show();
-//                }
-//                categoryDao.selectAll(mDBHelper);
-            }catch(DaoObjectNullException e){
-                    System.out.print("");
-            }
-        });
-        DBButton.setOnClickListener(v->{
-            try{
-
-                CategoryDao categoryDao = CategoryDaoImpl.getInstance();
-                DogamDao dogamDao = DogamDaoImpl.getInstance();
-                mDBHelper.upgrade(mDBHelper.getWritableDB());
-                Toast.makeText(this,String.valueOf(dogamDao.insert(mDBHelper,"NewDogam","This is new Dogam",null)),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,1,1,"패션",1)),Toast.LENGTH_SHORT).show();
-
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,2,1,"상의",1)),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,2,1,"하의",1)),Toast.LENGTH_SHORT).show();
-
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,2,"아우터",1)),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,2,"조끼",1)),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,3,"청바지",1)),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,String.valueOf(categoryDao.insert(mDBHelper,3,3,"슬렉",1)),Toast.LENGTH_SHORT).show();
-
-                categoryDao.selectByDogamId(mDBHelper,dogamDao.selectByTitle(mDBHelper,"NewDogam").getId());
-
-
-            } catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-
-        });
-        createBtn.setOnClickListener(v -> {
-            try {
-                mDBHelper.upgrade(mDBHelper.getWritableDB());
-                CategoryNodeDto category = createCategory();
-                CategoryDto categoryDto = new CategoryDto("sample dogam", "this is sample category", "1234", category);
-                String result = categoryService.createCategory(categoryDto);
-
-                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        });
-
-        findBtn.setOnClickListener(v -> {
-            try {
-
-                CategoryDto category = categoryService.findCategoryById(1);
-                Log.d("found category", category.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
+        createBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
             }
         });
 
-        deleteBtn.setOnClickListener(v -> {
-            try {
-                String result = categoryService.deleteCategory(1);
-                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
+        shareBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "ShareMenuActivity로 이동함", Toast.LENGTH_LONG).show();
             }
         });
 
-//        requestDataBtn.setOnClickListener(v -> {
-//            CategoryNodeDto category = createCategory();
-//            dataBindingService.requestData(category);
-//        });
+        myBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
+            }
+        });
+
+
+        //ResultActivity로 이동하기 위한 임시 버튼
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                MainActivity.this.startActivity(intent);
+
+            }
+        });
+
+        myBookPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
+            }
+        });
+
+        shareBookPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "ShareMenuActivity로 이동함", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView = findViewById(R.id.recycler1_main);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
+
+        // 리사이클러뷰에 객체 지정.
+        adapter_main1 adapter = new adapter_main1();
+        recyclerView.setAdapter(adapter) ;
+
+        adapter.setItems(new MyBookData_Sample().getItems());
+
+
+        // 추천 게시물 리사이클러뷰 (리사이클러뷰 2)
+        RecyclerView recyclerView2 = findViewById(R.id.recycler2_main);
+        recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
+
+
+        adapter_main2 adapter2 = new adapter_main2();
+        recyclerView2.setAdapter(adapter2);
+
+        //아이템 로드
+        adapter2.setItems(new SharedData_Sample().getItems());
+
+
+
+
     }
 
-    public CategoryNodeDto createCategory() {
-        CategoryNodeDto root = new CategoryNodeDto("L1", null, 1);
-        for(int i = 0; i < 3; i++) {
-            CategoryNodeDto secondNode = new CategoryNodeDto("L2_" + i, root, 2);
-            root.getLowLayer().add(secondNode);
-            for(int j = 0; j < 5; j++) {
-                CategoryNodeDto thirdNode = new CategoryNodeDto("L3+" + j, secondNode, 3);
-                secondNode.getLowLayer().add(thirdNode);
+    //mainToolBar에 menu.xml을 인플레이트함
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        //menu.xml에서 지정한 item 이벤트 추가
+        switch (item.getItemId()) {
+
+
+            default:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainDisplay);
+                drawer.openDrawer(Gravity.LEFT);
+
+                return true;
             }
+
+            case R.id.moveMY:
+                // User chose the "Settings" item, show the app settings UI
+                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
+                return true;
+
+//            default:
+//                Toast.makeText(getApplicationContext(),"메뉴 Tab 펼쳐짐", Toast.LENGTH_LONG).show();
+//                return true;
+
         }
-        return root;
     }
 }
