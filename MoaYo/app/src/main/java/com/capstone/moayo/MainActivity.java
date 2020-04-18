@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.capstone.moayo.Adapter.adapter_main1;
 import com.capstone.moayo.Adapter.adapter_main2;
+//import com.capstone.moayo.R;
 import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
 
@@ -171,4 +172,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-
