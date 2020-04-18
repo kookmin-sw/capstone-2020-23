@@ -5,7 +5,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -24,12 +23,21 @@ import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
 
 public class MainActivity extends AppCompatActivity {
+    private Button createBtn;
+    private Button requestDataBtn;
+    private Button DBButton;
+    private Button findBtn;
+    private Button deleteBtn;
+    private Button getTagBtn;
+
+    private CategoryService categoryService;
+    private DataBindingService dataBindingService;
+    private StorageFactory storageFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 //        //리소스 파일에서 추가한 툴바를 앱바로 지정하기
 //        Toolbar mainToolBar = (Toolbar) findViewById(R.id.mainToolBar);
 //        setSupportActionBar(mainToolBar);
@@ -169,6 +177,5 @@ public class MainActivity extends AppCompatActivity {
 //                return true;
 
         }
-
     }
 }
