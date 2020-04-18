@@ -3,25 +3,49 @@ package com.capstone.moayo.service.dto;
 import com.capstone.moayo.entity.Post;
 
 public class PostDto {
+    private int id;
+    private String imgUrl;
     private String url;
     private String info;
     private String hashtag;
     private int like;
+
     private int categoryNodeId;
 
-    public PostDto(String url, String info, String hashtag, int like) {
+    public PostDto() {
+        this.id = 0;
+    }
+    public PostDto(String imgUrl, String url, String info, String hashtag, int like) {
+        this.imgUrl = imgUrl;
         this.url = url;
         this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
-    public Post toContent() {
-        Post content = new Post(url, info, hashtag, like);
-        content.setCategoryNodeId(categoryNodeId);
+    public Post toPost() {
+        Post post = new Post(imgUrl, url, info, hashtag, like);
+        post.setCategoryNodeId(categoryNodeId);
+        post.setId(id);
 
 
-        return content;
+        return post;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getUrl() {

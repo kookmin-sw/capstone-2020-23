@@ -1,4 +1,4 @@
-package com.capstone.moayo.util.retrofit;
+package com.capstone.moayo.util;
 
 import android.database.Cursor;
 import android.util.Pair;

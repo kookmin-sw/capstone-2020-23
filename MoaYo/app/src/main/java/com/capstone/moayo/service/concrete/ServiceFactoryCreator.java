@@ -3,7 +3,7 @@ package com.capstone.moayo.service.concrete;
 import android.content.Context;
 
 import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.service.ContentService;
+import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.service.ServiceFactory;
 
@@ -11,7 +11,7 @@ public class ServiceFactoryCreator implements ServiceFactory{
     private volatile static ServiceFactory instance;
     private CategoryService categoryService;
     private DataBindingService dataBindingService;
-    private ContentService contentService;
+    private PostService contentService;
 
     public static synchronized ServiceFactory getInstance() {
         if(instance == null) {
@@ -33,9 +33,9 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public ContentService requestContentService(Context context) {
+    public PostService requestContentService(Context context) {
         if(contentService == null) {
-            contentService = new ConcreteContentService(context);
+            contentService = new ConcretePostService(context);
         }
         return contentService;
     }

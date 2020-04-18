@@ -3,27 +3,54 @@ package com.capstone.moayo.entity;
 import com.capstone.moayo.service.dto.PostDto;
 
 public class Post {
-    // private Image img;
-    private String url;
+    private int id;
     private String info;
     private String hashtag;
     private int like;
 
+    private String imgUrl;
+    private String url;
+
+
     private int categoryNodeId;
 
-    public Post(String url, String info, String hashtag, int like) {
+    public Post() {
+        this.id = 0;
+    }
+
+    public Post(String imgUrl, String url, String info, String hashtag, int like) {
+        this();
+        this.imgUrl = imgUrl;
         this.url = url;
         this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
-    public PostDto toContentDto() {
-        PostDto contentDto = new PostDto(url, info, hashtag, like);
+    public PostDto toPostDto() {
+        PostDto postDto = new PostDto(imgUrl, url, info, hashtag, like);
+        postDto.setCategoryNodeId(categoryNodeId);
+        postDto.setId(id);
 
-        return contentDto;
+        return postDto;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
@@ -64,4 +91,10 @@ public class Post {
     public void setCategoryNodeId(int categoryNodeId) {
         this.categoryNodeId = categoryNodeId;
     }
+
+//    public String toString() {
+//        StringBuffer buffer = new StringBuffer();
+//        buffer.append("\"{id\" : \"").append(id).append("\"").
+//                append("\"{\" : \"").append(id).append("\"").
+//    }
 }

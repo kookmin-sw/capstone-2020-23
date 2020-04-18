@@ -12,7 +12,7 @@ public class CategoryDto {
     private String title;
     private String description;
     private String password;
-    
+
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
 

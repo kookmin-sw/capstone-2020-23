@@ -3,11 +3,11 @@ package com.capstone.moayo.storage.concrete;
 import android.content.Context;
 
 import com.capstone.moayo.service.dto.PostDto;
-import com.capstone.moayo.storage.ContentStorage;
+import com.capstone.moayo.storage.PostStorage;
 
 import java.util.List;
 
-public class ConcreteContentStorage implements ContentStorage {
+public class ConcretePostStorage implements PostStorage {
     @Override
     public String createContent() {
         return null;
@@ -38,6 +38,6 @@ public class ConcreteContentStorage implements ContentStorage {
 
     }
 
-    public ConcreteContentStorage(Context context) {
+    public ConcretePostStorage(Context context) {
     }
 }

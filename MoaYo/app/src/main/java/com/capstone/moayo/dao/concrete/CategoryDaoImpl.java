@@ -9,7 +9,7 @@ import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
-import com.capstone.moayo.util.retrofit.DataEntityTranslator;
+import com.capstone.moayo.util.DataEntityTranslator;
 
 public class CategoryDaoImpl implements CategoryDao {
 
