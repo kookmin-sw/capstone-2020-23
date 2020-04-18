@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="book_manage_spinner">
+        <item>모든 도감</item>
+        <item>내가 좋아요한 도감</item>
+        <item>내가 공유한 도감</item>
+    </string-array>
+</resources>
