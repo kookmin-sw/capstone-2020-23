@@ -17,8 +17,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.capstone.moayo.Adapter.adapter_main1;
+import com.capstone.moayo.Adapter.adapter_main2;
 import com.capstone.moayo.data.MyBookData_Sample;
-import com.capstone.moayo.data.RecommendData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(""); //앱바에서 제목을 없애고 activity_main.xml에서 설정한 제목이 뜨게 설정
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(R.layout.logo);
 
         TextView createBook = (TextView) findViewById(R.id.createBook);
         TextView shareBook = (TextView) findViewById(R.id.shareBook);
@@ -63,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
         myBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "BookManageActivity로 이동함", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
             }
         });
 
@@ -74,13 +80,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                 MainActivity.this.startActivity(intent);
+
             }
         });
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "BookManageActivity로 이동함", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
             }
         });
 
@@ -115,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
         //아이템 로드
         adapter2.setItems(new SharedData_Sample().getItems());
 
+
+
+
     }
 
     //mainToolBar에 menu.xml을 인플레이트함
@@ -144,7 +157,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.moveMY:
                 // User chose the "Settings" item, show the app settings UI
-                Toast.makeText(getApplicationContext(), "BookManageActivity로 이동함", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
                 return true;
 
 //            default:

@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.capstone.moayo.Adapter.adapter_result1;
+import com.capstone.moayo.Adapter.adapter_result2;
 import com.capstone.moayo.data.RecommendData_Sample;
 import com.capstone.moayo.data.SavedData_Sample;
 
