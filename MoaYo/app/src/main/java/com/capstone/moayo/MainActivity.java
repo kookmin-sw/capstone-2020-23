@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,9 @@ import com.capstone.moayo.Adapter.adapter_main2;
 //import com.capstone.moayo.R;
 import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
+import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.DataBindingService;
+import com.capstone.moayo.storage.StorageFactory;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn;
