@@ -3,15 +3,18 @@ package com.capstone.moayo.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.ResultActivity;
+import com.capstone.moayo.model.Category;
 import com.capstone.moayo.model.CategoryNode;
 
 import java.util.ArrayList;
@@ -59,13 +62,11 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             view = convertView;
         }
 
-
         TextView text = (TextView)view.findViewById(R.id.text1);
-        text.setText(currentNode.title);
 
-        if (isSelectedNode(currentNode, selectedNode)) {
-//            text.setTextColor(Color.rgb(030,144,255));
-            text.setText("fuck");
+        text.setText(currentNode.title);
+        if (isSelectedNode(currentNode, selectedNode) == true) {
+            text.setTextColor(Color.parseColor("#1e90ff"));
         }
 
 //        TextView sub_text = (TextView)view.findViewById(R.id.text2);
@@ -122,8 +123,22 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             view = convertView;
         }
 
+//        if(hasSelectedNode(currentNode, selectedNode) == true) {
+//            ExpandableListView expandableListView = (ExpandableListView)parent;
+//            if (!isExpanded) {
+//                expandableListView.expandGroup(groupPosition);
+//            }
+//            else {
+//                expandableListView.collapseGroup(groupPosition);
+//            }
+//        }
+
         TextView text = (TextView)view.findViewById(R.id.text);
         text.setText(currentNode.title);
+
+        if (isSelectedNode(currentNode, selectedNode) == true) {
+            text.setTextColor(Color.parseColor("#1e90ff"));
+        }
 
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.group_search_btn);
         searchBtn.setFocusable(false);
@@ -182,16 +197,36 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
     }
 
+//    private boolean hasSelectedNode(CategoryNode parent, CategoryNode selected) {
+//
+//        if(selected != null) {
+//            ArrayList<CategoryNode> childs = (ArrayList<CategoryNode>) parent.lowLayer;
+//            for(int i = 0; i < childs.size(); ++i) {
+//                if (childs.get(i).title.equals(selected.title)) {
+//                    Log.d("state", "is contained");
+//                    return true;
+//                }
+//            }
+//            Log.d("state", "is not contained");
+//            return false;
+//        } else {
+//            return false;
+//        }
+//    }
+
     private boolean isSelectedNode(CategoryNode target, CategoryNode selected) {
         if(target == null || selected == null) {
+//            Log.d("state", "1. null");
             return false;
+        } else {
+            if(target.title.equals(selected.title)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
-        if(target.title == selected.title) {
-            return true;
-        } else {
-            return false;
-        }
+
 
     }
 }
