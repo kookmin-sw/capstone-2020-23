@@ -1,4 +1,4 @@
-package com.capstone.moayo;
+package com.capstone.moayo.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.capstone.moayo.CategoryNode;
 import com.capstone.moayo.PageFragment;
+import com.capstone.moayo.model.CategoryNode;
 
 import java.util.ArrayList;
 

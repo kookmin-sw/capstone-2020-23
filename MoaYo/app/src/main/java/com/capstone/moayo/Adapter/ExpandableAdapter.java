@@ -2,35 +2,42 @@ package com.capstone.moayo.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.capstone.moayo.CategoryNode;
 import com.capstone.moayo.R;
 import com.capstone.moayo.ResultActivity;
+import com.capstone.moayo.model.CategoryNode;
 
 import java.util.ArrayList;
 
-//import android.widget.ExpandableListView;
 
 public class ExpandableAdapter extends BaseExpandableListAdapter {
     Context mContext;
-    ArrayList<CategoryNode> mBookData;
+    ArrayList<CategoryNode> categoryNodes;
+    CategoryNode selectedNode;
 
-    public ExpandableAdapter(Context context, ArrayList<CategoryNode> book) {
+    public ExpandableAdapter(Context context, ArrayList<CategoryNode> nodes) {
         mContext = context;
-        mBookData = book;
+        categoryNodes = nodes;
+        selectedNode = null;
+    }
+
+    public ExpandableAdapter(Context context, ArrayList<CategoryNode> nodes, CategoryNode selected_node) {
+        mContext = context;
+        categoryNodes = nodes;
+        selectedNode = selected_node;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         // TODO Auto-generated method stub
-        return mBookData.get(groupPosition).lowLayer.get(childPosition);
+        return categoryNodes.get(groupPosition).lowLayer.get(childPosition);
     }
 
     @Override
@@ -44,14 +51,22 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view;
+        final CategoryNode currentNode = categoryNodes.get(groupPosition).lowLayer.get(childPosition);
+
         if(convertView == null) {
             view = getChildGenericView();
         } else {
             view = convertView;
         }
 
+
         TextView text = (TextView)view.findViewById(R.id.text1);
-        text.setText(mBookData.get(groupPosition).lowLayer.get(childPosition).title);
+        text.setText(currentNode.title);
+
+        if (isSelectedNode(currentNode, selectedNode)) {
+//            text.setTextColor(Color.rgb(030,144,255));
+            text.setText("fuck");
+        }
 
 //        TextView sub_text = (TextView)view.findViewById(R.id.text2);
 //        sub_text.setText(mBookData.get(groupPosition).title);
@@ -63,7 +78,10 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View view){
             Intent intent = new Intent(mContext, ResultActivity.class);
+            intent.putExtra("current_node", currentNode);
+
             mContext.startActivity(intent);
+
             }
         });
 
@@ -72,17 +90,17 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mBookData.get(groupPosition).lowLayer.size();
+        return categoryNodes.get(groupPosition).lowLayer.size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return mBookData.get(groupPosition);
+        return categoryNodes.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return mBookData.size();
+        return categoryNodes.size();
     }
 
     @Override
@@ -96,6 +114,8 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
                              View convertView, final ViewGroup parent) {
 
         View view;
+        final CategoryNode currentNode = categoryNodes.get(groupPosition);
+
         if(convertView == null) {
             view = getParentGenericView();
         } else {
@@ -103,7 +123,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         TextView text = (TextView)view.findViewById(R.id.text);
-        text.setText(mBookData.get(groupPosition).title);
+        text.setText(currentNode.title);
 
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.group_search_btn);
         searchBtn.setFocusable(false);
@@ -122,6 +142,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 //                }
 //                Toast.makeText(mContext , "검색!!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, ResultActivity.class);
+                intent.putExtra("current_node", currentNode);
                 mContext.startActivity(intent);
             }
         });
@@ -158,5 +179,19 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.group_list_view, null);
         return view;
+
+    }
+
+    private boolean isSelectedNode(CategoryNode target, CategoryNode selected) {
+        if(target == null || selected == null) {
+            return false;
+        }
+
+        if(target.title == selected.title) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

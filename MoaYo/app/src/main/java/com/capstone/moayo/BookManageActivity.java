@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.capstone.moayo.Adapter.PagerAdapter;
+import com.capstone.moayo.data.CategoryData_Dummy;
+import com.capstone.moayo.model.CategoryNode;
 
 import java.util.ArrayList;
 
@@ -55,61 +57,6 @@ public class BookManageActivity extends AppCompatActivity {
 
 //    create test data
     private ArrayList<CategoryNode> createData () {
-        ArrayList<CategoryNode> myBookList = new ArrayList<>();
-
-//      Node <<Movie>>
-        CategoryNode movie = new CategoryNode("영화");
-
-        CategoryNode romance = new CategoryNode("로맨스");
-        CategoryNode thriller = new CategoryNode("스릴러");
-
-        CategoryNode horror = new CategoryNode("호러");
-        CategoryNode scary_movie = new CategoryNode("무서운영화");
-        horror.addChild(scary_movie);
-
-        CategoryNode comedy = new CategoryNode("코미디");
-        CategoryNode fantasy = new CategoryNode("판타지");
-
-        movie.addChild(romance);
-        movie.addChild(thriller);
-        movie.addChild(horror);
-        movie.addChild(comedy);
-        movie.addChild(fantasy);
-
-
-//      Node <<Fashion>>
-        CategoryNode fashion = new CategoryNode("패션");
-
-        CategoryNode pants = new CategoryNode("하의");
-        CategoryNode denim_pants = new CategoryNode("데님바지");
-        CategoryNode cotton_pants = new CategoryNode("코튼바지");
-        CategoryNode leather_pants = new CategoryNode("레더바지");
-
-        pants.addChild(denim_pants);
-        pants.addChild(cotton_pants);
-        pants.addChild(leather_pants);
-
-        CategoryNode top = new CategoryNode("상의");
-        CategoryNode hood = new CategoryNode("후드");
-
-        top.addChild(hood);
-
-        CategoryNode outer = new CategoryNode("아우터");
-        CategoryNode denim_jacket = new CategoryNode("데님자켓");
-        CategoryNode cotton_jacket = new CategoryNode("코튼자켓");
-        CategoryNode leather_jacket = new CategoryNode("레더자켓");
-
-        outer.addChild(denim_jacket);
-        outer.addChild(cotton_jacket);
-        outer.addChild(leather_jacket);
-
-        fashion.addChild(pants);
-        fashion.addChild(top);
-        fashion.addChild(outer);
-
-        myBookList.add(fashion);
-        myBookList.add(movie);
-
-        return myBookList;
+        return new CategoryData_Dummy().getItems();
     }
 }
