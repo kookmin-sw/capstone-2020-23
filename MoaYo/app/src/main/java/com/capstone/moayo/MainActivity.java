@@ -53,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
         createBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, BookFormActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
             }
         });
 

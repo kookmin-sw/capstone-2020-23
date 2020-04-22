@@ -1,6 +1,7 @@
 package com.capstone.moayo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.capstone.moayo.CategoryNode;
 import com.capstone.moayo.R;
+import com.capstone.moayo.ResultActivity;
 
 import java.util.ArrayList;
 
@@ -60,8 +62,8 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-
-                Toast.makeText(mContext , "자식 검색!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext, ResultActivity.class);
+            mContext.startActivity(intent);
             }
         });
 
@@ -118,7 +120,9 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 //                else {
 //                    expandableListView.collapseGroup(groupPosition);
 //                }
-                Toast.makeText(mContext , "검색!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext , "검색!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, ResultActivity.class);
+                mContext.startActivity(intent);
             }
         });
         return view;
