@@ -65,10 +65,8 @@ public class ResultActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
         //menu.xml에서 지정한 item 이벤트 추가
         switch (item.getItemId()) {
-
 
             case R.id.myBook:
             {
