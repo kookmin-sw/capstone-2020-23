@@ -5,6 +5,8 @@ public class Category {
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
 
+    private String url;
+
     public Category(CategoryNode rootNode) {
         this.rootNode = rootNode;
         this.selectCategoryNode = null;
