@@ -73,7 +73,7 @@ public class CategoryData_Dummy {
         CategoryNode rock = new CategoryNode("락","");
         CategoryNode dance = new CategoryNode("댄스","");
 
-        CategoryNode yoosanseul = new CategoryNode("유산슬","");
+        CategoryNode yoosanseul = new CategoryNode("유산슬","", 1);
         CategoryNode songgain = new CategoryNode("송가인","");
         CategoryNode jangyunjung = new CategoryNode("장윤정","");
         CategoryNode hongginyoung = new CategoryNode("홍진영","");
@@ -91,6 +91,34 @@ public class CategoryData_Dummy {
 
         //맛집
         CategoryNode food = new CategoryNode("맛집","https://www.polinews.co.kr/data/photos/20190102/art_15469376601633_583641.jpg");
+
+        CategoryNode korean_food = new CategoryNode("한식");
+        CategoryNode japenese_food = new CategoryNode("일식");
+        CategoryNode chinese_food = new CategoryNode("중식");
+        CategoryNode snack = new CategoryNode("분식");
+        CategoryNode fast_food = new CategoryNode("패스트푸드");
+        CategoryNode dessert = new CategoryNode("디저트");
+
+        CategoryNode blacknoodle = new CategoryNode("짜장면");
+        CategoryNode jjamppong = new CategoryNode("짬뽕");
+        CategoryNode sour_pork = new CategoryNode("탕수육");
+        CategoryNode yoosanseul_food = new CategoryNode("유산슬", "", 2);
+        CategoryNode palbochae = new CategoryNode("팔보채");
+        CategoryNode china_chicken = new CategoryNode("깐풍기");
+
+        food.addChild(korean_food);
+        food.addChild(japenese_food);
+        food.addChild(chinese_food);
+        food.addChild(snack);
+        food.addChild(fast_food);
+        food.addChild(dessert);
+
+        chinese_food.addChild(blacknoodle);
+        chinese_food.addChild(jjamppong);
+        chinese_food.addChild(sour_pork);
+        chinese_food.addChild(yoosanseul_food);
+        chinese_food.addChild(palbochae);
+        chinese_food.addChild(china_chicken);
 
 
         //가구

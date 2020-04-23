@@ -70,7 +70,7 @@ public class ResultActivity extends AppCompatActivity {
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
-        myList.setAdapter(new ExpandableAdapter(this, getDummyRoot().lowLayer, searchNode));
+        myList.setAdapter(new ExpandableAdapter(this, getDummyRoot(searchNode).lowLayer, searchNode));
     }
 
     //도감 검색결과 요청.
@@ -78,19 +78,35 @@ public class ResultActivity extends AppCompatActivity {
         //인탠트를 통해 받아온 검색 노드.
         Toast.makeText(getApplicationContext(), node.title, Toast.LENGTH_SHORT).show();
 
+
+        if(node.getId() == 1) {
+            return new ResultPost_Dummy().getSinger();
+        } else {
+            return new ResultPost_Dummy().getFood();
+        }
         //Dummy Data(데님바지).
-        return new ResultPost_Dummy().getItems();
+//        return new ResultPost_Dummy().getSinger();
     }
 
     //저장 게시물 요청.
     private ArrayList<SavedPost> requestSavedPost(CategoryNode node) {
         //Dummy Data(데님바지).
-        return new SavedPost_Dummy().getItems();
+        if(node.getId() == 1) {
+            return new SavedPost_Dummy().getSinger();
+        } else {
+            return new SavedPost_Dummy().getFood();
+        }
+
     }
 
-    private CategoryNode getDummyRoot () {
+    private CategoryNode getDummyRoot (CategoryNode node) {
         //첫번째 index의 dummy data 가져옴
-        return new CategoryData_Dummy().getItems().get(0);
+        if(node.getId() == 1) {
+            return new CategoryData_Dummy().getItems().get(0);
+        } else {
+            return new CategoryData_Dummy().getItems().get(3);
+        }
+
     }
 
 

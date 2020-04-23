@@ -15,6 +15,8 @@ public class CategoryNode implements Serializable {
     private CategoryNode parent;
     private int level;
 
+    private int id;
+
     //이미지 할당
 
 
@@ -25,6 +27,7 @@ public class CategoryNode implements Serializable {
         this.lowLayer = new ArrayList<CategoryNode>();
         this.contents = new ArrayList<String>();
         this.url = "";
+        this.id = 0;
     }
 
     public CategoryNode(String title, String url) {
@@ -33,8 +36,18 @@ public class CategoryNode implements Serializable {
         this.level = 0;
         this.lowLayer = new ArrayList<CategoryNode>();
         this.contents = new ArrayList<String>();
-
         this.url = url;
+    }
+
+    public CategoryNode(String title, String url, int id) {
+        this.title = title;
+        this.parent = null;
+        this.level = 0;
+        this.lowLayer = new ArrayList<CategoryNode>();
+        this.contents = new ArrayList<String>();
+        this.url = url;
+
+        this.id = id;
     }
 
 
@@ -42,7 +55,7 @@ public class CategoryNode implements Serializable {
         lowLayer.add(node);
     }
 
-
+    public int getId() {return this.id; }
     //이미지 url 추가
     public String getUrl() {
         return url;

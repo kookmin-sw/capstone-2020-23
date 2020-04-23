@@ -5,13 +5,53 @@ import com.capstone.moayo.model.NewPost;
 import java.util.ArrayList;
 
 public class ResultPost_Dummy {
-    ArrayList<NewPost> posts;
+    ArrayList<NewPost> food;
+    ArrayList<NewPost> singer;
 
     public ResultPost_Dummy() {
-        posts = new ArrayList<>();
+        food = new ArrayList<>();
+        singer = new ArrayList<>();
     }
 
-    public ArrayList<NewPost> getItems() {
+    public ArrayList<NewPost> getFood() {
+
+        NewPost dummy1 = new NewPost("https://lh3.googleusercontent.com/proxy/BD_3JnurRH4VzFj874wukoQbHNMjzdiOv4Kg1T2SjpLsGqn72R4dr7CvAdDcVHU9BiD-s0WXgH1t0wv0vc0GwKIhs8bChI9Qfatbvbn9wLyKoq26hfszZ8Ib6zMPMpPZJzuepifUTuWThIlq8uAWuIDPQbullCGMiAJNc3c8jCr5nRf8OEjyQ2HcBlojb_vB30bJnH_S1_xtIifPRya2WPrweQxvvpP5VZxj13cwF60Mup0KJLniVPiaEvRQzFtOEd9HeNJ_VWK9aHuXn8I9ncvmiI_Hc9H4aw");
+        NewPost dummy2 = new NewPost("https://lh3.googleusercontent.com/proxy/Bfxq2LKpFALNBe6F6dS3JzqQxx5h_TptHKJk_mgS6H2p0Gzb-OK-jR9SZOxMtrB77X3ZIPBbQkKpKamXSlxXx3OXYQr9-95eeyuKIvADCrV8DKM8UsFC4Nq8K2DKI-tFGKyCj9SAhC4wh-YFe5q5ehfZ7d6cBAvBiBknbBGBx3RMGZh_St03WAu84Lfua04gONRzSdnTNR_lgZuWzGjaD_vqI2NKimrx_yCUOKCA--PLnRtWg0YK9M7mIc5svdh3w2zpYkpeS39xZo27PURmnoGCoq_3auFC");
+        NewPost dummy3 = new NewPost("https://lh3.googleusercontent.com/proxy/WYitGc1XrF_-ZZt7lhtKF605L0rcOPHPsSzRs8tlm1l4BXokdl-X1xrpL4-X8vaRnbuxl1BNdMLp1P72sfXDWGJrjRU6Szjoc3Hk1tKcPb-gVmuwcYzGwxn-P1x1-n5Sdun6MXrxp4jPEjqu8y9CWqeqrIiiHrkBSBWPQAUQs3_qF709LpauYscfBmGqTeZNXYFWG-AvBYIaZLBzaVEhNtt8aw8HFsUq5OCCQTQkUQ9QMUo-KpUgVkxWgeLQyBxQWeUWKWBNPLpVtEmpSOnufyarl-xzcBHR67IsBs5AHmsom4AcV-00lWsghCaxAmgh81gfoXT-_tzV_A");
+        NewPost dummy4 = new NewPost("https://newsteacher.chosun.com/site/data/img_dir/2020/01/07/2020010700114_0.jpg");
+        NewPost dummy5 = new NewPost("https://www.simbata.co.kr/img_src/s600/a897/a8970104.jpg");
+        NewPost dummy6 = new NewPost("https://homecuisine.co.kr/files/attach/images/142/821/001/31c249d8f3fe7ff55a910c988e21faf8.JPG");
+        NewPost dummy7 = new NewPost("https://www.simbata.co.kr/img_src/s600/a897/a8970355.jpg");
+        NewPost dummy8 = new NewPost("https://www.simbata.co.kr/img_src/s600/a897/a8970275.jpg");
+        NewPost dummy9 = new NewPost("https://img.gokorea.kr/news/photo/201901/82925_147513_3017.jpg");
+
+
+        food.add(dummy1);
+        food.add(dummy2);
+        food.add(dummy3);
+        food.add(dummy4);
+        food.add(dummy5);
+        food.add(dummy6);
+        food.add(dummy7);
+        food.add(dummy8);
+        food.add(dummy9);
+
+        food.add(dummy1);
+        food.add(dummy2);
+        food.add(dummy3);
+        food.add(dummy4);
+        food.add(dummy5);
+//        food.add(dummy6);
+//        food.add(dummy7);
+//        food.add(dummy8);
+//        food.add(dummy9);
+
+
+        return food;
+
+    }
+
+    public ArrayList<NewPost> getSinger() {
 
         //데님바지 더미 데이터
 //        NewPost dummy1 = new NewPost("https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/64266142_341476623168364_6977961588534360221_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=5UZCKTlYeH0AX_U2wY1&oh=356c7967350c904284b8eacc61a7660b&oe=5EC9C9BE");
@@ -33,27 +73,28 @@ public class ResultPost_Dummy {
         NewPost dummy9 = new NewPost("https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/94213711_137247381188934_9068420848067939088_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=106&_nc_ohc=mV7XG12jaY4AX_3rOWN&oh=e378220ec90ff2094c037412f6d54b1a&oe=5ECA1DA0");
 
 
-        posts.add(dummy1);
-        posts.add(dummy2);
-        posts.add(dummy3);
-        posts.add(dummy4);
-        posts.add(dummy5);
-        posts.add(dummy6);
-        posts.add(dummy7);
-        posts.add(dummy8);
-        posts.add(dummy9);
+        singer.add(dummy1);
+        singer.add(dummy2);
+        singer.add(dummy3);
+        singer.add(dummy4);
+        singer.add(dummy5);
+        singer.add(dummy6);
+        singer.add(dummy7);
+        singer.add(dummy8);
+        singer.add(dummy9);
 
-        posts.add(dummy1);
-        posts.add(dummy2);
-        posts.add(dummy3);
-        posts.add(dummy4);
-        posts.add(dummy5);
-        posts.add(dummy6);
-        posts.add(dummy7);
-        posts.add(dummy8);
-        posts.add(dummy9);
+        singer.add(dummy1);
+        singer.add(dummy2);
+        singer.add(dummy3);
+        singer.add(dummy4);
+        singer.add(dummy5);
+        singer.add(dummy6);
+        singer.add(dummy7);
+        singer.add(dummy8);
+        singer.add(dummy9);
 
 
-        return posts;
+
+        return singer;
     }
 }
