@@ -11,31 +11,56 @@
 
 - ## 개요
 
-  관심 있는 걸 모아서 보고, 내 관심사를 모아서 표출하는 것은 우리에게 아주 익숙하고 중요한 일이다.
+  관심 있는 걸 모아서 보고, 내 관심사를 모아서 표출하는 것은 우리에게 아주 익숙하고 중요한 일이다. 매일매일 SNS에 접속해서 마음에 드는 게시물에 좋아요를 누르고, 재미있어 보이는 게시물을 보는 것은 우리에게 아주 익숙하다. 이런 SNS 중 요새 가장 대세인 걸 꼽으라면, 단연 **인스타그램**이다. 최근 SNS의 사용 목적으로 떠오르는 정보 검색은 SNS 사용을 더 확장시키는 요인이다.
 
-  매일매일 SNS에 접속해서 마음에 드는 게시물에 좋아요를 누르고, 재미있어 보이는 게시물을 보는 것은 우리에게 아주 익숙하다. 이런 SNS 중 요새 가장 대세인 걸 꼽으라면, 단연 **인스타그램**이다.
+   
 
-  그런데 인스타그램은 게시물을 올리기에는 적합하지만, 내가 관심 있는 것을 모아서 보거나 저장하기에는 적절하지 않다.
+  하지만 인스타그램은 단일 태그, 분류할 수 없는 게시물, 태그와 관련 없는 게시물 등 정보 검색에 있어서는 적절하지 않다. 그래서 우리는 태그를 1개만 입력할 수 있는 인스타그램의 한정된 검색 기능을 개선하여 다중 복합 연산을 통한 메타 검색 서비스를 제공하려 한다. 계층적인 구조를 가지는 카테고리를 사용자가 입력하여 생성하고, 시스템은 사용자가 입력한 카테고리를 가지고 인스타그램에서 메타 검색을 실시한다.
 
-  관심있는 분야에 대한 최신 게시물들을 매번 검색해서 봐야하고, 검색 탭에서 무언가를 검색하면 관련 없는 피드가 너무 많으며, 게시물을 저장해도 분류를 할 수 없고 공유도 할 수 없기 떄문에 저장 기능은 잘 쓰이지 않는다.
+   
 
-  무엇보다 여러 검색어를 동시에 넣어 검색할 수 없다는 것은 큰 아쉬움으로 남는다.
+  일반적으로 여러 검색 엔진에 질의를 던져 얻은 결과물을 모아 한꺼번에 제공하는 검색 방식을 *‘메타 검색’* (meta search) 이라 한다. 여기서는 인스타그램이라는 하나의 사이트에 동시에 여러 개의 질의를 던져 얻은 결과를 종합하여 사용자에게 제공하는데, 이를 통해 ***‘작은 의미의 메타 검색’*** 이라 칭한다. 편의상 후술할 메타 검색이란 이 ‘작은 의미의 메타 검색’을 지칭하는 것이다.
 
-  그래서 우리는 보다 정교한 검색 기능을 제공하고, 검색한 결과를 모아 **도감**의 형태로 공유할 수 있는 서비스 '모아요'를 만들기로 했다.
-  <br/>
-  <br/>
-  ‘모아요’(‘MoaYo’) 는 사용자가 관심있는 카테고리에 대해 게시물을 모은다는 의미와 나의(‘My’) 라는 의미를 담고있다.
-  <br/>
-  <br/>
+   
+
+  사용자는 검색 결과에서 마음에 드는 게시물을 사용자가 만든 계층적 구조의 카테고리에 저장할 수 있는데, 이렇게 게시물을 저장할 수 있는 계층적인 카테고리를 ***‘도감’*** 이라고 한다. 한번 생성한 카테고리와 저장된 게시물은 도감의 형태로 저장되어 언제든지 확인 가능하며, 새로운 게시물을 보고싶을 때마다 기존 인스타그램의 번거로운 절차 없이 본 시스템에 저장된 도감의 카테고리를 클릭만 하면 바로 확인할 수 있다.
+
+   
+
+  ‘모아요’(‘MoaYo’) 는 사용자가 관심있는 카테고리에 대해 게시물을 모은다는 의미와 나의(‘My’) 라는 의미를 담고있다. 
+
   ‘모아요’는 다음과 같은 서비스를 제공할 것을 목표로 한다.
-  <br/>
-  <br/>
 
-  1. 기존보다 나은 고급 검색 기능 - 카테고리 기반 메타 검색
-  2. 검색 시 카테고리 추천
-  3. 타 사용자와의 게시물 공유 (도감 공유)
+  <br />
+
+  <br />
+
+  **1. 다중 태그 기반의 메타** **검색**
+
+  ​	A. 각각의 태그 및 그 유의어 추출
+
+  ​	B. 인스타그램의 게시물 중 1.A로부터 얻은 데이터의 교집합을 검색
+
+  
+
+  **2. 사용자가 직접 만드는 계층 구조의 도감**
+
+  ​	A. 계층 구조로 된 입력창에 사용자가 원하는 태그를 입력하면 완성되는 도감
+
+  ​	B. 태그 입력시 키워드에 대한 연관 태그 제안
+
+  ​	C. 재검색을 위해 다시 검색창에 입력할 필요 없이 도감을 클릭하면 해당 태그들을 검색
+
+  
+
+  **3. 만든 도감을 다른 사람들과 공유**
+
+  ​	A. 각각의 사용자들이 만든 도감을 다른 사람들과 공유
+  
 
 <br/>
+
+
 
 - ## 구성
 
@@ -61,7 +86,7 @@
 
         <br/>
         <br/>
-        
+      
       - 도감관리 메뉴 접근 시, 유저가 생성한 도감 리스트와 스크랩 한 컬렉션들을 확인할 수 있다.
       - 도감 리스트에 표시되는 각 도감의 명칭은 사용자가 지정한 1차 키워드이다.
       - 한개의 도감을 선택하면 **카테고리 계층구조**가 시각적으로 표시되고, 각 요소를 클릭하면 **게시물 리스트**가 표시된다.
@@ -100,35 +125,71 @@
 
 # 2. _Abstract_
 
-It is very familiar and important for us to collect and see what we are interested in.
+It is very familiar and important for us to collect and see what we are interested in. It is very familiar for us to log on to SNS every day, click like on a post we like, and see a post that looks fun. One of the most popular social networking sites these days is by far **Instagram**. Searching for information that has recently emerged for the purpose of using SNS is a factor that further expands the use of SNS.
 
-It is very familiar for us to log on to SNS every day, click like on a post we like, and see a post that looks fun. One of the most popular social networking sites these days is by far **Instagram**.
 
-Instagram, however, is suitable for posting, but it is not appropriate to collect, view, or save what I am interested in.
 
-The save function is not used well because you have to search and view the latest posts about the areas of interest every time, there are too many unrelated feeds when you search on the Search tab, and you cannot categorize and share the posts.
+Instagram, however, is not appropriate when it comes to searching for information, such as single tags, unclassifiable postings and posts unrelated to tags. So we're trying to improve Instagram's limited search capability, which allows only one tag to be entered, to provide a meta-search service through multiple compound operations. Categories with hierarchical structures are created by user input, and the system performs a meta-search on Instagram with categories entered by the user.
 
-Most of all, it is a great pity that it cannot be searched by adding multiple search terms at the same time.
 
-So we decided to create a service called "MoaYo," which provides more sophisticated search capabilities and can collect search results and share them in the form of **Dogam**.
-<br/>
-<br/>
+
+In general, a search method that collects the results obtained by questioning several search engines and provides them all at once is called *'meta search'*. Here, it provides users with a combination of results obtained by throwing multiple queries at a single site called Instagram at the same time, which is called a ***'micro meta-search'***. Meta-search, which will be described for convenience, refers to this 'micro meta-search'.
+
+
+
+Users can store their favorite postings in the search results in a hierarchical category created by users, which is called a ***'Dogam'*** in this hierarchical category where they can store postings. Once created and saved posts are stored in the form of a diagram, they can be checked at any time, and whenever you want to see a new post, you can check them immediately by clicking on the category of the picture stored in the system without the cumbersome procedure of the existing Instagram.
+
+
+
 "MoaYo" means collecting posts about categories that users are interested in and "My".
-<br/>
-<br/>
+
 'MoaYo' aims to provide the following services.
-<br/>
+
+<br />
+
+<br />
+
+**1. Multiple tag-based meta** **Search**
+
+​	A. Extracting each tag and its significance
+
+​	B. Search the intersection of data obtained from 1.A of posts on Instagram
+
+
+
+**2. User-created hierarchical illustrations**
+
+​	A. Completed picture when users type the desired tag in a hierarchical input window.
+
+​	B. Suggest associated tags for keywords when entering tags
+
+​	C. Click on the illustration to search for the tags without having to re-enter them in the search box.
+
+
+
+**3. Share your illustrated book with others**
+
+​	A. Share the illustrations created by each user with others
+
+
+
 <br/>
 
-1. Better than existing search capabilities - category based meta search
-2. Recommend categories when searching
-3. Sharing posts with other users (sharing illustrations)
 
-<br/>
 
 # 3. 소개 영상
 
-[![intro](https://img.shields.io/badge/-Click!-FF0000?logo=YouTube)](https://youtu.be/prg8dxmJ_Wk)
+- 제안서 발표 소개 영상
+
+[![intro](https://user-images.githubusercontent.com/29545214/80134505-d10e6380-85d9-11ea-908e-0eeb7d07616b.png)](https://youtu.be/prg8dxmJ_Wk)
+
+
+
+- 중간 평가 발표 영상
+
+[![medium](https://user-images.githubusercontent.com/29545214/80134624-f69b6d00-85d9-11ea-98c0-842ecc99f720.png)](https://youtu.be/ZBMoho0NFUQ)
+
+
 
 <br/>
 
