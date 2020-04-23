@@ -37,25 +37,39 @@
 
   **1. 다중 태그 기반의 메타** **검색**
 
-      A. 각각의 태그 및 그 유의어 추출
+  
 
-      B. 인스타그램의 게시물 중 1.A로부터 얻은 데이터의 교집합을 검색
+  ​	A. 각각의 태그 및 그 유의어 추출
+
+  ​	B. 인스타그램의 게시물 중 1.A로부터 얻은 데이터의 교집합을 검색
+
+  
 
   <br />
+
+  
 
   **2. 사용자가 직접 만드는 계층 구조의 도감**
 
-      A. 계층 구조로 된 입력창에 사용자가 원하는 태그를 입력하면 완성되는 도감
+  
 
-      B. 태그 입력시 키워드에 대한 연관 태그 제안
+  ​	A. 계층 구조로 된 입력창에 사용자가 원하는 태그를 입력하면 완성되는 도감
 
-      C. 재검색을 위해 다시 검색창에 입력할 필요 없이 도감을 클릭하면 해당 태그들을 검색
+  ​	B. 태그 입력시 키워드에 대한 연관 태그 제안
+
+  ​	C. 재검색을 위해 다시 검색창에 입력할 필요 없이 도감을 클릭하면 해당 태그들을 검색
+
+  
 
   <br />
 
+  
+
   **3. 만든 도감을 다른 사람들과 공유**
 
-      A. 각각의 사용자들이 만든 도감을 다른 사람들과 공유
+  ​	A. 각각의 사용자들이 만든 도감을 다른 사람들과 공유
+
+  
 
 <br/>
 
@@ -85,10 +99,13 @@
 
         <br/>
         <br/>
-      
+
       - 도감관리 메뉴 접근 시, 유저가 생성한 도감 리스트와 스크랩 한 컬렉션들을 확인할 수 있다.
+
       - 도감 리스트에 표시되는 각 도감의 명칭은 사용자가 지정한 1차 키워드이다.
+
       - 한개의 도감을 선택하면 **카테고리 계층구조**가 시각적으로 표시되고, 각 요소를 클릭하면 **게시물 리스트**가 표시된다.
+
       - 선택된 각 도감의 상세 페이지에서 도감 **수정**과 **삭제**가 가능하다.
 
         <br/>
@@ -150,25 +167,39 @@ Users can store their favorite postings in the search results in a hierarchical 
 
 **1. Multiple tag-based meta** **Search**
 
-    A. Extracting each tag and its significance
 
-    B. Search the intersection of data obtained from 1.A of posts on Instagram
-    
+
+​	A. Extracting each tag and its significance
+
+​	B. Search the intersection of data obtained from 1.A of posts on Instagram
+
+
+
 <br />
+
+
 
 **2. User-created hierarchical illustrations**
 
-    A. Completed picture when users type the desired tag in a hierarchical input window.
+​	
 
-    B. Suggest associated tags for keywords when entering tags
+​	A. Completed picture when users type the desired tag in a hierarchical input window.
 
-    C. Click on the illustration to search for the tags without having to re-enter them in the search box.
+​	B. Suggest associated tags for keywords when entering tags
+
+​	C. Click on the illustration to search for the tags without having to re-enter them in the search box.
+
+
 
 <br />
 
+
+
 **3. Share your illustrated book with others**
 
-    A. Share the illustrations created by each user with others
+
+
+​	A. Share the illustrations created by each user with others
 
 
 
