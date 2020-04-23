@@ -65,7 +65,7 @@ public class CategoryData_Dummy {
         fashion.addChild(outer);
 
         //  Node <<Singer>>
-        CategoryNode singer = new CategoryNode("가수","https://post-phinf.pstatic.net/MjAxOTA5MjBfMTkw/MDAxNTY4OTU4ODQ0MzQz.LafQDluadjb6bHtQEqCpV3Qf0cNHs75hc5VryAvQ4IYg.Qq7q4KHJmn81fHcnImIVj4opK5kswDKtPGT5Fs00E9Ag.JPEG/hangout_with_yoo_71188186_972766079728373_4444266538588771361_n.jpg?type=w1200");
+        CategoryNode singer = new CategoryNode("가수","https://lh3.googleusercontent.com/proxy/iz7mqs_RA1uYHQgxJwMR0c3-lo5DstNhpHgF7_s4JITb4eyBJLQmAcj1xdLTiKdw_O2THJLP8otJDdY9VCiwz2SmU8CkwQGHLjLZeEGAUItXyScsOJsusjMVbLMUz4Y");
 
         CategoryNode trot = new CategoryNode("트로트","");
         CategoryNode ballad = new CategoryNode("발라드","");
@@ -92,11 +92,12 @@ public class CategoryData_Dummy {
         //맛집
         CategoryNode food = new CategoryNode("맛집","https://www.polinews.co.kr/data/photos/20190102/art_15469376601633_583641.jpg");
 
+
         //가구
         CategoryNode furniture = new CategoryNode("가구","https://post-phinf.pstatic.net/MjAxODA2MTVfMjI3/MDAxNTI5MDI0OTEyNzkw.nZysM1B1Cph53JAl2hPk91kh5p1C7P1EZfV_vfiSGsMg.CYE_l4wAKZ-qKfmEFH_WdZ0uDz7x-GYsd3e3Hr1232Ag.PNG/6.png?type=w800_q75");
 
         //여행
-        CategoryNode travel = new CategoryNode("여행","https://travelpost.kr/wp-content/uploads/2016/02/78-01.jpg");
+        CategoryNode travel = new CategoryNode("여행","https://image.edaily.co.kr/images/Photo/files/NP/S/2016/06/PS16060300126.jpg");
 
         nodes.add(singer);
         nodes.add(fashion);

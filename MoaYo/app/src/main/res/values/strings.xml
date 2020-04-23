@@ -6,6 +6,6 @@
     <string name="myBook_MainActivity">나의 도감</string>
     <string name="shareBook_MainActivity">모두의 도감</string>
     <string name="myBook_ResultActivity">저장한 게시물</string>
-    <string name="new_ResultActivity">추천 게시물</string>
+    <string name="new_ResultActivity">검색된 게시물</string>
 </resources>
 

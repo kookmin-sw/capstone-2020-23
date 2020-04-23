@@ -52,7 +52,6 @@ public class BookManageActivity extends AppCompatActivity {
                 R.array.book_manage_spinner, android.R.layout.simple_spinner_dropdown_item);
         bookTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookTypeSpinner.setAdapter(bookTypeAdapter);
-
     }
 
 //    create test data

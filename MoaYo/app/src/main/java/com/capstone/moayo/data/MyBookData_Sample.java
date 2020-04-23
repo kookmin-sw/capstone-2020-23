@@ -11,7 +11,7 @@ public class MyBookData_Sample {
 
     public ArrayList<MyBook> getItems() {
 
-        MyBook book1 = new MyBook("https://post-phinf.pstatic.net/MjAxOTA5MjBfMTkw/MDAxNTY4OTU4ODQ0MzQz.LafQDluadjb6bHtQEqCpV3Qf0cNHs75hc5VryAvQ4IYg.Qq7q4KHJmn81fHcnImIVj4opK5kswDKtPGT5Fs00E9Ag.JPEG/hangout_with_yoo_71188186_972766079728373_4444266538588771361_n.jpg?type=w1200",
+        MyBook book1 = new MyBook("https://lh3.googleusercontent.com/proxy/iz7mqs_RA1uYHQgxJwMR0c3-lo5DstNhpHgF7_s4JITb4eyBJLQmAcj1xdLTiKdw_O2THJLP8otJDdY9VCiwz2SmU8CkwQGHLjLZeEGAUItXyScsOJsusjMVbLMUz4Y",
                 "가수");
 
         MyBook book2 = new MyBook("https://usercontents-c.styleshare.io/images/19518035/640x-",

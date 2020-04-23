@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.capstone.moayo.model.Category;
 import com.capstone.moayo.model.CategoryNode;
 
 import java.util.ArrayList;
@@ -51,20 +48,26 @@ public class PageFragment extends Fragment implements OnClickListener {
 
 //        해당 페이지의 담긴 도감만큼 버튼을 초기화, 남는 버튼은 Invisible 설정.
         for(int i = 1; i <= 9; ++i) {
-            int bookID = getResources().getIdentifier("bookBtn" + i, "id", getContext().getPackageName());
 
-            //추가한부분 ************
+            //textView
+            int bookID = getResources().getIdentifier("bookBtn" + i, "id", getContext().getPackageName());
+            TextView bookBtnView = (TextView) rootView.findViewById(bookID);
+
+            //cicleImageView
             int ImageID = getResources().getIdentifier("myBookPost" +i ,"id",getContext().getPackageName());
             CircleImageView circleImageView = (CircleImageView) rootView.findViewById(ImageID);
 
-
-            TextView bookBtnView = (TextView) rootView.findViewById(bookID);
             if (i <= book_list.size()) {
                 bookBtnView.setText(book_list.get(i-1).title);
                 bookBtnView.setTag(book_list.get(i-1));
-                bookBtnView.setOnClickListener(this);
+//                bookBtnView.setOnClickListener(this);
+                Glide.with(getContext()).load(book_list.get(i-1).getUrl()).into(circleImageView);
+
+                circleImageView.setTag(book_list.get(i-1));
+                circleImageView.setOnClickListener(this);
             } else {
                 bookBtnView.setVisibility(View.INVISIBLE);
+                circleImageView.setVisibility(View.INVISIBLE);
             }
         }
 
