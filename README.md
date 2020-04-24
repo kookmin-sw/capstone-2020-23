@@ -217,7 +217,7 @@ Users can store their favorite postings in the search results in a hierarchical 
 
 - 중간 평가 발표 영상
 
-[![medium](https://user-images.githubusercontent.com/29545214/80134624-f69b6d00-85d9-11ea-98c0-842ecc99f720.png)](https://youtu.be/ZBMoho0NFUQ)
+[![medium](https://user-images.githubusercontent.com/29545214/80134624-f69b6d00-85d9-11ea-98c0-842ecc99f720.png)](https://youtu.be/WNz_1Nq_59w)
 
 
 
