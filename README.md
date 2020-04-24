@@ -112,7 +112,7 @@
 
     - ### 게시물 리스트
 
-      <img src="https://user-images.githubusercontent.com/42925501/77553868-b375ad80-6ef8-11ea-8017-c42cdaf3480d.png" width="640" height="360">
+      <img src="https://github.com/kookmin-sw/capstone-2020-23/blob/resultActivity/doc/wireframe/ActivityFlow/DetailBookFlow.png?raw=true" width="640" height="360">
 
         <br/>
         <br/>
