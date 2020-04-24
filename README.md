@@ -95,7 +95,7 @@
 
     - ### 도감 관리 메뉴
 
-      <img src="https://user-images.githubusercontent.com/42925501/77553921-c4262380-6ef8-11ea-99e6-ca082c95d898.png" width="640" height="360">
+      <img src="https://github.com/20162819/capstone23_test/blob/test/ManageBookFlow.png?raw=true" width="640" height="360">
 
         <br/>
         <br/>
