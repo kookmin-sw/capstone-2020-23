@@ -65,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
         createBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, BookFormActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
             }
         });
 
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
+        // 나의 도감 리사이클러뷰 (리사이클러뷰 1)
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         RecyclerView recyclerView = findViewById(R.id.recycler1_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setItems(new MyBookData_Sample().getItems());
 
 
-        // 추천 게시물 리사이클러뷰 (리사이클러뷰 2)
+        // 추천 공유도감 리사이클러뷰 (리사이클러뷰 2)
         RecyclerView recyclerView2 = findViewById(R.id.recycler2_main);
         recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
 

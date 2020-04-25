@@ -1,11 +1,15 @@
 package com.capstone.moayo.Adapter;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.capstone.moayo.CategoryNode;
+import com.bumptech.glide.Glide;
 import com.capstone.moayo.PageFragment;
+import com.capstone.moayo.model.Category;
+import com.capstone.moayo.model.CategoryNode;
+import com.capstone.moayo.model.MyBook;
 
 import java.util.ArrayList;
 
@@ -69,4 +73,5 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         return PageFragment.create(pages.get(position));
     }
+
 }
