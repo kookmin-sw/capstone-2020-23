@@ -1,5 +1,6 @@
 package com.capstone.moayo;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -11,48 +12,102 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
+import android.widget.Toast;
 
+import com.capstone.moayo.Adapter.ExpandableAdapter;
 import com.capstone.moayo.Adapter.adapter_result1;
 import com.capstone.moayo.Adapter.adapter_result2;
-import com.capstone.moayo.data.RecommendData_Sample;
-import com.capstone.moayo.data.SavedData_Sample;
+import com.capstone.moayo.data.CategoryData_Dummy;
+import com.capstone.moayo.data.ResultPost_Dummy;
+import com.capstone.moayo.data.SavedPost_Dummy;
+import com.capstone.moayo.model.CategoryNode;
+import com.capstone.moayo.model.NewPost;
+import com.capstone.moayo.model.SavedPost;
+
+import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private CategoryNode searchNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        searchNode = (CategoryNode) getIntent().getSerializableExtra("current_node");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("# "+searchNode.title);
 
 
         // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = findViewById(R.id.recycler1_result);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
+        RecyclerView saved_recycler = findViewById(R.id.recycler1_result);
+        saved_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
 
         // 리사이클러뷰에 객체 지정.
-        adapter_result1 adapter = new adapter_result1();
-        recyclerView.setAdapter(adapter) ;
+        adapter_result1 saved_adapter = new adapter_result1();
+        saved_recycler.setAdapter(saved_adapter) ;
 
-        adapter.setItems(new SavedData_Sample().getItems());
-
-
-        // 추천 게시물 리사이클러뷰 (리사이클러뷰 2)
-        RecyclerView recyclerView2 = findViewById(R.id.recycler2_result);
-        recyclerView2.setLayoutManager(new GridLayoutManager(this,3));
+        saved_adapter.setItems(requestSavedPost(searchNode));
 
 
-        adapter_result2 adapter2 = new adapter_result2();
-        recyclerView2.setAdapter(adapter2);
+        // 검색 게시물 리사이클러뷰 (리사이클러뷰 2)
+        RecyclerView result_recycler = findViewById(R.id.recycler2_result);
+        result_recycler.setLayoutManager(new GridLayoutManager(this,3));
+
+
+        adapter_result2 result_adapter = new adapter_result2();
+        result_recycler.setAdapter(result_adapter);
 
         //아이템 로드
-        adapter2.setItems(new RecommendData_Sample().getItems());
+        result_adapter.setItems(requestResultPost(searchNode));
+
+        //Drawer
+        ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
+        //create Data
+        myList.setAdapter(new ExpandableAdapter(this, getDummyRoot(searchNode).lowLayer, searchNode));
     }
 
+    //도감 검색결과 요청.
+    private ArrayList<NewPost> requestResultPost(CategoryNode node) {
+        //인탠트를 통해 받아온 검색 노드.
+        Toast.makeText(getApplicationContext(), node.title, Toast.LENGTH_SHORT).show();
 
+
+        if(node.getId() == 1) {
+            return new ResultPost_Dummy().getSinger();
+        } else {
+            return new ResultPost_Dummy().getFood();
+        }
+        //Dummy Data(데님바지).
+//        return new ResultPost_Dummy().getSinger();
+    }
+
+    //저장 게시물 요청.
+    private ArrayList<SavedPost> requestSavedPost(CategoryNode node) {
+        //Dummy Data(데님바지).
+        if(node.getId() == 1) {
+            return new SavedPost_Dummy().getSinger();
+        } else {
+            return new SavedPost_Dummy().getFood();
+        }
+
+    }
+
+    private CategoryNode getDummyRoot (CategoryNode node) {
+        //첫번째 index의 dummy data 가져옴
+        if(node.getId() == 1) {
+            return new CategoryData_Dummy().getItems().get(0);
+        } else {
+            return new CategoryData_Dummy().getItems().get(3);
+        }
+
+    }
 
 
     //액션바에 menu_resul.xml 내용 지정
@@ -65,10 +120,8 @@ public class ResultActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
         //menu.xml에서 지정한 item 이벤트 추가
         switch (item.getItemId()) {
-
 
             case R.id.myBook:
             {

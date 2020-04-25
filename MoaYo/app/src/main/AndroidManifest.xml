@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".ResultActivity"/>
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -25,6 +25,8 @@
 
         <activity android:name=".BookManageActivity" android:parentActivityName=".MainActivity"/>
         <activity android:name=".BookDetailActivity" android:parentActivityName=".BookManageActivity"/>
+        <activity android:name=".ResultActivity" android:parentActivityName=".BookManageActivity"/>
+        <activity android:name=".BookFormActivity" android:parentActivityName=".MainActivity"/>
 
     </application>
 
