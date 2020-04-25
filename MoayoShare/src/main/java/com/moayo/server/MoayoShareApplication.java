@@ -9,5 +9,5 @@ public class MoayoShareApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MoayoShareApplication.class, args);
 	}
-
+	// git test
 }
