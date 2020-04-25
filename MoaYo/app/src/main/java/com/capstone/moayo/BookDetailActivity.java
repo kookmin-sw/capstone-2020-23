@@ -1,32 +1,20 @@
 package com.capstone.moayo;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
+//import android.widget.ExpandableListView.OnChildClickListener;
+//import android.widget.ExpandableListView.OnGroupClickListener;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.capstone.moayo.Adapter.ExpandableAdapter;
-import com.capstone.moayo.model.BookData;
+import com.capstone.moayo.model.CategoryNode;
 
-import java.util.ArrayList;
 
 public class BookDetailActivity extends AppCompatActivity{
 
-    private ArrayList<BookData> createData() {
-        ArrayList<BookData> book_list = new ArrayList<>();
-        BookData book = new BookData("상의");
-        book.addChild("후드/집업");
-        book.addChild("맨투맨");
-        book.addChild("니트");
 
-        book_list.add(book);
-
-        return book_list;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

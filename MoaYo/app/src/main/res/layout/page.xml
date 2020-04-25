@@ -19,28 +19,156 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/bookBtn1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:text="1"
-            />
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/bookBtn2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="2"
-            />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
-            <Button
-                android:id="@+id/bookBtn3"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:text="3"
-            />
+                <TextView
+                    android:id="@+id/bookBtn1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/bookBtn2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/bookBtn3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="3" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/bookBtn4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/bookBtn5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="5" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost6"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/bookBtn6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="6" />
+
+            </LinearLayout>
 
         </TableRow>
 
@@ -50,59 +178,79 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/bookBtn4"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:text="4"
-                />
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/bookBtn5"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="5"
-                />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost7"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
-            <Button
-                android:id="@+id/bookBtn6"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:text="6"
-                />
+                <TextView
+                    android:id="@+id/bookBtn7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="7" />
 
-        </TableRow>
+            </LinearLayout>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/bookBtn7"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:text="7"
-                />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost8"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
-            <Button
-                android:id="@+id/bookBtn8"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="8"
-                />
+                <TextView
+                    android:id="@+id/bookBtn8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="8" />
 
-            <Button
-                android:id="@+id/bookBtn9"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:text="9"
-                />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/myBookPost9"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/bookBtn9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_background"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="9" />
+
+
+            </LinearLayout>
+
 
         </TableRow>
 
