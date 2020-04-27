@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 public class DBHelper {
 
     private static final String DATABASE_NAME = "MoayoStorage(SQLite).db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 2;
     private static DatabaseHelper mDBHelper;
     private Context mCtx;
 
@@ -17,12 +17,9 @@ public class DBHelper {
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
-            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._DOGAMCREATE);
-            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE1);
-            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._HCREATE);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE0);
-            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CPCREATE);
-            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CHCREATE);
+            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE1);
+            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._DOGAMCREATE);
         }
 
         public DatabaseHelper(Context context, String name, CursorFactory factory, int version){
@@ -31,12 +28,9 @@ public class DBHelper {
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._CPTABLENAME);
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._CHTABLENAME);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME0);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME1);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._DOGAMTABLENAME);
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._HTABLENAME);
             onCreate(sqLiteDatabase);
         }
     }

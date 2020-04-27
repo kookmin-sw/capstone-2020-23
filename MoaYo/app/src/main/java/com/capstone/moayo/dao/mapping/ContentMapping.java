@@ -1,17 +1,21 @@
 package com.capstone.moayo.dao.mapping;
 
-public class PostMapping {
+public class ContentMapping {
     private int id;
+    private int parent;
+    private int level;
     private String url;
     private String imgUrl;
     private String info;
     private String hashTag;
 
-    public PostMapping(){
+    public ContentMapping(){
 
     }
-    public PostMapping(int id, String url, String imgUrl, String info, String hashTag){
+    public ContentMapping(int id,int parent,int level,String url,String imgUrl,String info,String hashTag){
         this.id = id;
+        this.parent = parent;
+        this.level = level;
         this.url = url;
         this.imgUrl = imgUrl;
         this.info = info;
@@ -24,6 +28,22 @@ public class PostMapping {
 
     public int getId() {
         return id;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public void setUrl(String url) {
