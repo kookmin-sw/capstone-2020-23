@@ -1,8 +1,6 @@
 package com.capstone.moayo.dao;
 
-import android.database.Cursor;
-
-import com.capstone.moayo.dao.mapping.ContentMapping;
+import com.capstone.moayo.dao.mapping.PostMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 
 public interface ContentDao {
@@ -13,7 +11,7 @@ public interface ContentDao {
 
     public boolean delete(DBHelper dbHelper,int id);
     // 커서 이용한 뒤 close()할것.
-    public ContentMapping selectById(DBHelper dbHelper, int id);
+    public PostMapping selectById(DBHelper dbHelper, int id);
 
-    public ContentMapping[] selectByparent(DBHelper dbHelper, int parent);
+    public PostMapping[] selectByparent(DBHelper dbHelper, int parent);
 }
