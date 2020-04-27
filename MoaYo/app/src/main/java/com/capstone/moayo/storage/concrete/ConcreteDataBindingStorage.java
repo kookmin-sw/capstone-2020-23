@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.storage.DataBindingStorage;
-import com.capstone.moayo.util.retrofit.InstagramService;
+import com.capstone.moayo.util.retrofit.InstagramAPI;
 
 import org.json.JSONObject;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConcreteDataBindingStorage implements DataBindingStorage {
-    private InstagramService instagramService;
+    private InstagramAPI instagramService;
 
     public ConcreteDataBindingStorage(Context context) {
 //        instagramService = APIUtils.getInstagramService();

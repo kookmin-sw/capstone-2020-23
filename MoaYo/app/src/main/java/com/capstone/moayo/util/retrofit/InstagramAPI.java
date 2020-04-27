@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface InstagramService {
+public interface InstagramAPI {
     @GET("/api/v1/topsearch?query={querys}")
     Call<List<String>> listResult(@Path("querys") String querys);
 

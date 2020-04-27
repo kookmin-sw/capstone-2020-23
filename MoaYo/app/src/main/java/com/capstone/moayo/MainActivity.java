@@ -1,10 +1,5 @@
 package com.capstone.moayo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,14 +12,21 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.capstone.moayo.Adapter.adapter_main1;
 import com.capstone.moayo.Adapter.adapter_main2;
-//import com.capstone.moayo.R;
 import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.StorageFactory;
+
+//import com.capstone.moayo.R;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn;
