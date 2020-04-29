@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.capstone.moayo.dao.CategoryDao;
-import com.capstone.moayo.dao.ContentDao;
+import com.capstone.moayo.dao.PostDao;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.PostStorage;
@@ -18,7 +18,7 @@ public class StorageFactoryCreator implements StorageFactory{
     private DataBindingStorage dataBindingStorage;
 
     private CategoryDao categoryDao;
-    private ContentDao contentDao;
+    private PostDao contentDao;
     private static DBHelper mDBHelper;
 
     public static synchronized StorageFactory getInstance() {

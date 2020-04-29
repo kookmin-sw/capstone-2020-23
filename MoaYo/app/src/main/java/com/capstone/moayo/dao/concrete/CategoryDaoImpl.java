@@ -28,26 +28,30 @@ public class CategoryDaoImpl implements CategoryDao {
         return instance;
     }
     @Override
-    public long insert(DBHelper dbHelper,int level, int parent, String title,int dogamId){
+    public long insert(DBHelper dbHelper,int level, int parent, String title,int dogamId,int parentDogamId){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.CATEGORYLEVEL,level);
         values.put(StorageInfo.CreateStorage.CATEGORYPARENT,parent);
+        values.put(StorageInfo.CreateStorage.CATEGORYPARENTDOGAM,parentDogamId);
         values.put(StorageInfo.CreateStorage.CATEGORYTITLE,title);
         values.put(StorageInfo.CreateStorage.CATEGORYDOGAMID,dogamId);
+        mDB.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
         long result =  mDB.insert(StorageInfo.CreateStorage._TABLENAME0,null,values);
         mDB.close();
         return result;
     }
     @Override
-    public boolean update(DBHelper dbHelper,int id,int level,int parent, String title,int dogamId){
+    public boolean update(DBHelper dbHelper,int id,int level,int parent, String title,int dogamId,int parentDogamId){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.CATEGORYID,id);
         values.put(StorageInfo.CreateStorage.CATEGORYLEVEL,level);
         values.put(StorageInfo.CreateStorage.CATEGORYPARENT,parent);
+        values.put(StorageInfo.CreateStorage.CATEGORYPARENTDOGAM,parentDogamId);
         values.put(StorageInfo.CreateStorage.CATEGORYTITLE,title);
         values.put(StorageInfo.CreateStorage.CATEGORYDOGAMID,dogamId);
+        mDB.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
         boolean result = mDB.update(StorageInfo.CreateStorage._TABLENAME0,values,"co_id=" + id,null) > 0;
         mDB.close();
         return result;
