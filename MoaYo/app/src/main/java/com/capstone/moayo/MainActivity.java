@@ -20,11 +20,29 @@ import android.widget.Toast;
 import com.capstone.moayo.Adapter.adapter_main1;
 import com.capstone.moayo.Adapter.adapter_main2;
 //import com.capstone.moayo.R;
+import com.capstone.moayo.dao.CategoryDao;
+import com.capstone.moayo.dao.CategoryHashtagDao;
+import com.capstone.moayo.dao.CategoryPostDao;
+import com.capstone.moayo.dao.DogamDao;
+import com.capstone.moayo.dao.HashtagDao;
+import com.capstone.moayo.dao.PostDao;
+import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
+import com.capstone.moayo.dao.concrete.CategoryHashtagDaoImpl;
+import com.capstone.moayo.dao.concrete.CategoryPostDaoImpl;
+import com.capstone.moayo.dao.concrete.DogamDaoImpl;
+import com.capstone.moayo.dao.concrete.HashtagDaoImpl;
+import com.capstone.moayo.dao.concrete.PostDaoImpl;
+import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
+import com.capstone.moayo.dao.mapping.CategoryPostMapping;
+import com.capstone.moayo.dao.mapping.HashTagMapping;
+import com.capstone.moayo.dao.mapping.PostMapping;
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.StorageFactory;
+import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn;
@@ -42,6 +60,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        StorageFactory sf = StorageFactoryCreator.getInstance();
+//        DBHelper mDB = sf.initDao(this);
+//
+//        try {
+//            DogamDao dogamDao = DogamDaoImpl.getInstance();
+//            CategoryDao categoryDao = CategoryDaoImpl.getInstance();
+//            HashtagDao hashtagDao = HashtagDaoImpl.getInstance();
+//            PostDao postDao = PostDaoImpl.getInstance();
+//
+////            mDB.upgrade(mDB.getWritableDB());
+//
+//            long dogamId = dogamDao.insert(mDB,"NewDogam2","This is new Dogam2","12345");
+//            long rootCategoryId = categoryDao.rootInsert(mDB,1,0,"음식",(int)dogamId,(int)dogamId);
+//            categoryDao.rootUpdate(mDB,(int)rootCategoryId,1,(int)rootCategoryId,"음식",(int)dogamId,(int)dogamId);
+//            hashtagDao.insert(mDB,new HashTagMapping("먹스타그램"));
+//            long postId = postDao.insert(mDB,new PostMapping(0,"url","imgUrl","info","hashtag"));
+//
+//            CategoryPostDao categoryPostDao = CategoryPostDaoImpl.getInstance();
+//            CategoryHashtagDao categoryHashtagDao = CategoryHashtagDaoImpl.getInstance();
+//
+//            long categoryPostId = categoryPostDao.insert(mDB,new CategoryPostMapping((int)dogamId,(int)rootCategoryId,(int)postId));
+//            long categoryHashId = categoryHashtagDao.insert(mDB,new CategoryHashTagMapping((int)dogamId,(int)rootCategoryId,"먹스타그램"));
+//
+//        }catch (Exception e ){
+//            e.printStackTrace();
+//        }
+
 //        //리소스 파일에서 추가한 툴바를 앱바로 지정하기
 //        Toolbar mainToolBar = (Toolbar) findViewById(R.id.mainToolBar);
 //        setSupportActionBar(mainToolBar);

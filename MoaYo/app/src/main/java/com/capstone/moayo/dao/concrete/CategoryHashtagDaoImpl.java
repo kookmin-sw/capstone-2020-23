@@ -14,6 +14,18 @@ import java.util.List;
 
 public class CategoryHashtagDaoImpl implements CategoryHashtagDao {
 
+    private volatile static CategoryHashtagDao instance;
+
+    public static synchronized CategoryHashtagDao getInstance(){
+        if(instance == null) {
+            synchronized (CategoryHashtagDaoImpl.class) {
+                if(instance == null) {
+                    instance = new CategoryHashtagDaoImpl();
+                }
+            }
+        }
+        return instance;
+    }
     @Override
     public long insert(DBHelper dbHelper, CategoryHashTagMapping categoryHashTagMapping) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();

@@ -13,7 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HashtagDaoImpl implements HashtagDao {
+    private volatile static HashtagDao instance;
 
+    public static synchronized HashtagDao getInstance() {
+        if(instance == null) {
+            synchronized (HashtagDaoImpl.class) {
+                if(instance == null) {
+                    instance = new HashtagDaoImpl();
+                }
+            }
+        }
+        return instance;
+    }
     @Override
     public long insert(DBHelper dbHelper, HashTagMapping hashTagMapping) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();

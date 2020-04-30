@@ -6,6 +6,7 @@ public final class StorageInfo{
     public static final class CreateStorage implements BaseColumns{
         // tb_category
         public static final String FOREIGNKEY_ON = "PRAGMA foreign_keys = ON;";
+        public static final String FOREIGNKEY_OFF = "PRAGMA foreign_keys = OFF";
 
         public static final String CATEGORYID = "co_id";
         public static final String CATEGORYTITLE = "co_title";
@@ -21,9 +22,8 @@ public final class StorageInfo{
                 CATEGORYPARENT + " integer, "+
                 CATEGORYPARENTDOGAM + " integer,"+
                 CATEGORYLEVEL + " integer not null ,"+ "primary key(co_id,co_dogamId),"+
-                "constraint fk_dogamId foreign key(co_dogamId) references tb_dogamlist(co_id) ON DELETE CASCADE," +
-                "constraint fk_parent foreign key(co_parent) references tb_category(co_id) ON DELETE CASCADE," +
-                "constraint fk_parentDogam foreign key(co_parentDogam) references tb_category(co_dogamId) ON DELETE CASCADE );";
+                "foreign key(co_dogamId) references tb_dogamlist(co_id) ON DELETE CASCADE," +
+                "foreign key(co_parent,co_parentDogam) references tb_category(co_id,co_dogamId) ON DELETE CASCADE);";
 
         // tb_postHavingLike
         public static final String CID = "co_postId";
@@ -48,13 +48,12 @@ public final class StorageInfo{
                 CPDOGAMID + " integer ,"+
                 CPCATEGORYID + " integer ,"+
                 CPPOSTID + " integer ,"+ "primary key(co_dogamId,co_categoryId,co_postId), " +
-                " constraint fk_dogamId foreign key(co_dogamId) references tb_category(co_dogamId) ON DELETE CASCADE ON UPDATE CASCADE," +
-                " constraint fk_categoryId foreign key(co_categoryId) references tb_category(co_id) ON DELETE CASCADE ON UPDATE CASCADE," +
-                " constraint fk_postId foreign key(co_postId) references tb_postHavingLike(co_postId) ON DELETE CASCADE ON UPDATE CASCADE)";
+                "foreign key(co_dogamId,co_categoryId) references tb_category(co_dogamId,co_id) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "foreign key(co_postId) references tb_postHavingLike(co_postId) ON DELETE CASCADE ON UPDATE CASCADE)";
 
         // tb_hashtag
         public static final String HHASHTAG = "co_hashtag";
-        public static final String _HTABLENAME = "tb_hasgtag";
+        public static final String _HTABLENAME = "tb_hashtag";
         public static final String _HCREATE = "create table if not exists " + _HTABLENAME + "(" + HHASHTAG + " text primary key)";
 
         // tb_category_hashtag
@@ -66,9 +65,8 @@ public final class StorageInfo{
                 CHDOGAMID + " integer, " +
                 CHCATEGORYID + " integer, " +
                 CHHASHTAG + " text," + "primary key(co_dogamId,co_categoryId,co_hashtag)," +
-                " constraint fk_dogamId foreign key(co_dogamId) references tb_category(co_dogamId) ON DELETE CASCADE ON UPDATE CASCADE," +
-                " constraint fk_categoryId foreign key(co_categoryId) references tb_category(co_id) ON DELETE CASCADE ON UPDATE CASCADE," +
-                " constraint fk_hashtag foreign key(co_hashtag) references tb_hashtag(co_hashtag) ON DELETE CASCADE ON UPDATE CASCADE)";
+                "foreign key(co_dogamId,co_categoryId) references tb_category(co_dogamId,co_id) ON DELETE CASCADE ON UPDATE CASCADE," +
+                "foreign key(co_hashtag) references tb_hashtag(co_hashtag) ON DELETE CASCADE ON UPDATE CASCADE)";
 
         // tb_dogamlist
         public static final String DOGAMID = "co_id";
