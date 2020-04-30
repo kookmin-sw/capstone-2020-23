@@ -1,3 +1,6 @@
 [submodule "src/instacrawler"]
 	path = src/instacrawler
 	url = https://github.com/joshua-dev/instacrawler
+[submodule "src/MoaYoSearch"]
+	path = src/MoaYoSearch
+	url = https://github.com/joshua-dev/instacrawler
