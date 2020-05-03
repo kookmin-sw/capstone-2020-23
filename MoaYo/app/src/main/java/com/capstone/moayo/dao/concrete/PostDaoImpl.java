@@ -67,7 +67,8 @@ public class PostDaoImpl implements PostDao {
     @Override
     public PostMapping selectById(DBHelper dbHelper, int id) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
-        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_id="+id+";",null);
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_postId="+id+";",null);
+        c.moveToFirst();
         PostMapping cm = new PostMapping(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4));
         c.close();
         mDB.close();

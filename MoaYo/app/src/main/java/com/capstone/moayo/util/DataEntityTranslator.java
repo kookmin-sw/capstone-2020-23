@@ -22,10 +22,12 @@ public class DataEntityTranslator {
         while(c.moveToNext()){
             CategoryNode cn = new CategoryNode();
             cn.setId(c.getInt(0));
-            cn.setTitle(c.getString(1));
-            cn.setLevel(c.getInt(3));
+            cn.setDogamId(c.getInt(1));
+            cn.setTitle(c.getString(2));
+            cn.setParentDogamId(c.getInt(4));
+            cn.setLevel(c.getInt(5));
 
-            nodeSet.put(c.getInt(0),Pair.create(c.getInt(2),cn));
+            nodeSet.put(c.getInt(0),Pair.create(c.getInt(3),cn));
         }
         c.close();
 
@@ -41,6 +43,7 @@ public class DataEntityTranslator {
         return root;
     }
 
+    // need to modify.
     public CategoryNode cursorToNode(Cursor c) {
         CategoryNode rootNode = null;
         List<Pair<Integer, CategoryNode>> second_layer = new ArrayList<>();

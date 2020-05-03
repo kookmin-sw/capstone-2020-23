@@ -58,10 +58,11 @@ public class HashtagDaoImpl implements HashtagDao {
     public List<HashTagMapping> selectAll(DBHelper dbHelper) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._HTABLENAME +";",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<HashTagMapping> results = new ArrayList<HashTagMapping>();
+//        results.add(new HashTagMapping(c.getString(0)));
         while(c.moveToNext()){
-            results.add(new HashTagMapping(c.getString(1)));
+            results.add(new HashTagMapping(c.getString(0)));
         }
         c.close();
         mDB.close();

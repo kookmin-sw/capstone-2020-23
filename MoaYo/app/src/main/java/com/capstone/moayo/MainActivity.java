@@ -34,15 +34,19 @@ import com.capstone.moayo.dao.concrete.HashtagDaoImpl;
 import com.capstone.moayo.dao.concrete.PostDaoImpl;
 import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
 import com.capstone.moayo.dao.mapping.CategoryPostMapping;
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.mapping.PostMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn;
@@ -69,20 +73,47 @@ public class MainActivity extends AppCompatActivity {
 //            CategoryDao categoryDao = CategoryDaoImpl.getInstance();
 //            HashtagDao hashtagDao = HashtagDaoImpl.getInstance();
 //            PostDao postDao = PostDaoImpl.getInstance();
-//
-////            mDB.upgrade(mDB.getWritableDB());
-//
-//            long dogamId = dogamDao.insert(mDB,"NewDogam2","This is new Dogam2","12345");
-//            long rootCategoryId = categoryDao.rootInsert(mDB,1,0,"음식",(int)dogamId,(int)dogamId);
-//            categoryDao.rootUpdate(mDB,(int)rootCategoryId,1,(int)rootCategoryId,"음식",(int)dogamId,(int)dogamId);
-//            hashtagDao.insert(mDB,new HashTagMapping("먹스타그램"));
-//            long postId = postDao.insert(mDB,new PostMapping(0,"url","imgUrl","info","hashtag"));
-//
 //            CategoryPostDao categoryPostDao = CategoryPostDaoImpl.getInstance();
 //            CategoryHashtagDao categoryHashtagDao = CategoryHashtagDaoImpl.getInstance();
 //
+//            mDB.upgrade(mDB.getWritableDB());
+//
+//            long dogamId = dogamDao.insert(mDB,"NewDogam2","This is new Dogam2","12345");
+//            long rootCategoryId = categoryDao.rootInsert(mDB,1,0,"음식",(int)dogamId,(int)dogamId);
+////            categoryDao.rootUpdate(mDB,(int)rootCategoryId,1,(int)rootCategoryId,"음식",(int)dogamId,(int)dogamId);
+//            hashtagDao.insert(mDB,new HashTagMapping("먹스타그램"));
+//            long postId = postDao.insert(mDB,new PostMapping(0,"url","imgUrl","info","hashtag"));
+//
+//
 //            long categoryPostId = categoryPostDao.insert(mDB,new CategoryPostMapping((int)dogamId,(int)rootCategoryId,(int)postId));
 //            long categoryHashId = categoryHashtagDao.insert(mDB,new CategoryHashTagMapping((int)dogamId,(int)rootCategoryId,"먹스타그램"));
+//
+//            long result = categoryDao.insert(mDB,2,(int)rootCategoryId,"중국음식",(int)dogamId,(int)dogamId);
+//            System.out.println(result);
+//            CategoryNode cn = categoryDao.selectByDogamId(mDB,1);
+//            System.out.println(cn.toString());
+//
+//            DogamMapping[] dm = dogamDao.selectAll(mDB);
+//            for(DogamMapping m : dm){
+//                System.out.println(m.getId());
+//            }
+//
+//            List<HashTagMapping> hm = hashtagDao.selectAll(mDB);
+//            for(HashTagMapping m : hm){
+//                System.out.println(m.getHashtag());
+//            }
+//
+//            System.out.println(postDao.selectById(mDB,1).getInfo());
+//
+//            List<CategoryPostMapping> cpm = categoryPostDao.selectByDogamId(mDB,1);
+//            for(CategoryPostMapping m : cpm){
+//                System.out.println(m.getCategoryId());
+//            }
+//
+//            List<CategoryHashTagMapping> chm = categoryHashtagDao.selectByDogamId(mDB,1);
+//            for(CategoryHashTagMapping m : chm){
+//                System.out.println(m.getHashtag());
+//            }
 //
 //        }catch (Exception e ){
 //            e.printStackTrace();

@@ -43,7 +43,7 @@ public class CategoryHashtagDaoImpl implements CategoryHashtagDao {
     public List<CategoryHashTagMapping> selectByDogamId(DBHelper dbHelper, int dogamId) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._CHTABLENAME +" where co_dogamId = "+dogamId+";",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<CategoryHashTagMapping> results = new ArrayList<CategoryHashTagMapping>();
         while(c.moveToNext()){
             results.add(new CategoryHashTagMapping(c.getInt(0),c.getInt(1),c.getString(2)));
@@ -57,7 +57,7 @@ public class CategoryHashtagDaoImpl implements CategoryHashtagDao {
     public List<CategoryHashTagMapping> selectByCategoryId(DBHelper dbHelper, int categoryId) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._CHTABLENAME +" where co_categoryId = "+categoryId+";",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<CategoryHashTagMapping> results = new ArrayList<CategoryHashTagMapping>();
         while(c.moveToNext()){
             results.add(new CategoryHashTagMapping(c.getInt(0),c.getInt(1),c.getString(2)));
@@ -71,7 +71,7 @@ public class CategoryHashtagDaoImpl implements CategoryHashtagDao {
     public List<CategoryHashTagMapping> selectByHashtag(DBHelper dbHelper, String hashtag) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._CHTABLENAME +" where co_hashtag = '"+hashtag+"';",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<CategoryHashTagMapping> results = new ArrayList<CategoryHashTagMapping>();
         while(c.moveToNext()){
             results.add(new CategoryHashTagMapping(c.getInt(0),c.getInt(1),c.getString(2)));

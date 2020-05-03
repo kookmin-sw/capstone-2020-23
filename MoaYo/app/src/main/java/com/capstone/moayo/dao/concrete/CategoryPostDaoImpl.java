@@ -45,7 +45,7 @@ public class CategoryPostDaoImpl implements CategoryPostDao {
     public List<CategoryPostMapping> selectByDogamId(DBHelper dbHelper, int dogamId) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._CPTABLENAME +" where co_dogamId = "+dogamId+";",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<CategoryPostMapping> results = new ArrayList<CategoryPostMapping>();
         while(c.moveToNext()){
             results.add(new CategoryPostMapping(c.getInt(0),c.getInt(1),c.getInt(2)));
@@ -59,7 +59,7 @@ public class CategoryPostDaoImpl implements CategoryPostDao {
     public List<CategoryPostMapping> selectByCategoryId(DBHelper dbHelper, int categoryId) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._CPTABLENAME +" where co_categoryId = "+categoryId+";",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<CategoryPostMapping> results = new ArrayList<CategoryPostMapping>();
         while(c.moveToNext()){
             results.add(new CategoryPostMapping(c.getInt(0),c.getInt(1),c.getInt(2)));
@@ -73,7 +73,7 @@ public class CategoryPostDaoImpl implements CategoryPostDao {
     public List<CategoryPostMapping> selectByPostId(DBHelper dbHelper, int postId) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._CPTABLENAME +" where co_postId = "+postId+";",null);
-        c.moveToFirst();
+//        c.moveToFirst();
         List<CategoryPostMapping> results = new ArrayList<CategoryPostMapping>();
         while(c.moveToNext()){
             results.add(new CategoryPostMapping(c.getInt(0),c.getInt(1),c.getInt(2)));

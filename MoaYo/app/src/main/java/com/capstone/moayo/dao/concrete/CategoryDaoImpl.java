@@ -38,6 +38,9 @@ public class CategoryDaoImpl implements CategoryDao {
         values.put(StorageInfo.CreateStorage.CATEGORYDOGAMID,dogamId);
         mDB.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
         long result =  mDB.insert(StorageInfo.CreateStorage._TABLENAME0,null,values);
+        mDB.execSQL("UPDATE " + StorageInfo.CreateStorage._TABLENAME0 + " set " + StorageInfo.CreateStorage.CATEGORYID +" = "
+        + result +" where " + StorageInfo.CreateStorage.CATEGORYDOGAMID + " = " + dogamId + " and " + StorageInfo.CreateStorage.CATEGORYID
+        + " IS NULL;");
         mDB.close();
         return result;
     }
@@ -52,6 +55,9 @@ public class CategoryDaoImpl implements CategoryDao {
         values.put(StorageInfo.CreateStorage.CATEGORYTITLE,title);
         values.put(StorageInfo.CreateStorage.CATEGORYDOGAMID,dogamId);
         long result =  mDB.insert(StorageInfo.CreateStorage._TABLENAME0,null,values);
+        mDB.execSQL("UPDATE " + StorageInfo.CreateStorage._TABLENAME0 + " set " + StorageInfo.CreateStorage.CATEGORYID +" = "
+                + result +", "+StorageInfo.CreateStorage.CATEGORYPARENT +" = "+result +" where " + StorageInfo.CreateStorage.CATEGORYDOGAMID + " = " + dogamId + " and " + StorageInfo.CreateStorage.CATEGORYID
+                + " IS NULL;");
         mDB.close();
         return result;
     }
