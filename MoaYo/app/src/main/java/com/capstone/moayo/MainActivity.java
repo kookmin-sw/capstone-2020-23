@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setItems(new CategoryData_Dummy().getItems());
 
 
-        // 추천 공유도감 리사이클러뷰 (리사이클러뷰 2)
+        // 공유도감 리사이클러뷰 (리사이클러뷰 2)
         RecyclerView recyclerView2 = findViewById(R.id.recycler2_main);
         recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
 

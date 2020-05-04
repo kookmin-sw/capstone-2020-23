@@ -2,13 +2,10 @@ package com.capstone.moayo;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.capstone.moayo.Adapter.MainCenterRecyclerAdapter;
+import com.capstone.moayo.Adapter.ShareMenuAdapter;
 import com.capstone.moayo.data.SharedData_Sample;
 
 public class ShareMenuActivity extends AppCompatActivity {
@@ -30,6 +27,16 @@ public class ShareMenuActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("공유 게시판");
 
+
+        RecyclerView recyclerView2 = findViewById(R.id.recycler_shareMenu);
+        recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
+
+
+        ShareMenuAdapter adapter2 = new ShareMenuAdapter();
+        recyclerView2.setAdapter(adapter2);
+
+        //아이템 로드
+        adapter2.setItems(new SharedData_Sample().getItems());
 
 
         Spinner ShareTypeSpinner = (Spinner)findViewById(R.id.shareMenuSpinner);
