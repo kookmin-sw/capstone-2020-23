@@ -148,12 +148,26 @@ public class CategoryData_Dummy {
         CategoryNode travel = new CategoryNode("여행", null, 1);
         travel.setUrl("https://image.edaily.co.kr/images/Photo/files/NP/S/2016/06/PS16060300126.jpg");
 
+        //Dummy CategoryNode
+        CategoryNode dummy = new CategoryNode("더미", null, 1);
+        dummy.setUrl("https://image.flaticon.com/icons/png/512/130/130304.png");
+
+
         nodes.add(singer);
         nodes.add(fashion);
         nodes.add(movie);
         nodes.add(food);
         nodes.add(furniture);
         nodes.add(travel);
+        nodes.add(dummy);
+        nodes.add(dummy);
+        nodes.add(dummy);
+        nodes.add(dummy);
+        nodes.add(dummy);
+        nodes.add(dummy);
+        nodes.add(dummy);
+        nodes.add(dummy);
+
 
         return nodes;
     }

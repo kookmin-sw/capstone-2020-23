@@ -16,7 +16,7 @@ import com.capstone.moayo.model.SharedBook;
 
 import java.util.ArrayList;
 
-public class adapter_main2 extends RecyclerView.Adapter<adapter_main2.ViewHolder> {
+public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRecyclerAdapter.ViewHolder> {
 
     private ArrayList<SharedBook> sharedBooks = new ArrayList<>();
 
@@ -35,19 +35,19 @@ public class adapter_main2 extends RecyclerView.Adapter<adapter_main2.ViewHolder
     }
     @NonNull
     @Override
-    public adapter_main2.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i){
+    public MainCenterRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i){
 
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.recycler2_main, parent, false) ;
-        adapter_main2.ViewHolder vh = new adapter_main2.ViewHolder(view) ;
+        MainCenterRecyclerAdapter.ViewHolder vh = new MainCenterRecyclerAdapter.ViewHolder(view) ;
 
         return vh ;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull adapter_main2.ViewHolder vh, int position) {
+    public void onBindViewHolder(@NonNull MainCenterRecyclerAdapter.ViewHolder vh, int position) {
 
         SharedBook item = sharedBooks.get(position);
 

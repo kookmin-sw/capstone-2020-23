@@ -17,10 +17,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.moayo.Adapter.adapter_main1;
-import com.capstone.moayo.Adapter.adapter_main2;
+import com.capstone.moayo.Adapter.MainTopRecyclerAdapter;
+import com.capstone.moayo.Adapter.MainCenterRecyclerAdapter;
 //import com.capstone.moayo.R;
-import com.capstone.moayo.data.MyBookData_Sample;
+import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.DataBindingService;
@@ -119,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
 
         // 리사이클러뷰에 객체 지정.
-        adapter_main1 adapter = new adapter_main1();
+        MainTopRecyclerAdapter adapter = new MainTopRecyclerAdapter();
         recyclerView.setAdapter(adapter) ;
 
-        adapter.setItems(new MyBookData_Sample().getItems());
+        adapter.setItems(new CategoryData_Dummy().getItems());
 
 
         // 추천 공유도감 리사이클러뷰 (리사이클러뷰 2)
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
 
 
-        adapter_main2 adapter2 = new adapter_main2();
+        MainCenterRecyclerAdapter adapter2 = new MainCenterRecyclerAdapter();
         recyclerView2.setAdapter(adapter2);
 
         //아이템 로드
