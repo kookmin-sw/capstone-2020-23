@@ -11,10 +11,10 @@ import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import java.util.List;
 
 public class ConcretePostService implements PostService {
-    private PostStorage contentStorage;
+    private PostStorage postStorage;
 
     public ConcretePostService(Context context) {
-        contentStorage = StorageFactoryCreator.getInstance().requestContentStorage(context);
+        postStorage = StorageFactoryCreator.getInstance().requestPostStorage(context);
     }
 
     @Override

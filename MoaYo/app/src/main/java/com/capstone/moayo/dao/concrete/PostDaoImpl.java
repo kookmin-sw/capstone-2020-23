@@ -12,21 +12,7 @@ import com.capstone.moayo.dao.sqlite.StorageInfo;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
 
 public class PostDaoImpl implements PostDao {
-    private static SQLiteDatabase mDB;
-    private volatile static PostDao instance;
 
-    private PostDaoImpl(){}
-
-    public static synchronized PostDao getInstance() throws DaoObjectNullException {
-        if(instance == null) {
-            synchronized (PostDaoImpl.class) {
-                if(instance == null) {
-                    instance = new PostDaoImpl();
-                }
-            }
-        }
-        return instance;
-    }
     // if insert new data, id = null;
     @Override
     public long insert(DBHelper dbHelper,PostMapping postMapping){

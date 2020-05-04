@@ -11,19 +11,6 @@ import com.capstone.moayo.dao.sqlite.StorageInfo;
 
 public class DogamDaoImpl implements DogamDao {
 
-    private volatile static DogamDao instance;
-
-    public static synchronized DogamDao getInstance(){
-        if(instance == null) {
-            synchronized (DogamDaoImpl.class) {
-                if(instance == null) {
-                    instance = new DogamDaoImpl();
-                }
-            }
-        }
-        return instance;
-    }
-
     @Override
     public long insert(DBHelper dbHelper, String title, String description, String password) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();

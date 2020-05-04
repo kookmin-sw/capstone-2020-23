@@ -14,19 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryPostDaoImpl implements CategoryPostDao {
-    private volatile static CategoryPostDao instance;
-
-    public static synchronized CategoryPostDao getInstance() {
-        if(instance == null) {
-            synchronized (CategoryPostDaoImpl.class) {
-                if(instance == null) {
-                    instance = new CategoryPostDaoImpl();
-                }
-            }
-        }
-        return instance;
-    }
-
 
     @Override
     public long insert(DBHelper dbHelper, CategoryPostMapping categoryPostMapping) {

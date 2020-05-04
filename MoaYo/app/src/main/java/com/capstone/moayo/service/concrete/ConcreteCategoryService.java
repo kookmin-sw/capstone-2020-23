@@ -15,6 +15,7 @@ public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
     private Context applicationContext;
 
+
     public ConcreteCategoryService(Context context) {
         this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage(context);
         applicationContext = context;
@@ -68,7 +69,12 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
-        //TODO implement code
+        Category foundCategory = categoryStorage.retrieveById(modifyCategory.getId());
+        if(foundCategory == null) {
+            return "No Category";
+        }
+
+        categoryStorage.update(modifyCategory);
         return null;
     }
 

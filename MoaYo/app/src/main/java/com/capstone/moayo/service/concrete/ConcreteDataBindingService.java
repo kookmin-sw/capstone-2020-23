@@ -5,7 +5,6 @@ import android.content.Context;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.DataBindingService;
-import com.capstone.moayo.storage.DataBindingStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 
 import org.json.JSONObject;

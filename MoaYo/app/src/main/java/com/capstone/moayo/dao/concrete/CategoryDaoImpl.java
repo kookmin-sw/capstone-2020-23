@@ -13,20 +13,8 @@ import com.capstone.moayo.util.DataEntityTranslator;
 
 public class CategoryDaoImpl implements CategoryDao {
 
-    private volatile static CategoryDao instance;
+    public CategoryDaoImpl(){}
 
-    private CategoryDaoImpl(){}
-
-    public static synchronized CategoryDao getInstance() throws DaoObjectNullException {
-        if(instance == null) {
-            synchronized (CategoryDaoImpl.class) {
-                if(instance == null) {
-                    instance = new CategoryDaoImpl();
-                }
-            }
-        }
-        return instance;
-    }
     @Override
     public long insert(DBHelper dbHelper,int level, int parent, String title,int dogamId,int parentDogamId){
         SQLiteDatabase mDB = dbHelper.getWritableDB();

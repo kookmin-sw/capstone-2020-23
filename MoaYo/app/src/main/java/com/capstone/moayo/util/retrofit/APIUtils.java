@@ -4,8 +4,8 @@ public class APIUtils {
     private static final String SEARCH_URL = "";
     private static final String SHARE_URL = "";
 
-    public static InstagramAPI getInstagramAPI() {
-        return RetrofitClient.getClient(SEARCH_URL).create(InstagramAPI.class);
+    public static SearchAPI getSearchAPI() {
+        return RetrofitClient.getClient(SEARCH_URL).create(SearchAPI.class);
     }
 
     public static ShareAPI getShareAPI() {

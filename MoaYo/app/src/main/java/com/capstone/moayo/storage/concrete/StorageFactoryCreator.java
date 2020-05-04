@@ -8,17 +8,13 @@ import com.capstone.moayo.dao.PostDao;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.PostStorage;
-import com.capstone.moayo.storage.DataBindingStorage;
 import com.capstone.moayo.storage.StorageFactory;
 
 public class StorageFactoryCreator implements StorageFactory{
     private volatile static StorageFactory instance;
     private CategoryStorage categoryStorage;
     private PostStorage contentStorage;
-    private DataBindingStorage dataBindingStorage;
 
-    private CategoryDao categoryDao;
-    private PostDao contentDao;
     private static DBHelper mDBHelper;
 
     public static synchronized StorageFactory getInstance() {
@@ -41,19 +37,11 @@ public class StorageFactoryCreator implements StorageFactory{
     }
 
     @Override
-    public PostStorage requestContentStorage(Context context) {
+    public PostStorage requestPostStorage(Context context) {
         if(contentStorage == null) {
             contentStorage = new ConcretePostStorage(context);
         }
         return contentStorage;
-    }
-
-    @Override
-    public DataBindingStorage requestDataBindingStorage(Context context) {
-        if(dataBindingStorage == null) {
-            dataBindingStorage = new ConcreteDataBindingStorage(context);
-        }
-        return dataBindingStorage;
     }
 
     @Override
