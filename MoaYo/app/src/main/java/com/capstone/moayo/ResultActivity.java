@@ -21,7 +21,9 @@ import com.capstone.moayo.Adapter.adapter_result2;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.ResultPost_Dummy;
 import com.capstone.moayo.data.SavedPost_Dummy;
-import com.capstone.moayo.model.CategoryNode;
+
+import com.capstone.moayo.entity.CategoryNode;
+
 import com.capstone.moayo.model.NewPost;
 import com.capstone.moayo.model.SavedPost;
 
@@ -41,7 +43,7 @@ public class ResultActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("# "+searchNode.title);
+        actionBar.setTitle("# "+searchNode.getTitle());
 
 
         // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
@@ -70,13 +72,13 @@ public class ResultActivity extends AppCompatActivity {
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
-        myList.setAdapter(new ExpandableAdapter(this, getDummyRoot(searchNode).lowLayer, searchNode));
+        myList.setAdapter(new ExpandableAdapter(this, (ArrayList<CategoryNode>) getDummyRoot(searchNode).getLowLayer(), searchNode));
     }
 
     //도감 검색결과 요청.
     private ArrayList<NewPost> requestResultPost(CategoryNode node) {
         //인탠트를 통해 받아온 검색 노드.
-        Toast.makeText(getApplicationContext(), node.title, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), node.getTitle(), Toast.LENGTH_SHORT).show();
 
 
         if(node.getId() == 1) {

@@ -7,9 +7,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.PageFragment;
-import com.capstone.moayo.model.Category;
-import com.capstone.moayo.model.CategoryNode;
-import com.capstone.moayo.model.MyBook;
+import com.capstone.moayo.entity.CategoryNode;
+//import com.capstone.moayo.model.MyBook;
 
 import java.util.ArrayList;
 
