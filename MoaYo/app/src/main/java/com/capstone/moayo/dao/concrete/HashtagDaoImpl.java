@@ -40,7 +40,7 @@ public class HashtagDaoImpl implements HashtagDao {
     public boolean delete(DBHelper dbHelper, HashTagMapping hashTagMapping) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         mDB.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
-        boolean result = mDB.delete(StorageInfo.CreateStorage._HTABLENAME,"co_hashtag="+hashTagMapping.getHashtag(),null) > 0;
+        boolean result = mDB.delete(StorageInfo.CreateStorage._HTABLENAME,"co_hashtag='"+hashTagMapping.getHashtag()+"'",null) > 0;
         mDB.close();
         return result;
     }

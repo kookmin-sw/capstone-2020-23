@@ -51,7 +51,7 @@ public class PostDaoImpl implements PostDao {
         values.put(StorageInfo.CreateStorage.IMGURL,postMapping.getImgUrl());
         values.put(StorageInfo.CreateStorage.INFO,postMapping.getInfo());
         values.put(StorageInfo.CreateStorage.HASHTAG,postMapping.getHashTag());
-        boolean result = mDB.update(StorageInfo.CreateStorage._TABLENAME1,values,"co_id=" + postMapping.getId(),null) > 0;
+        boolean result = mDB.update(StorageInfo.CreateStorage._TABLENAME1,values,"co_postId=" + postMapping.getId(),null) > 0;
         mDB.close();
         return result;
     }
@@ -59,7 +59,7 @@ public class PostDaoImpl implements PostDao {
     public boolean delete(DBHelper dbHelper,int id){
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         mDB.execSQL(StorageInfo.CreateStorage.FOREIGNKEY_ON);
-        boolean result = mDB.delete(StorageInfo.CreateStorage._TABLENAME1,"co_id="+id,null) > 0;
+        boolean result = mDB.delete(StorageInfo.CreateStorage._TABLENAME1,"co_postId="+id,null) > 0;
         mDB.close();
         return result;
     }
