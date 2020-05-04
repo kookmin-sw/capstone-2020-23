@@ -40,7 +40,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.recycler2_main, parent, false) ;
+        View view = inflater.inflate(R.layout.main_center_recycler, parent, false) ;
         MainCenterRecyclerAdapter.ViewHolder vh = new MainCenterRecyclerAdapter.ViewHolder(view) ;
 
         return vh ;
