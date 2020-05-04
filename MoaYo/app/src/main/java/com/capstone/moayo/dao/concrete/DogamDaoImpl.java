@@ -95,9 +95,18 @@ public class DogamDaoImpl implements DogamDao {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._DOGAMTABLENAME +" ;",null);
         c.moveToFirst();
+        DogamMapping[] result = new DogamMapping[c.getCount()];
+        for(int i = 0;i<c.getCount();i++){
+            result[i] = new DogamMapping();
+            result[i].setId(c.getInt(0));
+            result[i].setTitle(c.getString(1));
+            result[i].setDesription(c.getString(2));
+            result[i].setPassword(c.getString(3));
+            c.moveToNext();
+        }
         c.close();
         mDB.close();
 
-        return null;
+        return result;
     }
 }
