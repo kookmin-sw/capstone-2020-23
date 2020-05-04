@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.capstone.moayo.model.CategoryNode;
+import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public class PageFragment extends Fragment implements OnClickListener {
             CircleImageView circleImageView = (CircleImageView) rootView.findViewById(ImageID);
 
             if (i <= book_list.size()) {
-                bookBtnView.setText(book_list.get(i-1).title);
+                bookBtnView.setText(book_list.get(i-1).getTitle());
                 bookBtnView.setTag(book_list.get(i-1));
 //                bookBtnView.setOnClickListener(this);
                 Glide.with(getContext()).load(book_list.get(i-1).getUrl()).into(circleImageView);

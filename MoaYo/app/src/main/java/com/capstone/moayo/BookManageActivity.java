@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.capstone.moayo.Adapter.PagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.model.CategoryNode;
+import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 

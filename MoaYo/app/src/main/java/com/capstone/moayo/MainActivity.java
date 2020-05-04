@@ -27,12 +27,7 @@ import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.StorageFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private Button createBtn;
-    private Button requestDataBtn;
-    private Button DBButton;
-    private Button findBtn;
-    private Button deleteBtn;
-    private Button getTagBtn;
+    private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
 
     private CategoryService categoryService;
     private DataBindingService dataBindingService;
@@ -49,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(""); //앱바에서 제목을 없애고 activity_main.xml에서 설정한 제목이 뜨게 설정
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        getSupportActionBar().setCustomView(R.layout.logo);
+
 
         TextView createBook = (TextView) findViewById(R.id.createBook);
         TextView shareBook = (TextView) findViewById(R.id.shareBook);
@@ -142,13 +136,9 @@ public class MainActivity extends AppCompatActivity {
         //아이템 로드
         adapter2.setItems(new SharedData_Sample().getItems());
 
-
-
-
     }
 
     //mainToolBar에 menu.xml을 인플레이트함
-
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
@@ -159,10 +149,8 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
         //menu.xml에서 지정한 item 이벤트 추가
         switch (item.getItemId()) {
-
 
             default:
             {
