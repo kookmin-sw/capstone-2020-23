@@ -10,6 +10,8 @@ public class CategoryNode {
     private String title;
     private int level;
     private List<String> hashtags;
+    private int dogamId;
+    private int parentDogamId;
 
     private CategoryNode parent;
     private List<CategoryNode> lowLayer;
@@ -44,6 +46,22 @@ public class CategoryNode {
         }
 
         return rootNode;
+    }
+
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
+    }
+
+    public int getDogamId() {
+        return dogamId;
+    }
+
+    public void setParentDogamId(int parentDogamId) {
+        this.parentDogamId = parentDogamId;
+    }
+
+    public int getParentDogamId() {
+        return parentDogamId;
     }
 
     public int getId() {
