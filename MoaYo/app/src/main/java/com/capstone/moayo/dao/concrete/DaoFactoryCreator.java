@@ -1,5 +1,8 @@
 package com.capstone.moayo.dao.concrete;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.CategoryHashtagDao;
 import com.capstone.moayo.dao.CategoryPostDao;
@@ -7,6 +10,7 @@ import com.capstone.moayo.dao.DaoFactory;
 import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.HashtagDao;
 import com.capstone.moayo.dao.PostDao;
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Post;
 
 public class DaoFactoryCreator implements DaoFactory {
@@ -17,6 +21,7 @@ public class DaoFactoryCreator implements DaoFactory {
     private DogamDao dogamDao;
     private HashtagDao hashtagDao;
     private PostDao postDao;
+    private DBHelper dbHelper;
 
     public static synchronized DaoFactory getInstance() {
         if(instance == null) {
@@ -70,5 +75,14 @@ public class DaoFactoryCreator implements DaoFactory {
         if(postDao == null)
             postDao = new PostDaoImpl();
         return postDao;
+    }
+
+    @Override
+    public DBHelper initDao(Context context) {
+        dbHelper.init();
+        SQLiteDatabase db = dbHelper.getWritableDB();
+        dbHelper.create(db);
+        db.close();
+        return dbHelper;
     }
 }

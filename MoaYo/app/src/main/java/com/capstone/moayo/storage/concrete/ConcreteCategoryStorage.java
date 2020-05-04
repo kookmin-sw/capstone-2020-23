@@ -6,6 +6,7 @@ import android.util.Log;
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
+import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.concrete.DogamDaoImpl;
 import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
@@ -22,13 +23,9 @@ public class ConcreteCategoryStorage implements CategoryStorage {
     private DBHelper dbHelper;
 
     public ConcreteCategoryStorage(Context context) {
-        try {
-            dbHelper = StorageFactoryCreator.getInstance().initDao(context);
-            categoryDao = CategoryDaoImpl.getInstance();
-            dogamDao = DogamDaoImpl.getInstance();
-        } catch (DaoObjectNullException e) {
-            e.printStackTrace();
-        }
+        dbHelper = StorageFactoryCreator.getInstance().initDao(context);
+        categoryDao = DaoFactoryCreator.getInstance().requestCategoryDao();
+        dogamDao = DaoFactoryCreator.getInstance().requestDogamDao();
     }
 
     @Override
@@ -48,7 +45,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 //            }
 //        }
 //        Log.d("Category", category.toString());
-        return "Success";
+        return category.toString();
     }
 
     @Override
@@ -112,7 +109,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 //            } else return "fail to update";
 //
 //        } else return "fail to update";
-        return "success to update";
+        return category.toString();
     }
 
     @Override

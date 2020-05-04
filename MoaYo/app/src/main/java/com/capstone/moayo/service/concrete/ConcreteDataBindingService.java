@@ -5,42 +5,40 @@ import android.content.Context;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.DataBindingService;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
+import com.capstone.moayo.util.CategoryConvertor;
+import com.capstone.moayo.util.retrofit.APIUtils;
+import com.capstone.moayo.util.retrofit.RetrofitClient;
+import com.capstone.moayo.util.retrofit.SearchAPI;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class ConcreteDataBindingService implements DataBindingService {
-    private DataBindingStorage dataBindingStorage;
+    private SearchAPI searchAPI;
 
     public ConcreteDataBindingService(Context context) {
-        this.dataBindingStorage = StorageFactoryCreator.getInstance().requestDataBindingStorage(context);
+        searchAPI = APIUtils.getSearchAPI();
     }
 
     @Override
-    public List<Post> requestData(Category category) {
-        JSONObject stream = new JSONObject();
+    public RespondForm requestData(CategoryNodeDto secondLayer, CategoryNodeDto thirdLayer) {
+        String requestForm = CategoryConvertor.convertCategoryToJSON(secondLayer, thirdLayer);
+        Call<RespondForm> call = searchAPI.listContents(requestForm);
+        try {
+            Response<RespondForm> responseForm = call.execute();
+            return responseForm.body();
+        } catch (IOException e) {
 
-
-//        try {
-//            for(CategoryNode node : category.getRoot().getLowLevel()) {
-//                JSONArray second_tags = new JSONArray();
-//                second_tags.put(node.getTitle());
-//                stream.put("second_layer", second_tags);
-//                for(CategoryNode node2 : node.getLowLater()) {
-//                    JSONArray third_tags = new JSONArray();
-//                    third_tags.put(node2.getTitle());
-//                    stream.put("third_layer", third_tags);
-//                    List<Content> contents = dataBindingStorage.request(stream);
-//
-//                }
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        }
         return null;
     }
-
-
 }

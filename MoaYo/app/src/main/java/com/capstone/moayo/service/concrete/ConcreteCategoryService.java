@@ -69,13 +69,13 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
-        Category foundCategory = categoryStorage.retrieveById(modifyCategory.getId());
-        if(foundCategory == null) {
-            return "No Category";
-        }
+//        Category foundCategory = categoryStorage.retrieveById(modifyCategory.getId());
+//        if(foundCategory == null) {
+//            return "No Category";
+//        }
 
-        categoryStorage.update(modifyCategory);
-        return null;
+        String result = categoryStorage.update(modifyCategory);
+        return result;
     }
 
     @Override

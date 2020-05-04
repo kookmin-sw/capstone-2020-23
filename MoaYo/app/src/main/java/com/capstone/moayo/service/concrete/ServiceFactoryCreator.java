@@ -33,7 +33,7 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public PostService requestContentService(Context context) {
+    public PostService requestPostService(Context context) {
         if(contentService == null) {
             contentService = new ConcretePostService(context);
         }
