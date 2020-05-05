@@ -21,6 +21,7 @@ public class TestActivity extends AppCompatActivity {
     private Button convertBtn;
     private Button createBtn;
     private Button modifyBtn;
+    private Button findBtn;
     private CategoryService categoryService;
 
     @Override
@@ -31,6 +32,7 @@ public class TestActivity extends AppCompatActivity {
         convertBtn = findViewById(R.id.convert);
         createBtn = findViewById(R.id.create);
         modifyBtn = findViewById(R.id.modify);
+        findBtn = findViewById(R.id.find);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
@@ -50,13 +52,18 @@ public class TestActivity extends AppCompatActivity {
         });
 
         modifyBtn.setOnClickListener(v -> {
-            CategoryDto testCategory = createCategory();
+            CategoryDto testCategory = categoryService.findCategoryById(1);
             testCategory.setTitle("modify dummy dogam");
             testCategory.getRootNode().setTitle("modify node");
 
             String result = categoryService.modifyCategory(testCategory);
 
             Log.d("modify result", result);
+        });
+
+        findBtn.setOnClickListener(v -> {
+            CategoryDto foundCategory = categoryService.findCategoryById(1);
+            Log.d("found category", foundCategory.toString());
         });
     }
 

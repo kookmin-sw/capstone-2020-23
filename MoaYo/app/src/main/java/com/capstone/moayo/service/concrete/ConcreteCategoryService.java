@@ -8,16 +8,19 @@ import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.storage.CategoryStorage;
+import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.Exception.NullCategoryException;
 
 public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
+    private DogamStorage dogamStorage;
     private Context applicationContext;
 
 
     public ConcreteCategoryService(Context context) {
         this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage(context);
+        this.dogamStorage = StorageFactoryCreator.getInstance().requestDogamStorage(context);
         applicationContext = context;
     }
 
@@ -26,6 +29,8 @@ public class ConcreteCategoryService implements CategoryService {
 
         Category newCategory = newCategoryDto.toCategory();
 
+        int dogamId = dogamStorage.create(newCategory);
+        newCategory.setId(dogamId);
         String result = categoryStorage.create(newCategory);
 
         return result;
@@ -69,10 +74,10 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
-//        Category foundCategory = categoryStorage.retrieveById(modifyCategory.getId());
-//        if(foundCategory == null) {
-//            return "No Category";
-//        }
+        Category foundCategory = categoryStorage.retrieveById(modifyCategory.getId());
+        if(foundCategory == null) {
+            return "No Category";
+        }
 
         String result = categoryStorage.update(modifyCategory);
         return result;

@@ -27,6 +27,7 @@ public class Category{
 
     public CategoryDto toCategoryDto() {
         CategoryDto categoryDto = new CategoryDto(title, description, password, rootNode.toCategoryNodeDto());
+        categoryDto.setId(id);
         return categoryDto;
     }
 

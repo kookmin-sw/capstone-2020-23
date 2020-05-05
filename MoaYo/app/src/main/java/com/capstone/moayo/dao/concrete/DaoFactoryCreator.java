@@ -11,7 +11,6 @@ import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.HashtagDao;
 import com.capstone.moayo.dao.PostDao;
 import com.capstone.moayo.dao.sqlite.DBHelper;
-import com.capstone.moayo.entity.Post;
 
 public class DaoFactoryCreator implements DaoFactory {
     private static volatile DaoFactory instance;
@@ -79,6 +78,9 @@ public class DaoFactoryCreator implements DaoFactory {
 
     @Override
     public DBHelper initDao(Context context) {
+        if(dbHelper == null)
+            dbHelper = new DBHelper(context);
+
         dbHelper.init();
         SQLiteDatabase db = dbHelper.getWritableDB();
         dbHelper.create(db);
