@@ -37,7 +37,8 @@ public class HashtagDaoImpl implements HashtagDao {
     @Override
     public boolean isExist(DBHelper dbHelper, String hashtag) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
-        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._HTABLENAME +" where co_hashtag = ''"+hashtag+"'';",null);
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._HTABLENAME +" where co_hashtag = '"+hashtag+"';",null);
+        if(c.getCount() == 0) return false;
         c.moveToFirst();
         return !c.isNull(0);
     }

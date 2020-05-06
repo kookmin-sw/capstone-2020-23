@@ -4,7 +4,6 @@ import com.capstone.moayo.service.dto.PostDto;
 
 public class Post {
     private int id;
-    private String info;
     private String hashtag;
     private int like;
 
@@ -18,17 +17,16 @@ public class Post {
         this.id = 0;
     }
 
-    public Post(String imgUrl, String url, String info, String hashtag, int like) {
+    public Post(String imgUrl, String url, String hashtag, int like) {
         this();
         this.imgUrl = imgUrl;
         this.url = url;
-        this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
     public PostDto toPostDto() {
-        PostDto postDto = new PostDto(imgUrl, url, info, hashtag, like);
+        PostDto postDto = new PostDto(imgUrl, url, hashtag, like);
         postDto.setCategoryNodeId(categoryNodeId);
         postDto.setId(id);
 
@@ -58,14 +56,6 @@ public class Post {
 
     public String getHashtag() {
         return hashtag;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getInfo() {
-        return info;
     }
 
     public void setLike(int like) {

@@ -35,9 +35,11 @@ public class CategoryNodeDto {
         for (CategoryNodeDto secondNodeDto : lowLayer) {
             CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
             secondNode.setId(secondNodeDto.getId());
+            secondNode.setHashtags(secondNodeDto.getHashtags());
             for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                 CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
                 thirdNode.setId(thirdNodeDto.getId());
+                thirdNode.setHashtags(thirdNodeDto.getHashtags());
                 secondNode.getLowLayer().add(thirdNode);
             }
             rootNode.getLowLayer().add(secondNode);

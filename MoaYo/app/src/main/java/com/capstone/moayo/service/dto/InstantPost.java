@@ -1,18 +1,27 @@
 package com.capstone.moayo.service.dto;
 
-public class InstantPost {
-    private String text;
-    private String url;
-    private String src;
-    private String like;
+import com.google.gson.annotations.SerializedName;
 
-    public InstantPost(String text, String url, String src, String like) {
+public class InstantPost {
+    @SerializedName("text")
+    private String text;
+    @SerializedName("url")
+    private String url;
+    @SerializedName("src")
+    private String src;
+    @SerializedName("like")
+    private int like;
+
+    public InstantPost(String text, String url, String src, int like) {
         this.text = text;
         setUrl(url);
         this.src = src;
         this.like = like;
     }
-
+    public PostDto toPostDto() {
+        PostDto postDto = new PostDto(src, url, text, like);
+        return postDto;
+    }
     public String getText() {
         return text;
     }
@@ -37,11 +46,11 @@ public class InstantPost {
         this.src = src;
     }
 
-    public String getLike() {
+    public int getLike() {
         return like;
     }
 
-    public void setLike(String like) {
+    public void setLike(int like) {
         this.like = like;
     }
 }

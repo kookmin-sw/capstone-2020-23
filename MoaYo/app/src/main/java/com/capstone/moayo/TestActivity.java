@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.capstone.moayo.dao.DaoFactory;
+import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -22,7 +25,10 @@ public class TestActivity extends AppCompatActivity {
     private Button createBtn;
     private Button modifyBtn;
     private Button findBtn;
+    private Button initBtn;
+    private Button removeBtn;
     private CategoryService categoryService;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +39,11 @@ public class TestActivity extends AppCompatActivity {
         createBtn = findViewById(R.id.create);
         modifyBtn = findViewById(R.id.modify);
         findBtn = findViewById(R.id.find);
+        initBtn = findViewById(R.id.init);
+        removeBtn = findViewById(R.id.remove);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         convertBtn.setOnClickListener(v -> {
             CategoryDto testCategory = createCategory();
@@ -65,6 +74,18 @@ public class TestActivity extends AppCompatActivity {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
             Log.d("found category", foundCategory.toString());
         });
+
+        initBtn.setOnClickListener(v -> {
+            dbHelper.upgrade(dbHelper.getWritableDB());
+        });
+
+        removeBtn.setOnClickListener(v -> {
+            CategoryDto foundCategory = categoryService.findCategoryById(1);
+            String result = categoryService.deleteCategoryNode(18);
+            Log.d("delete result", result);
+//            result = categoryService.deleteDogam(1);
+//            Log.d("delete result", result);
+        });
     }
 
     private CategoryDto createCategory() {
@@ -73,14 +94,14 @@ public class TestActivity extends AppCompatActivity {
         for(int i = 0; i < 5; i++) {
             CategoryNodeDto dummyNodeDto = new CategoryNodeDto("second" + i + "th node", rootNode, 2);
             for(int k = 0; k < 5; k++) {
-                String hashtags = "second_hash" + k;
+                String hashtags = "second" + k + "hash";
                 dummyNodeDto.getHashtags().add(hashtags);
             }
             rootNode.getLowLayer().add(dummyNodeDto);
             for(int j = 0; j < 5; j++) {
-                CategoryNodeDto dummyNodeDto2 = new CategoryNodeDto("third" + i + "th node", dummyNodeDto, 3);
+                CategoryNodeDto dummyNodeDto2 = new CategoryNodeDto("third" + j + "th node", dummyNodeDto, 3);
                 for(int k = 0; k < 5; k++) {
-                    String hashtags = "third_hash" + k;
+                    String hashtags = "third" + k + "hash";
                     dummyNodeDto2.getHashtags().add(hashtags);
                 }
                 dummyNodeDto.getLowLayer().add(dummyNodeDto2);

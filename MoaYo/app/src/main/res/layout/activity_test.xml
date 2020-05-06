@@ -31,4 +31,16 @@
         android:layout_height="wrap_content"
         android:text="find" />
 
+    <Button
+        android:id="@+id/init"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="initialize" />
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="delete" />
+
 </LinearLayout>

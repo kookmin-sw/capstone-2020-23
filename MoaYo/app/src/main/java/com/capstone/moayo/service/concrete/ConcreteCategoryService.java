@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.entity.Category;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.storage.CategoryStorage;
@@ -38,33 +40,22 @@ public class ConcreteCategoryService implements CategoryService {
 
     @Override
     public CategoryDto findCategoryByTitle(String title) {
-        CategoryDto foundCategoryDto = null;
-        try {
-            Category foundCategory = categoryStorage.retrieveByTitle(title);
-            if(foundCategory == null)
-                throw new NullCategoryException();
-
-            foundCategoryDto = foundCategory.toCategoryDto();
-
-        } catch (NullCategoryException e) {
-            e.toString();
-        }
-
-
-        return foundCategoryDto;
+        return null;
     }
 
     @Override
     public CategoryDto findCategoryById(int id) {
         CategoryDto foundCategoryDto = null;
         try {
-            Category foundCategory = categoryStorage.retrieveById(id);
-            if(foundCategory == null) {
-                throw new NullCategoryException();
-            }
+            DogamMapping foundDogam = dogamStorage.retrieveById(id);
+            if(foundDogam == null) {
 
+            }
+            CategoryNode rootNode = categoryStorage.retrieveById(foundDogam.getId());
+            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), rootNode);
+            foundCategory.setId(foundDogam.getId());
             foundCategoryDto = foundCategory.toCategoryDto();
-        } catch (NullCategoryException e) {
+        } catch (Exception e) {
             Log.d("error in service", e.toString());
         }
 
@@ -74,27 +65,49 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
-        Category foundCategory = categoryStorage.retrieveById(modifyCategory.getId());
-        if(foundCategory == null) {
+        DogamMapping foundDogam = dogamStorage.retrieveById(modifyCategory.getId());
+        if(foundDogam == null) {
             return "No Category";
         }
 
+        dogamStorage.update(modifyCategory);
         String result = categoryStorage.update(modifyCategory);
         return result;
     }
 
     @Override
-    public String deleteCategory(int id) {
+    public String deleteDogam(int id) {
         String result = "";
         try {
-            Category foundCategory = categoryStorage.retrieveById(id);
-            if(foundCategory == null)
+            DogamMapping foundDogam = dogamStorage.retrieveById(id);
+            if(foundDogam == null)
                 throw new NullCategoryException();
-            result = categoryStorage.remove(id);
+            boolean re = dogamStorage.remove(foundDogam.getId());
+            if(re != true) {
+                result = "fail to delete dogam";
+            } else {
+                result = "success to delete dogam";
+            }
         } catch (NullCategoryException e) {
             Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
+        return result;
+    }
+
+    @Override
+    public String deleteCategoryNode(int id) {
+        String result = "";
+        try {
+//            CategoryNode foundNode = categoryStorage.retrieveById(id);
+//            Log.d("found node", foundNode.toString());
+//            if(foundNode == null) {
+//                throw new Exception();
+//            }
+            result = categoryStorage.remove(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 }

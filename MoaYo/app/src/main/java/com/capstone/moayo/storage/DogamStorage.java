@@ -7,5 +7,5 @@ public interface DogamStorage {
     public int create(Category category);
     public DogamMapping retrieveById(int id);
     public void update(Category category);
-    public void remove(Category category);
+    public boolean remove(int id);
 }

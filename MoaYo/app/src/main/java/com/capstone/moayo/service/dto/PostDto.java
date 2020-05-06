@@ -6,7 +6,6 @@ public class PostDto {
     private int id;
     private String imgUrl;
     private String url;
-    private String info;
     private String hashtag;
     private int like;
 
@@ -15,16 +14,15 @@ public class PostDto {
     public PostDto() {
         this.id = 0;
     }
-    public PostDto(String imgUrl, String url, String info, String hashtag, int like) {
+    public PostDto(String imgUrl, String url, String hashtag, int like) {
         this.imgUrl = imgUrl;
         this.url = url;
-        this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
     public Post toPost() {
-        Post post = new Post(imgUrl, url, info, hashtag, like);
+        Post post = new Post(imgUrl, url, hashtag, like);
         post.setCategoryNodeId(categoryNodeId);
         post.setId(id);
 
@@ -54,14 +52,6 @@ public class PostDto {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public String getHashtag() {

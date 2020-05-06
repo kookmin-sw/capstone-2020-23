@@ -6,12 +6,16 @@ import android.util.Log;
 
 import com.capstone.moayo.MainActivity;
 import com.capstone.moayo.dao.CategoryDao;
+import com.capstone.moayo.dao.CategoryHashtagDao;
 import com.capstone.moayo.dao.DaoFactory;
 import com.capstone.moayo.dao.DogamDao;
+import com.capstone.moayo.dao.HashtagDao;
 import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.concrete.DogamDaoImpl;
+import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
 import com.capstone.moayo.dao.mapping.DogamMapping;
+import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
@@ -20,19 +24,23 @@ import com.capstone.moayo.util.Exception.DaoObjectNullException;
 import com.capstone.moayo.util.Exception.DogamNullException;
 import com.capstone.moayo.util.Exception.NullCategoryException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class ConcreteCategoryStorage implements CategoryStorage {
     private CategoryDao categoryDao;
-    private DogamDao dogamDao;
+    private HashtagDao hashtagDao;
+    private CategoryHashtagDao categoryHashtagDao;
     private DBHelper dbHelper;
 
     public ConcreteCategoryStorage(Context context) {
         dbHelper = DaoFactoryCreator.getInstance().initDao(context);
         categoryDao = DaoFactoryCreator.getInstance().requestCategoryDao();
-        dogamDao = DaoFactoryCreator.getInstance().requestDogamDao();
+        hashtagDao = DaoFactoryCreator.getInstance().requestHashtagDao();
+        categoryHashtagDao = DaoFactoryCreator.getInstance().requestCategoryHashtagDao();
     }
 
     @Override
@@ -43,11 +51,17 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                 Category selectCategory = categories[0];
                 int dogamId = selectCategory.getId();
                 CategoryNode rootNode = selectCategory.getRootNode();
+                createHashTag(rootNode.getHashtags());
                 int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId , dogamId);
+                createCategoryHashTag(dogamId, rootId, rootNode.getHashtags());
                 for(CategoryNode secondNode : rootNode.getLowLayer()) {
+                    createHashTag(secondNode.getHashtags());
                     int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId, dogamId);
+                    createCategoryHashTag(dogamId, secondId, secondNode.getHashtags());
                     for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                        createHashTag(thirdNode.getHashtags());
                         int thirdId = (int) categoryDao.insert(dbHelper, thirdNode.getLevel(), secondId, thirdNode.getTitle(), dogamId, dogamId);
+                        createCategoryHashTag(dogamId, thirdId, thirdNode.getHashtags());
                     }
                 }
                 return "success to create category";
@@ -63,46 +77,24 @@ public class ConcreteCategoryStorage implements CategoryStorage {
     }
 
     @Override
-    public Category retrieveByTitle(String title) {
-        Category foundCategory = null;
-        try {
-            DogamMapping dogamMapping = dogamDao.selectByTitle(dbHelper, title);
-            if(dogamMapping == null)
-                throw new DogamNullException();
-
-            CategoryNode foundCategoryNode = categoryDao.selectByDogamId(dbHelper, dogamMapping.getId());
-            if(foundCategoryNode == null)
-                throw new NullCategoryException();
-
-            foundCategory = new Category(dogamMapping.getTitle(), dogamMapping.getDesription(), dogamMapping.getPassword(), foundCategoryNode);
-        } catch (DogamNullException | NullCategoryException e) {
-            Log.d("error in storage",e.toString());
-        }
-
-        return foundCategory;
+    public CategoryNode retrieveByTitle(String title) {
+        return null;
     }
 
     @Override
-    public Category retrieveById(int id) {
-        Category foundCategory = null;
+    public CategoryNode retrieveById(int id) {
+        CategoryNode rootNode = null;
         try {
-            DogamMapping mapping = dogamDao.selectById(dbHelper, id);
-            Log.d("mapping", String.format("%d",mapping.getId()));
-            if(mapping == null) {
-                throw new DogamNullException();
+            rootNode = categoryDao.selectByDogamId(dbHelper, id);
+            if(rootNode == null) {
+
             }
-            CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, mapping.getId());
-            if(foundNode == null) {
-                throw new NullCategoryException();
-            }
-            foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
-            foundCategory.setId(mapping.getId());
-            Log.d("found category", foundCategory.toString());
-        } catch (DogamNullException | NullCategoryException e) {
-            Log.d("error in storage", e.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return foundCategory;
+        return rootNode;
     }
 
     @Override
@@ -137,7 +129,24 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String remove(int id) {
-        String result = dogamDao.delete(dbHelper, id) ? "success to delete" : "fail to delete";
+        String result = "";
+        boolean re = categoryDao.delete(dbHelper, id);
+        if(re != true) result = "fail to delete node";
+        else result = "success to delete node";
         return result;
+    }
+
+    private void createHashTag(List<String> hashtags) {
+        for(String hashtag : hashtags) {
+            boolean exist = hashtagDao.isExist(dbHelper, hashtag);
+            if(exist == true) continue;
+            int result = (int) hashtagDao.insert(dbHelper, new HashTagMapping(hashtag));
+        }
+    }
+
+    private void createCategoryHashTag(int dogamId, int categoryId, List<String> hashtags) {
+        for(String hashtag : hashtags) {
+            categoryHashtagDao.insert(dbHelper, new CategoryHashTagMapping(dogamId, categoryId, hashtag));
+        }
     }
 }

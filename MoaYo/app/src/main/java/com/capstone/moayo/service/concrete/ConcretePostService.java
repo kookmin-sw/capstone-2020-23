@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.PostService;
+import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.storage.PostStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
@@ -18,8 +19,8 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public String createPost(PostDto newPostDto) {
-        Post newPost = newPostDto.toPost();
+    public String createPost(InstantPost newPost) {
+        Post post = new Post(newPost.getSrc(), newPost.getUrl(), newPost.getText(), newPost.getLike());
         return null;
     }
 
