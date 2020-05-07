@@ -11,6 +11,9 @@ import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.storage.DogamStorage;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -36,6 +39,21 @@ public class ConcreteDogamStorage implements DogamStorage {
     public DogamMapping retrieveById(int id) {
         DogamMapping foundDogam = dogamDao.selectById(dbHelper, id);
         return foundDogam;
+    }
+
+    @Override
+    public List<Category> retrieveAll() {
+        DogamMapping[] dogams = dogamDao.selectAll(dbHelper);
+        if(dogams == null) {
+            return null;
+        }
+        List<Category> categories = new ArrayList<>();
+        for(DogamMapping dogam : dogams) {
+            Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(), null);
+            category.setId(dogam.getId());
+            categories.add(category);
+        }
+        return categories;
     }
 
     @Override

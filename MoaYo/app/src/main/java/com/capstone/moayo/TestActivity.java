@@ -71,8 +71,9 @@ public class TestActivity extends AppCompatActivity {
         });
 
         findBtn.setOnClickListener(v -> {
-            CategoryDto foundCategory = categoryService.findCategoryById(1);
-            Log.d("found category", foundCategory.toString());
+            List<CategoryDto> foundCategory = categoryService.findAll();
+            for(CategoryDto categoryDto : foundCategory)
+                Log.d("found category", categoryDto.toString());
         });
 
         initBtn.setOnClickListener(v -> {

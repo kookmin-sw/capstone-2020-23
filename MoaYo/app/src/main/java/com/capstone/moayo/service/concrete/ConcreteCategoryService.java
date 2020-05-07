@@ -14,6 +14,9 @@ import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.Exception.NullCategoryException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
     private DogamStorage dogamStorage;
@@ -39,8 +42,23 @@ public class ConcreteCategoryService implements CategoryService {
     }
 
     @Override
-    public CategoryDto findCategoryByTitle(String title) {
-        return null;
+    public List<CategoryDto> findAll() {
+        List<Category> categories = dogamStorage.retrieveAll();
+        if(categories == null) {
+            return null;
+        }
+
+        for(Category category : categories) {
+            CategoryNode categoryNode = categoryStorage.retrieveById(category.getId());
+            category.setRootNode(categoryNode);
+        }
+
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        for(Category category : categories) {
+            CategoryDto categoryDto = category.toCategoryDto();
+            categoryDtoList.add(categoryDto);
+        }
+        return categoryDtoList;
     }
 
     @Override

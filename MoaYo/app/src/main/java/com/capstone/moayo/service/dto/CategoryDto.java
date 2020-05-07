@@ -25,7 +25,10 @@ public class CategoryDto {
     }
 
     public Category toCategory() {
-        Category category = new Category(title, description, password, rootNode.toCategoryNode());
+        Category category = null;
+        if(rootNode != null)
+            category = new Category(title, description, password, rootNode.toCategoryNode());
+        else category = new Category(title, description, password, null);
         category.setId(id);
         return category;
     }
