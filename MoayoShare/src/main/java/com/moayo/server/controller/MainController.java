@@ -1,7 +1,7 @@
 package com.moayo.server.controller;
 
 
-import com.moayo.server.model.BookModel;
+import com.moayo.server.model.DogamListModel;
 import com.moayo.server.service.ShareService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,7 +22,7 @@ public class MainController {
         JSONObject jsonObject = service.jsonParser(body);
 
         JSONArray jsonArray = (JSONArray)jsonObject.get("book");
-        BookModel newModel = service.createBookModel(jsonObject);
+        DogamListModel newModel = service.createBookModel(jsonObject);
         // json create
         // .json url input newModel.setUrl();
         service.uploadBook(newModel);
