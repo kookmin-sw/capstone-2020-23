@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-import com.capstone.moayo.Adapter.ExpandableAdapter;
-import com.capstone.moayo.Adapter.adapter_result1;
-import com.capstone.moayo.Adapter.adapter_result2;
+import com.capstone.moayo.adapter.ExpandableAdapter;
+import com.capstone.moayo.adapter.adapter_result1;
+import com.capstone.moayo.adapter.adapter_result2;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.ResultPost_Dummy;
 import com.capstone.moayo.data.SavedPost_Dummy;

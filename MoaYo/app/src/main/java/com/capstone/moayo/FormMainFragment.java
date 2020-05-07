@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,7 +31,17 @@ public class FormMainFragment extends Fragment {
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BookFormActivity)getActivity()).onFragmentChange(1);
+                EditText title_et = (EditText) view.findViewById(R.id.create_book_title);
+                String title = title_et.getText().toString();
+
+                if(!title.isEmpty()) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("book_title", title);
+                    ((BookFormActivity)getActivity()).onFragmentChange(1);
+                } else {
+                    Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

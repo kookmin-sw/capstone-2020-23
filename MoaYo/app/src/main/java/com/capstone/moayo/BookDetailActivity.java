@@ -8,7 +8,7 @@ import android.widget.ExpandableListView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.capstone.moayo.Adapter.ExpandableAdapter;
+import com.capstone.moayo.adapter.ExpandableAdapter;
 import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;

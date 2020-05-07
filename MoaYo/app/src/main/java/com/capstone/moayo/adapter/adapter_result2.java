@@ -1,4 +1,4 @@
-package com.capstone.moayo.Adapter;
+package com.capstone.moayo.adapter;
 
 import android.content.Context;
 
