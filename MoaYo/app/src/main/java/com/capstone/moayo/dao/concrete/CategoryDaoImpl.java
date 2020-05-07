@@ -77,7 +77,7 @@ public class CategoryDaoImpl implements CategoryDao {
         values.put(StorageInfo.CreateStorage.CATEGORYPARENTDOGAM,parentDogamId);
         values.put(StorageInfo.CreateStorage.CATEGORYTITLE,title);
         values.put(StorageInfo.CreateStorage.CATEGORYDOGAMID,dogamId);
-        boolean result = mDB.update(StorageInfo.CreateStorage._TABLENAME0,values,"co_dogamId=" + dogamId + " AND co_id IS NULL",null) > 0;
+        boolean result = mDB.update(StorageInfo.CreateStorage._TABLENAME0,values,"co_dogamId=" + dogamId + " AND co_id = " + id ,null) > 0;
         mDB.close();
         return result;
     }
