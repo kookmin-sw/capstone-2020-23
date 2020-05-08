@@ -5,13 +5,12 @@ import com.moayo.server.model.CategoryPostModel;
 
 public interface CategoryPostDao {
     long insertCategoryPost(CategoryPostModel categoryPostModel);
-    long updateCategoryPost(CategoryPostModel categoryPostModel);
 
     long deleteByDogamId(int dogamId);
-    long deleteByCategoryId(int categoryId);
+    long deleteByCategoryId(int categoryId,int dogamId);
     long deleteByPostId(String postId);
 
     CategoryPostModel getByDogamId(int dogamId);
-    CategoryPostModel getByCategoryId(int categoryId);
+    CategoryPostModel getByCategoryId(int categoryId,int dogamId);
     CategoryPostModel getByPostId(int postId);
 }
