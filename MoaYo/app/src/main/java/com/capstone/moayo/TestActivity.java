@@ -11,9 +11,13 @@ import com.capstone.moayo.dao.DaoFactory;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.CrawlerService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.InstantPost;
+import com.capstone.moayo.service.dto.RequsetForm;
+import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.CategoryConvertor;
 
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ public class TestActivity extends AppCompatActivity {
     private Button initBtn;
     private Button removeBtn;
     private CategoryService categoryService;
+    private CrawlerService crawlerService;
     private DBHelper dbHelper;
 
     @Override
@@ -43,15 +48,63 @@ public class TestActivity extends AppCompatActivity {
         removeBtn = findViewById(R.id.remove);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        crawlerService = ServiceFactoryCreator.getInstance().requestCrawlerService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         convertBtn.setOnClickListener(v -> {
             CategoryDto testCategory = createCategory();
             CategoryNodeDto rootNode = testCategory.getRootNode();
             CategoryNodeDto secondNode = rootNode.getLowLayer().get(2);
+            List<String> hashtagList = secondNode.getHashtags();
+
+            hashtagList.set(0, "cafe");
+            hashtagList.set(1, "커피");
+            hashtagList.set(2, "카페");
+            hashtagList.set(3, "coffee");
+            hashtagList.set(4, "일상");
+            secondNode.setHashtags(hashtagList);
+
             CategoryNodeDto thirdNode = secondNode.getLowLayer().get(3);
+            List<String> hashtagList1 = thirdNode.getHashtags();
+            hashtagList1.set(0, "스타벅스");
+            hashtagList1.set(1, "starbucks");
+            hashtagList1.set(2, "daily");
+            hashtagList1.set(3, "데일리");
+            hashtagList1.set(4, "coffee");
+            thirdNode.setHashtags(hashtagList1);
+
+            String[] secondCache = new String[secondNode.getHashtags().size()];
+            String[] thirdCache = new String[thirdNode.getHashtags().size()];
+            for(int i = 0; i < secondCache.length; i++)
+                secondCache[i] = "";
+            for(int i = 0; i < thirdCache.length; i++)
+                thirdCache[i] = "";
+            RequsetForm requsetForm = new RequsetForm();
+            requsetForm.setSecond_layer(secondNode.getHashtags());
+            requsetForm.setThird_layer(thirdNode.getHashtags());
+            requsetForm.setSecond_layer_cache(secondCache);
+            requsetForm.setThird_layer_cache(thirdCache);
+
             String converting = CategoryConvertor.convertCategoryToJSON(secondNode, thirdNode);
-            Log.d("convert result", converting);
+
+            RespondForm respondForm = crawlerService.requestData(requsetForm);
+            InstantPost post = respondForm.getSecond_layer().get(3);
+            Log.d("response result: text", post.getText());
+            Log.d("response result: url", post.getUrl());
+            Log.d("response result: src", post.getSrc());
+            Log.d("response result: like", String.format("%d", post.getLike()));
+            Log.d("response result: cache", respondForm.getSecond_layer_cache()[3]);
+
+            requsetForm.setSecond_layer_cache(respondForm.getSecond_layer_cache());
+            requsetForm.setThird_layer_cache(respondForm.getThird_layer_cache());
+
+            RespondForm respondForm1 = crawlerService.requestData(requsetForm);
+            InstantPost post1 = respondForm1.getSecond_layer().get(3);
+            Log.d("response result: text", post1.getText());
+            Log.d("response result: url", post1.getUrl());
+            Log.d("response result: src", post1.getSrc());
+            Log.d("response result: like", String.format("%d", post1.getLike()));
+            Log.d("response result: cache", respondForm1.getSecond_layer_cache()[3]);
         });
 
         createBtn.setOnClickListener(v -> {

@@ -19,7 +19,7 @@ public class InstantPost {
         this.like = like;
     }
     public PostDto toPostDto() {
-        PostDto postDto = new PostDto(src, url, text, like);
+        PostDto postDto = new PostDto(src, url, text, like, 0, 0);
         return postDto;
     }
     public String getText() {

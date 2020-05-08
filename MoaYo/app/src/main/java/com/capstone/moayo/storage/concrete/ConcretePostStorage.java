@@ -88,12 +88,22 @@ public class ConcretePostStorage implements PostStorage {
 
     @Override
     public Post findPostById(int id) {
+        PostMapping postMapping = postDao.selectById(dbHelper, id);
+//        CategoryPostMapping categoryPostMapping = categoryPostDao.selectByPostId(dbHelper, id);
+//        Post foundPost = new Post(postMapping.getImgUrl(), postMapping.getUrl(), postMapping.getHashTag(), postMapping.getLike())
         return null;
     }
 
     @Override
     public void modifyPost(Post post) {
-
+        AsyncTask<Post, Void, Void> thread = new AsyncTask<Post, Void, Void>() {
+            @Override
+            protected Void doInBackground(Post... posts) {
+                Post post = posts[0];
+                boolean result = postDao.update(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
+                return null;
+            }
+        };
     }
 
     @Override
@@ -118,4 +128,6 @@ public class ConcretePostStorage implements PostStorage {
     private void createCategoryPost(int nodeId, int dogamId, int id) {
         categoryPostDao.insert(dbHelper, new CategoryPostMapping(dogamId, nodeId, id));
     }
+
+
 }

@@ -115,12 +115,15 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                 CategoryNode rootNode = categories[0].getRootNode();
                 boolean result = categoryDao.rootUpdate(dbHelper, rootNode.getId(), rootNode.getLevel(), 0, rootNode.getTitle(), dogamId, dogamId);
                 if(result != true) return "fail to update";
+                updateCategoryHashTag(dogamId, rootNode.getId(), rootNode.getHashtags());
                 for(CategoryNode secondNode : rootNode.getLowLayer()) {
                     result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), dogamId, dogamId);
                     if(result != true) return "fail to update";
+                    updateCategoryHashTag(dogamId, secondNode.getId(), secondNode.getHashtags());
                     for(CategoryNode thirdNode : secondNode.getLowLayer()) {
                         result = categoryDao.update(dbHelper, thirdNode.getId(), thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), dogamId, dogamId);
                         if(result != true) return "fail to update";
+                        updateCategoryHashTag(dogamId, thirdNode.getId(), thirdNode.getHashtags());
                     }
                 }
                 return "success to update";
@@ -159,16 +162,9 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         }
     }
 
-//    private void updateCategoryHashTag(int nodeId, List<String> hashtags) {
-//        createHashTag(hashtags);
-//
-//        List<CategoryHashTagMapping> result = categoryHashtagDao.selectByCategoryId(dbHelper, nodeId);
-//        for(CategoryHashTagMapping mapping : result) {
-//            if(!hashtags.contains(mapping.getHashtag())) {
-//                hashtagDao.delete(dbHelper, new HashTagMapping(mapping.getHashtag()));
-//            } else {
-//                categoryHashtagDao.replace(dbHelper, new CategoryHashTagMapping(mapping.getDogamId(), nodeId, ));
-//            }
-//        }
-//    }
+    private void updateCategoryHashTag(int dogamId, int nodeId, List<String> hashtags) {
+        for(String hashtag : hashtags) {
+            categoryHashtagDao.replace(dbHelper, new CategoryHashTagMapping(dogamId, nodeId, hashtag));
+        }
+    }
 }

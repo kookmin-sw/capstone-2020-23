@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
-import com.capstone.moayo.service.DataBindingService;
+import com.capstone.moayo.service.CrawlerService;
 import com.capstone.moayo.service.ServiceFactory;
 
 public class ServiceFactoryCreator implements ServiceFactory{
     private volatile static ServiceFactory instance;
     private CategoryService categoryService;
-    private DataBindingService dataBindingService;
+    private CrawlerService crawlerService;
     private PostService contentService;
 
     public static synchronized ServiceFactory getInstance() {
@@ -41,11 +41,11 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public DataBindingService requestDataBindingService(Context context) {
-        if(dataBindingService == null) {
-            dataBindingService = new ConcreteDataBindingService(context);
+    public CrawlerService requestCrawlerService(Context context) {
+        if(crawlerService == null) {
+            crawlerService = new ConcreteCrawlerService(context);
         }
 
-        return dataBindingService;
+        return crawlerService;
     }
 }

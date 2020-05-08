@@ -6,6 +6,9 @@ import com.capstone.moayo.service.dto.CategoryNodeDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoryConvertor {
     public static String convertCategoryToJSON(CategoryNodeDto secondNode, CategoryNodeDto thirdNode) {
         try {
@@ -15,6 +18,12 @@ public class CategoryConvertor {
             rootObject.put("second_layer", secondArray);
             JSONArray thirdArray = new JSONArray(thirdNode.getHashtags());
             rootObject.put("third_layer", thirdArray);
+
+            JSONArray secondCache = new JSONArray(createStringArray(secondArray.length()));
+
+            JSONArray thirdCache = new JSONArray(createStringArray(thirdArray.length()));
+            rootObject.put("second_layer_cache", secondCache);
+            rootObject.put("third_layer_cache", thirdCache);
 
             return rootObject.toString();
         } catch (Exception e) {
@@ -40,4 +49,12 @@ public class CategoryConvertor {
 
         return null;
     }
+
+    public static String[] createStringArray(int size) {
+        String[] array = new String[size];
+        for(int i = 0; i < size; i++)
+            array[i] = "";
+        return array;
+    };
 }
+

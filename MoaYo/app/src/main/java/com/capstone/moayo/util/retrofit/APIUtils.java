@@ -1,7 +1,7 @@
 package com.capstone.moayo.util.retrofit;
 
 public class APIUtils {
-    private static final String SEARCH_URL = "";
+    private static final String SEARCH_URL = "http://192.168.0.22:8080";
     private static final String SHARE_URL = "";
 
     public static SearchAPI getSearchAPI() {
