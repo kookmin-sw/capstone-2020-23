@@ -7,6 +7,24 @@ public class PostModel {
     private String co_info;
     private String co_hashtag;
 
+    public PostModel(int co_postId, String co_postUrl, String co_imageUrl, String co_info, String co_hashtag) {
+        this.co_postId = co_postId;
+        this.co_postUrl = co_postUrl;
+        this.co_imageUrl = co_imageUrl;
+        this.co_info = co_info;
+        this.co_hashtag = co_hashtag;
+    }
+
+    public PostModel(String co_postUrl, String co_imageUrl, String co_info, String co_hashtag) {
+        this.co_postUrl = co_postUrl;
+        this.co_imageUrl = co_imageUrl;
+        this.co_info = co_info;
+        this.co_hashtag = co_hashtag;
+    }
+
+    public PostModel() {
+    }
+
     public String getCo_hashtag() {
         return co_hashtag;
     }
