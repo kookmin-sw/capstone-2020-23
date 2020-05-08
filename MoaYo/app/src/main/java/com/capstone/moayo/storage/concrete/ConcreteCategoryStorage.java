@@ -2,29 +2,18 @@ package com.capstone.moayo.storage.concrete;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.capstone.moayo.MainActivity;
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.CategoryHashtagDao;
-import com.capstone.moayo.dao.DaoFactory;
-import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.HashtagDao;
-import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
-import com.capstone.moayo.dao.concrete.DogamDaoImpl;
 import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
-import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.storage.CategoryStorage;
-import com.capstone.moayo.util.Exception.DaoObjectNullException;
-import com.capstone.moayo.util.Exception.DogamNullException;
-import com.capstone.moayo.util.Exception.NullCategoryException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -68,7 +57,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             }
         };
         try {
-            String result = thread.execute(category).get(3, TimeUnit.SECONDS);
+            String result = thread.execute(category).get(1, TimeUnit.SECONDS);
             return result;
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
@@ -83,18 +72,38 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public CategoryNode retrieveById(int id) {
-        CategoryNode rootNode = null;
-        try {
-            rootNode = categoryDao.selectByDogamId(dbHelper, id);
-            if(rootNode == null) {
+        AsyncTask<Integer, Void, CategoryNode> thread = new AsyncTask<Integer, Void, CategoryNode>() {
+            @Override
+            protected CategoryNode doInBackground(Integer... integers) {
+                int dogamId = integers[0];
+                // find root node
+                CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, dogamId);
+                if(rootNode == null) return null;
 
+                // find hash tags
+                for(CategoryNode secondNode : rootNode.getLowLayer()) {
+                    List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
+                    for(int i = 0; i < mappings.size(); i++)
+                        secondNode.getHashtags().add(mappings.get(i).getHashtag());
+                    for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                        List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
+                        for(int j = 0; j < mappings1.size(); j++)
+                            thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
+                    }
+                }
+                return rootNode;
             }
+        };
 
-        } catch (Exception e) {
+        try {
+            CategoryNode rootNode = thread.execute(id).get(1, TimeUnit.SECONDS);
+
+            return rootNode;
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
 
-        return rootNode;
+        return null;
     }
 
     @Override
@@ -149,4 +158,17 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             categoryHashtagDao.insert(dbHelper, new CategoryHashTagMapping(dogamId, categoryId, hashtag));
         }
     }
+
+//    private void updateCategoryHashTag(int nodeId, List<String> hashtags) {
+//        createHashTag(hashtags);
+//
+//        List<CategoryHashTagMapping> result = categoryHashtagDao.selectByCategoryId(dbHelper, nodeId);
+//        for(CategoryHashTagMapping mapping : result) {
+//            if(!hashtags.contains(mapping.getHashtag())) {
+//                hashtagDao.delete(dbHelper, new HashTagMapping(mapping.getHashtag()));
+//            } else {
+//                categoryHashtagDao.replace(dbHelper, new CategoryHashTagMapping(mapping.getDogamId(), nodeId, ));
+//            }
+//        }
+//    }
 }

@@ -15,4 +15,6 @@ public interface PostDao {
     public boolean delete(DBHelper dbHelper,int id);
     // 커서 이용한 뒤 close()할것.
     public PostMapping selectById(DBHelper dbHelper, int id);
+
+    public List<PostMapping> selectByNodeId(DBHelper dbHelper, int nodeId);
 }

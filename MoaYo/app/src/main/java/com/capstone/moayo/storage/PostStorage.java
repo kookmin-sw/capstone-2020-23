@@ -1,14 +1,15 @@
 package com.capstone.moayo.storage;
 
+import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.dto.PostDto;
 
 import java.util.List;
 
 public interface PostStorage {
-    public String createPost();
-    public List<PostDto> findPostByNodeId();
-    public List<PostDto> findPostByDogamId();
-    public PostDto findPostById();
-    public void modifyPost();
-    public void removePost();
+    public int createPost(Post post);
+    public List<Post> retrievePostByNodeId(int nodeId);
+    public List<Post> retrievePostByDogamId(int dogamId);
+    public Post findPostById(int id);
+    public void modifyPost(Post post);
+    public void removePost(int id);
 }

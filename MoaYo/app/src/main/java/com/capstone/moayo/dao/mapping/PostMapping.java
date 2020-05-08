@@ -4,18 +4,18 @@ public class PostMapping {
     private int id;
     private String url;
     private String imgUrl;
-    private String info;
     private String hashTag;
+    private int like;
 
     public PostMapping(){
 
     }
-    public PostMapping(int id, String url, String imgUrl, String info, String hashTag){
+    public PostMapping(int id, String url, String imgUrl, String hashTag, int like){
         this.id = id;
         this.url = url;
         this.imgUrl = imgUrl;
-        this.info = info;
         this.hashTag = hashTag;
+        this.like = like;
     }
 
     public void setId(int id) {
@@ -50,11 +50,11 @@ public class PostMapping {
         return imgUrl;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public int getLike() {
+        return like;
     }
 
-    public String getInfo() {
-        return info;
+    public void setLike(int like) {
+        this.like = like;
     }
 }

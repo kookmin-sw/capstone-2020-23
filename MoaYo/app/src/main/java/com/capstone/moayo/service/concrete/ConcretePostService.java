@@ -9,6 +9,7 @@ import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.storage.PostStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConcretePostService implements PostService {
@@ -19,14 +20,25 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public String createPost(InstantPost newPost) {
-        Post post = new Post(newPost.getSrc(), newPost.getUrl(), newPost.getText(), newPost.getLike());
-        return null;
+    public int createPost(InstantPost newPost, int nodeId, int dogamId) {
+        Post post = new Post(newPost.getSrc(), newPost.getUrl(), newPost.getText(), newPost.getLike(), nodeId, dogamId);
+        int postId = postStorage.createPost(post);
+        return postId;
     }
 
     @Override
-    public List<PostDto> findPostByCategoryNodeId(int id) {
-        return null;
+    public List<PostDto> findPostByCategoryNodeId(int nodeId) {
+        List<PostDto> postDtoList = new ArrayList<>();
+        List<Post> postList = postStorage.retrievePostByNodeId(nodeId);
+        if(postList == null) {
+            return null;
+        }
+
+        for(Post post : postList) {
+            PostDto postDto = post.toPostDto();
+            postDtoList.add(postDto);
+        }
+        return postDtoList;
     }
 
     @Override

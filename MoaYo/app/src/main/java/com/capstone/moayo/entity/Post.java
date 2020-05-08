@@ -12,13 +12,16 @@ public class Post {
 
 
     private int categoryNodeId;
+    private  int dogamId;
 
-    public Post() {
+    public Post(int categoryNodeId, int dogamId) {
         this.id = 0;
+        this.categoryNodeId = categoryNodeId;
+        this.dogamId = dogamId;
     }
 
-    public Post(String imgUrl, String url, String hashtag, int like) {
-        this();
+    public Post(String imgUrl, String url, String hashtag, int like, int categoryNodeId, int dogamId) {
+        this(categoryNodeId, dogamId);
         this.imgUrl = imgUrl;
         this.url = url;
         this.hashtag = hashtag;
@@ -26,8 +29,7 @@ public class Post {
     }
 
     public PostDto toPostDto() {
-        PostDto postDto = new PostDto(imgUrl, url, hashtag, like);
-        postDto.setCategoryNodeId(categoryNodeId);
+        PostDto postDto = new PostDto(imgUrl, url, hashtag, like, categoryNodeId, dogamId);
         postDto.setId(id);
 
         return postDto;
@@ -82,7 +84,15 @@ public class Post {
         this.categoryNodeId = categoryNodeId;
     }
 
-//    public String toString() {
+    public int getDogamId() {
+        return dogamId;
+    }
+
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
+    }
+
+    //    public String toString() {
 //        StringBuffer buffer = new StringBuffer();
 //        buffer.append("\"{id\" : \"").append(id).append("\"").
 //                append("\"{\" : \"").append(id).append("\"").

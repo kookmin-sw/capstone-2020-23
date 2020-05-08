@@ -10,11 +10,15 @@ public class PostDto {
     private int like;
 
     private int categoryNodeId;
+    private int dogamId;
 
-    public PostDto() {
+    public PostDto(int categoryNodeId, int dogamId) {
         this.id = 0;
+        this.categoryNodeId = categoryNodeId;
+        this.dogamId = dogamId;
     }
-    public PostDto(String imgUrl, String url, String hashtag, int like) {
+    public PostDto(String imgUrl, String url, String hashtag, int like, int categoryNodeId, int dogamId) {
+        this(categoryNodeId, dogamId);
         this.imgUrl = imgUrl;
         this.url = url;
         this.hashtag = hashtag;
@@ -22,10 +26,8 @@ public class PostDto {
     }
 
     public Post toPost() {
-        Post post = new Post(imgUrl, url, hashtag, like);
-        post.setCategoryNodeId(categoryNodeId);
+        Post post = new Post(imgUrl, url, hashtag, like, categoryNodeId, dogamId);
         post.setId(id);
-
 
         return post;
     }
@@ -76,5 +78,13 @@ public class PostDto {
 
     public void setCategoryNodeId(int categoryNodeId) {
         this.categoryNodeId = categoryNodeId;
+    }
+
+    public int getDogamId() {
+        return dogamId;
+    }
+
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
     }
 }

@@ -8,6 +8,7 @@ import com.capstone.moayo.dao.CategoryHashtagDao;
 import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
+import com.capstone.moayo.storage.StorageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +68,17 @@ public class CategoryHashtagDaoImpl implements CategoryHashtagDao {
         c.close();
         mDB.close();
         return results;
+    }
+
+    @Override
+    public long replace(DBHelper dbHelper, CategoryHashTagMapping mapping) {
+        SQLiteDatabase mDB = dbHelper.getWritableDB();
+        ContentValues values = new ContentValues();
+        values.put(StorageInfo.CreateStorage.CHDOGAMID, mapping.getDogamId());
+        values.put(StorageInfo.CreateStorage.CHCATEGORYID, mapping.getCategoryId());
+        values.put(StorageInfo.CreateStorage.CHHASHTAG, mapping.getHashtag());
+        long result = mDB.replace(StorageInfo.CreateStorage._CHTABLENAME, null, values);
+
+        return result;
     }
 }

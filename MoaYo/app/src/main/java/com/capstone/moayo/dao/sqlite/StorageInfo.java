@@ -29,15 +29,15 @@ public final class StorageInfo{
         public static final String CID = "co_postId";
         public static final String URL = "co_url";
         public static final String IMGURL = "co_imgUrl";
-        public static final String INFO = "co_info";
         public static final String HASHTAG = "co_hashTag";
+        public static final String LIKE = "co_like";
         public static final String _TABLENAME1 = "tb_postHavingLike";
         public static final String _CREATE1 = "create table if not exists " + _TABLENAME1 + "(" +
                 CID + " integer primary key autoincrement, "+
                 URL + " text, " +
                 IMGURL + " text, " +
-                INFO + " text, " +
-                HASHTAG + " text);";
+                HASHTAG + " text, " +
+                LIKE  + " integer);";
 
         // tb_category_Post
         public static final String CPDOGAMID = "co_dogamId";

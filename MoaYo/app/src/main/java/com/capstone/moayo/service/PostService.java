@@ -7,7 +7,7 @@ import com.capstone.moayo.service.dto.PostDto;
 import java.util.List;
 
 public interface PostService {
-    public String createPost(InstantPost newPost);
+    public int createPost(InstantPost newPost, int nodeId, int dogamId);
     public List<PostDto> findPostByCategoryNodeId(int id);
     public PostDto findPostById(int id);
     public boolean modifyPost(PostDto postDto);

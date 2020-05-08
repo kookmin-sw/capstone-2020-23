@@ -11,6 +11,8 @@ import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
 
+import java.util.List;
+
 public class PostDaoImpl implements PostDao {
 
     // if insert new data, id = null;
@@ -21,7 +23,6 @@ public class PostDaoImpl implements PostDao {
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.URL,postMapping.getUrl());
         values.put(StorageInfo.CreateStorage.IMGURL,postMapping.getImgUrl());
-        values.put(StorageInfo.CreateStorage.INFO,postMapping.getInfo());
         values.put(StorageInfo.CreateStorage.HASHTAG,postMapping.getHashTag());
         long result =  mDB.insert(StorageInfo.CreateStorage._TABLENAME1,null,values);
         mDB.close();
@@ -35,7 +36,6 @@ public class PostDaoImpl implements PostDao {
         values.put(StorageInfo.CreateStorage.CID,postMapping.getId());
         values.put(StorageInfo.CreateStorage.URL,postMapping.getUrl());
         values.put(StorageInfo.CreateStorage.IMGURL,postMapping.getImgUrl());
-        values.put(StorageInfo.CreateStorage.INFO,postMapping.getInfo());
         values.put(StorageInfo.CreateStorage.HASHTAG,postMapping.getHashTag());
         boolean result = mDB.update(StorageInfo.CreateStorage._TABLENAME1,values,"co_postId=" + postMapping.getId(),null) > 0;
         mDB.close();
@@ -55,10 +55,14 @@ public class PostDaoImpl implements PostDao {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_postId="+id+";",null);
         c.moveToFirst();
-        PostMapping cm = new PostMapping(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4));
+        PostMapping cm = new PostMapping(c.getInt(0),c.getString(1),c.getString(2),c.getString(3));
         c.close();
         mDB.close();
         return cm;
     }
 
+    @Override
+    public List<PostMapping> selectByNodeId(DBHelper dbHelper, int nodeId) {
+        return null;
+    }
 }
