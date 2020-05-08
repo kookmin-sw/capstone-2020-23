@@ -1,5 +1,7 @@
 package com.capstone.moayo;
 
+import android.app.ActionBar;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +16,32 @@ import androidx.fragment.app.Fragment;
 
 import com.capstone.moayo.adapter.FormListAdapter;
 import com.capstone.moayo.entity.Keyword;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
 public class FormEditFragment extends Fragment {
+
+    public interface OnChangeFormListener{
+        void onChangeForm(int frag_id);
+    }
+
     View view;
     ArrayList<Keyword> items;
     FormListAdapter adapter;
-//    ArrayAdapter<Keyword> listAdapter;
     ListView listView;
     Button add_btn;
+    OnChangeFormListener cfListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            cfListener = (OnChangeFormListener) context;
+        }catch(ClassCastException e){
+            throw new ClassCastException(context.toString() + " must implement OnChangeBodyListener");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,11 +55,17 @@ public class FormEditFragment extends Fragment {
 
         items = getListData();
 
-//        listAdapter = new ArrayAdapter<Keyword>(getContext(), android.R.layout.simple_list_item_single_choice, items);
         adapter = new FormListAdapter(getContext(), items);
         listView = (ListView) view.findViewById(R.id.form_list_view);
         listView.setAdapter(adapter);
-//        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+//        String title = this.getArguments().getString("title");
+//        ActionBar actionBar = ((BookFormActivity)getActivity()).getActionBar();
+//        if(title != null) {
+//            actionBar.setTitle(title);
+//        }
+
+
 
         add_btn = (Button) view.findViewById(R.id.add_keyword_btn);
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +74,15 @@ public class FormEditFragment extends Fragment {
                 EditText input_et = (EditText) view.findViewById(R.id.input_keyword);
 
                 String word = input_et.getText().toString();        // EditText에 입력된 문자열값을 얻기
+
                 if (!word.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
-                    Keyword add_word = new Keyword(word);
-                    items.add(add_word);                          // items 리스트에 입력된 문자열 추가
+//                    Keyword add_word = new Keyword(word);
+//                    items.add(add_word);                          // items 리스트에 입력된 문자열 추가
                     input_et.setText("");                           // EditText 입력란 초기화
                     adapter.notifyDataSetChanged();           // 리스트 목록 갱신
+
+                    BottomSheetFragment bottomSheet = BottomSheetFragment.getInstance();
+                    bottomSheet.show(getFragmentManager(),"bottomSheet");
                 } else {
                     Toast.makeText(getContext(), "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }

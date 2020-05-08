@@ -1,5 +1,6 @@
 package com.capstone.moayo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,15 @@ import androidx.fragment.app.Fragment;
 
 public class FormMainFragment extends Fragment {
 
-    View view;
-    Button start_btn;
+    private View view;
+    private Button start_btn;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,9 +43,8 @@ public class FormMainFragment extends Fragment {
                 String title = title_et.getText().toString();
 
                 if(!title.isEmpty()) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("book_title", title);
-                    ((BookFormActivity)getActivity()).onFragmentChange(1);
+                    ((BookFormActivity)getActivity()).setTitle(title);
+                    ((BookFormActivity)getActivity()).onChangeForm(1);
                 } else {
                     Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();
                 }
@@ -47,5 +54,7 @@ public class FormMainFragment extends Fragment {
 
         return view;
     }
+
+
 
 }
