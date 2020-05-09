@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
-import com.capstone.moayo.service.CrawlerService;
+import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.ServiceFactory;
 
 public class ServiceFactoryCreator implements ServiceFactory{
     private volatile static ServiceFactory instance;
     private CategoryService categoryService;
-    private CrawlerService crawlerService;
+    private SearchService searchService;
     private PostService contentService;
 
     public static synchronized ServiceFactory getInstance() {
@@ -41,11 +41,9 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public CrawlerService requestCrawlerService(Context context) {
-        if(crawlerService == null) {
-            crawlerService = new ConcreteCrawlerService(context);
-        }
-
-        return crawlerService;
+    public SearchService requestSearchService(Context context) {
+        if(searchService == null)
+            searchService = new ConcreteSearchService(context);
+        return searchService;
     }
 }

@@ -69,4 +69,11 @@ public class CategoryPostDaoImpl implements CategoryPostDao {
         mDB.close();
         return results;
     }
+
+    @Override
+    public boolean delete(DBHelper dbHelper, int nodeId, int postId) {
+        SQLiteDatabase mDB = dbHelper.getWritableDB();
+        boolean result = mDB.delete(StorageInfo.CreateStorage._CPTABLENAME, "co_categoryId="+nodeId+"AND co_postId="+postId, null) > 0;
+        return result;
+    }
 }

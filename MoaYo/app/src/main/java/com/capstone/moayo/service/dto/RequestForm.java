@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class RequsetForm {
+public class RequestForm {
     @SerializedName("second_layer")
     private List<String> second_layer;
     @SerializedName("third_layer")

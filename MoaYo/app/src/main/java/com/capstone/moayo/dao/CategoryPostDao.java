@@ -10,4 +10,5 @@ public interface CategoryPostDao {
     List<CategoryPostMapping> selectByDogamId(DBHelper dbHelper,int dogamId);
     List<CategoryPostMapping> selectByCategoryId(DBHelper dbHelper,int categoryId);
     List<CategoryPostMapping> selectByPostId(DBHelper dbHelper,int postId);
+    boolean delete(DBHelper dbHelper, int nodeId, int postId);
 }

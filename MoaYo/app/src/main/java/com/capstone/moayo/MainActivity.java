@@ -22,7 +22,7 @@ import com.capstone.moayo.Adapter.adapter_main2;
 import com.capstone.moayo.data.MyBookData_Sample;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.service.CrawlerService;
+import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.storage.StorageFactory;
 
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button getTagBtn;
 
     private CategoryService categoryService;
-    private CrawlerService dataBindingService;
+    private SearchService dataBindingService;
     private StorageFactory storageFactory;
 
     @Override

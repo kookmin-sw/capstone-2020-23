@@ -2,25 +2,22 @@ package com.capstone.moayo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Service;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
-import com.capstone.moayo.dao.DaoFactory;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.service.CrawlerService;
+import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.InstantPost;
-import com.capstone.moayo.service.dto.RequsetForm;
+import com.capstone.moayo.service.dto.RequestForm;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.CategoryConvertor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
@@ -32,7 +29,7 @@ public class TestActivity extends AppCompatActivity {
     private Button initBtn;
     private Button removeBtn;
     private CategoryService categoryService;
-    private CrawlerService crawlerService;
+    private SearchService searchService;
     private DBHelper dbHelper;
 
     @Override
@@ -48,7 +45,7 @@ public class TestActivity extends AppCompatActivity {
         removeBtn = findViewById(R.id.remove);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-        crawlerService = ServiceFactoryCreator.getInstance().requestCrawlerService(getApplicationContext());
+        searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         convertBtn.setOnClickListener(v -> {
@@ -73,21 +70,9 @@ public class TestActivity extends AppCompatActivity {
             hashtagList1.set(4, "coffee");
             thirdNode.setHashtags(hashtagList1);
 
-            String[] secondCache = new String[secondNode.getHashtags().size()];
-            String[] thirdCache = new String[thirdNode.getHashtags().size()];
-            for(int i = 0; i < secondCache.length; i++)
-                secondCache[i] = "";
-            for(int i = 0; i < thirdCache.length; i++)
-                thirdCache[i] = "";
-            RequsetForm requsetForm = new RequsetForm();
-            requsetForm.setSecond_layer(secondNode.getHashtags());
-            requsetForm.setThird_layer(thirdNode.getHashtags());
-            requsetForm.setSecond_layer_cache(secondCache);
-            requsetForm.setThird_layer_cache(thirdCache);
+            RequestForm requsetForm = CategoryConvertor.generateForm(secondNode, thirdNode);
 
-            String converting = CategoryConvertor.convertCategoryToJSON(secondNode, thirdNode);
-
-            RespondForm respondForm = crawlerService.requestData(requsetForm);
+            RespondForm respondForm = searchService.requestData(requsetForm);
             InstantPost post = respondForm.getSecond_layer().get(3);
             Log.d("response result: text", post.getText());
             Log.d("response result: url", post.getUrl());
@@ -98,7 +83,7 @@ public class TestActivity extends AppCompatActivity {
             requsetForm.setSecond_layer_cache(respondForm.getSecond_layer_cache());
             requsetForm.setThird_layer_cache(respondForm.getThird_layer_cache());
 
-            RespondForm respondForm1 = crawlerService.requestData(requsetForm);
+            RespondForm respondForm1 = searchService.requestData(requsetForm);
             InstantPost post1 = respondForm1.getSecond_layer().get(3);
             Log.d("response result: text", post1.getText());
             Log.d("response result: url", post1.getUrl());

@@ -25,10 +25,13 @@ public class ConcretePostStorage implements PostStorage {
     private CategoryPostDao categoryPostDao;
     private DBHelper dbHelper;
 
+    private Context context;
+
     public ConcretePostStorage(Context context) {
         dbHelper = DaoFactoryCreator.getInstance().initDao(context);
         postDao = DaoFactoryCreator.getInstance().requsetPostDao();
         categoryPostDao = DaoFactoryCreator.getInstance().requestCategoryPostDao();
+        this.context = context;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class ConcretePostStorage implements PostStorage {
                 Post post = posts[0];
                 int postId = (int) postDao.insert(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
                 createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postId);
+
                 return postId;
             }
         };
@@ -87,11 +91,20 @@ public class ConcretePostStorage implements PostStorage {
     }
 
     @Override
-    public Post findPostById(int id) {
-        PostMapping postMapping = postDao.selectById(dbHelper, id);
-//        CategoryPostMapping categoryPostMapping = categoryPostDao.selectByPostId(dbHelper, id);
-//        Post foundPost = new Post(postMapping.getImgUrl(), postMapping.getUrl(), postMapping.getHashTag(), postMapping.getLike())
-        return null;
+    public Post findPostById(int nodeId, int postId) {
+        Post foundPost = null;
+        PostMapping postMapping = postDao.selectById(dbHelper, postId);
+        List<CategoryPostMapping> mappingList = categoryPostDao.selectByPostId(dbHelper, postId);
+
+        for(CategoryPostMapping mapping : mappingList) {
+            if(mapping.getCategoryId() == nodeId) {
+                foundPost = new Post(
+                        postMapping.getImgUrl(), postMapping.getUrl(), postMapping.getHashTag(), postMapping.getLike(),
+                        mapping.getCategoryId(), mapping.getDogamId());
+                break;
+            }
+        }
+        return foundPost;
     }
 
     @Override
@@ -107,12 +120,16 @@ public class ConcretePostStorage implements PostStorage {
     }
 
     @Override
-    public void removePost(int id) {
+    public void removePost(int nodeId, int postId) {
         AsyncTask<Integer, Void, Void> thread = new AsyncTask<Integer, Void, Void>() {
             @Override
             protected Void doInBackground(Integer... integers) {
                 int postId = integers[0];
-                postDao.delete(dbHelper, postId);
+                boolean result = categoryPostDao.delete(dbHelper, nodeId, postId);
+                if(result != true) return null;
+
+                List<CategoryPostMapping> mapping = categoryPostDao.selectByPostId(dbHelper, postId);
+                if(mapping == null) postDao.delete(dbHelper, postId);
 
                 return null;
             }

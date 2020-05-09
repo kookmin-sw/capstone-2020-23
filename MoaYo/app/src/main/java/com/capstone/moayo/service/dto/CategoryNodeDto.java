@@ -16,6 +16,8 @@ public class CategoryNodeDto {
     private List<CategoryNodeDto> lowLayer;
     private List<PostDto> posts;
 
+    private RequestForm requestForm;
+
     public CategoryNodeDto() {
         this.id = 0;
         hashtags = new ArrayList<>();
@@ -94,6 +96,14 @@ public class CategoryNodeDto {
 
     public void setLowLayer(List<CategoryNodeDto> lowLayer) {
         this.lowLayer = lowLayer;
+    }
+
+    public RequestForm getRequestForm() {
+        return requestForm;
+    }
+
+    public void setRequestForm(RequestForm requestForm) {
+        this.requestForm = requestForm;
     }
 
     public int getLevel() {

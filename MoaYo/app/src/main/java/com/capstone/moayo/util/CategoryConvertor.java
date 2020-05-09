@@ -1,36 +1,25 @@
 package com.capstone.moayo.util;
 
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.RequestForm;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CategoryConvertor {
-    public static String convertCategoryToJSON(CategoryNodeDto secondNode, CategoryNodeDto thirdNode) {
-        try {
-            JSONObject rootObject = new JSONObject();
+    public static RequestForm generateForm(CategoryNodeDto secondNode, CategoryNodeDto thirdNode) {
+        RequestForm form = new RequestForm();
 
-            JSONArray secondArray = new JSONArray(secondNode.getHashtags());
-            rootObject.put("second_layer", secondArray);
-            JSONArray thirdArray = new JSONArray(thirdNode.getHashtags());
-            rootObject.put("third_layer", thirdArray);
+        form.setSecond_layer(secondNode.getHashtags());
+        form.setThird_layer(thirdNode.getHashtags());
 
-            JSONArray secondCache = new JSONArray(createStringArray(secondArray.length()));
+        String[] secondCache = new String[form.getSecond_layer().size()];
+        String[] thirdCache = new String[form.getThird_layer().size()];
 
-            JSONArray thirdCache = new JSONArray(createStringArray(thirdArray.length()));
-            rootObject.put("second_layer_cache", secondCache);
-            rootObject.put("third_layer_cache", thirdCache);
+        for(int i = 0; i < secondCache.length; i++) secondCache[i] = "";
+        for(int i = 0; i < thirdCache.length; i++) thirdCache[i] = "";
 
-            return rootObject.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return form;
     }
 
     public static String convertCategoryToJSON(CategoryNodeDto categoryNodeDto) {
@@ -50,11 +39,5 @@ public class CategoryConvertor {
         return null;
     }
 
-    public static String[] createStringArray(int size) {
-        String[] array = new String[size];
-        for(int i = 0; i < size; i++)
-            array[i] = "";
-        return array;
-    };
 }
 

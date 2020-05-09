@@ -163,8 +163,15 @@ public class ConcreteCategoryStorage implements CategoryStorage {
     }
 
     private void updateCategoryHashTag(int dogamId, int nodeId, List<String> hashtags) {
-        for(String hashtag : hashtags) {
-            categoryHashtagDao.replace(dbHelper, new CategoryHashTagMapping(dogamId, nodeId, hashtag));
+        List<CategoryHashTagMapping> mappingList = categoryHashtagDao.selectByCategoryId(dbHelper, nodeId);
+
+        for(CategoryHashTagMapping mapping : mappingList) {
+            if(!hashtags.contains(mapping.getHashtag())) {
+                categoryHashtagDao.delete(dbHelper, mapping);
+            }
         }
+
+        for(String hashtag : hashtags)
+            categoryHashtagDao.replace(dbHelper, new CategoryHashTagMapping(dogamId, nodeId, hashtag));
     }
 }

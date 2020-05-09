@@ -12,4 +12,5 @@ public interface CategoryHashtagDao {
     List<CategoryHashTagMapping> selectByCategoryId(DBHelper dbHelper,int categoryId);
     List<CategoryHashTagMapping> selectByHashtag(DBHelper dbHelper,String hashtag);
     long replace(DBHelper dbHelper, CategoryHashTagMapping categoryHashTagMapping);
+    boolean delete(DBHelper dbHelper, CategoryHashTagMapping categoryHashTagMapping);
 }
