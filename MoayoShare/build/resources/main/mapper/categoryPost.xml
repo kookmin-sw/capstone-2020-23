@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.moayo.server.dao.CategoryPostDao">
+    <insert id="insertCategoryPost" parameterType="com.moayo.server.model.CategoryPostModel">
+        INSERT INTO `MoayoShare`.`tb_categoryPost` (`co_dogamId`, `co_categoryId`, `co_postId`)
+        VALUES (${co_dogamId}, ${co_categoryId}, '${co_postId}');
+    </insert>
+
+    <delete id="deleteByDogamId" parameterType="int">
+        DELETE FROM `MoayoShare`.`tb_categoryPost` WHERE `co_dogamId = ${dogamId};
+    </delete>
+    <delete id="deleteByCategoryId" parameterType="int">
+        DELETE FROM `MoayoShare`.`tb_categoryPost` WHERE `co_dogamId = ${dogamId} AND `co_categoryId` = ${categoryId};
+    </delete>
+    <delete id="deleteByPostId" parameterType="int">
+        DELETE FROM `MoayoShare`.`tb_categoryPost` WHERE `co_postId = ${postId};
+    </delete>
+
+    <select id="getByDogamId" parameterType="int" resultType="com.moayo.server.model.CategoryPostModel">
+        SELECT * FROM `tb_categoryPost` WHERE `co_dogamId = ${dogamId};
+    </select>
+    <select id="getByCategoryId" parameterType="int" resultType="com.moayo.server.model.CategoryPostModel">
+        SELECT * FROM `tb_categoryPost` WHERE `co_dogamId = ${dogamId} AND `co_categoryId` = ${categoryId};
+    </select>
+    <select id="getByPostId" parameterType="int" resultType="com.moayo.server.model.CategoryPostModel">
+        SELECT * FROM `tb_categoryPost` WHERE `co_postId = ${postId};
+    </select>
+
+</mapper>
