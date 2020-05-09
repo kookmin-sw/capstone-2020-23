@@ -19,6 +19,7 @@ import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.service.dto.RequestForm;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.CategoryConvertor;
+import com.capstone.moayo.util.Tag.TagsFinder;
 
 import java.util.ArrayList;
 import java.util.List;
