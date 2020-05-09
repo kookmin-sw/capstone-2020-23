@@ -109,8 +109,7 @@ public class CategoryDaoImpl implements CategoryDao {
     public CategoryNode selectByDogamId(DBHelper dbHelper,int dogamId) {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME0+" where co_dogamId = '"+dogamId+"';",null);
-        DataEntityTranslator det = new DataEntityTranslator();
-        CategoryNode result = det.cursorToCategoryNode(c);
+        CategoryNode result = DataEntityTranslator.cursorToCategoryNode(c);
         mDB.close();
         return result;
     }

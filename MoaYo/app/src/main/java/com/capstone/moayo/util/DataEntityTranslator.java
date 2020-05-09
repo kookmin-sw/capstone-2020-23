@@ -15,7 +15,7 @@ import java.util.Map;
 public class DataEntityTranslator {
 
     // use CategoryDao
-    public CategoryNode cursorToCategoryNode(Cursor c){
+    public static CategoryNode cursorToCategoryNode(Cursor c){
         // Map<ID,Pair<parent,Object>>
         Map<Integer,Pair<Integer,CategoryNode>> nodeSet = new HashMap<>();
         CategoryNode root = null;
@@ -32,13 +32,16 @@ public class DataEntityTranslator {
         c.close();
 
         for(Pair<Integer,CategoryNode> p : nodeSet.values()){
+            if(p.second.getId() == p.first) {
+                root = p.second;
+                continue;
+            }
+
             CategoryNode parent = nodeSet.get(p.first).second;
             p.second.setParent(parent);
 
             if(parent.getId() != p.second.getId())
                 parent.getLowLayer().add(p.second);
-            if(p.second.getId() == p.first)
-                root = p.second;
         }
         return root;
     }

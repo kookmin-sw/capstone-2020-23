@@ -9,15 +9,18 @@ import android.widget.Button;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.InstantPost;
+import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.service.dto.RequestForm;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.CategoryConvertor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
@@ -28,7 +31,10 @@ public class TestActivity extends AppCompatActivity {
     private Button findBtn;
     private Button initBtn;
     private Button removeBtn;
+    private Button createPostBtn;
+
     private CategoryService categoryService;
+    private PostService postService;
     private SearchService searchService;
     private DBHelper dbHelper;
 
@@ -43,9 +49,11 @@ public class TestActivity extends AppCompatActivity {
         findBtn = findViewById(R.id.find);
         initBtn = findViewById(R.id.init);
         removeBtn = findViewById(R.id.remove);
+        createPostBtn = findViewById(R.id.createPost);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
+        postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         convertBtn.setOnClickListener(v -> {
@@ -102,6 +110,7 @@ public class TestActivity extends AppCompatActivity {
             CategoryDto testCategory = categoryService.findCategoryById(1);
             testCategory.setTitle("modify dummy dogam");
             testCategory.getRootNode().setTitle("modify node");
+            testCategory.getRootNode().getLowLayer().get(2).getHashtags().set(2, "modify hash tag");
 
             String result = categoryService.modifyCategory(testCategory);
 
@@ -124,6 +133,11 @@ public class TestActivity extends AppCompatActivity {
             Log.d("delete result", result);
 //            result = categoryService.deleteDogam(1);
 //            Log.d("delete result", result);
+        });
+
+        createPostBtn.setOnClickListener(v -> {
+            InstantPost newPost = new InstantPost("dummy post", "dummy url", "dummy src", 123);
+            postService.createPost(newPost, 2, 1);
         });
     }
 
@@ -150,5 +164,22 @@ public class TestActivity extends AppCompatActivity {
         CategoryDto categoryDto = new CategoryDto("dummy dogam", "this is dummy dogam", "1234", null);
         categoryDto.setRootNode(rootNode);
         return categoryDto;
+    }
+
+    private CategoryDto createPost(CategoryDto categoryDto) {
+        CategoryDto dogam = new CategoryDto(categoryDto.getTitle(), categoryDto.getDescription(), categoryDto.getPassword(), categoryDto.getRootNode());
+        CategoryNodeDto rootNode = dogam.getRootNode();
+        for(int i  = 0; i < 3; i++)
+            rootNode.getPosts().add(new PostDto("IMGUrl-rootNode", "url", "hash"+i, i, rootNode.getId(), categoryDto.getId()));
+
+        for(CategoryNodeDto secondNodeDto : rootNode.getLowLayer()) {
+            for(int i = 0; i < 3; i++)
+                secondNodeDto.getPosts().add(new PostDto("IMGURL-secondNode", "url", "hash"+i, i, secondNodeDto.getId(), categoryDto.getId()));
+            for(CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
+                for(int i = 0; i < 3; i++)
+                    thirdNodeDto.getPosts().add(new PostDto("IMGURL-thirdNode", "url", "hash"+i, i, thirdNodeDto.getId(), categoryDto.getId()));
+            }
+        }
+        return dogam;
     }
 }
