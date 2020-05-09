@@ -14,4 +14,8 @@ public interface CategoryDao {
     long deleteCategoryByDogamId(int dogamId);
     CategoryModel getCategoryById(int id,int dogamId);
     List<CategoryModel> getCategoryByDogamId(int dogamId);
+
+
+    void foreignKeyON();
+    void foreignKeyOFF();
 }

@@ -5,12 +5,12 @@
 <mapper namespace="com.moayo.server.dao.DogamListDao">
 
     <select id="getDogamById" resultType="com.moayo.server.model.DogamListModel">
-        select * from tb_dogamList where co_dogamId=#{id}
+        select * from tb_dogamList where co_dogamId=#{id};
     </select>
     <select id="getAllDogam" resultType="com.moayo.server.model.DogamListModel">
-        selectt * from tb_dogamList
+        select * from tb_dogamList;
     </select>
-    <insert id="insertDogam" parameterType="com.moayo.server.model.DogamListModel">
+    <insert id="insertDogam" parameterType="com.moayo.server.model.DogamListModel" useGeneratedKeys="true" keyProperty="co_dogamId">
         INSERT INTO `tb_dogamList` (`co_title`, `co_description`, `co_status`,`co_password`) VALUES (#{co_title},#{co_description},#{co_status},#{co_password});
     </insert>
     <update id="updateDogam" parameterType="com.moayo.server.model.DogamListModel">
