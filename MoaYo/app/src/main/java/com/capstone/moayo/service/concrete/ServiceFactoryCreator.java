@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
-import com.capstone.moayo.service.DataBindingService;
+import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.ServiceFactory;
 
 public class ServiceFactoryCreator implements ServiceFactory{
     private volatile static ServiceFactory instance;
     private CategoryService categoryService;
-    private DataBindingService dataBindingService;
+    private SearchService searchService;
     private PostService contentService;
 
     public static synchronized ServiceFactory getInstance() {
@@ -41,11 +41,9 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public DataBindingService requestDataBindingService(Context context) {
-        if(dataBindingService == null) {
-            dataBindingService = new ConcreteDataBindingService(context);
-        }
-
-        return dataBindingService;
+    public SearchService requestSearchService(Context context) {
+        if(searchService == null)
+            searchService = new ConcreteSearchService(context);
+        return searchService;
     }
 }

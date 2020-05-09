@@ -81,4 +81,13 @@ public class CategoryHashtagDaoImpl implements CategoryHashtagDao {
 
         return result;
     }
+
+    @Override
+    public boolean delete(DBHelper dbHelper, CategoryHashTagMapping categoryHashTagMapping) {
+        SQLiteDatabase mDB = dbHelper.getWritableDB();
+        boolean result = mDB.delete(
+                StorageInfo.CreateStorage._CHTABLENAME,
+                "co_categoryId="+categoryHashTagMapping.getCategoryId()+"AND co_hashtag="+categoryHashTagMapping.getHashtag(), null) > 0;
+        return result;
+    }
 }

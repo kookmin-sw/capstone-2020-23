@@ -1,27 +1,25 @@
 package com.capstone.moayo.util;
 
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.RequestForm;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class CategoryConvertor {
-    public static String convertCategoryToJSON(CategoryNodeDto secondNode, CategoryNodeDto thirdNode) {
-        try {
-            JSONObject rootObject = new JSONObject();
+    public static RequestForm generateForm(CategoryNodeDto secondNode, CategoryNodeDto thirdNode) {
+        RequestForm form = new RequestForm();
 
-            JSONArray secondArray = new JSONArray(secondNode.getHashtags());
-            rootObject.put("second_layer", secondArray);
-            JSONArray thirdArray = new JSONArray(thirdNode.getHashtags());
-            rootObject.put("third_layer", thirdArray);
+        form.setSecond_layer(secondNode.getHashtags());
+        form.setThird_layer(thirdNode.getHashtags());
 
-            return rootObject.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String[] secondCache = new String[form.getSecond_layer().size()];
+        String[] thirdCache = new String[form.getThird_layer().size()];
 
-        return null;
+        for(int i = 0; i < secondCache.length; i++) secondCache[i] = "";
+        for(int i = 0; i < thirdCache.length; i++) thirdCache[i] = "";
+
+        return form;
     }
 
     public static String convertCategoryToJSON(CategoryNodeDto categoryNodeDto) {
@@ -40,4 +38,6 @@ public class CategoryConvertor {
 
         return null;
     }
+
 }
+

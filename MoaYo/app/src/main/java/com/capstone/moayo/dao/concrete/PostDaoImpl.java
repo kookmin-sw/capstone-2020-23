@@ -24,6 +24,7 @@ public class PostDaoImpl implements PostDao {
         values.put(StorageInfo.CreateStorage.URL,postMapping.getUrl());
         values.put(StorageInfo.CreateStorage.IMGURL,postMapping.getImgUrl());
         values.put(StorageInfo.CreateStorage.HASHTAG,postMapping.getHashTag());
+        values.put(StorageInfo.CreateStorage.LIKE, postMapping.getLike());
         long result =  mDB.insert(StorageInfo.CreateStorage._TABLENAME1,null,values);
         mDB.close();
         return result;
@@ -55,7 +56,7 @@ public class PostDaoImpl implements PostDao {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_postId="+id+";",null);
         c.moveToFirst();
-        PostMapping cm = new PostMapping(c.getInt(0),c.getString(1),c.getString(2),c.getString(3));
+        PostMapping cm = new PostMapping(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getInt(4));
         c.close();
         mDB.close();
         return cm;
