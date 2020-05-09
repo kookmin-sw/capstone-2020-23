@@ -49,4 +49,16 @@
         android:layout_height="wrap_content"
         android:text="createPost" />
 
+    <Button
+        android:id="@+id/findPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="findPost" />
+
+    <Button
+        android:id="@+id/removePost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="removepost" />
+
 </LinearLayout>

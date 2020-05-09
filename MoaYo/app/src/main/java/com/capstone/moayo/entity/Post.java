@@ -4,11 +4,10 @@ import com.capstone.moayo.service.dto.PostDto;
 
 public class Post {
     private int id;
-    private String hashtag;
-    private int like;
-
     private String imgUrl;
     private String url;
+    private String hashtag;
+    private int like;
 
 
     private int categoryNodeId;
@@ -92,9 +91,16 @@ public class Post {
         this.dogamId = dogamId;
     }
 
-    //    public String toString() {
-//        StringBuffer buffer = new StringBuffer();
-//        buffer.append("\"{id\" : \"").append(id).append("\"").
-//                append("\"{\" : \"").append(id).append("\"").
-//    }
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{\"id\": ").append("\"").append(id).append("\",")
+                .append("\"img_url\": ").append("\"").append(imgUrl).append("\",")
+                .append("\"url\": ").append("\"").append(url).append("\",")
+                .append("\"hashtag\": ").append("\"").append(hashtag).append("\",")
+                .append("\"like\": ").append(like).append(",")
+                .append("\"categoryNodeId\": ").append("\"").append(categoryNodeId).append("\",")
+                .append("\"dogamId\": ").append("\"").append(dogamId).append("\"}");
+
+        return buffer.toString();
+    }
 }
