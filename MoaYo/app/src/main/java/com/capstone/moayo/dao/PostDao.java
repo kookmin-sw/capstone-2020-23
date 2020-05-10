@@ -16,5 +16,9 @@ public interface PostDao {
     // 커서 이용한 뒤 close()할것.
     public PostMapping selectById(DBHelper dbHelper, int id);
 
+    public PostMapping selectByUrl(DBHelper dbHelper, String url);
+
     public List<PostMapping> selectByNodeId(DBHelper dbHelper, int nodeId);
+
+    public boolean isExist(DBHelper dbHelper, PostMapping postMapping);
 }

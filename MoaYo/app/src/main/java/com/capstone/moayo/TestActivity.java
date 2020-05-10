@@ -152,8 +152,11 @@ public class TestActivity extends AppCompatActivity {
 
         removePost.setOnClickListener(v -> {
             List<PostDto> foundPosts = postService.findPostByCategoryNodeId(2);
-            for(PostDto postDto : foundPosts)
-                postService.deletePostById(postDto.getId());
+
+            for(PostDto postDto : foundPosts) {
+                Log.d("found post", postDto.toString());
+                postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
+            }
         });
     }
 

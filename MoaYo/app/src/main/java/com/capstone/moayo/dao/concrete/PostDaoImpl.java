@@ -9,6 +9,7 @@ import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.mapping.PostMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
+import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.util.Exception.DaoObjectNullException;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class PostDaoImpl implements PostDao {
         SQLiteDatabase mDB = dbHelper.getReadableDB();
         Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_postId="+id+";",null);
         c.moveToFirst();
+
         PostMapping cm = new PostMapping(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getInt(4));
         c.close();
         mDB.close();
@@ -63,7 +65,29 @@ public class PostDaoImpl implements PostDao {
     }
 
     @Override
+    public PostMapping selectByUrl(DBHelper dbHelper, String url) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM "+StorageInfo.CreateStorage._TABLENAME1+" where co_url='"+url+"';", null);
+
+        c.moveToFirst();
+
+        PostMapping postMapping = new PostMapping(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4));
+        c.close();
+        mDB.close();
+        return postMapping;
+    }
+
+    @Override
     public List<PostMapping> selectByNodeId(DBHelper dbHelper, int nodeId) {
         return null;
+    }
+
+    @Override
+    public boolean isExist(DBHelper dbHelper, PostMapping postMapping) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM "+ StorageInfo.CreateStorage._TABLENAME1 + " where co_url='"+postMapping.getUrl()+"';", null);
+        c.moveToFirst();
+        if (c.getCount() == 0) return false;
+        return !c.isNull(0);
     }
 }

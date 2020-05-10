@@ -42,8 +42,18 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public PostDto findPostById(int id) {
-        return null;
+    public PostDto findPostById(int nodeId, int postId) {
+        PostDto foundPostDto = null;
+
+        try {
+            Post foundPost = postStorage.retrievePostById(nodeId, postId);
+            if(foundPost == null) return null;
+
+            foundPostDto = foundPost.toPostDto();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foundPostDto;
     }
 
     @Override
@@ -52,7 +62,19 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public void deletePostById(int id) {
+    public void deletePostByNodeId(int nodeId) {
 
+    }
+
+    @Override
+    public void deletePostById(int nodeId, int postId) {
+        try {
+            Post foundPost = postStorage.retrievePostById(nodeId, postId);
+
+            postStorage.removePost(nodeId, postId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
