@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 //        setSupportActionBar(mainToolBar);
 //
 //        getSupportActionBar().setTitle(""); //앱바에서 제목을 없애고 activity_main.xml에서 설정한 제목이 뜨게 설정
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
