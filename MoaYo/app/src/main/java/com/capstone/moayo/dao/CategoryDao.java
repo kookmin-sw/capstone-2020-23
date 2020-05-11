@@ -2,7 +2,9 @@ package com.capstone.moayo.dao;
 
 import android.database.Cursor;
 
+import com.capstone.moayo.dao.mapping.CategoryMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 
 public interface CategoryDao {
@@ -19,4 +21,6 @@ public interface CategoryDao {
     public CategoryNode selectByTitle(DBHelper dbHelper, String title);
 
     public CategoryNode selectByDogamId(DBHelper dbHelper, int dogamId);
+
+    public CategoryMapping selectById(DBHelper dbHelper, int nodeId);
 }

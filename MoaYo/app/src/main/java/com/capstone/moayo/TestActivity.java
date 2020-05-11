@@ -134,7 +134,7 @@ public class TestActivity extends AppCompatActivity {
 
         removeBtn.setOnClickListener(v -> {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
-            String result = categoryService.deleteCategoryNode(18);
+            String result = categoryService.deleteCategoryNode(2);
             Log.d("delete result", result);
 //            result = categoryService.deleteDogam(1);
 //            Log.d("delete result", result);

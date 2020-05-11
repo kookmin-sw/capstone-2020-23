@@ -9,6 +9,7 @@ import com.capstone.moayo.dao.CategoryHashtagDao;
 import com.capstone.moayo.dao.HashtagDao;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
+import com.capstone.moayo.dao.mapping.CategoryMapping;
 import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
@@ -67,12 +68,28 @@ public class ConcreteCategoryStorage implements CategoryStorage {
     }
 
     @Override
-    public CategoryNode retrieveByTitle(String title) {
+    public CategoryMapping retrieveById(int id) {
+        AsyncTask<Integer, Void, CategoryMapping> thread = new AsyncTask<Integer, Void, CategoryMapping>() {
+            @Override
+            protected CategoryMapping doInBackground(Integer... integers) {
+                int nodeId = integers[0];
+                CategoryMapping mapping = categoryDao.selectById(dbHelper, nodeId);
+                return mapping;
+            }
+        };
+
+        try {
+            CategoryMapping mapping = thread.execute(id).get();
+
+            return mapping;
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public CategoryNode retrieveById(int id) {
+    public CategoryNode retrieveByDogamId(int id) {
         AsyncTask<Integer, Void, CategoryNode> thread = new AsyncTask<Integer, Void, CategoryNode>() {
             @Override
             protected CategoryNode doInBackground(Integer... integers) {

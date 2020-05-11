@@ -2,6 +2,10 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,13 +120,21 @@ public class CategoryNodeDto {
 
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append("{\"title\" : ").append("\"").append(title).append("\"").append(",").
+        String tab = "";
+        for(int i = 0; i < level-1; i++)
+            tab += "\t";
+
+        buffer.append("{").append("\"title\" : ").append("\"").append(title).append("\"").append(",").
                 append("\"level\" : ").append("\"").append(level).append("\"").append(",").
-                append("\"lowLayer\" : [");
-        for(CategoryNodeDto lowNode : lowLayer) {
-            buffer.append(lowNode.toString());
-        }
-        buffer.append("]}");
+                append("\"lowLayer\" : ");
+        if(lowLayer.isEmpty()) buffer.append("[");
+        else buffer.append("\n"+tab+"[");
+            for (CategoryNodeDto lowNode : lowLayer) {
+                buffer.append("\n"+tab+"\t").append(lowNode.toString());
+            }
+
+        if(lowLayer.isEmpty()) buffer.append("]}");
+        else buffer.append("\n" + tab).append("]").append("}").append("");
 
         return buffer.toString();
     }
