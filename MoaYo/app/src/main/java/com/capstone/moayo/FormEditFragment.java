@@ -26,12 +26,12 @@ public class FormEditFragment extends Fragment {
         void onChangeForm(int frag_id);
     }
 
-    View view;
-    ArrayList<Keyword> items;
-    FormListAdapter adapter;
-    ListView listView;
-    Button add_btn;
-    OnChangeFormListener cfListener;
+    private View view;
+    private ArrayList<Keyword> items;
+    private FormListAdapter adapter;
+    private ListView listView;
+    private Button add_btn;
+    private OnChangeFormListener cfListener;
 
     @Override
     public void onAttach(Context context) {
@@ -81,7 +81,11 @@ public class FormEditFragment extends Fragment {
                     input_et.setText("");                           // EditText 입력란 초기화
                     adapter.notifyDataSetChanged();           // 리스트 목록 갱신
 
+                    Bundle args = new Bundle();
+                    args.putString("keyword", word);
+
                     BottomSheetFragment bottomSheet = BottomSheetFragment.getInstance();
+                    bottomSheet.setArguments(args);
                     bottomSheet.show(getFragmentManager(),"bottomSheet");
                 } else {
                     Toast.makeText(getContext(), "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -92,6 +96,10 @@ public class FormEditFragment extends Fragment {
         return view;
     }
 
+    public void addKeyword(String add_data, ArrayList<String> tags) {
+        Keyword keyword = new Keyword(add_data);
+        this.items.add(keyword);
+    }
 
     private ArrayList<Keyword> getListData() {
         ArrayList<Keyword> list = new ArrayList<>();

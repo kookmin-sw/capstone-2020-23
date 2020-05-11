@@ -12,8 +12,8 @@ import com.capstone.moayo.entity.Keyword;
 
 import java.util.ArrayList;
 
-public class FormListAdapter extends ArrayAdapter {
-    public FormListAdapter(Context context, ArrayList keywords) {
+public class BottomSheetListAdapter extends ArrayAdapter {
+    public BottomSheetListAdapter(Context context, ArrayList keywords) {
         super(context, 0, keywords);
     }
 
@@ -30,10 +30,8 @@ public class FormListAdapter extends ArrayAdapter {
 
         // Lookup view for data population
         TextView title = (TextView) convertView.findViewById(R.id.keyword);
-        TextView count = (TextView) convertView.findViewById(R.id.num_of_tags);
         // Populate the data into the template view using the data object
         title.setText((String)keyword.getKeyword());
-        count.setText(Integer.toString(keyword.getNumOfTags()));
 
         // Return the completed view to render on screen
         return convertView;
