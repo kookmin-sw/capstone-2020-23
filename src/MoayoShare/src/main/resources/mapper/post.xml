@@ -9,16 +9,16 @@
     </insert>
     <update id="updatePost" parameterType="com.moayo.server.model.PostModel" useGeneratedKeys="true" keyProperty="co_postId">
         UPDATE `MoayoShare`.`tb_postHavingLike` SET `co_postUrl` = '${co_postUrl}', `co_imageUrl` = '${co_imageUrl}', `co_info` = '${co_info}', `co_hashtag` = '${co_hashtag}'
-        WHERE (`co_postId` = '${co_postId}');
+        WHERE (`co_postId` = ${co_postId});
     </update>
     <delete id="deletePost" parameterType="com.moayo.server.model.PostModel">
-        DELETE FROM `MoayoShare`.`tb_postHavingLike` WHERE (`co_postId` = '${co_postId}');
+        DELETE FROM `MoayoShare`.`tb_postHavingLike` WHERE (`co_postId` = ${co_postId});
     </delete>
     <delete id="deletePostById" parameterType="int">
-        DELETE FROM `MoayoShare`.`tb_postHavingLike` WHERE (`co_postId` = '${postId}');
+        DELETE FROM `MoayoShare`.`tb_postHavingLike` WHERE (`co_postId` = #{postId});
     </delete>
     <select id="getPost" resultType="com.moayo.server.model.PostModel" parameterType="int">
-        SELECT * FROM `tb_postHavingLike` WHERE co_postId = ${postId};
+        SELECT * FROM `tb_postHavingLike` WHERE co_postId = #{postId};
     </select>
     <select id="getAllPost" resultType="com.moayo.server.model.PostModel">
         SELECT * FROM `tb_postHavingLike`;

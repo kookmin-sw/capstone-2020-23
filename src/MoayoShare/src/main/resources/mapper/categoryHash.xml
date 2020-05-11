@@ -9,22 +9,22 @@
     </insert>
 
     <delete id="deleteByDogamId" parameterType="int">
-        DELETE FROM `MoayoShare`.`tb_categoryHashtag` WHERE `co_dogamId = ${dogamId};
+        DELETE FROM `MoayoShare`.`tb_categoryHashtag` WHERE `co_dogamId = #{dogamId};
     </delete>
-    <delete id="deleteByCategoryId" parameterType="int">
-        DELETE FROM `MoayoShare`.`tb_categoryHashtag` WHERE `co_dogamId = ${dogamId} AND `co_categoryId` = ${categoryId};
+    <delete id="deleteByCategoryId" parameterType="map">
+        DELETE FROM `MoayoShare`.`tb_categoryHashtag` WHERE `co_dogamId = #{dogamId} AND `co_categoryId` = #{categoryId};
     </delete>
     <delete id="deleteByHashtag" parameterType="String">
         DELETE FROM `MoayoShare`.`tb_categoryHashtag` WHERE `co_hashtag` = ${value};
     </delete>
 
     <select id="getByDogamId" parameterType="int" resultType="com.moayo.server.model.CategoryHashModel">
-        SELECT * FROM `tb_categoryHashtag` WHERE `co_dogamId = ${dogamId};
+        SELECT * FROM `tb_categoryHashtag` WHERE `co_dogamId` = #{dogamId};
     </select>
-    <select id="getByCategoryId" parameterType="int" resultType="com.moayo.server.model.CategoryHashModel">
-        SELECT * FROM `tb_categoryHashtag` WHERE `co_dogamId = ${dogamId} AND `co_categoryId` = ${categoryId};
+    <select id="getByCategoryId" parameterType="map" resultType="com.moayo.server.model.CategoryHashModel">
+        SELECT * FROM `tb_categoryHashtag` WHERE `co_dogamId` = #{dogamId} AND `co_categoryId` = #{categoryId};
     </select>
     <select id="getByHashtag" parameterType="String" resultType="com.moayo.server.model.CategoryHashModel">
-        SELECT * FROM `tb_categoryHashtag` WHERE `co_hashtag = ${value};
+        SELECT * FROM `tb_categoryHashtag` WHERE `co_hashtag` = ${value};
     </select>
 </mapper>
