@@ -20,7 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
-public class FormEditFragment extends Fragment {
+public class FormEditFragment extends Fragment implements BottomSheetFragment.OnAddKeywordListener{
 
     public interface OnChangeFormListener{
         void onChangeForm(int frag_id);
@@ -32,6 +32,7 @@ public class FormEditFragment extends Fragment {
     private ListView listView;
     private Button add_btn;
     private OnChangeFormListener cfListener;
+    private BottomSheetFragment bottomSheet;
 
     @Override
     public void onAttach(Context context) {
@@ -83,10 +84,8 @@ public class FormEditFragment extends Fragment {
 
                     Bundle args = new Bundle();
                     args.putString("keyword", word);
+                    showDialog(args);
 
-                    BottomSheetFragment bottomSheet = BottomSheetFragment.getInstance();
-                    bottomSheet.setArguments(args);
-                    bottomSheet.show(getFragmentManager(),"bottomSheet");
                 } else {
                     Toast.makeText(getContext(), "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
@@ -96,10 +95,19 @@ public class FormEditFragment extends Fragment {
         return view;
     }
 
-    public void addKeyword(String add_data, ArrayList<String> tags) {
-        Keyword keyword = new Keyword(add_data);
-        this.items.add(keyword);
+    public void showDialog(Bundle args) {
+        bottomSheet = BottomSheetFragment.getInstance();
+        bottomSheet.setOnAddKeywordListener(this);
+        bottomSheet.setArguments(args);
+        bottomSheet.show(getFragmentManager(),"bottomSheet");
     }
+
+    public void onAddKeyword(Keyword add_word) {
+        this.items.add(add_word);
+        adapter.notifyDataSetChanged();
+//        Toast.makeText(getContext(), "good job "+word, Toast.LENGTH_SHORT).show();
+    }
+
 
     private ArrayList<Keyword> getListData() {
         ArrayList<Keyword> list = new ArrayList<>();
