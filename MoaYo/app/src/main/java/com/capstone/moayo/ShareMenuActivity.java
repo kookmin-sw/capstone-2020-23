@@ -47,28 +47,28 @@ public class ShareMenuActivity extends AppCompatActivity {
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_sharemenu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        //menu.xml에서 지정한 item 이벤트 추가
-        switch (item.getItemId()) {
-
-            case R.id.newShare:
-            {
-                //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
-                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
-                return true;
-            }
-            default:
-                onBackPressed();
-                return true;
-        }
-
-    }
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.menu_sharemenu, menu);
+//        return true;
+//    }
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        //menu.xml에서 지정한 item 이벤트 추가
+//        switch (item.getItemId()) {
+//
+//            case R.id.newShare:
+//            {
+//                //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
+//                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
+//                return true;
+//            }
+//            default:
+//                onBackPressed();
+//                return true;
+//        }
+//
+//    }
 }
