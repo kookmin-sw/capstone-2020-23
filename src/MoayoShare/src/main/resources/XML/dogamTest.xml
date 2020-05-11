@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dogam
+        xmlns="https://github.com/kookmin-sw/capstone-2020-23/tree/shareServer_develop/src/MoayoShare/src/main/resources/XML"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://github.com/kookmin-sw/capstone-2020-23/tree/shareServer_develop/src/MoayoShare/src/main/resources/XML dogam.xsd">
+    <title>NewDogam</title>
+    <description>This is new Dogam</description>
+    <status>1</status>
+    <password>1234</password>
+    <categories>
+        <category>
+            <categoryName>요리</categoryName>
+            <categoryLevel>1</categoryLevel>
+            <post>
+                <postUrl>Url</postUrl>
+                <imageUrl>ImaUrl</imageUrl>
+                <info>Info</info>
+                <postHashtag>#hashtag</postHashtag>
+            </post>
+            <hashtag>#요리해시태그</hashtag>
+            <category>
+                <categoryName>중화요리</categoryName>
+                <categoryLevel>2</categoryLevel>
+                <category>
+                    <categoryName>유산슬</categoryName>
+                    <categoryLevel>3</categoryLevel>
+                    <post>
+                        <postUrl>URL</postUrl>
+                        <imageUrl>IMG</imageUrl>
+                        <info>INFO</info>
+                        <postHashtag>#HASH</postHashtag>
+                    </post>
+                </category>
+            </category>
+        </category>
+    </categories>
+</dogam>
