@@ -40,10 +40,16 @@ public class ConcretePostStorage implements PostStorage {
             @Override
             protected Integer doInBackground(Post... posts) {
                 Post post = posts[0];
-                int postId = (int) postDao.insert(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
-                createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postId);
+                if(postDao.isExist(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()))) {
+                    PostMapping postMapping = postDao.selectByUrl(dbHelper, post.getUrl());
+                    createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postMapping.getId());
+                    return postMapping.getId();
+                } else {
+                    int postId = (int) postDao.insert(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
+                    createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postId);
+                    return postId;
+                }
 
-                return postId;
             }
         };
 
@@ -69,6 +75,7 @@ public class ConcretePostStorage implements PostStorage {
                 for(CategoryPostMapping mapping : categoryPostMappingList) {
                     PostMapping newMapping = postDao.selectById(dbHelper, mapping.getPostId());
                     Post post = new Post(newMapping.getImgUrl(), newMapping.getUrl(), newMapping.getHashTag(), newMapping.getLike(), mapping.getCategoryId(), mapping.getDogamId());
+                    post.setId(newMapping.getId());
                     postList.add(post);
                 }
                 return postList;
@@ -91,7 +98,7 @@ public class ConcretePostStorage implements PostStorage {
     }
 
     @Override
-    public Post findPostById(int nodeId, int postId) {
+    public Post retrievePostById(int nodeId, int postId) {
         Post foundPost = null;
         PostMapping postMapping = postDao.selectById(dbHelper, postId);
         List<CategoryPostMapping> mappingList = categoryPostDao.selectByPostId(dbHelper, postId);
@@ -101,11 +108,13 @@ public class ConcretePostStorage implements PostStorage {
                 foundPost = new Post(
                         postMapping.getImgUrl(), postMapping.getUrl(), postMapping.getHashTag(), postMapping.getLike(),
                         mapping.getCategoryId(), mapping.getDogamId());
+                foundPost.setId(mapping.getPostId());
                 break;
             }
         }
         return foundPost;
     }
+
 
     @Override
     public void modifyPost(Post post) {
@@ -125,26 +134,27 @@ public class ConcretePostStorage implements PostStorage {
             @Override
             protected Void doInBackground(Integer... integers) {
                 int postId = integers[0];
+                int nodeId = integers[1];
                 boolean result = categoryPostDao.delete(dbHelper, nodeId, postId);
                 if(result != true) return null;
 
                 List<CategoryPostMapping> mapping = categoryPostDao.selectByPostId(dbHelper, postId);
-                if(mapping == null) postDao.delete(dbHelper, postId);
+                if(mapping.size() == 0) postDao.delete(dbHelper, postId);
 
                 return null;
             }
         };
 
         try {
-            thread.execute();
+            thread.execute(postId, nodeId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void createCategoryPost(int nodeId, int dogamId, int id) {
+        if(categoryPostDao.isExist(dbHelper, nodeId, id)) return;
+
         categoryPostDao.insert(dbHelper, new CategoryPostMapping(dogamId, nodeId, id));
     }
-
-
 }

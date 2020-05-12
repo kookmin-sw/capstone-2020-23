@@ -73,7 +73,16 @@ public class CategoryPostDaoImpl implements CategoryPostDao {
     @Override
     public boolean delete(DBHelper dbHelper, int nodeId, int postId) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
-        boolean result = mDB.delete(StorageInfo.CreateStorage._CPTABLENAME, "co_categoryId="+nodeId+"AND co_postId="+postId, null) > 0;
+        boolean result = mDB.delete(StorageInfo.CreateStorage._CPTABLENAME, "co_categoryId="+nodeId+" AND co_postId="+postId, null) > 0;
         return result;
+    }
+
+    @Override
+    public boolean isExist(DBHelper dbHelper, int nodeId, int postId) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM " +StorageInfo.CreateStorage._CPTABLENAME+" where co_categoryId="+nodeId+ " AND co_postId="+postId+";", null);
+        if(c.getCount() == 0) return false;
+        c.moveToFirst();
+        return !c.isNull(0);
     }
 }

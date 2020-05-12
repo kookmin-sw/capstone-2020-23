@@ -33,6 +33,8 @@ public class TestActivity extends AppCompatActivity {
     private Button initBtn;
     private Button removeBtn;
     private Button createPostBtn;
+    private Button findPost;
+    private Button removePost;
 
     private CategoryService categoryService;
     private PostService postService;
@@ -51,6 +53,8 @@ public class TestActivity extends AppCompatActivity {
         initBtn = findViewById(R.id.init);
         removeBtn = findViewById(R.id.remove);
         createPostBtn = findViewById(R.id.createPost);
+        findPost = findViewById(R.id.findPost);
+        removePost = findViewById(R.id.removePost);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
@@ -130,7 +134,7 @@ public class TestActivity extends AppCompatActivity {
 
         removeBtn.setOnClickListener(v -> {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
-            String result = categoryService.deleteCategoryNode(18);
+            String result = categoryService.deleteCategoryNode(2);
             Log.d("delete result", result);
 //            result = categoryService.deleteDogam(1);
 //            Log.d("delete result", result);
@@ -139,6 +143,20 @@ public class TestActivity extends AppCompatActivity {
         createPostBtn.setOnClickListener(v -> {
             InstantPost newPost = new InstantPost("dummy post", "dummy url", "dummy src", 123);
             postService.createPost(newPost, 2, 1);
+        });
+
+        findPost.setOnClickListener(v -> {
+            List<PostDto> foundPost = postService.findPostByCategoryNodeId(2);
+            Log.d("found post", foundPost.toString());
+        });
+
+        removePost.setOnClickListener(v -> {
+            List<PostDto> foundPosts = postService.findPostByCategoryNodeId(2);
+
+            for(PostDto postDto : foundPosts) {
+                Log.d("found post", postDto.toString());
+                postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
+            }
         });
     }
 

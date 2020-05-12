@@ -9,7 +9,8 @@ import java.util.List;
 public interface PostService {
     public int createPost(InstantPost newPost, int nodeId, int dogamId);
     public List<PostDto> findPostByCategoryNodeId(int id);
-    public PostDto findPostById(int id);
+    public PostDto findPostById(int nodeId, int postId);
     public boolean modifyPost(PostDto postDto);
-    public void deletePostById(int id);
+    public void deletePostByNodeId(int nodeId);
+    public void deletePostById(int nodeId, int postId);
 }

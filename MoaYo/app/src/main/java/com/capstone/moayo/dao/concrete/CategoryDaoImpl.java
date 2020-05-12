@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.capstone.moayo.dao.CategoryDao;
+import com.capstone.moayo.dao.mapping.CategoryMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
 import com.capstone.moayo.entity.CategoryNode;
@@ -112,6 +113,18 @@ public class CategoryDaoImpl implements CategoryDao {
         CategoryNode result = DataEntityTranslator.cursorToCategoryNode(c);
         mDB.close();
         return result;
+    }
+
+    @Override
+    public CategoryMapping selectById(DBHelper dbHelper, int nodeId) {
+        SQLiteDatabase mDB = dbHelper.getReadableDB();
+        Cursor c = mDB.rawQuery("SELECT * FROM " + StorageInfo.CreateStorage._TABLENAME0+" where co_id="+nodeId+";", null);
+        c.moveToFirst();
+        CategoryMapping mapping = new CategoryMapping(c.getInt(0), c.getInt(1), c.getString(2), c.getInt(3), c.getInt(4), c.getInt(5));
+        c.close();
+        mDB.close();
+
+        return mapping;
     }
 }
 

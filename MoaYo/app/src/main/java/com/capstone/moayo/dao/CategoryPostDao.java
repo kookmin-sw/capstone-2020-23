@@ -11,4 +11,5 @@ public interface CategoryPostDao {
     List<CategoryPostMapping> selectByCategoryId(DBHelper dbHelper,int categoryId);
     List<CategoryPostMapping> selectByPostId(DBHelper dbHelper,int postId);
     boolean delete(DBHelper dbHelper, int nodeId, int postId);
+    boolean isExist(DBHelper dbHelper, int nodeId, int postId);
 }

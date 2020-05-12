@@ -9,7 +9,7 @@ public interface PostStorage {
     public int createPost(Post post);
     public List<Post> retrievePostByNodeId(int nodeId);
     public List<Post> retrievePostByDogamId(int dogamId);
-    public Post findPostById(int nodeId, int postId);
+    public Post retrievePostById(int nodeId, int postId);
     public void modifyPost(Post post);
     public void removePost(int nodeId, int postId);
 }

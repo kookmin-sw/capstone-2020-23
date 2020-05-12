@@ -4,6 +4,10 @@ import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.util.Exception.NotRootException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,10 +86,10 @@ public class CategoryDto {
     }
 
     public String toString() {
-        String result = String.format("{\"title\" : \"%s\"," +
+        String result = String.format("{\n\"title\" : \"%s\"," +
                                 " \"description\" : \"%s\"," +
                                 " \"password\" : \"%s\"," +
-                                " \"rootNode\" : \"%s\"}", title, description, password, rootNode.toString());
+                                " \"rootNode\" : \n%s}\n", title, description, password, rootNode.toString());
 
         return result;
     }
