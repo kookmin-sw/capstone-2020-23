@@ -11,19 +11,23 @@
                 <xs:element name="imageUrl" type="xs:string"/>
                 <xs:element name="info" type="xs:string"/>
                 <xs:element name="postHashtag" type="xs:string"/>
+                <xs:element name="postParentId" type="xs:integer"/>
             </xs:sequence>
+        <xs:attribute name="id" type="xs:integer"/>
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="categoryType">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="categoryName" type="xs:string"/>
-            <xs:element name="categoryLevel" type="xs:integer"/>
-            <xs:element ref="post" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element ref="hashtag" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="category" minOccurs="0" type="categoryType"/>
-        </xs:choice>
-    </xs:complexType>
+    <xs:element name="category">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="categoryName" type="xs:string"/>
+                <xs:element name="categoryLevel" type="xs:integer"/>
+                <xs:element ref="hashtag" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="categoryParentId" type="xs:integer"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
 
 
     <xs:element name="hashtag" type="xs:string"/>
@@ -36,7 +40,8 @@
                 <xs:element name="description" type="xs:string"/>
                 <xs:element name="status" type="xs:integer"/>
                 <xs:element name="password" type="xs:string"/>
-                <xs:element name="categories" type="categoryType"/>
+                <xs:element ref="category" maxOccurs="unbounded"/>
+                <xs:element ref="post" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

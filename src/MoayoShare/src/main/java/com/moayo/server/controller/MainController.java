@@ -4,12 +4,19 @@ package com.moayo.server.controller;
 import com.moayo.server.dao.*;
 import com.moayo.server.model.*;
 import com.moayo.server.service.ShareService;
+import com.moayo.server.service.XMLParsingService;
+import com.moayo.server.service.XMLParsingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import util.XMLParsing;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -28,6 +35,8 @@ public class MainController {
     DogamListDao dogamListDao;
     @Autowired
     PostDao postDao;
+    @Autowired
+    XMLParsingService xmlParsingService;
 //
 //    @RequestMapping(value="/bookshare",method = RequestMethod.POST)
 //    public void bookShare(HttpServletRequest req ,HttpServletResponse res,@RequestBody String body){
@@ -46,6 +55,11 @@ public class MainController {
 //        service.loadBook();
 //    }
 
+    @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
+    public void xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
+        Document doc = XMLParsing.XMLParsing(body);
+        xmlParsingService.insertData(doc);
+    }
     @RequestMapping(value = "/daoTest",method = RequestMethod.GET)
     public void dbTest(HttpServletRequest req,HttpServletResponse res){
 //        DogamListModel m1 = new DogamListModel("NewDogam2","this is new dogam2",1,"1234");
