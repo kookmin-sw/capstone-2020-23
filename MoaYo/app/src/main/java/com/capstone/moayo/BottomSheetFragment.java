@@ -23,23 +23,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public interface OnAddKeywordListener {
         void onAddKeyword(Keyword add_word);
     }
-
     private Keyword add_keyword;
     private String word;
     private Button cancel_btn, add_btn;
     private TextView keyword;
     private OnAddKeywordListener callback;
 
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try{
-//             listener = (OnAddKeywordListener) context;
-//        }catch(ClassCastException e){
-//            throw new ClassCastException(context.toString() + " must implement OnChangeBodyListener");
-//        }
-//    }
     public void setOnAddKeywordListener(OnAddKeywordListener callback) {
         this.callback = callback;
     }
@@ -62,10 +51,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         tags.add("hashtag2");
         tags.add("hashtag3");
         final ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, tags);
-
         final ListView listview = (ListView) view.findViewById(R.id.hashtag_list);
+
         listview.setAdapter(adapter);
 
+//        Cancel Button
         cancel_btn = (Button) view.findViewById(R.id.cancel_btn);
         cancel_btn.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -74,19 +64,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
         });
 
+//        Add Button
         add_btn = (Button) view.findViewById(R.id.add_btn);
         add_btn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Keyword 객체에 선택된 태그들 넣는 코드...
-//                if(add_keyword == null) {
-
-//                }
-//                listener.onAddKeyword(add_keyword);
-//                dismiss();
-//                Keyword add_data = new Keyword(word);
 
                 add_keyword = new Keyword(word);
+                //Keyword 객체에 선택된 태그들 넣는 코드...
+
                 callback.onAddKeyword(add_keyword);
                 dismiss();
 

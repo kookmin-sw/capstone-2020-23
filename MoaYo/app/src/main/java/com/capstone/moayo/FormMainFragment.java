@@ -22,8 +22,6 @@ public class FormMainFragment extends Fragment {
         super.onAttach(context);
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +41,9 @@ public class FormMainFragment extends Fragment {
                 String title = title_et.getText().toString();
 
                 if(!title.isEmpty()) {
-                    ((BookFormActivity)getActivity()).setTitle(title);
-                    ((BookFormActivity)getActivity()).onChangeForm(1);
+                    ((BookFormActivity)getActivity()).categoryFactory(title);
+
+                    ((BookFormActivity)getActivity()).onChangeLevel(1);
                 } else {
                     Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();
                 }

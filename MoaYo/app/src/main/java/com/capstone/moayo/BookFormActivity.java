@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeFormListener {
+import com.capstone.moayo.entity.Category;
+import com.capstone.moayo.entity.CategoryNode;
+
+public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener {
     private FragmentManager fm;
     private FragmentTransaction tran;
-    private String dogamTitle = "";
+    private Category category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +24,10 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("도감 생성");
 
-        onChangeForm(0);
+        onChangeLevel(0);
     }
 
-    //프래그먼트와 프래그먼트끼리 직접접근을하지않는다. 프래그먼트와 엑티비티가 접근함
 //    public void onFragmentChange(int index) {
-//
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 //        fragmentTransaction.addToBackStack(null);
@@ -45,7 +46,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //    }
 
     @Override
-    public void onChangeForm(int frag_id) {
+    public void onChangeLevel(int frag_id) {
 
         Fragment temp = null;
 
@@ -54,12 +55,15 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
         Bundle bundle = new Bundle();
-        bundle.putString("title", this.dogamTitle);
+
+//        bundle.putString("title", this.bookTitle);
 
         switch (frag_id) {
             case 0:
-                if ((temp = fm.findFragmentByTag("main")) == null)
+                if ((temp = fm.findFragmentByTag("main")) == null) {
                     temp = new FormMainFragment();
+                }
+                temp.setArguments(bundle);
                 tran.replace(R.id.form_frame, temp, "main");
                 break;
             case 1:
@@ -81,8 +85,18 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran.commit();
     }
 
-    public void setTitle(String title) {
-        this.dogamTitle = title;
+    public void categoryFactory(String title) {
+//        this.bookTitle = title;
+        if(category == null) {
+            category = new Category(title, null, null, null);
+        } else {
+            category.setTitle(title);
+        }
+    }
+
+    public CategoryNode nodeFactory(String title, CategoryNode parentNode, int level) {
+        CategoryNode node = new CategoryNode(title, parentNode, level);
+        return node;
     }
 
 

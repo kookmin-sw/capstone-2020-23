@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 
-public class Category{
+public class Category {
     private int id;
     private String title;
     private String description;
@@ -15,6 +15,15 @@ public class Category{
 
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
+
+    public Category() {
+        this.id = 0;
+        this.title = null;
+        this.description = null;
+        this.password = null;
+        this.rootNode = null;
+        this.selectCategoryNode = null;
+    }
 
     public Category(String title, String description, String password,CategoryNode rootNode) {
         this.id = 0;
