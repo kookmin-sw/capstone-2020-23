@@ -46,11 +46,6 @@ public class BookManageActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setTitle("나의 도감");
-//
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-
 //       TEST DATA 생성하여 변수에 할당.
         userBookData = createData();
 

@@ -25,15 +25,12 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".BookDetailActivity"
-            android:theme="@style/AppBarTheme"
             android:parentActivityName=".BookManageActivity" />
         <activity
             android:name=".ResultActivity"
-            android:theme="@style/AppBarTheme"
             android:parentActivityName=".BookManageActivity" />
         <activity
             android:name=".BookFormActivity"
-            android:theme="@style/AppBarTheme"
             android:parentActivityName=".MainActivity" />
     </application>
 

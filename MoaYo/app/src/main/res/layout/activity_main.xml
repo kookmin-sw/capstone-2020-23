@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/mainDisplay">
+<!--<androidx.drawerlayout.widget.DrawerLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".MainActivity"-->
+<!--    android:id="@+id/mainDisplay">-->
 
 <!--    &lt;!&ndash;기존의 App Bar를 없애고 커스터마이징을 위해 Tool Bar설치&ndash;&gt;-->
 
-    <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,7 +28,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/surface"
+                android:background="@color/colorWhite"
+                android:elevation="3dp"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme">
 
@@ -78,7 +83,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="#000000"/>
+            android:background="@color/colorBlack"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,67 +132,67 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/mainMenu"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:background="#ffffff"
-        android:layout_gravity="start">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/mainMenu"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:orientation="vertical"-->
+<!--        android:background="#ffffff"-->
+<!--        android:layout_gravity="bottom">-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/create_Book"
-            android:textSize="25dp"
-            android:drawableLeft="@drawable/ic_create_black_24dp"
-            android:drawablePadding="10dp"
-            android:id="@+id/createBook" />
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:text="@string/create_Book"-->
+<!--            android:textSize="25dp"-->
+<!--            android:drawableLeft="@drawable/ic_create_black_24dp"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:id="@+id/createBook" />-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/share_Book"
-            android:textSize="25dp"
-            android:drawableLeft="@drawable/ic_share_black_24dp"
-            android:drawablePadding="10dp"
-            android:id="@+id/shareBook"/>
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:text="@string/share_Book"-->
+<!--            android:textSize="25dp"-->
+<!--            android:drawableLeft="@drawable/ic_share_black_24dp"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:id="@+id/shareBook"/>-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/my_Book"
-            android:textSize="25dp"
-            android:drawableLeft="@drawable/ic_folder_shared_black_24dp"
-            android:drawablePadding="10dp"
-            android:id="@+id/myBook"/>
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:text="@string/my_Book"-->
+<!--            android:textSize="25dp"-->
+<!--            android:drawableLeft="@drawable/ic_folder_shared_black_24dp"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:id="@+id/myBook"/>-->
 
-        <View
-            android:layout_width="190dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            android:background="#000000"/>
+<!--        <View-->
+<!--            android:layout_width="190dp"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:background="#000000"/>-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="30dp"
-            android:text="About"
-            android:textSize="25dp"
-            android:drawableLeft="@drawable/ic_error_black_24dp"
-            android:drawablePadding="10dp"
-            android:id="@+id/setting"/>
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:text="About"-->
+<!--            android:textSize="25dp"-->
+<!--            android:drawableLeft="@drawable/ic_error_black_24dp"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:id="@+id/setting"/>-->
 
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-</androidx.drawerlayout.widget.DrawerLayout>
+<!--</androidx.drawerlayout.widget.DrawerLayout>-->

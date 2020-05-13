@@ -2,9 +2,11 @@ package com.capstone.moayo;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +25,15 @@ public class ShareMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_menu);
 
+        //리소스 파일에서 추가한 툴바를 앱바로 지정하기
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("공유 게시판");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
 
         RecyclerView recyclerView2 = findViewById(R.id.recycler_shareMenu);
@@ -46,29 +54,33 @@ public class ShareMenuActivity extends AppCompatActivity {
         ShareTypeSpinner.setAdapter(shareTypeAdapter);
     }
 
+    //mainToolBar에 menu.xml을 인플레이트함
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.menu_sharemenu, menu);
-//        return true;
-//    }
-//
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        //menu.xml에서 지정한 item 이벤트 추가
-//        switch (item.getItemId()) {
-//
-//            case R.id.newShare:
-//            {
-//                //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
-//                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
-//                return true;
-//            }
-//            default:
-//                onBackPressed();
-//                return true;
-//        }
-//
-//    }
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_bookmanage, menu);
+        return true;
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //menu_bookmanage.xml에서 지정한 item 이벤트 추가
+        switch (item.getItemId()) {
+
+            default: {
+                onBackPressed();
+                return true;
+            }
+
+            case R.id.createBook:
+
+                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
+
+
+        }
+    }
 }

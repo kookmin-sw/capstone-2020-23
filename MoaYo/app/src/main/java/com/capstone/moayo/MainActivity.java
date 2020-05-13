@@ -8,14 +8,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.StorageFactory;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private CategoryService categoryService;
     private DataBindingService dataBindingService;
     private StorageFactory storageFactory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,59 +55,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
 
-
-        TextView createBook = (TextView) findViewById(R.id.createBook);
-        TextView shareBook = (TextView) findViewById(R.id.shareBook);
-        TextView myBook = (TextView) findViewById(R.id.myBook);
-
-        ImageButton myBookPlus = (ImageButton) findViewById(R.id.myBookPlus);
-        ImageButton shareBookPlus = (ImageButton) findViewById(R.id.shareBookPlus);
-
-        //메뉴 탭의 환결설정 버튼을 임시로 ResultActivity로 이동하는 버튼으로 설정함
-        TextView setting = (TextView) findViewById(R.id.setting);
-
-        createBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "BookFormActivity로 이동함", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, BookFormActivity.class);
-                MainActivity.this.startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-
-        shareBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
-                MainActivity.this.startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-
-        myBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
-                MainActivity.this.startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-
-
-        //ResultActivity로 이동하기 위한 임시 버튼
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                MainActivity.this.startActivity(intent);
-
-            }
-        });
+        ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
+        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,8 +121,50 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             default: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainDisplay);
-                drawer.openDrawer(Gravity.LEFT);
+//                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainDisplay);
+//                drawer.openDrawer(Gravity.LEFT);
+
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        MainActivity.this, R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(getApplicationContext())
+                        .inflate(R.layout.main_bottom_menu, (LinearLayout)findViewById(R.id.bottomSheetContainer));
+
+                bottomSheetView.findViewById(R.id.createBook).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, BookFormActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        bottomSheetDialog.dismiss();
+
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                });
+
+                bottomSheetView.findViewById(R.id.shareBook).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        bottomSheetDialog.dismiss();
+
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                });
+
+                bottomSheetView.findViewById(R.id.myBook).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        bottomSheetDialog.dismiss();
+
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                });
+
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
 
                 return true;
             }
