@@ -78,7 +78,9 @@ public class CategoryNode implements Serializable {
         }
     }
 
-    public void setLowLayer(List<CategoryNode> lowLayer) {this.lowLayer = lowLayer;}
+    public void setLowLayer(List<CategoryNode> lowLayer) { this.lowLayer = lowLayer; }
+
+    public void addLowLayer(CategoryNode node) { this.lowLayer.add(node); }
 
     public void setParent(CategoryNode parent) {
         this.parent = parent;

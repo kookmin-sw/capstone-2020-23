@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 //import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.capstone.moayo.entity.Keyword;
+import com.capstone.moayo.entity.CategoryNode;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -20,16 +20,16 @@ import java.util.ArrayList;
 public class BottomSheetFragment extends BottomSheetDialogFragment {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
 
-    public interface OnAddKeywordListener {
-        void onAddKeyword(Keyword add_word);
+    public interface OnAddNodeListener {
+        void onAddNode(CategoryNode add_word);
     }
-    private Keyword add_keyword;
+    private CategoryNode newNode;
     private String word;
     private Button cancel_btn, add_btn;
     private TextView keyword;
-    private OnAddKeywordListener callback;
+    private OnAddNodeListener callback;
 
-    public void setOnAddKeywordListener(OnAddKeywordListener callback) {
+    public void setOnAddNodeListener(OnAddNodeListener callback) {
         this.callback = callback;
     }
 
@@ -70,10 +70,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                add_keyword = new Keyword(word);
+                newNode = new CategoryNode(word, null, 0);
                 //Keyword 객체에 선택된 태그들 넣는 코드...
 
-                callback.onAddKeyword(add_keyword);
+                callback.onAddNode(newNode);
                 dismiss();
 
             }

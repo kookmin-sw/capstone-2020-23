@@ -43,7 +43,7 @@ public class FormMainFragment extends Fragment {
                 if(!title.isEmpty()) {
                     ((BookFormActivity)getActivity()).categoryFactory(title);
 
-                    ((BookFormActivity)getActivity()).onChangeLevel(1);
+                    ((BookFormActivity)getActivity()).onChangeLevel(1, null);
                 } else {
                     Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();
                 }

@@ -3,11 +3,12 @@ package com.capstone.moayo.entity;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable {
     private int id;
     private String title;
     private String description;

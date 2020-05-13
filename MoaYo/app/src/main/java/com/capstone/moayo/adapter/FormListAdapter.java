@@ -10,13 +10,15 @@ import android.widget.TextView;
 
 import com.capstone.moayo.BookFormActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.Keyword;
+import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 
 public class FormListAdapter extends ArrayAdapter {
+
     private ImageButton trans_btn;
     private Context mContext;
+    private CategoryNode node;
 
     public FormListAdapter(Context context, ArrayList keywords) {
         super(context, 0, keywords);
@@ -34,14 +36,14 @@ public class FormListAdapter extends ArrayAdapter {
         }
 
         // Get the data item for this position
-        Keyword keyword = (Keyword) getItem(position);
+        node = (CategoryNode) getItem(position);
 
         // Lookup view for data population
         TextView title = (TextView) convertView.findViewById(R.id.keyword);
         TextView count = (TextView) convertView.findViewById(R.id.num_of_tags);
         // Populate the data into the template view using the data object
-        title.setText((String)keyword.getKeyword());
-        count.setText(Integer.toString(keyword.getNumOfTags()));
+        title.setText((String)node.getTitle());
+        count.setText(Integer.toString(node.getHashtags().size()));
 
         trans_btn = (ImageButton) convertView.findViewById(R.id.trans_layer_btn);
 //        if() {
@@ -51,7 +53,7 @@ public class FormListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 BookFormActivity activity = (BookFormActivity) mContext;
-                activity.onChangeLevel(2);
+                activity.onChangeLevel(2, node);
             }
         });
 

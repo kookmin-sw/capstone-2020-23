@@ -24,7 +24,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("도감 생성");
 
-        onChangeLevel(0);
+        onChangeLevel(0, null);
     }
 
 //    public void onFragmentChange(int index) {
@@ -46,7 +46,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //    }
 
     @Override
-    public void onChangeLevel(int frag_id) {
+    public void onChangeLevel(int fragId, CategoryNode selectedNode) {
 
         Fragment temp = null;
 
@@ -54,15 +54,18 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran = fm.beginTransaction();
         tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
+        if(selectedNode != null ) {
+            this.category.setSelectCategoryNode(selectedNode);
+        }
+
         Bundle bundle = new Bundle();
+        bundle.putSerializable("category", this.category);
 
-//        bundle.putString("title", this.bookTitle);
 
-        switch (frag_id) {
+        switch (fragId) {
             case 0:
-                if ((temp = fm.findFragmentByTag("main")) == null) {
+                if ((temp = fm.findFragmentByTag("main")) == null)
                     temp = new FormMainFragment();
-                }
                 temp.setArguments(bundle);
                 tran.replace(R.id.form_frame, temp, "main");
                 break;
@@ -89,9 +92,24 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //        this.bookTitle = title;
         if(category == null) {
             category = new Category(title, null, null, null);
+            createDummy(category);
         } else {
             category.setTitle(title);
         }
+    }
+
+    public void createDummy(Category category) {
+        CategoryNode lvlOne = nodeFactory("가수", null, 1);
+        CategoryNode lvlTwo1 = nodeFactory("트로트", lvlOne, 2);
+        CategoryNode lvlTwo2 = nodeFactory("발라드", lvlOne, 2);
+        CategoryNode lvlTwo3 = nodeFactory("힙합", lvlOne, 2);
+
+        lvlOne.addLowLayer(lvlTwo1);
+        lvlOne.addLowLayer(lvlTwo2);
+        lvlOne.addLowLayer(lvlTwo3);
+
+        category.setRootNode(lvlOne);
+        category.setSelectCategoryNode(lvlOne);
     }
 
     public CategoryNode nodeFactory(String title, CategoryNode parentNode, int level) {
