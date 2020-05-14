@@ -61,4 +61,10 @@
         android:layout_height="wrap_content"
         android:text="removepost" />
 
+    <Button
+        android:id="@+id/convertForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="convertForm" />
+
 </LinearLayout>

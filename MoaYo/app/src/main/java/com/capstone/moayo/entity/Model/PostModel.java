@@ -50,4 +50,15 @@ public class PostModel {
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        buffer.append("\t").append("id : ").append(id).append("\n");
+        buffer.append("\t").append("url : ").append(url).append("\n");
+        buffer.append("\t").append("imgUrl : ").append(imgUrl).append("\n");
+        buffer.append("\t").append("hashtag : ").append(hashtag).append("\n");
+        buffer.append("}");
+        return buffer.toString();
+    }
 }

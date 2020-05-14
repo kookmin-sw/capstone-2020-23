@@ -61,4 +61,16 @@ public class DogamModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        buffer.append("\t").append("id : ").append(id).append("\n");
+        buffer.append("\t").append("title : ").append(title).append("\n");
+        buffer.append("\t").append("description : ").append(description).append("\n");
+        buffer.append("\t").append("status : ").append(status).append("\n");
+        buffer.append("\t").append("password : ").append(password).append("\n");
+        buffer.append("}");
+        return buffer.toString();
+    }
 }

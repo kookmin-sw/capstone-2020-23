@@ -39,4 +39,14 @@ public class CategoryHashtagModel {
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        buffer.append("\t").append("dogamId : ").append(dogamId).append("\n");
+        buffer.append("\t").append("categoryId : ").append(categoryId).append("\n");
+        buffer.append("\t").append("hashtag : ").append(hashtag).append("\n");
+        buffer.append("}");
+        return buffer.toString();
+    }
 }

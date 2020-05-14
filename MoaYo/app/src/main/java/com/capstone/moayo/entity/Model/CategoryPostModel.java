@@ -39,4 +39,14 @@ public class CategoryPostModel {
     public void setPostId(int postId) {
         this.postId = postId;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        buffer.append("\t").append("dogamId : ").append(dogamId).append("\n");
+        buffer.append("\t").append("categoryId : ").append(categoryId).append("\n");
+        buffer.append("\t").append("postId : ").append(postId).append("\n");
+        buffer.append("}");
+        return buffer.toString();
+    }
 }

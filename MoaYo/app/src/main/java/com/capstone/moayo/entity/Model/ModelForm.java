@@ -64,4 +64,21 @@ public class ModelForm {
     public void setCategoryHashtagModels(CategoryHashtagModel[] categoryHashtagModels) {
         this.categoryHashtagModels = categoryHashtagModels;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("dogamModel : ").append(dogamModel.toString()).append("\n");
+        for(CategoryModel categoryModel : categoryModels)
+            buffer.append("categoryModel : ").append(categoryModel.toString()).append("\n");
+        for(PostModel postModel : postModels)
+            buffer.append("postModel : ").append(postModel.toString()).append("\n");
+        for(HashtagModel hashtagModel : hashtagModels)
+            buffer.append("hashModel : ").append(hashtagModel.toString()).append("\n");
+        for(CategoryPostModel categoryPostModel : categoryPostModels)
+            buffer.append("categoryPostModel : ").append(categoryPostModel.toString()).append("\n");
+        for(CategoryHashtagModel categoryHashtagModel : categoryHashtagModels)
+            buffer.append("categoryHashtagModel : ").append(categoryHashtagModel.toString()).append("\n");
+
+        return buffer.toString();
+    }
 }
