@@ -17,5 +17,4 @@ public interface SearchAPI {
 
     @POST("/api/v1/crawl")
     Call<RespondForm> requestPosts(@Body RequestForm requestForm);
-
 }
