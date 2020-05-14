@@ -1,7 +1,8 @@
 package com.moayo.server.service;
 
+import com.moayo.server.model.DogamListModel;
 import org.w3c.dom.Document;
 
 public interface XMLParsingService {
-    public void insertData(Document doc);
+    public DogamListModel insertData(Document doc);
 }

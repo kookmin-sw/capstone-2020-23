@@ -5,7 +5,7 @@
 <mapper namespace="com.moayo.server.dao.CategoryPostDao">
     <insert id="insertCategoryPost" parameterType="com.moayo.server.model.CategoryPostModel">
         INSERT INTO `MoayoShare`.`tb_categoryPost` (`co_dogamId`, `co_categoryId`, `co_postId`)
-        VALUES (${dogamId}, ${categoryId}, '${postId}');
+        VALUES (${co_dogamId}, ${co_categoryId}, '${co_postId}');
     </insert>
 
     <delete id="deleteByDogamId" parameterType="int">

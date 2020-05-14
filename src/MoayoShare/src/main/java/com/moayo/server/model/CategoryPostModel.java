@@ -1,46 +1,46 @@
 package com.moayo.server.model;
 
 public class CategoryPostModel {
-    private int dogamId;
-    private int categoryId;
-    private int postId;
+    private int co_dogamId;
+    private int co_categoryId;
+    private int co_postId;
 
 
-    public CategoryPostModel(int dogamId, int categoryId, int postId) {
-        this.dogamId = dogamId;
-        this.categoryId = categoryId;
-        this.postId = postId;
+    public CategoryPostModel(int co_dogamId, int co_categoryId, int co_postId) {
+        this.co_dogamId = co_dogamId;
+        this.co_categoryId = co_categoryId;
+        this.co_postId = co_postId;
     }
 
     public CategoryPostModel() {
     }
 
-    public void setDogamId(int dogamId) {
-        this.dogamId = dogamId;
+    public void setCo_dogamId(int co_dogamId) {
+        this.co_dogamId = co_dogamId;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCo_categoryId() {
+        return co_categoryId;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getCo_postId() {
+        return co_postId;
     }
 
-    public int getDogamId() {
-        return dogamId;
+    public int getCo_dogamId() {
+        return co_dogamId;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCo_categoryId(int co_categoryId) {
+        this.co_categoryId = co_categoryId;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setCo_postId(int co_postId) {
+        this.co_postId = co_postId;
     }
 
     @Override
     public String toString(){
-        return "{" + dogamId + "," + categoryId + "," + postId + "}";
+        return "{" + co_dogamId + "," + co_categoryId + "," + co_postId + "}";
     }
 }

@@ -19,7 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
 public class MainController {
     @Autowired
     ShareService service;
@@ -56,9 +56,10 @@ public class MainController {
 //    }
 
     @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
-    public void xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
+    public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
         Document doc = XMLParsing.XMLParsing(body);
-        xmlParsingService.insertData(doc);
+        DogamListModel dogamListModel = xmlParsingService.insertData(doc);
+        return dogamListModel;
     }
     @RequestMapping(value = "/daoTest",method = RequestMethod.GET)
     public void dbTest(HttpServletRequest req,HttpServletResponse res){
