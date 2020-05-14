@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="578eced0-21dc-47fb-a220-58bc041e1695" name="Default Changelist" comment="" />
+    <list default="true" id="578eced0-21dc-47fb-a220-58bc041e1695" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../MoaYo/app/src/main/java/com/capstone/moayo/TestActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../MoaYo/app/src/main/java/com/capstone/moayo/TestActivity.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
