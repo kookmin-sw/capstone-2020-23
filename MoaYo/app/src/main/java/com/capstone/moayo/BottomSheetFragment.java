@@ -24,6 +24,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         void onAddNode(CategoryNode add_word);
     }
     private CategoryNode newNode;
+    private CategoryNode parentNode;
     private String word;
     private Button cancel_btn, add_btn;
     private TextView keyword;
@@ -40,6 +41,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.fragment_bottom_sheet, container,false);
 
         word = getArguments().getString("keyword");
+        parentNode = (CategoryNode) getArguments().getSerializable("parentNode");
         //추가하려는 키워드
         keyword = (TextView) view.findViewById(R.id.title_keyword);
         keyword.setText(word);
@@ -70,7 +72,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                newNode = new CategoryNode(word, null, 0);
+                newNode = new CategoryNode(word, parentNode, parentNode.getLevel()+1);
                 //Keyword 객체에 선택된 태그들 넣는 코드...
 
                 callback.onAddNode(newNode);

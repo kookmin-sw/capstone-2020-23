@@ -41,9 +41,9 @@ public class FormMainFragment extends Fragment {
                 String title = title_et.getText().toString();
 
                 if(!title.isEmpty()) {
-                    ((BookFormActivity)getActivity()).categoryFactory(title);
+                    ((BookFormActivity)getActivity()).initCategory(title);
 
-                    ((BookFormActivity)getActivity()).onChangeLevel(1, null);
+                    ((BookFormActivity)getActivity()).onChangeLevel(2, null);
                 } else {
                     Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();
                 }

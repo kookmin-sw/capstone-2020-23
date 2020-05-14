@@ -15,6 +15,8 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private FragmentManager fm;
     private FragmentTransaction tran;
     private Category category;
+    private CategoryNode rootNode;
+    private CategoryNode currentNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +57,15 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
         if(selectedNode != null ) {
-            this.category.setSelectCategoryNode(selectedNode);
+//            this.category.setSelectCategoryNode(selectedNode);
+            currentNode = selectedNode;
+        } else {
+            currentNode = rootNode;
         }
 
+
         Bundle bundle = new Bundle();
-        bundle.putSerializable("category", this.category);
+        bundle.putSerializable("currentNode", currentNode);
 
 
         switch (fragId) {
@@ -69,17 +75,17 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
                 temp.setArguments(bundle);
                 tran.replace(R.id.form_frame, temp, "main");
                 break;
-            case 1:
-                if ((temp = fm.findFragmentByTag("level1")) == null)
-                    temp = new FormEditFragment();
-                temp.setArguments(bundle);
-                tran.replace(R.id.form_frame, temp, "level1");
-                break;
             case 2:
                 if ((temp = fm.findFragmentByTag("level2")) == null)
                     temp = new FormEditFragment();
                 temp.setArguments(bundle);
                 tran.replace(R.id.form_frame, temp, "level2");
+                break;
+            case 3:
+                if ((temp = fm.findFragmentByTag("level3")) == null)
+                    temp = new FormEditFragment();
+                temp.setArguments(bundle);
+                tran.replace(R.id.form_frame, temp, "level3");
                 break;
             default:
                 break;
@@ -88,29 +94,35 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran.commit();
     }
 
-    public void categoryFactory(String title) {
-//        this.bookTitle = title;
-        if(category == null) {
-            category = new Category(title, null, null, null);
-            createDummy(category);
+    public void initCategory(String title) {
+        if(rootNode == null) {
+            rootNode = new CategoryNode(title, null, 1);
+//            category = new Category(title, null, null, null);
+//            category.setRootNode(rootNode);
+//            createDummy(category);
         } else {
-            category.setTitle(title);
+            rootNode.setTitle(title);
         }
     }
 
-    public void createDummy(Category category) {
-        CategoryNode lvlOne = nodeFactory("가수", null, 1);
-        CategoryNode lvlTwo1 = nodeFactory("트로트", lvlOne, 2);
-        CategoryNode lvlTwo2 = nodeFactory("발라드", lvlOne, 2);
-        CategoryNode lvlTwo3 = nodeFactory("힙합", lvlOne, 2);
-
-        lvlOne.addLowLayer(lvlTwo1);
-        lvlOne.addLowLayer(lvlTwo2);
-        lvlOne.addLowLayer(lvlTwo3);
-
-        category.setRootNode(lvlOne);
-        category.setSelectCategoryNode(lvlOne);
+    public CategoryNode addNode(CategoryNode newNode) {
+        currentNode.addLowLayer(newNode);
+        return currentNode;
     }
+
+//    public void createDummy(Category category) {
+//        CategoryNode lvlOne = nodeFactory("가수", null, 1);
+//        CategoryNode lvlTwo1 = nodeFactory("트로트", lvlOne, 2);
+//        CategoryNode lvlTwo2 = nodeFactory("발라드", lvlOne, 2);
+//        CategoryNode lvlTwo3 = nodeFactory("힙합", lvlOne, 2);
+//
+//        lvlOne.addLowLayer(lvlTwo1);
+//        lvlOne.addLowLayer(lvlTwo2);
+//        lvlOne.addLowLayer(lvlTwo3);
+//
+//        category.setRootNode(lvlOne);
+//        category.setSelectCategoryNode(lvlOne);
+//    }
 
     public CategoryNode nodeFactory(String title, CategoryNode parentNode, int level) {
         CategoryNode node = new CategoryNode(title, parentNode, level);

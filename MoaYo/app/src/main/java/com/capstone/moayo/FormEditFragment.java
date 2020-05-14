@@ -30,10 +30,10 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
     private ArrayList<CategoryNode> items;
     private FormListAdapter adapter;
     private ListView listView;
-    private Button add_btn;
+    private Button add_btn, back_btn;
     private OnChangeLevelListener lvl_callback;
     private BottomSheetFragment bottomSheet;
-    private Category category;
+    private CategoryNode currentNode;
 
     @Override
     public void onAttach(Context context) {
@@ -55,20 +55,24 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_form_edit, container, false);
 
-//        items = getListData();
-
         if (getArguments() != null) {
-            category = (Category) getArguments().getSerializable("category");
-//            Toast.makeText(getContext(), category.getTitle(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(getContext(), category.getSelectCategoryNode().getTitle(), Toast.LENGTH_SHORT).show();
+            currentNode = (CategoryNode) getArguments().getSerializable("currentNode");
+            Toast.makeText(getContext(), currentNode.getTitle(), Toast.LENGTH_SHORT).show();
 
-            items = (ArrayList<CategoryNode>) category.getSelectCategoryNode().getLowLayer();
-//            refreshItem();
+            items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
         }
 
         adapter = new FormListAdapter(getContext(), items);
         listView = (ListView) view.findViewById(R.id.form_list_view);
         listView.setAdapter(adapter);
+
+        back_btn = (Button) view.findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BookFormActivity)getActivity()).onChangeLevel(currentNode.getLevel(), currentNode.getParent());
+            }
+        });
 
         add_btn = (Button) view.findViewById(R.id.add_keyword_btn);
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +87,7 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
                     Bundle args = new Bundle();
                     args.putString("keyword", word);
+                    args.putSerializable("parentNode", currentNode);
                     showDialog(args);
                 } else {
                     Toast.makeText(getContext(), "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -101,40 +106,25 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
     }
 
     public void onAddNode(CategoryNode newNode) {
-        if(category != null) {
-//            this.items.add(newNode);
-            CategoryNode tempNode = (CategoryNode) category.getSelectCategoryNode();
-            tempNode.addLowLayer(newNode);
-            category.setSelectCategoryNode(tempNode);
-
-            refreshItem();
-
-        } else {
-            //show error log
-        }
-    }
-
-    public void refreshItem() {
-        items = (ArrayList<CategoryNode>) category.getSelectCategoryNode().getLowLayer();
+        currentNode = ((BookFormActivity)getActivity()).addNode(newNode);
+        items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
         adapter.notifyDataSetChanged();
+
+//        if(category != null) {
+////            this.items.add(newNode);
+//            CategoryNode tempNode = (CategoryNode) category.getSelectCategoryNode();
+//            tempNode.addLowLayer(newNode);
+//            category.setSelectCategoryNode(tempNode);
+//            refreshItem();
+//        } else {
+//            //show error log
+//        }
     }
 
-
-//    private ArrayList<Keyword> getListData() {
-//        ArrayList<Keyword> list = new ArrayList<>();
-//
-//        Keyword key1 = new Keyword("가수");
-//        Keyword key2 = new Keyword("싱어");
-//        Keyword key3 = new Keyword("뮤지션");
-//        Keyword key4 = new Keyword("노래");
-//
-//        list.add(key1);
-//        list.add(key2);
-//        list.add(key3);
-//        list.add(key4);
-//
-//        return list;
-//
+//    public void refreshItem() {
+//        items = (ArrayList<CategoryNode>) category.getSelectCategoryNode().getLowLayer();
+//        adapter.notifyDataSetChanged();
 //    }
+
 }
 

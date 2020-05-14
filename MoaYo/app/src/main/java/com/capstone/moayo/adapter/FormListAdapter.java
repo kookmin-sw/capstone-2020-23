@@ -53,7 +53,7 @@ public class FormListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 BookFormActivity activity = (BookFormActivity) mContext;
-                activity.onChangeLevel(2, node);
+                activity.onChangeLevel(3, node);
             }
         });
 
