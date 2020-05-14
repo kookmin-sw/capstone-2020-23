@@ -1,6 +1,7 @@
 package com.capstone.moayo;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //    }
 
     @Override
-    public void onChangeLevel(int fragId, CategoryNode selectedNode) {
+    public void onChangeLevel(int fraglvl, CategoryNode selectedNode) {
 
         Fragment temp = null;
 
@@ -59,6 +60,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         if(selectedNode != null ) {
 //            this.category.setSelectCategoryNode(selectedNode);
             currentNode = selectedNode;
+            Toast.makeText(getApplicationContext(), "this is " + currentNode.getTitle(), Toast.LENGTH_SHORT).show();
         } else {
             currentNode = rootNode;
         }
@@ -68,7 +70,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         bundle.putSerializable("currentNode", currentNode);
 
 
-        switch (fragId) {
+        switch (fraglvl) {
             case 0:
                 if ((temp = fm.findFragmentByTag("main")) == null)
                     temp = new FormMainFragment();

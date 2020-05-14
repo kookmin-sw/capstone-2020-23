@@ -43,7 +43,8 @@ public class FormListAdapter extends ArrayAdapter {
         TextView count = (TextView) convertView.findViewById(R.id.num_of_tags);
         // Populate the data into the template view using the data object
         title.setText((String)node.getTitle());
-        count.setText(Integer.toString(node.getHashtags().size()));
+//        count.setText(Integer.toString(node.getHashtags().size()));
+        count.setText("num of child : " + Integer.toString(node.getLowLayer().size()));
 
         trans_btn = (ImageButton) convertView.findViewById(R.id.trans_layer_btn);
 //        if() {
@@ -53,6 +54,7 @@ public class FormListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 BookFormActivity activity = (BookFormActivity) mContext;
+                node = (CategoryNode) getItem(position);
                 activity.onChangeLevel(3, node);
             }
         });
