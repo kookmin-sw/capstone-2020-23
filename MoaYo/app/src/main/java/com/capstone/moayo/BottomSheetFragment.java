@@ -1,6 +1,7 @@
 package com.capstone.moayo;
 
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.capstone.moayo.entity.CategoryNode;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
@@ -73,7 +75,19 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
 
                 newNode = new CategoryNode(word, parentNode, parentNode.getLevel()+1);
-                //Keyword 객체에 선택된 태그들 넣는 코드...
+
+                //node 객체에 선택된 해시태그들을 담음
+                ArrayList<String> hashtags = new ArrayList<>();
+                SparseBooleanArray checkedTags = listview.getCheckedItemPositions();
+                for (int i = adapter.getCount()-1; i >= 0; i--) {
+                    if (checkedTags.get(i)) {
+                        hashtags.add(tags.get(i));
+                    }
+                }
+                newNode.setHashtags((List) hashtags);
+                listview.clearChoices(); // 모든 선택상태 초기화.
+
+                adapter.notifyDataSetChanged();
 
                 callback.onAddNode(newNode);
                 dismiss();

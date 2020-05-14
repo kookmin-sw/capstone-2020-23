@@ -14,9 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.capstone.moayo.adapter.FormListAdapter;
-import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
-//import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -109,22 +107,8 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         currentNode = ((BookFormActivity)getActivity()).addNode(newNode);
         items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
         adapter.notifyDataSetChanged();
-
-//        if(category != null) {
-////            this.items.add(newNode);
-//            CategoryNode tempNode = (CategoryNode) category.getSelectCategoryNode();
-//            tempNode.addLowLayer(newNode);
-//            category.setSelectCategoryNode(tempNode);
-//            refreshItem();
-//        } else {
-//            //show error log
-//        }
     }
 
-//    public void refreshItem() {
-//        items = (ArrayList<CategoryNode>) category.getSelectCategoryNode().getLowLayer();
-//        adapter.notifyDataSetChanged();
-//    }
 
 }
 

@@ -41,7 +41,7 @@ public class FormMainFragment extends Fragment {
                 String title = title_et.getText().toString();
 
                 if(!title.isEmpty()) {
-                    ((BookFormActivity)getActivity()).initCategory(title);
+                    ((BookFormActivity)getActivity()).initRootNode(title);
 
                     ((BookFormActivity)getActivity()).onChangeLevel(2, null);
                 } else {

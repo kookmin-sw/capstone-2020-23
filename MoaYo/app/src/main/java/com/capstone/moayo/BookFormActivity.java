@@ -1,6 +1,9 @@
 package com.capstone.moayo;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -18,6 +21,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private Category category;
     private CategoryNode rootNode;
     private CategoryNode currentNode;
+    private Button completeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +31,17 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("도감 생성");
 
-        onChangeLevel(0, null);
-    }
+        completeBtn = (Button) findViewById(R.id.complete_btn);
+        completeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubmit();
+            }
+        });
 
-//    public void onFragmentChange(int index) {
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-//        fragmentTransaction.addToBackStack(null);
-//
-//        switch (index) {
-//            case 0:
-//                fragmentTransaction.replace(R.id.form_frame, new FormMainFragment()).commit();
-//                break;
-//            case 1:
-//                fragmentTransaction.replace(R.id.form_frame, new FormEditFragment()).commit();
-//                break;
-//            default:
-//                fragmentTransaction.replace(R.id.form_frame, new FormMainFragment()).commit();
-//                break;
-//        }
-//    }
+        onChangeLevel(0, null);
+
+    }
 
     @Override
     public void onChangeLevel(int fraglvl, CategoryNode selectedNode) {
@@ -58,17 +53,14 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
         if(selectedNode != null ) {
-//            this.category.setSelectCategoryNode(selectedNode);
             currentNode = selectedNode;
             Toast.makeText(getApplicationContext(), "this is " + currentNode.getTitle(), Toast.LENGTH_SHORT).show();
         } else {
             currentNode = rootNode;
         }
 
-
         Bundle bundle = new Bundle();
         bundle.putSerializable("currentNode", currentNode);
-
 
         switch (fraglvl) {
             case 0:
@@ -96,12 +88,9 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         tran.commit();
     }
 
-    public void initCategory(String title) {
+    public void initRootNode(String title) {
         if(rootNode == null) {
             rootNode = new CategoryNode(title, null, 1);
-//            category = new Category(title, null, null, null);
-//            category.setRootNode(rootNode);
-//            createDummy(category);
         } else {
             rootNode.setTitle(title);
         }
@@ -112,24 +101,21 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         return currentNode;
     }
 
-//    public void createDummy(Category category) {
-//        CategoryNode lvlOne = nodeFactory("가수", null, 1);
-//        CategoryNode lvlTwo1 = nodeFactory("트로트", lvlOne, 2);
-//        CategoryNode lvlTwo2 = nodeFactory("발라드", lvlOne, 2);
-//        CategoryNode lvlTwo3 = nodeFactory("힙합", lvlOne, 2);
-//
-//        lvlOne.addLowLayer(lvlTwo1);
-//        lvlOne.addLowLayer(lvlTwo2);
-//        lvlOne.addLowLayer(lvlTwo3);
-//
-//        category.setRootNode(lvlOne);
-//        category.setSelectCategoryNode(lvlOne);
-//    }
+    public void onSubmit() {
+        //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
+        category = new Category(rootNode.getTitle(), null, null, rootNode);
+//        String info = category.toString();
+        Log.d("category", category.toString());
+        Log.d("rootNode", category.getRootNode().toString());
 
-    public CategoryNode nodeFactory(String title, CategoryNode parentNode, int level) {
-        CategoryNode node = new CategoryNode(title, parentNode, level);
-        return node;
+        //--------Backend 통신----------
     }
+
+
+//    public CategoryNode nodeFactory(String title, CategoryNode parentNode, int level) {
+//        CategoryNode node = new CategoryNode(title, parentNode, level);
+//        return node;
+//    }
 
 
     @Override

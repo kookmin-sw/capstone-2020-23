@@ -26,7 +26,6 @@ public class FormListAdapter extends ArrayAdapter {
     }
 
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -41,15 +40,19 @@ public class FormListAdapter extends ArrayAdapter {
         // Lookup view for data population
         TextView title = (TextView) convertView.findViewById(R.id.keyword);
         TextView count = (TextView) convertView.findViewById(R.id.num_of_tags);
+        trans_btn = (ImageButton) convertView.findViewById(R.id.trans_layer_btn);
+
         // Populate the data into the template view using the data object
         title.setText((String)node.getTitle());
-//        count.setText(Integer.toString(node.getHashtags().size()));
-        count.setText("num of child : " + Integer.toString(node.getLowLayer().size()));
 
-        trans_btn = (ImageButton) convertView.findViewById(R.id.trans_layer_btn);
-//        if() {
-//            trans_btn.setVisibility(View.INVISIBLE);
-//        }
+        //leaf node라면 계층이동 버튼을 가리고, 자식노드의 수를 표시하지 않는다.
+        if(node.getLevel() > 2) {
+            trans_btn.setVisibility(View.INVISIBLE);
+        } else {
+            //        count.setText(Integer.toString(node.getHashtags().size()));
+            count.setText("num of child : " + Integer.toString(node.getLowLayer().size()));
+        }
+
         trans_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
