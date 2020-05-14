@@ -1,8 +1,9 @@
-package com.moayo.server.service;
+package com.moayo.server.service.concrete;
 
 
 import com.moayo.server.dao.*;
 import com.moayo.server.model.*;
+import com.moayo.server.service.XMLParsingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class XMLParsingServiceImpl implements XMLParsingService{
+public class XMLParsingServiceImpl implements XMLParsingService {
     @Autowired
     DogamListDao dogamListDao;
     @Autowired

@@ -10,7 +10,7 @@ public interface CategoryPostDao {
     long deleteByCategoryId(int categoryId,int dogamId);
     long deleteByPostId(String postId);
 
-    CategoryPostModel getByDogamId(int dogamId);
+    CategoryPostModel[] getByDogamId(int dogamId);
     CategoryPostModel getByCategoryId(int categoryId,int dogamId);
     CategoryPostModel getByPostId(int postId);
 }
