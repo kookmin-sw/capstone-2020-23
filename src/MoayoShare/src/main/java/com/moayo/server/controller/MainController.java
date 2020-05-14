@@ -34,6 +34,11 @@ public class MainController {
         return service.getDogam(dogamId);
     }
 
+    @RequestMapping(value = "/shareDogam",method = RequestMethod.POST)
+    public String shareDogam(@RequestBody DogamModel dogamModel){
+        System.out.println(dogamModel.toString());
+        return dogamModel.toString();
+    }
 //    @RequestMapping(value = "/getDogamList",method = RequestMethod.POST)
 //    public DogamListModel[] getDogamList(@RequestParam String hashtag){
 //
