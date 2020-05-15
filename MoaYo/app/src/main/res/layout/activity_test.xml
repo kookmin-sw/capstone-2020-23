@@ -67,4 +67,10 @@
         android:layout_height="wrap_content"
         android:text="convertForm" />
 
+    <Button
+        android:id="@+id/requestDogam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="request" />
+
 </LinearLayout>

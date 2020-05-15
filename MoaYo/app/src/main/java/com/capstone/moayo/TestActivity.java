@@ -12,6 +12,8 @@ import com.capstone.moayo.entity.Model.ModelForm;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
+import com.capstone.moayo.service.ServiceFactory;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -38,10 +40,12 @@ public class TestActivity extends AppCompatActivity {
     private Button findPost;
     private Button removePost;
     private Button convertFormBtn;
+    private Button requestBtn;
 
     private CategoryService categoryService;
     private PostService postService;
     private SearchService searchService;
+    private ShareService shareService;
     private DBHelper dbHelper;
 
     @Override
@@ -59,11 +63,13 @@ public class TestActivity extends AppCompatActivity {
         findPost = findViewById(R.id.findPost);
         removePost = findViewById(R.id.removePost);
         convertFormBtn = findViewById(R.id.convertForm);
+        requestBtn = findViewById(R.id.requestDogam);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
         postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
         convertBtn.setOnClickListener(v -> {
             CategoryDto testCategory = createCategory();
@@ -175,12 +181,27 @@ public class TestActivity extends AppCompatActivity {
 
         convertFormBtn.setOnClickListener(v -> {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
-            List<PostDto> postDtos = postService.findPostByCategoryNodeId(2);
-            foundCategory.getRootNode().getLowLayer().get(0).setPosts(postDtos);
+            List<PostDto> postDtos = postService.findPostByCategoryNodeId(foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).getId());
+            foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).setPosts(postDtos);
             ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory, 1);
+            logLargeString(form.toString());
             CategoryDto categoryDto = ShareUtil.convertFormToDogam(form);
-            Log.d("category", categoryDto.toString());
+            logLargeString(categoryDto.toString());
         });
+
+        requestBtn.setOnClickListener(v -> {
+            CategoryDto foundCategoryDto = shareService.loadDogam(30);
+            Log.d("dogam", foundCategoryDto.toString());
+        });
+    }
+
+    public void logLargeString(String str) {
+        if (str.length() > 3000) {
+            Log.d("d", str.substring(0, 3000));
+            logLargeString(str.substring(3000));
+        } else {
+            Log.d("d", str); // continuation
+        }
     }
 
     private CategoryDto createCategory() {
