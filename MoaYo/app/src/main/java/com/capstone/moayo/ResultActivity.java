@@ -86,6 +86,10 @@ public class ResultActivity extends AppCompatActivity {
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
         myList.setAdapter(new ExpandableAdapter(this, (ArrayList<CategoryNode>) getDummyRoot(searchNode).getLowLayer(), searchNode));
+
+
+
+
     }
 
     //도감 검색결과 요청.
