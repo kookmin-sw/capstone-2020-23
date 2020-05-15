@@ -6,12 +6,14 @@ import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.ServiceFactory;
+import com.capstone.moayo.service.ShareService;
 
 public class ServiceFactoryCreator implements ServiceFactory{
     private volatile static ServiceFactory instance;
     private CategoryService categoryService;
     private SearchService searchService;
     private PostService contentService;
+    private ShareService shareService;
 
     public static synchronized ServiceFactory getInstance() {
         if(instance == null) {
@@ -45,5 +47,12 @@ public class ServiceFactoryCreator implements ServiceFactory{
         if(searchService == null)
             searchService = new ConcreteSearchService(context);
         return searchService;
+    }
+
+    @Override
+    public ShareService requestShareService(Context context) {
+        if(shareService == null)
+            shareService = new ConcreteShareService();
+        return shareService;
     }
 }

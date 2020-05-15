@@ -8,9 +8,12 @@ import android.widget.Button;
 
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.sqlite.DBHelper;
+import com.capstone.moayo.entity.Model.ModelForm;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
+import com.capstone.moayo.service.ServiceFactory;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -19,6 +22,7 @@ import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.service.dto.RequestForm;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.CategoryConvertor;
+import com.capstone.moayo.util.ShareUtil;
 import com.capstone.moayo.util.Tag.TagsFinder;
 
 import java.util.ArrayList;
@@ -35,10 +39,13 @@ public class TestActivity extends AppCompatActivity {
     private Button createPostBtn;
     private Button findPost;
     private Button removePost;
+    private Button convertFormBtn;
+    private Button requestBtn;
 
     private CategoryService categoryService;
     private PostService postService;
     private SearchService searchService;
+    private ShareService shareService;
     private DBHelper dbHelper;
 
     @Override
@@ -55,11 +62,14 @@ public class TestActivity extends AppCompatActivity {
         createPostBtn = findViewById(R.id.createPost);
         findPost = findViewById(R.id.findPost);
         removePost = findViewById(R.id.removePost);
+        convertFormBtn = findViewById(R.id.convertForm);
+        requestBtn = findViewById(R.id.requestDogam);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
         postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
         convertBtn.setOnClickListener(v -> {
             CategoryDto testCategory = createCategory();
@@ -142,7 +152,17 @@ public class TestActivity extends AppCompatActivity {
 
         createPostBtn.setOnClickListener(v -> {
             InstantPost newPost = new InstantPost("dummy post", "dummy url", "dummy src", 123);
+            InstantPost newPost1 = new InstantPost("dummy post", "dummy url1", "dummy src", 123);
+            InstantPost newPost2 = new InstantPost("dummy post", "dummy url2", "dummy src", 123);
+            InstantPost newPost3 = new InstantPost("dummy post", "dummy url3", "dummy src", 123);
+            InstantPost newPost4 = new InstantPost("dummy post", "dummy url4", "dummy src", 123);
+            InstantPost newPost5 = new InstantPost("dummy post", "dummy url5", "dummy src", 123);
             postService.createPost(newPost, 2, 1);
+            postService.createPost(newPost1, 5, 1);
+            postService.createPost(newPost2, 8, 1);
+            postService.createPost(newPost3, 16, 1);
+            postService.createPost(newPost4, 24, 1);
+            postService.createPost(newPost5, 17, 1);
         });
 
         findPost.setOnClickListener(v -> {
@@ -158,6 +178,30 @@ public class TestActivity extends AppCompatActivity {
                 postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
             }
         });
+
+        convertFormBtn.setOnClickListener(v -> {
+            CategoryDto foundCategory = categoryService.findCategoryById(1);
+            List<PostDto> postDtos = postService.findPostByCategoryNodeId(foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).getId());
+            foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).setPosts(postDtos);
+            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory, 1);
+            logLargeString(form.toString());
+            CategoryDto categoryDto = ShareUtil.convertFormToDogam(form);
+            logLargeString(categoryDto.toString());
+        });
+
+        requestBtn.setOnClickListener(v -> {
+            CategoryDto foundCategoryDto = shareService.loadDogam(30);
+            Log.d("dogam", foundCategoryDto.toString());
+        });
+    }
+
+    public void logLargeString(String str) {
+        if (str.length() > 3000) {
+            Log.d("d", str.substring(0, 3000));
+            logLargeString(str.substring(3000));
+        } else {
+            Log.d("d", str); // continuation
+        }
     }
 
     private CategoryDto createCategory() {

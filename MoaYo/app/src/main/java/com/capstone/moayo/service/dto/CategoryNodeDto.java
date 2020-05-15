@@ -124,9 +124,18 @@ public class CategoryNodeDto {
         for(int i = 0; i < level-1; i++)
             tab += "\t";
 
-        buffer.append("{").append("\"title\" : ").append("\"").append(title).append("\"").append(",").
+        buffer.append("{").append("\"id\" : ").append("\"").append(id).append("\"").append(",").
+                append("\"title\" : ").append("\"").append(title).append("\"").append(",").
                 append("\"level\" : ").append("\"").append(level).append("\"").append(",").
-                append("\"lowLayer\" : ");
+                append("\"hashtags\" : ").append("[");
+        for(String hash : hashtags) {
+            buffer.append("\"").append(hash).append("\"").append(", ");
+        }
+        buffer.append("]\n").append(tab).append("\"posts\" : [");
+        for(PostDto postDto : posts) {
+            buffer.append(tab+"\t").append(postDto.toString()).append("\n");
+        }
+        buffer.append("]").append("\"lowLayer\" : ");
         if(lowLayer.isEmpty()) buffer.append("[");
         else buffer.append("\n"+tab+"[");
             for (CategoryNodeDto lowNode : lowLayer) {
