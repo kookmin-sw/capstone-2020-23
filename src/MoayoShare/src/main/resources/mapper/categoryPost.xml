@@ -7,7 +7,12 @@
         INSERT INTO `MoayoShare`.`tb_categoryPost` (`co_dogamId`, `co_categoryId`, `co_postId`)
         VALUES (${co_dogamId}, ${co_categoryId}, '${co_postId}');
     </insert>
-
+    <insert id="insertAll" parameterType="com.moayo.server.model.CategoryPostModel">
+        INSERT INTO `MoayoShare`.`tb_categoryPost` (`co_dogamId`, `co_categoryId`, `co_postId`) VALUES
+        <foreach item="item"  collection="java.util.Arrays" separator=",">
+            (${co_dogamId}, ${co_categoryId}, '${co_postId}')
+        </foreach>
+    </insert>
     <delete id="deleteByDogamId" parameterType="int">
         DELETE FROM `MoayoShare`.`tb_categoryPost` WHERE `co_dogamId` = #{dogamId};
     </delete>

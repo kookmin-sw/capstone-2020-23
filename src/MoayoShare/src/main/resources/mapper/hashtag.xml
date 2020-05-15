@@ -6,6 +6,12 @@
     <insert id="insertHashtag" parameterType="com.moayo.server.model.HashtagModel">
         INSERT INTO `tb_hashtag` (`co_hashtag`) VALUES ('${co_hashtag}');
     </insert>
+    <insert id="insertAll" parameterType="com.moayo.server.model.CategoryHashModel">
+        INSERT INTO `tb_hashtag` (`co_hashtag`) VALUES
+        <foreach collection="java.util.Arrays" item="item" separator=",">
+            ('${co_hashtag}')
+        </foreach>
+    </insert>
     <delete id="deleteHashtag" parameterType="com.moayo.server.model.HashtagModel">
         DELETE FROM tb_hashtag WHERE `co_hashtag` = '${co_hashtag}'
     </delete>

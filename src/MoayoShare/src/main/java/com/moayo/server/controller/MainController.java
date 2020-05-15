@@ -2,6 +2,7 @@ package com.moayo.server.controller;
 
 
 import com.moayo.server.model.*;
+import com.moayo.server.service.JSONParsingService;
 import com.moayo.server.service.concrete.ShareService;
 import com.moayo.server.service.XMLParsingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class MainController {
     ShareService service;
     @Autowired
     XMLParsingService xmlParsingService;
+    @Autowired
+    JSONParsingService jsonParsingService;
 
     @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
     public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
@@ -36,8 +39,8 @@ public class MainController {
 
     @RequestMapping(value = "/shareDogam",method = RequestMethod.POST)
     public String shareDogam(@RequestBody DogamModel dogamModel){
-        System.out.println(dogamModel.toString());
-        return dogamModel.toString();
+        jsonParsingService.insertData(dogamModel);
+        return "0000";
     }
 //    @RequestMapping(value = "/getDogamList",method = RequestMethod.POST)
 //    public DogamListModel[] getDogamList(@RequestParam String hashtag){

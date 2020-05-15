@@ -108,7 +108,6 @@ public class XMLParsingServiceImpl implements XMLParsingService {
             Element post = (Element)posts.item(i);
             PostModel postModel = new PostModel(post.getElementsByTagName("postUrl").item(0).getTextContent(),
                     post.getElementsByTagName("imageUrl").item(0).getTextContent(),
-                    post.getElementsByTagName("info").item(0).getTextContent(),
                     post.getElementsByTagName("postHashtag").item(0).getTextContent());
             postDao.insertPost(postModel);
             CategoryModel parent = categoryMap.get(Integer.valueOf(post.getElementsByTagName("postParentId").item(0).getTextContent()));

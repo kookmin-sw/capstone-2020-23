@@ -5,6 +5,7 @@ import com.moayo.server.model.CategoryPostModel;
 
 public interface CategoryPostDao {
     long insertCategoryPost(CategoryPostModel categoryPostModel);
+    void insertAll(CategoryPostModel[] categoryPostModels);
 
     long deleteByDogamId(int dogamId);
     long deleteByCategoryId(int categoryId,int dogamId);
