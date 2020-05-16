@@ -8,6 +8,7 @@ import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,17 @@ public class DataEntityTranslator {
 
             if(parent.getId() != p.second.getId())
                 parent.getLowLayer().add(p.second);
+        }
+
+        root.getLowLayer().sort((o1, o2) -> {
+            if(o1.getId() > o2.getId()) return 1;
+            else return -1;
+        });
+        for(CategoryNode node : root.getLowLayer()) {
+            node.getLowLayer().sort((o1, o2) -> {
+                if(o1.getId() > o2.getId()) return  1;
+                else return -1;
+            });
         }
         return root;
     }

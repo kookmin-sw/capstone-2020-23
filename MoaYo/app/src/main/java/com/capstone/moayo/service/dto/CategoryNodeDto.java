@@ -118,34 +118,14 @@ public class CategoryNodeDto {
         this.level = level;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        String tab = "";
-        for(int i = 0; i < level-1; i++)
-            tab += "\t";
-
-        buffer.append("{").append("\"id\" : ").append("\"").append(id).append("\"").append(",").
-                append("\"title\" : ").append("\"").append(title).append("\"").append(",").
-                append("\"level\" : ").append("\"").append(level).append("\"").append(",").
-                append("\"hashtags\" : ").append("[");
-        for(String hash : hashtags) {
-            buffer.append("\"").append(hash).append("\"").append(", ");
-        }
-        buffer.append("]\n").append(tab).append("\"posts\" : [");
-        for(PostDto postDto : posts) {
-            buffer.append(tab+"\t").append(postDto.toString()).append("\n");
-        }
-        buffer.append("]").append("\"lowLayer\" : ");
-        if(lowLayer.isEmpty()) buffer.append("[");
-        else buffer.append("\n"+tab+"[");
-            for (CategoryNodeDto lowNode : lowLayer) {
-                buffer.append("\n"+tab+"\t").append(lowNode.toString());
-            }
-
-        if(lowLayer.isEmpty()) buffer.append("]}");
-        else buffer.append("\n" + tab).append("]").append("}").append("");
-
-        return buffer.toString();
+        return "CategoryNodeDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", level=" + level +
+                ", hashtags=" + hashtags +
+                ", lowLayer=" + lowLayer +
+                "}\n";
     }
-
 }

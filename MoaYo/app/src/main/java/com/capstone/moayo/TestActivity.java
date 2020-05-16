@@ -21,12 +21,15 @@ import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.service.dto.RequestForm;
 import com.capstone.moayo.service.dto.RespondForm;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.CategoryConvertor;
 import com.capstone.moayo.util.ShareUtil;
 import com.capstone.moayo.util.Tag.TagsFinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -47,6 +50,8 @@ public class TestActivity extends AppCompatActivity {
     private SearchService searchService;
     private ShareService shareService;
     private DBHelper dbHelper;
+
+    private List<CategoryDto> dogams = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +122,24 @@ public class TestActivity extends AppCompatActivity {
 
         createBtn.setOnClickListener(v -> {
             CategoryDto testCategory = createCategory();
-            String result = categoryService.createCategory(testCategory);
-            Log.d("create result", result);
+            Callable<String> callable = () -> categoryService.createCategory(testCategory);
+            AsyncCallback<String> callback = new AsyncCallback<String>() {
+                @Override
+                public void onResult(String result) {
+                    Log.d("create result", result);
+                }
+
+                @Override
+                public void exceptionOccured(Exception e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+            new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
         });
 
         modifyBtn.setOnClickListener(v -> {
@@ -133,9 +154,28 @@ public class TestActivity extends AppCompatActivity {
         });
 
         findBtn.setOnClickListener(v -> {
-            List<CategoryDto> foundCategory = categoryService.findAll();
-            for(CategoryDto categoryDto : foundCategory)
-                Log.d("found category", categoryDto.toString());
+            Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
+            AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
+                @Override
+                public void onResult(List<CategoryDto> result) {
+                    dogams = result;
+                }
+
+                @Override
+                public void exceptionOccured(Exception e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+
+            new AsyncExecutor<List<CategoryDto>>().setCallable(callable).setCallback(callback).execute();
+
+            for(CategoryDto categoryDto : dogams)
+                logLargeString(categoryDto.toString());
         });
 
         initBtn.setOnClickListener(v -> {

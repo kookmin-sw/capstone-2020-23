@@ -88,16 +88,16 @@ public class PostDto {
         this.dogamId = dogamId;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{\"id\": ").append("\"").append(id).append("\",")
-                .append("\"img_url\": ").append("\"").append(imgUrl).append("\",")
-                .append("\"url\": ").append("\"").append(url).append("\",")
-                .append("\"hashtag\": ").append("\"").append(hashtag).append("\",")
-                .append("\"like\": ").append(like).append(",")
-                .append("\"categoryNodeId\": ").append("\"").append(categoryNodeId).append("\",")
-                .append("\"dogamId\": ").append("\"").append(dogamId).append("\"}");
-
-        return buffer.toString();
+        return "PostDto{" +
+                "id=" + id +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", url='" + url + '\'' +
+                ", hashtag='" + hashtag + '\'' +
+                ", like=" + like +
+                ", categoryNodeId=" + categoryNodeId +
+                ", dogamId=" + dogamId +
+                '}';
     }
 }

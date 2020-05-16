@@ -36,129 +36,77 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public String create(Category category) {
-        AsyncTask<Category, Void, String> thread = new AsyncTask<Category, Void, String>() {
-            @Override
-            protected String doInBackground(Category... categories) {
-                Category selectCategory = categories[0];
-                int dogamId = selectCategory.getId();
-                CategoryNode rootNode = selectCategory.getRootNode();
-                createHashTag(rootNode.getHashtags());
-                int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId , dogamId);
-                createCategoryHashTag(dogamId, rootId, rootNode.getHashtags());
-                for(CategoryNode secondNode : rootNode.getLowLayer()) {
-                    createHashTag(secondNode.getHashtags());
-                    int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId, dogamId);
-                    createCategoryHashTag(dogamId, secondId, secondNode.getHashtags());
-                    for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                        createHashTag(thirdNode.getHashtags());
-                        int thirdId = (int) categoryDao.insert(dbHelper, thirdNode.getLevel(), secondId, thirdNode.getTitle(), dogamId, dogamId);
-                        createCategoryHashTag(dogamId, thirdId, thirdNode.getHashtags());
-                    }
-                }
-                return "success to create category";
+        int dogamId = category.getId();
+        CategoryNode rootNode = category.getRootNode();
+        createHashTag(rootNode.getHashtags());
+        int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId, dogamId);
+        createCategoryHashTag(dogamId, rootId, rootNode.getHashtags());
+
+        for (CategoryNode secondNode : rootNode.getLowLayer()) {
+            createHashTag(secondNode.getHashtags());
+            int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId, dogamId);
+            createCategoryHashTag(dogamId, secondId, secondNode.getHashtags());
+
+            for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                createHashTag(thirdNode.getHashtags());
+                int thirdId = (int) categoryDao.insert(dbHelper, thirdNode.getLevel(), secondId, thirdNode.getTitle(), dogamId, dogamId);
+                createCategoryHashTag(dogamId, thirdId, thirdNode.getHashtags());
             }
-        };
-        try {
-            String result = thread.execute(category).get();
-            return result;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
         }
-        return "fail to create";
+        return "create category" + dogamId;
     }
 
     @Override
     public CategoryMapping retrieveById(int id) {
-        AsyncTask<Integer, Void, CategoryMapping> thread = new AsyncTask<Integer, Void, CategoryMapping>() {
-            @Override
-            protected CategoryMapping doInBackground(Integer... integers) {
-                int nodeId = integers[0];
-                CategoryMapping mapping = categoryDao.selectById(dbHelper, nodeId);
-                return mapping;
-            }
-        };
-
-        try {
-            CategoryMapping mapping = thread.execute(id).get();
-
-            return mapping;
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        CategoryMapping mapping = categoryDao.selectById(dbHelper, id);
+        return mapping;
     }
 
     @Override
     public CategoryNode retrieveByDogamId(int id) {
-        AsyncTask<Integer, Void, CategoryNode> thread = new AsyncTask<Integer, Void, CategoryNode>() {
-            @Override
-            protected CategoryNode doInBackground(Integer... integers) {
-                int dogamId = integers[0];
-                // find root node
-                CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, dogamId);
-                if(rootNode == null) return null;
+        // find root node
+        CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
+        if(rootNode == null) return null;
 
-                // find hash tags
-                for(CategoryNode secondNode : rootNode.getLowLayer()) {
-                    List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
-                    for(int i = 0; i < mappings.size(); i++) {
-                        secondNode.getHashtags().add(mappings.get(i).getHashtag());
-                    }
-                    for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                        List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
-                        for(int j = 0; j < mappings1.size(); j++)
-                            thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
-                    }
-                }
-                return rootNode;
+        // find hash tags
+        for(CategoryNode secondNode : rootNode.getLowLayer()) {
+            List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
+            for(int i = 0; i < mappings.size(); i++) {
+                secondNode.getHashtags().add(mappings.get(i).getHashtag());
             }
-        };
-
-        try {
-            CategoryNode rootNode = thread.execute(id).get();
-
-            return rootNode;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
+                for(int j = 0; j < mappings1.size(); j++)
+                    thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
+            }
         }
-
-        return null;
+        return rootNode;
     }
 
     @Override
     public String update(Category category) {
-        AsyncTask<Category, Void, String> thread = new AsyncTask<Category, Void, String>() {
-            @Override
-            protected String doInBackground(Category... categories) {
-                int dogamId = categories[0].getId();
-                CategoryNode rootNode = categories[0].getRootNode();
-                boolean result = categoryDao.rootUpdate(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), dogamId, dogamId);
-                if(result != true) return "fail to update";
-                createHashTag(rootNode.getHashtags());
-                updateCategoryHashTag(dogamId, rootNode.getId(), rootNode.getHashtags());
-                for(CategoryNode secondNode : rootNode.getLowLayer()) {
-                    result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), dogamId, dogamId);
-                    if(result != true) return "fail to update";
-                    createHashTag(secondNode.getHashtags());
-                    updateCategoryHashTag(dogamId, secondNode.getId(), secondNode.getHashtags());
-                    for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                        result = categoryDao.update(dbHelper, thirdNode.getId(), thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), dogamId, dogamId);
-                        if(result != true) return "fail to update";
-                        createHashTag(thirdNode.getHashtags());
-                        updateCategoryHashTag(dogamId, thirdNode.getId(), thirdNode.getHashtags());
-                    }
-                }
-                return "success to update";
-            }
-        };
+        int dogamId = category.getId();
+        CategoryNode rootNode = category.getRootNode();
 
-        try {
-            String result = thread.execute(category).get(3, TimeUnit.SECONDS);
-            return result;
-        } catch (ExecutionException | TimeoutException | InterruptedException e) {
-            e.printStackTrace();
+        boolean result = categoryDao.rootUpdate(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), dogamId, dogamId);
+        if(result != true) return "fail to update";
+        createHashTag(rootNode.getHashtags());
+        updateCategoryHashTag(dogamId, rootNode.getId(), rootNode.getHashtags());
+
+        for(CategoryNode secondNode : rootNode.getLowLayer()) {
+            result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), dogamId, dogamId);
+            if(result != true) return "fail to update";
+            createHashTag(secondNode.getHashtags());
+            updateCategoryHashTag(dogamId, secondNode.getId(), secondNode.getHashtags());
+
+            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                result = categoryDao.update(dbHelper, thirdNode.getId(), thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), dogamId, dogamId);
+                if(result != true) return "fail to update";
+                createHashTag(thirdNode.getHashtags());
+                updateCategoryHashTag(dogamId, thirdNode.getId(), thirdNode.getHashtags());
+            }
         }
-        return "fail to update";
+        return "success to update";
     }
 
     @Override

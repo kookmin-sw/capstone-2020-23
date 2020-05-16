@@ -36,7 +36,7 @@ public class ConcreteCategoryService implements CategoryService {
 
     @Override
     public String createCategory(CategoryDto newCategoryDto){
-
+        Log.d("create category", newCategoryDto.toString());
         try {
 
             if (newCategoryDto.getRootNode() == null)

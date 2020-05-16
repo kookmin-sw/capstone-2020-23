@@ -69,22 +69,7 @@ public class ConcreteDogamStorage implements DogamStorage {
 
     @Override
     public boolean remove(int id) {
-        AsyncTask<Integer, Void, Boolean> thread = new AsyncTask<Integer, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Integer ... integers) {
-                int dogamId = integers[0];
-                boolean result = dogamDao.delete(dbHelper, dogamId);
-                return result;
-            }
-        };
-
-        try {
-            boolean result = thread.execute(id).get(3, TimeUnit.SECONDS);
-            return result;
-        } catch (InterruptedException | TimeoutException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        boolean result = dogamDao.delete(dbHelper, id);
+        return result;
     }
 }

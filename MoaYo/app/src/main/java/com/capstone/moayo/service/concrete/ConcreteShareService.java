@@ -39,7 +39,6 @@ public class ConcreteShareService implements ShareService {
                 try {
                     Response<ModelForm> response = call.execute();
                     ModelForm form = response.body();
-
                     return form;
                 } catch (IOException e) {
                     e.printStackTrace();

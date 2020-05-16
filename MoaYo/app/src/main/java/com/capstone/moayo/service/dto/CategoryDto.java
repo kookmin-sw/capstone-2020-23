@@ -85,12 +85,14 @@ public class CategoryDto {
         this.rootNode = rootNode;
     }
 
+    @Override
     public String toString() {
-        String result = String.format("{\n\"title\" : \"%s\"," +
-                                " \"description\" : \"%s\"," +
-                                " \"password\" : \"%s\"," +
-                                " \"rootNode\" : \n%s}\n", title, description, password, rootNode.toString());
-
-        return result;
+        return "CategoryDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", password='" + password + '\'' +
+                ", rootNode=" + rootNode +
+                "}\n";
     }
 }
