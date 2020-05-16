@@ -2,6 +2,7 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.Exception.NotRootException;
 
 import org.json.JSONException;
@@ -16,11 +17,17 @@ public class CategoryDto {
     private String title;
     private String description;
     private String password;
+    private DogamStatus status;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
 
+    public CategoryDto() {
+        this.id = 0;
+        this.status = DogamStatus.NonShare;
+    }
     public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
+        this();
         this.title = title;
         this.description = description;
         this.password = password;
@@ -34,6 +41,7 @@ public class CategoryDto {
             category = new Category(title, description, password, rootNode.toCategoryNode());
         else category = new Category(title, description, password, null);
         category.setId(id);
+        category.setStatus(status);
         return category;
     }
 
@@ -67,6 +75,14 @@ public class CategoryDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public DogamStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DogamStatus status) {
+        this.status = status;
     }
 
     public CategoryNodeDto getSelectCategory() {

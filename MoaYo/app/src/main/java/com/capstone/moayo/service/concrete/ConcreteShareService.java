@@ -3,6 +3,7 @@ package com.capstone.moayo.service.concrete;
 import android.os.AsyncTask;
 import android.os.SharedMemory;
 
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Model.ModelForm;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -26,7 +27,8 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public void registerDogam(CategoryDto categoryDto) {
-
+        Category category = categoryDto.toCategory();
+        category.setStatus(1);
     }
 
     @Override

@@ -28,6 +28,7 @@ public class AsyncExecutor<T> extends AsyncTask<Void, Void, T> {
         if(callback instanceof AsyncExecutorAware)
         ((AsyncExecutorAware<T>) callback).setAsyncExecutor(this);
     }
+
     @Override
     protected void onPostExecute(T t) {
         if(isCancelled()) {

@@ -143,14 +143,30 @@ public class TestActivity extends AppCompatActivity {
         });
 
         modifyBtn.setOnClickListener(v -> {
-            CategoryDto testCategory = categoryService.findCategoryById(1);
+            CategoryDto testCategory = dogams.get(0);
             testCategory.setTitle("modify dummy dogam");
             testCategory.getRootNode().setTitle("modify node");
             testCategory.getRootNode().getLowLayer().get(2).getHashtags().set(2, "modify hash tag");
 
-            String result = categoryService.modifyCategory(testCategory);
+            Callable<String> callable = () -> categoryService.modifyCategory(testCategory);
+            AsyncCallback<String> callback = new AsyncCallback<String>() {
+                @Override
+                public void onResult(String result) {
+                    Log.d("modify result", result);
+                }
 
-            Log.d("modify result", result);
+                @Override
+                public void exceptionOccured(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+
+            new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
         });
 
         findBtn.setOnClickListener(v -> {
@@ -159,6 +175,9 @@ public class TestActivity extends AppCompatActivity {
                 @Override
                 public void onResult(List<CategoryDto> result) {
                     dogams = result;
+                    for(CategoryDto categoryDto : dogams) {
+                        Log.d("found Category", categoryDto.toString());
+                    }
                 }
 
                 @Override
@@ -172,10 +191,6 @@ public class TestActivity extends AppCompatActivity {
                 }
             };
 
-            new AsyncExecutor<List<CategoryDto>>().setCallable(callable).setCallback(callback).execute();
-
-            for(CategoryDto categoryDto : dogams)
-                logLargeString(categoryDto.toString());
         });
 
         initBtn.setOnClickListener(v -> {
