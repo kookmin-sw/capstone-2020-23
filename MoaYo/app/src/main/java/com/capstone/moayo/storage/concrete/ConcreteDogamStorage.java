@@ -31,7 +31,7 @@ public class ConcreteDogamStorage implements DogamStorage {
 
     @Override
     public int create(Category category) {
-        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword());
+        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword(), category.getStatus());
         return dogamId;
     }
 
@@ -59,7 +59,7 @@ public class ConcreteDogamStorage implements DogamStorage {
     @Override
     public void update(Category category) {
         try {
-            boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword());
+            boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword(), category.getStatus());
             if(result != true)
                 throw new Exception();
         } catch (Exception e) {

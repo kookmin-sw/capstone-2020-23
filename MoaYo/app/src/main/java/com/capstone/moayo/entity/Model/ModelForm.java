@@ -2,6 +2,8 @@ package com.capstone.moayo.entity.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 public class ModelForm {
     @SerializedName("dogamListModel")
     private DogamModel dogamModel;
@@ -65,20 +67,15 @@ public class ModelForm {
         this.categoryHashtagModels = categoryHashtagModels;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("dogamModel : ").append(dogamModel.toString()).append("\n");
-        for(CategoryModel categoryModel : categoryModels)
-            buffer.append("categoryModel : ").append(categoryModel.toString()).append("\n");
-        for(PostModel postModel : postModels)
-            buffer.append("postModel : ").append(postModel.toString()).append("\n");
-        for(HashtagModel hashtagModel : hashtagModels)
-            buffer.append("hashModel : ").append(hashtagModel.toString()).append("\n");
-        for(CategoryPostModel categoryPostModel : categoryPostModels)
-            buffer.append("categoryPostModel : ").append(categoryPostModel.toString()).append("\n");
-        for(CategoryHashtagModel categoryHashtagModel : categoryHashtagModels)
-            buffer.append("categoryHashtagModel : ").append(categoryHashtagModel.toString()).append("\n");
-
-        return buffer.toString();
+        return "ModelForm{" +
+                "dogamModel=" + dogamModel +
+                ", categoryModels=" + Arrays.toString(categoryModels) +
+                ", postModels=" + Arrays.toString(postModels) +
+                ", hashtagModels=" + Arrays.toString(hashtagModels) +
+                ", categoryPostModels=" + Arrays.toString(categoryPostModels) +
+                ", categoryHashtagModels=" + Arrays.toString(categoryHashtagModels) +
+                '}';
     }
 }

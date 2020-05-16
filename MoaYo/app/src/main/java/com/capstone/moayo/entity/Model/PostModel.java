@@ -51,14 +51,13 @@ public class PostModel {
         this.hashtag = hashtag;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{");
-        buffer.append("\t").append("id : ").append(id).append("\n");
-        buffer.append("\t").append("url : ").append(url).append("\n");
-        buffer.append("\t").append("imgUrl : ").append(imgUrl).append("\n");
-        buffer.append("\t").append("hashtag : ").append(hashtag).append("\n");
-        buffer.append("}");
-        return buffer.toString();
+        return "PostModel{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", hashtag='" + hashtag + '\'' +
+                '}';
     }
 }

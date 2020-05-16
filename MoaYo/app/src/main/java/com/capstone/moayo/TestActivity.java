@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Model.ModelForm;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
-import com.capstone.moayo.service.ServiceFactory;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -25,11 +25,12 @@ import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.CategoryConvertor;
 import com.capstone.moayo.util.ShareUtil;
-import com.capstone.moayo.util.Tag.TagsFinder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import retrofit2.Call;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -51,7 +52,7 @@ public class TestActivity extends AppCompatActivity {
     private ShareService shareService;
     private DBHelper dbHelper;
 
-    private List<CategoryDto> dogams = new ArrayList<>();
+    private List<CategoryDto> dogams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,25 +100,44 @@ public class TestActivity extends AppCompatActivity {
             thirdNode.setHashtags(hashtagList1);
 
             RequestForm requsetForm = CategoryConvertor.generateForm(secondNode, thirdNode);
+            final RespondForm[] respondForm = {null};
+            Callable<RespondForm> callable = () -> searchService.requestData(requsetForm);
+            AsyncCallback<RespondForm> callback = new AsyncCallback<RespondForm>() {
+                @Override
+                public void onResult(RespondForm result) {
+                    respondForm[0] = result;
+                }
 
-            RespondForm respondForm = searchService.requestData(requsetForm);
-            InstantPost post = respondForm.getSecond_layer().get(3);
+                @Override
+                public void exceptionOccured(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
+
+            InstantPost post = respondForm[0].getSecond_layer().get(3);
             Log.d("response result: text", post.getText());
             Log.d("response result: url", post.getUrl());
             Log.d("response result: src", post.getSrc());
             Log.d("response result: like", String.format("%d", post.getLike()));
-            Log.d("response result: cache", respondForm.getSecond_layer_cache()[3]);
+            Log.d("response result: cache", respondForm[0].getSecond_layer_cache()[3]);
 
-            requsetForm.setSecond_layer_cache(respondForm.getSecond_layer_cache());
-            requsetForm.setThird_layer_cache(respondForm.getThird_layer_cache());
+            requsetForm.setSecond_layer_cache(respondForm[0].getSecond_layer_cache());
+            requsetForm.setThird_layer_cache(respondForm[0].getThird_layer_cache());
 
-            RespondForm respondForm1 = searchService.requestData(requsetForm);
-            InstantPost post1 = respondForm1.getSecond_layer().get(3);
+            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
+
+            InstantPost post1 = respondForm[0].getSecond_layer().get(3);
             Log.d("response result: text", post1.getText());
             Log.d("response result: url", post1.getUrl());
             Log.d("response result: src", post1.getSrc());
             Log.d("response result: like", String.format("%d", post1.getLike()));
-            Log.d("response result: cache", respondForm1.getSecond_layer_cache()[3]);
+            Log.d("response result: cache", respondForm[0].getSecond_layer_cache()[3]);
         });
 
         createBtn.setOnClickListener(v -> {
@@ -143,13 +163,15 @@ public class TestActivity extends AppCompatActivity {
         });
 
         modifyBtn.setOnClickListener(v -> {
+
             CategoryDto testCategory = dogams.get(0);
+
             testCategory.setTitle("modify dummy dogam");
             testCategory.getRootNode().setTitle("modify node");
             testCategory.getRootNode().getLowLayer().get(2).getHashtags().set(2, "modify hash tag");
 
-            Callable<String> callable = () -> categoryService.modifyCategory(testCategory);
-            AsyncCallback<String> callback = new AsyncCallback<String>() {
+            Callable<String> callable1 = () -> categoryService.modifyCategory(testCategory);
+            AsyncCallback<String> callback1 = new AsyncCallback<String>() {
                 @Override
                 public void onResult(String result) {
                     Log.d("modify result", result);
@@ -166,7 +188,7 @@ public class TestActivity extends AppCompatActivity {
                 }
             };
 
-            new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
+            new AsyncExecutor<String>().setCallable(callable1).setCallback(callback1).execute();
         });
 
         findBtn.setOnClickListener(v -> {
@@ -190,7 +212,7 @@ public class TestActivity extends AppCompatActivity {
 
                 }
             };
-
+            new AsyncExecutor<List<CategoryDto>>().setCallable(callable).setCallback(callback).execute();
         });
 
         initBtn.setOnClickListener(v -> {
@@ -238,15 +260,15 @@ public class TestActivity extends AppCompatActivity {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
             List<PostDto> postDtos = postService.findPostByCategoryNodeId(foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).getId());
             foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).setPosts(postDtos);
-            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory, 1);
+            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory);
             logLargeString(form.toString());
             CategoryDto categoryDto = ShareUtil.convertFormToDogam(form);
             logLargeString(categoryDto.toString());
         });
 
         requestBtn.setOnClickListener(v -> {
-            CategoryDto foundCategoryDto = shareService.loadDogam(30);
-            Log.d("dogam", foundCategoryDto.toString());
+//            CategoryDto foundCategoryDto = shareService.loadDogam(30);
+//            Log.d("dogam", foundCategoryDto.toString());
         });
     }
 

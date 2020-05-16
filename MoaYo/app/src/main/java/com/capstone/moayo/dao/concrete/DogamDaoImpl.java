@@ -8,29 +8,32 @@ import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.dao.sqlite.StorageInfo;
+import com.capstone.moayo.util.DogamStatus;
 
 public class DogamDaoImpl implements DogamDao {
 
     @Override
-    public long insert(DBHelper dbHelper, String title, String description, String password) {
+    public long insert(DBHelper dbHelper, String title, String description, String password, DogamStatus status) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
         values.put(StorageInfo.CreateStorage.DOGAMDESCRIPTION,description);
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
+        values.put(StorageInfo.CreateStorage.DOGAMSTATUS, String.valueOf(status));
         long result =  mDB.insert(StorageInfo.CreateStorage._DOGAMTABLENAME,null,values);
         mDB.close();
         return result;
     }
 
     @Override
-    public boolean update(DBHelper dbHelper, int id, String title, String description, String password) {
+    public boolean update(DBHelper dbHelper, int id, String title, String description, String password, DogamStatus status) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.DOGAMID,id);
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
         values.put(StorageInfo.CreateStorage.DOGAMDESCRIPTION,description);
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
+        values.put(StorageInfo.CreateStorage.DOGAMSTATUS, String.valueOf(status));
         boolean result = mDB.update(StorageInfo.CreateStorage._DOGAMTABLENAME,values,"co_id=" + id,null) > 0;
         mDB.close();
         return result;
@@ -71,6 +74,7 @@ public class DogamDaoImpl implements DogamDao {
         dm.setTitle(c.getString(1));
         dm.setDesription(c.getString(2));
         dm.setPassword(c.getString(3));
+        dm.setStatus(DogamStatus.valueOf(c.getString(4)));
         c.close();
         mDB.close();
 
@@ -89,6 +93,7 @@ public class DogamDaoImpl implements DogamDao {
             result[i].setTitle(c.getString(1));
             result[i].setDesription(c.getString(2));
             result[i].setPassword(c.getString(3));
+            result[i].setStatus(DogamStatus.valueOf(c.getString(4)));
             c.moveToNext();
         }
         c.close();

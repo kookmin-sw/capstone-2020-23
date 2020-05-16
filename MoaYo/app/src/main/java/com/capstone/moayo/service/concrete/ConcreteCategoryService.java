@@ -13,6 +13,8 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
+import com.capstone.moayo.util.DogamStatus;
+import com.capstone.moayo.util.Exception.MutableException;
 import com.capstone.moayo.util.Exception.NoSuchCategoryException;
 import com.capstone.moayo.util.Exception.NoSuchNodeException;
 import com.capstone.moayo.util.Exception.NotRootException;
@@ -113,6 +115,9 @@ public class ConcreteCategoryService implements CategoryService {
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
         try {
+            if(modifyCategory.getStatus() == DogamStatus.Shared_Mutable)
+                throw new MutableException("can not modify");
+
             DogamMapping foundDogam = dogamStorage.retrieveById(modifyCategory.getId());
             if (foundDogam == null)
                 throw new NoSuchCategoryException("there is no such category");
@@ -120,7 +125,7 @@ public class ConcreteCategoryService implements CategoryService {
             dogamStorage.update(modifyCategory);
             String result = categoryStorage.update(modifyCategory);
             return result;
-        } catch (NoSuchNodeException e) {
+        } catch (NoSuchNodeException | MutableException e) {
             Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
         }
 

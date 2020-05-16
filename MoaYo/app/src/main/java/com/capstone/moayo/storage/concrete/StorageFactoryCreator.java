@@ -5,6 +5,7 @@ import android.content.Context;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.PostStorage;
+import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.storage.StorageFactory;
 
 public class StorageFactoryCreator implements StorageFactory{
@@ -12,6 +13,7 @@ public class StorageFactoryCreator implements StorageFactory{
     private CategoryStorage categoryStorage;
     private PostStorage contentStorage;
     private DogamStorage dogamStorage;
+    private ShareStorage shareStorage;
 
     public static synchronized StorageFactory getInstance() {
         if(instance == null) {
@@ -47,4 +49,10 @@ public class StorageFactoryCreator implements StorageFactory{
         return contentStorage;
     }
 
+    @Override
+    public ShareStorage requestShareStoraget(Context context) {
+        if(shareStorage == null)
+            shareStorage = new ConcreteShareStorage(context);
+        return shareStorage;
+    }
 }

@@ -62,15 +62,14 @@ public class CategoryModel {
         this.parentId = parentId;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{");
-        buffer.append("\t").append("id : ").append(id).append("\n");
-        buffer.append("\t").append("dogamId : ").append(dogamId).append("\n");
-        buffer.append("\t").append("name : ").append(name).append("\n");
-        buffer.append("\t").append("level : ").append(level).append("\n");
-        buffer.append("\t").append("parentId : ").append(parentId).append("\n");
-        buffer.append("}");
-        return buffer.toString();
+        return "CategoryModel{" +
+                "id=" + id +
+                ", dogamId=" + dogamId +
+                ", name='" + name + '\'' +
+                ", level=" + level +
+                ", parentId=" + parentId +
+                '}';
     }
 }

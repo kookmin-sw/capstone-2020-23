@@ -52,7 +52,7 @@ public class ServiceFactoryCreator implements ServiceFactory{
     @Override
     public ShareService requestShareService(Context context) {
         if(shareService == null)
-            shareService = new ConcreteShareService();
+            shareService = new ConcreteShareService(context);
         return shareService;
     }
 }

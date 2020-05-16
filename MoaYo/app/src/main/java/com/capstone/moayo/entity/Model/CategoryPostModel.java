@@ -40,13 +40,12 @@ public class CategoryPostModel {
         this.postId = postId;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{");
-        buffer.append("\t").append("dogamId : ").append(dogamId).append("\n");
-        buffer.append("\t").append("categoryId : ").append(categoryId).append("\n");
-        buffer.append("\t").append("postId : ").append(postId).append("\n");
-        buffer.append("}");
-        return buffer.toString();
+        return "CategoryPostModel{" +
+                "dogamId=" + dogamId +
+                ", categoryId=" + categoryId +
+                ", postId=" + postId +
+                '}';
     }
 }

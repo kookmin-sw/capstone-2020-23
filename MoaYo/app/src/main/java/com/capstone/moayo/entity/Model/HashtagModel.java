@@ -18,11 +18,10 @@ public class HashtagModel {
         this.hashtag = hashtag;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{");
-        buffer.append("\t").append("hashtag : ").append(hashtag).append("\n");
-        buffer.append("}");
-        return buffer.toString();
+        return "HashtagModel{" +
+                "hashtag='" + hashtag + '\'' +
+                '}';
     }
 }

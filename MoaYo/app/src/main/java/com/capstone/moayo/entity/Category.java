@@ -10,9 +10,9 @@ import java.util.Formatter;
 import java.util.List;
 
 /*
-    status
-    0 : non-share category
-    1 : share category
+
+    0 : mutable
+    1 : immutable
  */
 public class Category{
     private int id;

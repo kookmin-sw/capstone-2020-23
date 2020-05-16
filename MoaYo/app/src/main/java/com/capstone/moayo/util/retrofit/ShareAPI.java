@@ -12,9 +12,9 @@ public interface ShareAPI {
     @POST("/getDogam")
     Call<ModelForm> requestDogam(@Query("dogamId") int dogamId);
 
-    @POST("/api/v1/share/create")
+    @POST("/createDogam")
     Call<Void> requestCreate(@Body ModelForm form);
 
-    @DELETE("/api/v1/share/delete")
+    @DELETE("/deleteDogam")
     Call<Void> requsetDelete(@Body ModelForm form);
 }

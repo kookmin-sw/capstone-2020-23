@@ -10,11 +10,11 @@ public class DogamModel {
     @SerializedName("co_description")
     private String description;
     @SerializedName("co_status")
-    private int status;
+    private String status;
     @SerializedName("co_password")
     private String password;
 
-    public DogamModel(int id, String title, String description, int status, String password) {
+    public DogamModel(int id, String title, String description, String status, String password) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -46,11 +46,11 @@ public class DogamModel {
         this.description = description;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -62,15 +62,14 @@ public class DogamModel {
         this.password = password;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{");
-        buffer.append("\t").append("id : ").append(id).append("\n");
-        buffer.append("\t").append("title : ").append(title).append("\n");
-        buffer.append("\t").append("description : ").append(description).append("\n");
-        buffer.append("\t").append("status : ").append(status).append("\n");
-        buffer.append("\t").append("password : ").append(password).append("\n");
-        buffer.append("}");
-        return buffer.toString();
+        return "DogamModel{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

@@ -24,29 +24,15 @@ public class ConcreteSearchService implements SearchService {
 
     @Override
     public RespondForm requestData(RequestForm requsetForm) {
-        AsyncTask<RequestForm, Void, RespondForm> thread = new AsyncTask<RequestForm, Void, RespondForm>() {
-            @Override
-            protected RespondForm doInBackground(RequestForm... requsetForms) {
-                Call<RespondForm> call = searchAPI.requestPosts(requsetForms[0]);
-                try {
-                    Response<RespondForm> response = call.execute();
-                    RespondForm resultForm = response.body();
-                    return resultForm;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
-        };
+        Call<RespondForm> call = searchAPI.requestPosts(requsetForm);
         try {
-            RespondForm resultForm = thread.execute(requsetForm).get();
-
-
+            Response<RespondForm> response = call.execute();
+            RespondForm resultForm = response.body();
             return resultForm;
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 }
