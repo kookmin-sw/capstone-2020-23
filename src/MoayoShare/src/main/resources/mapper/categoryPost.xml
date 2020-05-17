@@ -9,8 +9,8 @@
     </insert>
     <insert id="insertAll" parameterType="com.moayo.server.model.CategoryPostModel">
         INSERT INTO `MoayoShare`.`tb_categoryPost` (`co_dogamId`, `co_categoryId`, `co_postId`) VALUES
-        <foreach item="item"  collection="array" separator="," index="index">
-            (${item.co_dogamId}, ${item.co_categoryId}, ${item.co_postId})
+        <foreach item="item"  collection="java.util.Arrays" separator=",">
+            (${co_dogamId}, ${co_categoryId}, '${co_postId}')
         </foreach>
     </insert>
     <delete id="deleteByDogamId" parameterType="int">

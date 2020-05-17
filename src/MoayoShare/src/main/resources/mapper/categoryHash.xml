@@ -9,8 +9,8 @@
     </insert>
     <insert id="insertAll" parameterType="com.moayo.server.model.CategoryHashModel">
         INSERT INTO `MoayoShare`.`tb_categoryHashtag` (`co_dogamId`, `co_categoryId`, `co_hashtag`) VALUES 
-        <foreach item="item"  collection="array" separator="," index="index">
-            (${item.co_dogamId}, ${item.co_categoryId}, '${item.co_hashtag}')
+        <foreach item="item"  collection="java.util.Arrays" separator=",">
+            (${co_dogamId}, ${co_categoryId}, '${co_hashtag}')
         </foreach>
     </insert>
     <delete id="deleteByDogamId" parameterType="int">

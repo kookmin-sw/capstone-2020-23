@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class MainController {
@@ -43,8 +42,8 @@ public class MainController {
         jsonParsingService.insertData(dogamModel);
         return "0000";
     }
-    @RequestMapping(value = "/getDogamList",method = RequestMethod.GET)
-    public List<DogamListModel> getDogamList(@RequestParam String hashtag){
-        return service.getDogamList();
-    }
+//    @RequestMapping(value = "/getDogamList",method = RequestMethod.POST)
+//    public DogamListModel[] getDogamList(@RequestParam String hashtag){
+//
+//    }
 }
