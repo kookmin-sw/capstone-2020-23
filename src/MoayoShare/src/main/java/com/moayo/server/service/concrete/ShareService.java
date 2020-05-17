@@ -5,6 +5,8 @@ import com.moayo.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShareService {
     @Autowired
@@ -43,5 +45,7 @@ public class ShareService {
 
         return dogamModel;
     }
-
+    public List<DogamListModel> getDogamList(){
+        return dogamListDao.getAllDogam();
+    }
 }
