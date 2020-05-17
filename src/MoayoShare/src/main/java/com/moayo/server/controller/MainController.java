@@ -1,36 +1,50 @@
 package com.moayo.server.controller;
 
 
-import com.moayo.server.model.BookModel;
-import com.moayo.server.service.ShareService;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.moayo.server.model.*;
+import com.moayo.server.service.JSONParsingService;
+import com.moayo.server.service.concrete.ShareService;
+import com.moayo.server.service.XMLParsingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import util.XMLParsing;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.util.List;
 
-@Controller
+@RestController
 public class MainController {
     @Autowired
     ShareService service;
+    @Autowired
+    XMLParsingService xmlParsingService;
+    @Autowired
+    JSONParsingService jsonParsingService;
 
-    @RequestMapping(value="/bookshare",method = RequestMethod.POST)
-    public void bookShare(HttpServletRequest req ,HttpServletResponse res,@RequestBody String body){
-        JSONObject jsonObject = service.jsonParser(body);
-
-        JSONArray jsonArray = (JSONArray)jsonObject.get("book");
-        BookModel newModel = service.createBookModel(jsonObject);
-        // json create
-        // .json url input newModel.setUrl();
-        service.uploadBook(newModel);
+    @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
+    public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
+        Document doc = XMLParsing.XMLParsing(body);
+        DogamListModel dogamListModel = xmlParsingService.insertData(doc);
+        return dogamListModel;
     }
 
-    @RequestMapping(value="/getbook",method = RequestMethod.POST)
-    public void getBook(HttpServletResponse res,HttpServletRequest req,@RequestBody String body){
-        // JSONObject jsonObject = service.jsonParser(body);
-        service.loadBook();
+    @RequestMapping(value = "/getDogam",method = RequestMethod.POST)
+    public DogamModel getDogam(HttpServletRequest req,HttpServletResponse res,@RequestParam int dogamId){
+        return service.getDogam(dogamId);
+    }
+
+    @RequestMapping(value = "/shareDogam",method = RequestMethod.POST)
+    public String shareDogam(@RequestBody DogamModel dogamModel){
+        jsonParsingService.insertData(dogamModel);
+        return "0000";
+    }
+    @RequestMapping(value = "/getDogamList",method = RequestMethod.GET)
+    public List<DogamListModel> getDogamList(@RequestParam String hashtag){
+        return service.getDogamList();
     }
 }
