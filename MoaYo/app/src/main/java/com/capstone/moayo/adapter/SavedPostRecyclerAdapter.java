@@ -16,7 +16,7 @@ import com.capstone.moayo.model.SavedPost;
 
 import java.util.ArrayList;
 
-public class adapter_result1 extends RecyclerView.Adapter<adapter_result1.ViewHolder> {
+public class SavedPostRecyclerAdapter extends RecyclerView.Adapter<SavedPostRecyclerAdapter.ViewHolder> {
 
     private ArrayList<SavedPost> saveditems = new ArrayList<>();
 
@@ -40,13 +40,13 @@ public class adapter_result1 extends RecyclerView.Adapter<adapter_result1.ViewHo
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
     @NonNull
     @Override
-    public adapter_result1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public SavedPostRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.recycler1_result, parent, false) ;
-        adapter_result1.ViewHolder vh = new adapter_result1.ViewHolder(view) ;
+        SavedPostRecyclerAdapter.ViewHolder vh = new SavedPostRecyclerAdapter.ViewHolder(view) ;
 
 
         return vh ;
@@ -54,7 +54,7 @@ public class adapter_result1 extends RecyclerView.Adapter<adapter_result1.ViewHo
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
-    public void onBindViewHolder(@NonNull adapter_result1.ViewHolder vh, int position) {
+    public void onBindViewHolder(@NonNull SavedPostRecyclerAdapter.ViewHolder vh, int position) {
 
         SavedPost item = saveditems.get(position);
 

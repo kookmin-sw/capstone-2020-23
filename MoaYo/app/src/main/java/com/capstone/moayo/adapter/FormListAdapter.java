@@ -42,6 +42,10 @@ public class FormListAdapter extends ArrayAdapter {
         TextView count = (TextView) convertView.findViewById(R.id.num_of_tags);
         trans_btn = (ImageButton) convertView.findViewById(R.id.trans_layer_btn);
 
+        trans_btn.setFocusable(false);
+        trans_btn.setFocusableInTouchMode(false);
+        trans_btn.setClickable(true);
+
         // Populate the data into the template view using the data object
         title.setText((String)node.getTitle());
 
@@ -61,7 +65,6 @@ public class FormListAdapter extends ArrayAdapter {
                 activity.onChangeLevel(3, node);
             }
         });
-
 
         // Return the completed view to render on screen
         return convertView;

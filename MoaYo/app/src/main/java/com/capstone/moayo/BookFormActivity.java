@@ -2,8 +2,6 @@ package com.capstone.moayo;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,7 +19,6 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private Category category;
     private CategoryNode rootNode;
     private CategoryNode currentNode;
-    private Button completeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +27,6 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("도감 생성");
-
-        completeBtn = (Button) findViewById(R.id.complete_btn);
-        completeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit();
-            }
-        });
 
         onChangeLevel(0, null);
 
@@ -54,7 +43,6 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
         if(selectedNode != null ) {
             currentNode = selectedNode;
-            Toast.makeText(getApplicationContext(), "this is " + currentNode.getTitle(), Toast.LENGTH_SHORT).show();
         } else {
             currentNode = rootNode;
         }
@@ -104,19 +92,13 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     public void onSubmit() {
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
         category = new Category(rootNode.getTitle(), null, null, rootNode);
-//        String info = category.toString();
         Log.d("category", category.toString());
-        Log.d("rootNode", category.getRootNode().toString());
+        Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
+//        Log.d("rootNode", category.getRootNode().toString());
 
         //--------Backend 통신----------
+        //service - CategoryService - create()
     }
-
-
-//    public CategoryNode nodeFactory(String title, CategoryNode parentNode, int level) {
-//        CategoryNode node = new CategoryNode(title, parentNode, level);
-//        return node;
-//    }
-
 
     @Override
     public void onBackPressed() {

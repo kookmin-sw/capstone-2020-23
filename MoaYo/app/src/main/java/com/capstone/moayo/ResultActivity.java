@@ -16,8 +16,8 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.capstone.moayo.adapter.ExpandableAdapter;
-import com.capstone.moayo.adapter.adapter_result1;
-import com.capstone.moayo.adapter.adapter_result2;
+import com.capstone.moayo.adapter.SavedPostRecyclerAdapter;
+import com.capstone.moayo.adapter.ResultPostRecyclerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.ResultPost_Dummy;
 import com.capstone.moayo.data.SavedPost_Dummy;
@@ -52,7 +52,7 @@ public class ResultActivity extends AppCompatActivity {
         saved_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
 
         // 리사이클러뷰에 객체 지정.
-        adapter_result1 saved_adapter = new adapter_result1();
+        SavedPostRecyclerAdapter saved_adapter = new SavedPostRecyclerAdapter();
         saved_recycler.setAdapter(saved_adapter) ;
 
         saved_adapter.setItems(requestSavedPost(searchNode));
@@ -63,7 +63,7 @@ public class ResultActivity extends AppCompatActivity {
         result_recycler.setLayoutManager(new GridLayoutManager(this,3));
 
 
-        adapter_result2 result_adapter = new adapter_result2();
+        ResultPostRecyclerAdapter result_adapter = new ResultPostRecyclerAdapter();
         result_recycler.setAdapter(result_adapter);
 
         //아이템 로드

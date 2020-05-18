@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,17 +21,24 @@
             android:padding="12dp"
             android:layout_marginLeft="8dp"
             />
+
         <TextView
-            android:id="@+id/title_keyword"
+            android:id="@+id/dialog_tag_tv_keyword"
+            android:layout_width="307dp"
+            android:layout_height="wrap_content"
             android:text="Keyword"
             android:textColor="#838383"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/dialog_tag_btn_delete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
     </LinearLayout>
 
     <ListView
-        android:id="@+id/hashtag_list"
+        android:id="@+id/dialog_tag_lv_hashtags"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_weight="1"
@@ -47,14 +55,14 @@
         >
 
         <Button
-            android:id="@+id/cancel_btn"
+            android:id="@+id/dialog_tag_btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cancel" />
 
         <Button
-            android:id="@+id/add_btn"
+            android:id="@+id/dialog_tag_btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

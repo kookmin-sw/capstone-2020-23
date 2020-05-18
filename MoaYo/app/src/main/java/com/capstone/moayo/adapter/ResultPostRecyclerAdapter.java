@@ -15,7 +15,7 @@ import com.capstone.moayo.model.NewPost;
 
 import java.util.ArrayList;
 
-public class adapter_result2 extends RecyclerView.Adapter<adapter_result2.ViewHolder> {
+public class ResultPostRecyclerAdapter extends RecyclerView.Adapter<ResultPostRecyclerAdapter.ViewHolder> {
 
     private ArrayList<NewPost> items = new ArrayList<>();
 
@@ -33,18 +33,18 @@ public class adapter_result2 extends RecyclerView.Adapter<adapter_result2.ViewHo
 
     @NonNull
     @Override
-    public adapter_result2.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public ResultPostRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.recycler2_result, parent, false);
-        adapter_result2.ViewHolder vh = new adapter_result2.ViewHolder(itemView);
+        ResultPostRecyclerAdapter.ViewHolder vh = new ResultPostRecyclerAdapter.ViewHolder(itemView);
 
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull adapter_result2.ViewHolder vh, int position) {
+    public void onBindViewHolder(@NonNull ResultPostRecyclerAdapter.ViewHolder vh, int position) {
 
         NewPost item = items.get(position);
 
