@@ -1,19 +1,30 @@
 package com.capstone.moayo;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.capstone.moayo.entity.CategoryNode;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -42,6 +53,47 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
     public void setOnEditNodeListener(OnEditNodeListener callback) {
         this.callback = callback;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final BottomSheetDialog d = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        // view hierarchy is inflated after dialog is shown
+        d.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                //Disables outside touch
+                d.getWindow().findViewById(R.id.touch_outside).setOnClickListener(null);
+                //Prevents dragging behavior
+                View content = d.getWindow().findViewById(R.id.design_bottom_sheet);
+                ((CoordinatorLayout.LayoutParams) content.getLayoutParams()).setBehavior(null);
+            }
+        });
+        return d;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            View bottomSheet = dialog.findViewById(R.id.design_bottom_sheet);
+            bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT; //setting full size Dialog.
+        }
+//        final View view = getView();
+//        view.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                View parent = (View) view.getParent();
+//                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) (parent).getLayoutParams();
+//                CoordinatorLayout.Behavior behavior = params.getBehavior();
+//                BottomSheetBehavior bottomSheetBehavior = (BottomSheetBehavior) behavior;
+//                bottomSheetBehavior.setPeekHeight(0);
+//                parent.setBackgroundColor(Color.WHITE);
+//            }
+//        });
     }
 
 
@@ -76,6 +128,18 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         tags.add("hashtag1");
         tags.add("hashtag2");
         tags.add("hashtag3");
+        tags.add("hashtag4");
+        tags.add("hashtag5");
+        tags.add("hashtag6");
+        tags.add("hashtag7");
+        tags.add("hashtag8");
+        tags.add("hashtag10");
+        tags.add("hashtag9");
+        tags.add("hashtag9");
+        tags.add("hashtag9");
+        tags.add("hashtag9");
+
+
 
         adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, tags);
         listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
@@ -110,6 +174,27 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         }
     }
 
+//    @Override
+//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                if (Build.VERSION.SDK_INT < 16) {
+//                    view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                } else {
+//                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                }
+//                BottomSheetDialog dialog = (BottomSheetDialog) getDialog();
+//                FrameLayout bottomSheet = (FrameLayout)
+//                        dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+//                BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+//                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//                behavior.setPeekHeight(0); // Remove this line to hide a dark background if you manually hide the dialog.
+//            }
+//        });
+//    }
+
 
     private void add() {
         node = new CategoryNode(word, parentNode, parentNode.getLevel()+1);
@@ -123,6 +208,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             }
         }
         node.setHashtags((List) hashtags);
+//        Log.d("node_tags", node.getHashtags().toString());
         listview.clearChoices(); // 모든 선택상태 초기화.
 
         callback.onAddNode(node);

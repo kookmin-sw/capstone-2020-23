@@ -119,6 +119,7 @@ public class CategoryNode implements Serializable {
         buffer.append("{\"id\" : ").append("\"").append(id).append("\"").append(",").
                 append("\"title\" : ").append("\"").append(title).append("\"").append(",").
                 append("\"level\" : ").append("\"").append(level).append("\"").append(",").
+                append("\"hashtags\" : ").append("\"").append(hashtags).append("\"").append(",").
                 append("\"lowLayer\" : [");
         for(CategoryNode lowNode : lowLayer) {
             buffer.append(lowNode.toString());
