@@ -5,10 +5,10 @@ public class APIUtils {
     private static final String SHARE_URL = "http://192.168.35.66:8080";
 
     public static SearchAPI getSearchAPI() {
-        return RetrofitClient.getClient(SEARCH_URL).create(SearchAPI.class);
+        return RetrofitClient.getSearchClient(SEARCH_URL).create(SearchAPI.class);
     }
 
     public static ShareAPI getShareAPI() {
-        return RetrofitClient.getClient(SHARE_URL).create(ShareAPI.class);
+        return RetrofitClient.getShareClient(SHARE_URL).create(ShareAPI.class);
     }
 }

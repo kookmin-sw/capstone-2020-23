@@ -10,11 +10,11 @@ public class DogamModel {
     @SerializedName("co_description")
     private String description;
     @SerializedName("co_status")
-    private String status;
+    private int status;
     @SerializedName("co_password")
     private String password;
 
-    public DogamModel(int id, String title, String description, String status, String password) {
+    public DogamModel(int id, String title, String description, int status, String password) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -46,11 +46,11 @@ public class DogamModel {
         this.description = description;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

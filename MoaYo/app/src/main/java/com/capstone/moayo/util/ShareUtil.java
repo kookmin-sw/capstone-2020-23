@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ShareUtil {
-    public static ModelForm convertDogamToModelForm(CategoryDto categoryDto, DogamStatus status) {
-        DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription(), String.valueOf(status), categoryDto.getPassword());
+    public static ModelForm convertDogamToModelForm(CategoryDto categoryDto, int status) {
+        DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription(), status, categoryDto.getPassword());
         List<CategoryModel> categoryModels = new ArrayList<>();
         List<PostModel> postModels = new ArrayList<>();
         List<CategoryPostModel> categoryPostModels = new ArrayList<>();
@@ -76,7 +76,13 @@ public class ShareUtil {
         CategoryNodeDto rootNode = convertModelToNode(categoryModels, categoryNodeDtos);
         CategoryDto dogam = new CategoryDto(dogamModel.getTitle(), dogamModel.getDescription(), dogamModel.getPassword(), rootNode);
         dogam.setId(dogamModel.getId());
-        dogam.setStatus(DogamStatus.valueOf(dogamModel.getStatus()));
+        switch (dogamModel.getStatus()) {
+            case 0:
+                dogam.setStatus(DogamStatus.Shared_Immutable);
+                break;
+            case 1:
+                dogam.setStatus(DogamStatus.Shared_Mutable);
+        }
 
         return dogam;
     }
