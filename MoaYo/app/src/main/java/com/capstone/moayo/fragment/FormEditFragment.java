@@ -58,7 +58,6 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
         if (getArguments() != null) {
             currentNode = (CategoryNode) getArguments().getSerializable("currentNode");
-//            Toast.makeText(getContext(), currentNode.getTitle(), Toast.LENGTH_SHORT).show();
             items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
         }
 

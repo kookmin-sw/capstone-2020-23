@@ -7,7 +7,7 @@
     tools:context=".activity.BookDetailActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
@@ -16,7 +16,7 @@
         android:elevation="3dp">
 
         <TextView
-            android:id="@+id/nodeName"
+            android:id="@+id/detail_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

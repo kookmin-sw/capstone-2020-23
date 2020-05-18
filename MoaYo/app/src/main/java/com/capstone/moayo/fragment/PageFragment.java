@@ -1,7 +1,5 @@
 package com.capstone.moayo.fragment;
 
-//import android.content.Context;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,10 +14,10 @@ import com.bumptech.glide.Glide;
 import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.CategoryNode;
-
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
+
+
 
 public class PageFragment extends Fragment implements OnClickListener {
 
@@ -62,8 +60,6 @@ public class PageFragment extends Fragment implements OnClickListener {
             if (i <= book_list.size()) {
                 bookBtnView.setText(book_list.get(i-1).getTitle());
                 bookBtnView.setTag(book_list.get(i-1));
-//                bookBtnView.setOnClickListener(this);
-
                 Glide.with(getContext()).load(book_list.get(i-1).getUrl()).into(circleImageView);
 
                 circleImageView.setTag(book_list.get(i-1));
@@ -78,16 +74,12 @@ public class PageFragment extends Fragment implements OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        int id = v.getId();
         v.setSelected(true);
-
-        //Button View Tag 값으로 저장된 카테고리 객체를 가져옴.
+        // Button View Tag 값으로 저장된 카테고리 객체를 가져옴.
         CategoryNode node = (CategoryNode) v.getTag();
 
-        ArrayList <CategoryNode> items = new ArrayList<>();
-
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
-//        intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
+        // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
         intent.putExtra("categoryNode", node);
         startActivity(intent);
 

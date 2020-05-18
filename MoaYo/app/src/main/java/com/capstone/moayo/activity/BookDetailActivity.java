@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class BookDetailActivity extends AppCompatActivity{
 
-
+    private TextView toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class BookDetailActivity extends AppCompatActivity{
         setContentView(R.layout.activity_book_detail);
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -38,8 +38,8 @@ public class BookDetailActivity extends AppCompatActivity{
 
         CategoryNode rootNode = (CategoryNode) getIntent().getSerializableExtra("categoryNode");
 
-        TextView textView = (TextView) findViewById(R.id.nodeName);
-        textView.setText(rootNode.getTitle());
+        toolbar_title = (TextView) findViewById(R.id.detail_tv_title);
+        toolbar_title.setText(rootNode.getTitle());
 
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);

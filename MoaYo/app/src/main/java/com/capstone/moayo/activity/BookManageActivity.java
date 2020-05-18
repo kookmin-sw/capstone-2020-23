@@ -40,7 +40,6 @@ public class BookManageActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-//        actionBar.setTitle("나의 도감");
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);

@@ -32,6 +32,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         void onAddNode(CategoryNode node);
         void onRemoveNode(CategoryNode node);
     }
+
     private CategoryNode node;
     private CategoryNode parentNode;
     private String word;
@@ -155,7 +156,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
 
             case R.id.dialog_tag_btn_save:
-                if(FORM_MODE == "ADD") {
+                if (FORM_MODE == "ADD") {
                     add();
                 } else {
                     edit();
@@ -168,27 +169,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
         }
     }
-
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                if (Build.VERSION.SDK_INT < 16) {
-//                    view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                } else {
-//                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                }
-//                BottomSheetDialog dialog = (BottomSheetDialog) getDialog();
-//                FrameLayout bottomSheet = (FrameLayout)
-//                        dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
-//                BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-//                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-//                behavior.setPeekHeight(0); // Remove this line to hide a dark background if you manually hide the dialog.
-//            }
-//        });
-//    }
 
 
     private void add() {
@@ -210,7 +190,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     }
 
     private void edit() {
-
+        //edit logic
     }
 
     private void delete() {

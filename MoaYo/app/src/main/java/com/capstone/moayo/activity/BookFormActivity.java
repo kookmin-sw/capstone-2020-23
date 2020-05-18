@@ -2,9 +2,12 @@ package com.capstone.moayo.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,11 +26,25 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private Category category;
     private CategoryNode rootNode;
     private CategoryNode currentNode;
+    private TextView toolbar_title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_form);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.form_toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar_title = (TextView) findViewById(R.id.form_tv_title);
+        toolbar_title.setText("도감 생성");
 
 
         onChangeLevel(0, null);

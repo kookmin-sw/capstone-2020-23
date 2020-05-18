@@ -100,8 +100,6 @@ public class ResultActivity extends AppCompatActivity {
         } else {
             return new ResultPost_Dummy().getFood();
         }
-        //Dummy Data(데님바지).
-//        return new ResultPost_Dummy().getSinger();
     }
 
     //저장 게시물 요청.
