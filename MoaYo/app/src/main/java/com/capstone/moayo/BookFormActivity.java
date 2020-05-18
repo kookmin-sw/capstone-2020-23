@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 
+import java.util.ArrayList;
+
 public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener {
     private FragmentManager fm;
     private FragmentTransaction tran;
@@ -84,8 +86,21 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         }
     }
 
-    public CategoryNode addNode(CategoryNode newNode) {
-        currentNode.addLowLayer(newNode);
+    public CategoryNode addNode(CategoryNode node) {
+        currentNode.addLowLayer(node);
+        return currentNode;
+    }
+
+    public CategoryNode removeNode(CategoryNode node) {
+        ArrayList<CategoryNode> lowLayerList = (ArrayList) currentNode.getLowLayer();
+        for(CategoryNode target : lowLayerList) {
+            if(target == node) {
+                lowLayerList.remove(target);
+                break;
+            }
+        }
+        currentNode.setLowLayer(lowLayerList);
+
         return currentNode;
     }
 

@@ -22,8 +22,9 @@ import java.util.List;
 public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
 
-    public interface OnAddNodeListener {
-        void onAddNode(CategoryNode add_word);
+    public interface OnEditNodeListener {
+        void onAddNode(CategoryNode node);
+        void onRemoveNode(CategoryNode node);
     }
     private CategoryNode node;
     private CategoryNode parentNode;
@@ -31,7 +32,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private Button cancel_btn, save_btn;
     private ImageButton delete_btn;
     private TextView keyword;
-    private OnAddNodeListener callback;
+    private OnEditNodeListener callback;
 
     private String FORM_MODE;
 
@@ -39,7 +40,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private ArrayAdapter adapter;
     private ArrayList<String> tags;
 
-    public void setOnAddNodeListener(OnAddNodeListener callback) {
+    public void setOnEditNodeListener(OnEditNodeListener callback) {
         this.callback = callback;
     }
 
@@ -80,10 +81,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
         listview.setAdapter(adapter);
 
-
-
         cancel_btn.setOnClickListener(this);
         save_btn.setOnClickListener(this);
+        delete_btn.setOnClickListener(this);
 
         return view;
     }
@@ -96,7 +96,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
 
             case R.id.dialog_tag_btn_save:
-                add();
+                if(FORM_MODE == "ADD") {
+                    add();
+                } else {
+                    edit();
+                }
+                dismiss();
+                break;
+            case R.id.dialog_tag_btn_delete:
+                delete();
                 dismiss();
                 break;
         }
@@ -117,8 +125,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         node.setHashtags((List) hashtags);
         listview.clearChoices(); // 모든 선택상태 초기화.
 
-        adapter.notifyDataSetChanged();
-
         callback.onAddNode(node);
     }
 
@@ -127,7 +133,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     }
 
     private void delete() {
-
+        callback.onRemoveNode(node);
     }
 
 

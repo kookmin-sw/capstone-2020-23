@@ -19,7 +19,7 @@ import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 
-public class FormEditFragment extends Fragment implements BottomSheetFragment.OnAddNodeListener, View.OnClickListener{
+public class FormEditFragment extends Fragment implements BottomSheetFragment.OnEditNodeListener, View.OnClickListener{
 
     public interface OnChangeLevelListener{
         void onChangeLevel(int fragId, CategoryNode selectedNode);
@@ -117,13 +117,19 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
     public void showDialog(Bundle args) {
         bottomSheet = BottomSheetFragment.getInstance();
-        bottomSheet.setOnAddNodeListener(this);
+        bottomSheet.setOnEditNodeListener(this);
         bottomSheet.setArguments(args);
         bottomSheet.show(getFragmentManager(),"bottomSheet");
     }
 
-    public void onAddNode(CategoryNode newNode) {
-        currentNode = ((BookFormActivity)getActivity()).addNode(newNode);
+    public void onAddNode(CategoryNode node) {
+        currentNode = ((BookFormActivity)getActivity()).addNode(node);
+        items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onRemoveNode(CategoryNode node) {
+        currentNode = ((BookFormActivity)getActivity()).removeNode(node);
         items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
         adapter.notifyDataSetChanged();
     }
