@@ -1,4 +1,4 @@
-package com.capstone.moayo.Square_Ratio_Manage;
+package com.capstone.moayo.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -7,21 +7,21 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 
-public class SquareLayout extends LinearLayout {
-    public SquareLayout(Context context) {
+public class SquareRatioLayout extends LinearLayout {
+    public SquareRatioLayout(Context context) {
         super(context);
     }
 
-    public SquareLayout(Context context, AttributeSet attrs) {
+    public SquareRatioLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SquareLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SquareRatioLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SquareLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SquareRatioLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

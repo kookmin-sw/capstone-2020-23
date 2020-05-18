@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResultActivity"
+    tools:context=".activity.ResultActivity"
     android:id="@+id/resultDisplay">
 
     <!--도감 보기 탭을 펼치기 전에 보일 화면-->

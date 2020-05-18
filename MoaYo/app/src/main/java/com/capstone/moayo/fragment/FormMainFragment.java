@@ -1,4 +1,4 @@
-package com.capstone.moayo;
+package com.capstone.moayo.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.capstone.moayo.activity.BookFormActivity;
+import com.capstone.moayo.R;
 
 public class FormMainFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.capstone.moayo;
+package com.capstone.moayo.activity;
 
 import android.os.Bundle;
 import android.widget.ExpandableListView;
@@ -10,7 +10,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.capstone.moayo.adapter.ExpandableAdapter;
+import com.capstone.moayo.R;
+import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class BookDetailActivity extends AppCompatActivity{
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
-        myList.setAdapter(new ExpandableAdapter(this, (ArrayList<CategoryNode>) rootNode.getLowLayer()));
+        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNode>) rootNode.getLowLayer()));
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);

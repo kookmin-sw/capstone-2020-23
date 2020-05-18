@@ -45,7 +45,7 @@ public class SavedPostRecyclerAdapter extends RecyclerView.Adapter<SavedPostRecy
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.recycler1_result, parent, false) ;
+        View view = inflater.inflate(R.layout.recycler_result_top, parent, false) ;
         SavedPostRecyclerAdapter.ViewHolder vh = new SavedPostRecyclerAdapter.ViewHolder(view) ;
 
 

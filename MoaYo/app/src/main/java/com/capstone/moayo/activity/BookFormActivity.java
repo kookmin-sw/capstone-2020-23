@@ -1,18 +1,19 @@
-package com.capstone.moayo;
+package com.capstone.moayo.activity;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.capstone.moayo.R;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.fragment.FormEditFragment;
+import com.capstone.moayo.fragment.FormMainFragment;
 
 import java.util.ArrayList;
 

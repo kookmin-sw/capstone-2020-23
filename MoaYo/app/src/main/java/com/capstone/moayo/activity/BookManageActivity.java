@@ -1,8 +1,7 @@
-package com.capstone.moayo;
+package com.capstone.moayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,11 +12,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 
-import com.capstone.moayo.adapter.PagerAdapter;
+import com.capstone.moayo.R;
+import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.entity.CategoryNode;
 
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 
 public class BookManageActivity extends AppCompatActivity {
     private ViewPager viewPager ;
-    private PagerAdapter pagerAdapter ;
+    private BookPagerAdapter pagerAdapter ;
 
     private ArrayList<CategoryNode> userBookData;
 
@@ -51,7 +50,7 @@ public class BookManageActivity extends AppCompatActivity {
 
         //ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), userBookData);
+        pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
         viewPager.setAdapter(pagerAdapter) ;
 
         //유저가 가진 도감의 총 개수 표시.

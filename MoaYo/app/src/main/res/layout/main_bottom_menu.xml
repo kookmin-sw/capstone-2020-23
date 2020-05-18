@@ -7,14 +7,6 @@
     android:orientation="vertical"
     android:background="@drawable/main_bottom_menu_">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:text="@string/main_menu"-->
-<!--        android:textSize="20dp"/>-->
-
     <TextView
         android:layout_width="50dp"
         android:layout_height="5dp"

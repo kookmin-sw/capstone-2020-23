@@ -1,4 +1,4 @@
-package com.capstone.moayo;
+package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,19 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.TestLooperManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.moayo.adapter.ExpandableAdapter;
+import com.capstone.moayo.R;
+import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.adapter.SavedPostRecyclerAdapter;
 import com.capstone.moayo.adapter.ResultPostRecyclerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
@@ -87,7 +84,7 @@ public class ResultActivity extends AppCompatActivity {
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
-        myList.setAdapter(new ExpandableAdapter(this, (ArrayList<CategoryNode>) getDummyRoot(searchNode).getLowLayer(), searchNode));
+        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNode>) getDummyRoot(searchNode).getLowLayer(), searchNode));
 
 
     }

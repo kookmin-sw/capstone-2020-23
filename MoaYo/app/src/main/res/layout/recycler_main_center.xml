@@ -27,7 +27,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp" />
 
-            <com.capstone.moayo.Square_Ratio_Manage.SquareLayout
+            <com.capstone.moayo.layout.SquareRatioLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -37,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop" />
 
-            </com.capstone.moayo.Square_Ratio_Manage.SquareLayout>
+            </com.capstone.moayo.layout.SquareRatioLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

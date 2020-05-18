@@ -45,7 +45,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.main_top_recycler, parent, false) ;
+        View view = inflater.inflate(R.layout.recycler_main_top, parent, false) ;
         MainTopRecyclerAdapter.ViewHolder vh = new MainTopRecyclerAdapter.ViewHolder(view) ;
 
 

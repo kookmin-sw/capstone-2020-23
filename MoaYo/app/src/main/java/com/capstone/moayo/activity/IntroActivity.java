@@ -1,4 +1,4 @@
-package com.capstone.moayo;
+package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.capstone.moayo.R;
 
 public class IntroActivity extends AppCompatActivity {
 

@@ -1,26 +1,21 @@
-package com.capstone.moayo;
+package com.capstone.moayo.fragment;
 
 //import android.content.Context;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.capstone.moayo.activity.BookDetailActivity;
+import com.capstone.moayo.R;
 import com.capstone.moayo.entity.CategoryNode;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

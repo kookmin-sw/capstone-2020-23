@@ -12,24 +12,24 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.capstone.moayo.R;
-import com.capstone.moayo.ResultActivity;
+import com.capstone.moayo.activity.ResultActivity;
 import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 
 
-public class ExpandableAdapter extends BaseExpandableListAdapter {
+public class BookExpandableAdapter extends BaseExpandableListAdapter {
     Context mContext;
     ArrayList<CategoryNode> categoryNodes;
     CategoryNode selectedNode;
 
-    public ExpandableAdapter(Context context, ArrayList<CategoryNode> nodes) {
+    public BookExpandableAdapter(Context context, ArrayList<CategoryNode> nodes) {
         mContext = context;
         categoryNodes = nodes;
         selectedNode = null;
     }
 
-    public ExpandableAdapter(Context context, ArrayList<CategoryNode> nodes, CategoryNode selected_node) {
+    public BookExpandableAdapter(Context context, ArrayList<CategoryNode> nodes, CategoryNode selected_node) {
         mContext = context;
         categoryNodes = nodes;
         selectedNode = selected_node;
@@ -174,14 +174,14 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     //Child의 View의 XML을 생성
     public View getChildGenericView() {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.child_list_view, null);
+        View view = inflater.inflate(R.layout.expandable_listview_child, null);
         return view;
     }
 
     //Parent(Group)의 View의 XML을 생성
     public View getParentGenericView() {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.group_list_view, null);
+        View view = inflater.inflate(R.layout.expandable_listview_parent, null);
         return view;
 
     }

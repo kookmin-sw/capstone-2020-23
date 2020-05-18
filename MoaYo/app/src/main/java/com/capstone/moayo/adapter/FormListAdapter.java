@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.capstone.moayo.BookFormActivity;
+import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.CategoryNode;
 
@@ -31,7 +31,7 @@ public class FormListAdapter extends ArrayAdapter {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_keyword, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_form_item, parent, false);
         }
 
         // Get the data item for this position

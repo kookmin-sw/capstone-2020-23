@@ -1,4 +1,4 @@
-package com.capstone.moayo;
+package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.ShareMenuAdapter;
 import com.capstone.moayo.data.SharedData_Sample;
 

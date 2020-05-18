@@ -37,7 +37,7 @@ public class ResultPostRecyclerAdapter extends RecyclerView.Adapter<ResultPostRe
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.recycler2_result, parent, false);
+        View itemView = inflater.inflate(R.layout.recycler_result_center, parent, false);
         ResultPostRecyclerAdapter.ViewHolder vh = new ResultPostRecyclerAdapter.ViewHolder(itemView);
 
         return vh;

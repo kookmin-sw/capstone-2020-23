@@ -40,7 +40,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.share_menu_recycler, parent, false);
+        View view = inflater.inflate(R.layout.recycler_share_menu, parent, false);
         ShareMenuAdapter.ViewHolder vh = new ShareMenuAdapter.ViewHolder(view);
 
         return vh ;
