@@ -5,6 +5,8 @@ import com.moayo.server.model.*;
 import com.moayo.server.service.JSONParsingService;
 import com.moayo.server.service.concrete.ShareService;
 import com.moayo.server.service.XMLParsingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
@@ -26,6 +28,8 @@ public class MainController {
     @Autowired
     JSONParsingService jsonParsingService;
 
+    private Logger logger = LoggerFactory.getLogger(MainController.class);
+
     @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
     public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
         Document doc = XMLParsing.XMLParsing(body);
@@ -35,16 +39,21 @@ public class MainController {
 
     @RequestMapping(value = "/getDogam",method = RequestMethod.POST)
     public DogamModel getDogam(HttpServletRequest req,HttpServletResponse res,@RequestParam int dogamId){
-        return service.getDogam(dogamId);
+        logger.info(req.getRequestedSessionId()+" : "+dogamId);
+        DogamModel dogamModel = service.getDogam(dogamId);
+        logger.info(dogamModel.getDogamListModel().toString());
+        return dogamModel;
     }
 
     @RequestMapping(value = "/shareDogam",method = RequestMethod.POST)
     public String shareDogam(@RequestBody DogamModel dogamModel){
+        logger.info(dogamModel.toString());
         jsonParsingService.insertData(dogamModel);
-        return "0000";
+        return "{0000}";
     }
     @RequestMapping(value = "/getDogamList",method = RequestMethod.GET)
     public List<DogamListModel> getDogamList(@RequestParam String hashtag){
+        logger.info(hashtag);
         return service.getDogamList();
     }
 }

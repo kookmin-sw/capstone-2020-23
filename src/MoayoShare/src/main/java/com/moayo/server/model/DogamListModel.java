@@ -68,9 +68,13 @@ public class DogamListModel {
     }
 
     @Override
-    public String toString(){
-        StringBuilder result = new StringBuilder();
-        result.append("{").append(getCo_dogamId()).append(",").append(getCo_title()).append("}");
-        return result.toString();
+    public String toString() {
+        return "DogamListModel{" +
+                "co_dogamId=" + co_dogamId +
+                ", co_title='" + co_title + '\'' +
+                ", co_description='" + co_description + '\'' +
+                ", co_status=" + co_status +
+                ", co_password='" + co_password + '\'' +
+                '}';
     }
 }

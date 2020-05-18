@@ -70,8 +70,15 @@ public class CategoryModel {
     public void setCo_name(String co_name) {
         this.co_name = co_name;
     }
+
     @Override
-    public String toString(){
-        return "{" + getCo_dogamId() +"."+getCo_categoryId() + "," + getCo_name() + "," + getCo_level()+"}";
+    public String toString() {
+        return "CategoryModel{" +
+                "co_categoryId=" + co_categoryId +
+                ", co_dogamId=" + co_dogamId +
+                ", co_name='" + co_name + '\'' +
+                ", co_level=" + co_level +
+                ", co_parentCategoryId=" + co_parentCategoryId +
+                '}';
     }
 }

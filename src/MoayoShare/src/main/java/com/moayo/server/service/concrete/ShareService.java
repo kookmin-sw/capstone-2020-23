@@ -2,6 +2,8 @@ package com.moayo.server.service.concrete;
 
 import com.moayo.server.dao.*;
 import com.moayo.server.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,12 @@ public class ShareService {
     CategoryPostDao categoryPostDao;
     @Autowired
     PostDao postDao;
+
+    private Logger logger;
+
+    public ShareService() {
+        this.logger = LoggerFactory.getLogger(ShareService.class);
+    }
 
     public DogamModel getDogam(int dogamId){
         DogamModel dogamModel = new DogamModel();
@@ -42,7 +50,7 @@ public class ShareService {
             hashtagModels[i] = new HashtagModel(categoryHashModels[i].getco_hashtag());
         }
         dogamModel.setHashtagModels(hashtagModels);
-
+        logger.info(dogamModel.getDogamListModel().toString());
         return dogamModel;
     }
     public List<DogamListModel> getDogamList(){
