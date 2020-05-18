@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
 
         ImageView sharedBookPost;
         TextView nickName, comment;
+        ImageButton like;
+        TextView likeCount;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -31,6 +34,19 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
             sharedBookPost = itemView.findViewById(R.id.sharedBookPost);
             nickName = itemView.findViewById(R.id.nickName);
             comment = itemView.findViewById(R.id.comment);
+
+            like = itemView.findViewById(R.id.like);
+            likeCount = itemView.findViewById(R.id.likeCount);
+
+            like.setOnClickListener(new View.OnClickListener() {
+                int count = 0;
+                @Override
+                public void onClick(View v) {
+                    like.setSelected(true);
+                    count ++ ;
+                    likeCount.setText(count + "명이 좋아합니다.");
+                }
+            });
         }
     }
     @NonNull
@@ -58,6 +74,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         vh.nickName.setText(item.getNickName());
         vh.comment.setText(item.getComment());
     }
+
 
     @Override
     public int getItemCount() {
