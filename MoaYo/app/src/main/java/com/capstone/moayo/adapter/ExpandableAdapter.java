@@ -1,4 +1,4 @@
-package com.capstone.moayo.Adapter;
+package com.capstone.moayo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -121,15 +121,6 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             view = convertView;
         }
 
-//        if(hasSelectedNode(currentNode, selectedNode) == true) {
-//            ExpandableListView expandableListView = (ExpandableListView)parent;
-//            if (!isExpanded) {
-//                expandableListView.expandGroup(groupPosition);
-//            }
-//            else {
-//                expandableListView.collapseGroup(groupPosition);
-//            }
-//        }
 
         TextView text = (TextView)view.findViewById(R.id.text);
         text.setText(currentNode.getTitle());

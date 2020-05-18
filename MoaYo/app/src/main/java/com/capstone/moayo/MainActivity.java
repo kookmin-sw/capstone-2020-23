@@ -22,8 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.moayo.Adapter.MainTopRecyclerAdapter;
-import com.capstone.moayo.Adapter.MainCenterRecyclerAdapter;
+import com.capstone.moayo.adapter.MainTopRecyclerAdapter;
+import com.capstone.moayo.adapter.MainCenterRecyclerAdapter;
 //import com.capstone.moayo.R;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.SharedData_Sample;

@@ -78,7 +78,9 @@ public class CategoryNode implements Serializable {
         }
     }
 
-    public void setLowLayer(List<CategoryNode> lowLayer) {this.lowLayer = lowLayer;}
+    public void setLowLayer(List<CategoryNode> lowLayer) { this.lowLayer = lowLayer; }
+
+    public void addLowLayer(CategoryNode node) { this.lowLayer.add(node); }
 
     public void setParent(CategoryNode parent) {
         this.parent = parent;
@@ -117,6 +119,7 @@ public class CategoryNode implements Serializable {
         buffer.append("{\"id\" : ").append("\"").append(id).append("\"").append(",").
                 append("\"title\" : ").append("\"").append(title).append("\"").append(",").
                 append("\"level\" : ").append("\"").append(level).append("\"").append(",").
+                append("\"hashtags\" : ").append("\"").append(hashtags).append("\"").append(",").
                 append("\"lowLayer\" : [");
         for(CategoryNode lowNode : lowLayer) {
             buffer.append(lowNode.toString());
