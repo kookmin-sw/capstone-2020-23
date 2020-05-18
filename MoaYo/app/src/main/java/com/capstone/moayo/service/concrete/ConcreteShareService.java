@@ -24,7 +24,7 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
-    public void registerDogam(CategoryDto categoryDto, DogamStatus status) {
+    public void registerDogam(CategoryDto categoryDto, int status) {
         ModelForm form = ShareUtil.convertDogamToModelForm(categoryDto, status);
         shareStorage.create(form);
         categoryDto.setStatus(DogamStatus.Sharing);

@@ -120,7 +120,7 @@ public class CategoryNodeDto {
 
     @Override
     public String toString() {
-        return "CategoryNodeDto{" +
+        return "{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", level=" + level +

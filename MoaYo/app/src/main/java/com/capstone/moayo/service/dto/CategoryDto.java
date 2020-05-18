@@ -103,11 +103,13 @@ public class CategoryDto {
 
     @Override
     public String toString() {
-        return "CategoryDto{" +
+        return "{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", password='" + password + '\'' +
+                ", status=" + status +
+                ", selectCategory=" + selectCategory +
                 ", rootNode=" + rootNode +
                 "}\n";
     }

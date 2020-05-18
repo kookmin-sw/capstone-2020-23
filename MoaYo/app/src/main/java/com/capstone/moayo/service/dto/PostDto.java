@@ -90,7 +90,7 @@ public class PostDto {
 
     @Override
     public String toString() {
-        return "PostDto{" +
+        return "{" +
                 "id=" + id +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", url='" + url + '\'' +
@@ -98,6 +98,6 @@ public class PostDto {
                 ", like=" + like +
                 ", categoryNodeId=" + categoryNodeId +
                 ", dogamId=" + dogamId +
-                '}';
+                "}\n";
     }
 }
