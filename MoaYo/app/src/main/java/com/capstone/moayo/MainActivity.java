@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
 
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
-        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
+//        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,16 +68,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        shareBookPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
-                MainActivity.this.startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+//        shareBookPlus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
+//                MainActivity.this.startActivity(intent);
+//
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            }
+//        });
 
 
         // 나의 도감 리사이클러뷰 (리사이클러뷰 1)
@@ -94,7 +94,18 @@ public class MainActivity extends AppCompatActivity {
 
         // 공유도감 리사이클러뷰 (리사이클러뷰 2)
         RecyclerView recyclerView2 = findViewById(R.id.recycler2_main);
-        recyclerView2.setLayoutManager(new GridLayoutManager(this, 1));
+//        recyclerView2.setLayoutManager(new GridLayoutManager(this, 1));
+        recyclerView2.setLayoutManager(new GridLayoutManager(this,1){
+            @Override
+            public boolean canScrollVertically() { // 세로스크롤 막기
+                return false;
+            }
+
+            @Override
+            public boolean canScrollHorizontally() { //가로 스크롤막기
+                return false;
+            }
+        });
 
 
         MainCenterRecyclerAdapter adapter2 = new MainCenterRecyclerAdapter();
