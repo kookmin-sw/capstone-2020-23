@@ -36,7 +36,7 @@ public class ConcreteShareService implements ShareService {
     public CategoryDto loadDogamFromServer(int dogamId) {
         ModelForm foundForm = shareStorage.retrieveById(dogamId);
         CategoryDto foundCategory = ShareUtil.convertFormToDogam(foundForm);
-        return null;
+        return foundCategory;
     }
 
     @Override

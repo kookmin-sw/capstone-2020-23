@@ -24,6 +24,7 @@ import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.CategoryConvertor;
+import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.ShareUtil;
 
 import java.util.ArrayList;
@@ -260,15 +261,32 @@ public class TestActivity extends AppCompatActivity {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
             List<PostDto> postDtos = postService.findPostByCategoryNodeId(foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).getId());
             foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).setPosts(postDtos);
-            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory);
+            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory, DogamStatus.Sharing);
             logLargeString(form.toString());
             CategoryDto categoryDto = ShareUtil.convertFormToDogam(form);
             logLargeString(categoryDto.toString());
         });
 
         requestBtn.setOnClickListener(v -> {
-//            CategoryDto foundCategoryDto = shareService.loadDogam(30);
-//            Log.d("dogam", foundCategoryDto.toString());
+            Callable<CategoryDto> callable = () -> shareService.loadDogamFromServer(30);
+            AsyncCallback<CategoryDto> callback = new AsyncCallback<CategoryDto>() {
+                @Override
+                public void onResult(CategoryDto result) {
+                    logLargeString(result.toString());
+                }
+
+                @Override
+                public void exceptionOccured(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+
+            new AsyncExecutor<CategoryDto>().setCallable(callable).setCallback(callback).execute();
         });
     }
 
