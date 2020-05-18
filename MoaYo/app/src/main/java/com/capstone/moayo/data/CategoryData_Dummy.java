@@ -71,8 +71,7 @@ public class CategoryData_Dummy {
 
         //  Node <<Singer>>
         CategoryNode singer = new CategoryNode("가수", null, 1);
-        singer.setUrl("https://lh3.googleusercontent.com/proxy/iz7mqs_RA1uYHQgxJwMR0c3-lo5DstNhpHgF7_s4JITb4eyBJLQmAcj1xdLTiKdw_O2THJLP8otJDdY9VCiwz2SmU8CkwQGHLjLZeEGAUItXyScsOJsusjMVbLMUz4Y");
-
+        singer.setUrl("https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile5.uf.tistory.com%2Fimage%2F99C86B485DCC0E3314477E");
         CategoryNode trot = new CategoryNode("트로트", singer, 2);
         CategoryNode ballad = new CategoryNode("발라드", singer, 2);
         CategoryNode hiphop = new CategoryNode("힙합", singer, 2);

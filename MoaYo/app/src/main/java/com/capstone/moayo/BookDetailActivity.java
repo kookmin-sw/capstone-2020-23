@@ -2,11 +2,13 @@ package com.capstone.moayo;
 
 import android.os.Bundle;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 //import android.widget.ExpandableListView.OnChildClickListener;
 //import android.widget.ExpandableListView.OnGroupClickListener;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.Adapter.ExpandableAdapter;
 import com.capstone.moayo.entity.CategoryNode;
@@ -23,10 +25,21 @@ public class BookDetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
 
-        CategoryNode rootNode = (CategoryNode) getIntent().getSerializableExtra("categoryNode");
+        //리소스 파일에서 추가한 툴바를 앱바로 지정하기
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(rootNode.getTitle());
+
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+
+        CategoryNode rootNode = (CategoryNode) getIntent().getSerializableExtra("categoryNode");
+
+        TextView textView = (TextView) findViewById(R.id.nodeName);
+        textView.setText(rootNode.getTitle());
+
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
