@@ -2,6 +2,7 @@ package com.capstone.moayo.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,8 +59,9 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
         fm = getSupportFragmentManager();
         tran = fm.beginTransaction();
-        tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-
+//        tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+        tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                R.anim.slide_in_left, R.anim.slide_out_right);
         if(selectedNode != null ) {
             currentNode = selectedNode;
         } else {
@@ -133,12 +135,22 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
         } else {
             getFragmentManager().popBackStack();
         }
+
     }
 
 }
