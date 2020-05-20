@@ -46,7 +46,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
                 public void onClick(View v) {
                     like.setSelected(true);
                     count ++ ;
-                    likeCount.setText(count + "명이 좋아합니다.");
+                    likeCount.setText(count+"");
                 }
             });
         }

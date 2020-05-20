@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.drawerlayout.widget.DrawerLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".MainActivity"-->
-<!--    android:id="@+id/mainDisplay">-->
-
-<!--    &lt;!&ndash;기존의 App Bar를 없애고 커스터마이징을 위해 Tool Bar설치&ndash;&gt;-->
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -93,7 +83,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/colorBlack" />
+                android:background="@color/darkGray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,33 +91,33 @@
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="10dp"-->
-<!--                        android:text="@string/shareBook_MainActivity"-->
-<!--                        android:textSize="18dp" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/shareBook_MainActivity"
+                        android:textSize="18dp" />
 
-<!--                    <View-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="0dp"-->
-<!--                        android:layout_weight="1" />-->
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/shareBookPlus"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginRight="5dp"-->
-<!--                        android:background="@android:color/transparent"-->
-<!--                        android:scaleType="fitCenter"-->
-<!--                        android:src="@drawable/ic_add_black_24dp" />-->
+                    <ImageButton
+                        android:id="@+id/shareBookPlus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_add_black_24dp" />
 
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler2_main"
