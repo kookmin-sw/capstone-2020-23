@@ -1,15 +1,21 @@
 package com.capstone.moayo.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.capstone.moayo.activity.BookFormActivity;
@@ -45,16 +51,51 @@ public class FormMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_form_main, container, false);
 
+        EditText title_et = (EditText) view.findViewById(R.id.create_book_title);
+        ImageView bookform_logo = (ImageView) view.findViewById(R.id.bookformImg);
+        ImageView create_text = (ImageView) view.findViewById(R.id.create);
+
+        title_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+                if (text.length() > 0) {
+                    title_et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_primary));
+                    start_btn.setBackgroundColor(Color.parseColor("#EFE5FD"));
+                    start_btn.setTextColor(Color.parseColor("#6200EE"));
+                    bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_primary));
+                    create_text.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    title_et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_gray));
+                    start_btn.setBackgroundColor(Color.parseColor("#ffffff"));
+                    start_btn.setTextColor(Color.parseColor("#707070"));
+                    bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_gray));
+                    create_text.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         start_btn = (Button) view.findViewById(R.id.start_form_btn);
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText title_et = (EditText) view.findViewById(R.id.create_book_title);
                 String title = title_et.getText().toString();
 
                 if(!title.isEmpty()) {
                     ((BookFormActivity)getActivity()).initRootNode(title);
-
                     ((BookFormActivity)getActivity()).onChangeLevel(2, null);
                 } else {
                     Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();

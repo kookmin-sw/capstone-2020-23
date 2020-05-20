@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
 
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
-//        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
+        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,16 +65,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        shareBookPlus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
-//                MainActivity.this.startActivity(intent);
-//
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//            }
-//        });
+        shareBookPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
 
         // 나의 도감 리사이클러뷰 (리사이클러뷰 1)

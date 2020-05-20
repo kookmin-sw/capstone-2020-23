@@ -7,5 +7,9 @@
     <color name="colorBlack">#000000</color>
     <color name="lightPurple">#EFE5FD</color>
     <color name="darkGray">#707070</color>
-    <color name="lightGray">#E4E4E4</color>
+    <color name="lightGray">#C3C3C3</color>
+
+    <!--editText 커서, 강조 색-->
+    <color name="cursorColor">#707070</color>
+    <color name="nomalColor">#c3c3c3</color>
 </resources>
