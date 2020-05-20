@@ -2,11 +2,12 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
 
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryNodeDto {
+public class CategoryNodeDto implements Serializable {
     private int id;
     private String title;
     private int level;
@@ -89,6 +90,8 @@ public class CategoryNodeDto {
             lowLayer = new ArrayList<>();
         return lowLayer;
     }
+
+    public void addLowLayer(CategoryNodeDto node) { this.lowLayer.add(node); }
 
     public void setLowLayer(List<CategoryNodeDto> lowLayer) {
         this.lowLayer = lowLayer;

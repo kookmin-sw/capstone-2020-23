@@ -4,10 +4,11 @@ import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.util.Exception.NotRootException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDto {
+public class CategoryDto implements Serializable {
     private int id;
     private String title;
     private String description;
