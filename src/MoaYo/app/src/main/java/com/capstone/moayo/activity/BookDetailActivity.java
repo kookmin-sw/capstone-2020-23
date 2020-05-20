@@ -12,7 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
-import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 public class BookDetailActivity extends AppCompatActivity{
 
     private TextView toolbar_title;
+    private CategoryDto category;
+    private CategoryNodeDto rootNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,8 @@ public class BookDetailActivity extends AppCompatActivity{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        CategoryNode rootNode = (CategoryNode) getIntent().getSerializableExtra("categoryNode");
+        category = (CategoryDto) getIntent().getSerializableExtra("category");
+        rootNode = category.getRootNode();
 
         toolbar_title = (TextView) findViewById(R.id.detail_tv_title);
         toolbar_title.setText(rootNode.getTitle());
@@ -44,7 +48,7 @@ public class BookDetailActivity extends AppCompatActivity{
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
-        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNode>) rootNode.getLowLayer()));
+        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);

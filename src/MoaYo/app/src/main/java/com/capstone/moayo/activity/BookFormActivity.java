@@ -30,6 +30,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private CategoryNodeDto rootNode;
     private CategoryNodeDto currentNode;
     private TextView toolbar_title;
+    private CategoryService categoryService;
 
 
     @Override
@@ -133,7 +134,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //        Log.d("rootNode", category.getRootNode().toString());
 
         //--------Backend 통신----------
-        CategoryService categoryService = new ConcreteCategoryService(getApplicationContext());
+        categoryService = new ConcreteCategoryService(getApplicationContext());
         String result = categoryService.createCategory(category);
         Log.d("create_result", result);
     }

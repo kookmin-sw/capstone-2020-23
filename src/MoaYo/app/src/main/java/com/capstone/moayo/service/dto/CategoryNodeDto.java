@@ -10,8 +10,10 @@ import java.util.List;
 public class CategoryNodeDto implements Serializable {
     private int id;
     private String title;
+    private String url;
     private int level;
     private List<String> hashtags;
+
 
     private CategoryNodeDto parent;
     private List<CategoryNodeDto> lowLayer;
@@ -19,6 +21,7 @@ public class CategoryNodeDto implements Serializable {
 
     public CategoryNodeDto() {
         this.id = 0;
+        url = null;
         hashtags = new ArrayList<>();
         lowLayer = new ArrayList<>();
         posts = new ArrayList<>();
@@ -51,12 +54,21 @@ public class CategoryNodeDto implements Serializable {
     }
 
     public void setId(int id) { this.id = id;}
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public CategoryNodeDto getParent() {

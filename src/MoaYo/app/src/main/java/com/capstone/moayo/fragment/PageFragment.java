@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryDto;
+
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PageFragment extends Fragment implements OnClickListener {
 
-    private ArrayList<CategoryNode> book_list;
+    private ArrayList<CategoryDto> book_list;
 
     public static PageFragment create(ArrayList book) {
         PageFragment fragment = new PageFragment();
@@ -35,7 +36,7 @@ public class PageFragment extends Fragment implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        book_list= (ArrayList<CategoryNode>) getArguments().getSerializable("key");
+        book_list= (ArrayList<CategoryDto>) getArguments().getSerializable("key");
 
     }
 
@@ -60,7 +61,7 @@ public class PageFragment extends Fragment implements OnClickListener {
             if (i <= book_list.size()) {
                 bookBtnView.setText(book_list.get(i-1).getTitle());
                 bookBtnView.setTag(book_list.get(i-1));
-                Glide.with(getContext()).load(book_list.get(i-1).getUrl()).into(circleImageView);
+                Glide.with(getContext()).load(book_list.get(i-1).getRootNode().getUrl()).into(circleImageView);
 
                 circleImageView.setTag(book_list.get(i-1));
                 circleImageView.setOnClickListener(this);
@@ -76,11 +77,11 @@ public class PageFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         v.setSelected(true);
         // Button View Tag 값으로 저장된 카테고리 객체를 가져옴.
-        CategoryNode node = (CategoryNode) v.getTag();
+        CategoryDto category = (CategoryDto) v.getTag();
 
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
         // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
-        intent.putExtra("categoryNode", node);
+        intent.putExtra("category", category);
         startActivity(intent);
 
     }

@@ -7,29 +7,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-//import android.widget.ExpandableListView;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.activity.ResultActivity;
-import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
 
 public class BookExpandableAdapter extends BaseExpandableListAdapter {
     Context mContext;
-    ArrayList<CategoryNode> categoryNodes;
-    CategoryNode selectedNode;
+    ArrayList<CategoryNodeDto> categoryNodes;
+    CategoryNodeDto selectedNode;
 
-    public BookExpandableAdapter(Context context, ArrayList<CategoryNode> nodes) {
+    public BookExpandableAdapter(Context context, ArrayList<CategoryNodeDto> nodes) {
         mContext = context;
         categoryNodes = nodes;
         selectedNode = null;
     }
 
-    public BookExpandableAdapter(Context context, ArrayList<CategoryNode> nodes, CategoryNode selected_node) {
+    public BookExpandableAdapter(Context context, ArrayList<CategoryNodeDto> nodes, CategoryNodeDto selected_node) {
         mContext = context;
         categoryNodes = nodes;
         selectedNode = selected_node;
@@ -52,7 +52,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view;
-        final CategoryNode currentNode = categoryNodes.get(groupPosition).getLowLayer().get(childPosition);
+        final CategoryNodeDto currentNode = categoryNodes.get(groupPosition).getLowLayer().get(childPosition);
 
         if(convertView == null) {
             view = getChildGenericView();
@@ -67,8 +67,6 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
             text.setTextColor(Color.parseColor("#1e90ff"));
         }
 
-//        TextView sub_text = (TextView)view.findViewById(R.id.text2);
-//        sub_text.setText(mBookData.get(groupPosition).title);
 
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.child_search_btn);
         searchBtn.setFocusable(false);
@@ -113,7 +111,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
                              View convertView, final ViewGroup parent) {
 
         View view;
-        final CategoryNode currentNode = categoryNodes.get(groupPosition);
+        final CategoryNodeDto currentNode = categoryNodes.get(groupPosition);
 
         if(convertView == null) {
             view = getParentGenericView();
@@ -203,19 +201,11 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 //        }
 //    }
 
-    private boolean isSelectedNode(CategoryNode target, CategoryNode selected) {
+    private boolean isSelectedNode(CategoryNodeDto target, CategoryNodeDto selected) {
         if(target == null || selected == null) {
-//            Log.d("state", "1. null");
             return false;
         } else {
-            if(target.getTitle().equals(selected.getTitle())) {
-                return true;
-            } else {
-                return false;
-            }
+            if (target.getTitle().equals(selected.getTitle()))  return true; else return false;
         }
-
-
-
     }
 }
