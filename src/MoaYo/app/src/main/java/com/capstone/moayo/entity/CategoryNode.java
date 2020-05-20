@@ -2,12 +2,15 @@ package com.capstone.moayo.entity;
 
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryNode {
+public class CategoryNode implements Serializable {
+
     private int id;
     private String title;
+    private String url;
     private int level;
     private List<String> hashtags;
 
@@ -75,7 +78,9 @@ public class CategoryNode {
         }
     }
 
-    public void setLowLayer(List<CategoryNode> lowLayer) {this.lowLayer = lowLayer;}
+    public void setLowLayer(List<CategoryNode> lowLayer) { this.lowLayer = lowLayer; }
+
+    public void addLowLayer(CategoryNode node) { this.lowLayer.add(node); }
 
     public void setParent(CategoryNode parent) {
         this.parent = parent;
@@ -84,6 +89,8 @@ public class CategoryNode {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void setUrl(String url) { this.url = url; }
 
     public CategoryNode getParent() {
         return parent;
@@ -96,6 +103,8 @@ public class CategoryNode {
     public String getTitle() {
         return title;
     }
+
+    public String getUrl() { return url; }
 
     public List<Post> getPosts() {
         return posts;
@@ -110,6 +119,7 @@ public class CategoryNode {
         buffer.append("{\"id\" : ").append("\"").append(id).append("\"").append(",").
                 append("\"title\" : ").append("\"").append(title).append("\"").append(",").
                 append("\"level\" : ").append("\"").append(level).append("\"").append(",").
+                append("\"hashtags\" : ").append("\"").append(hashtags).append("\"").append(",").
                 append("\"lowLayer\" : [");
         for(CategoryNode lowNode : lowLayer) {
             buffer.append(lowNode.toString());
