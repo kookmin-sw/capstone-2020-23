@@ -38,7 +38,7 @@ public class MainController {
         return dogamListModel;
     }
 
-    @RequestMapping(value = "/getDogam",method = RequestMethod.POST)
+    @RequestMapping(value = "/getDogam",method = RequestMethod.GET)
     public DogamModel getDogam(HttpServletRequest req,HttpServletResponse res,@RequestParam int dogamId){
         logger.info(req.getRequestedSessionId()+" : "+dogamId);
         DogamModel dogamModel = service.getDogam(dogamId);
