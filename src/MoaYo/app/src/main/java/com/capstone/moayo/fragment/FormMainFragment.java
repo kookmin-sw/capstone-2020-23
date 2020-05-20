@@ -31,6 +31,15 @@ public class FormMainFragment extends Fragment {
 
     }
 
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+        ((BookFormActivity) getActivity())
+                .setText("도감 생성",null,null, null);
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

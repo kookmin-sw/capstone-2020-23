@@ -2,6 +2,8 @@ package com.capstone.moayo.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,12 +46,20 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        toolbar_title = (TextView) findViewById(R.id.form_tv_title);
-        toolbar_title.setText("도감 생성");
-
 
         onChangeLevel(0, null);
 
+    }
+
+    public void setText(String title1, String arrow, String title2, String title3) {
+        TextView textView = (TextView) findViewById(R.id.form_tv_title);
+        TextView arrowText = (TextView) findViewById(R.id.arrow1);
+        TextView textView2 = (TextView) findViewById(R.id.form_tv_title_2);
+        TextView textView3 = (TextView) findViewById(R.id.form_tv_title_3);
+        textView.setText(title1);
+        arrowText.setText(arrow);
+        textView2.setText(title2);
+        textView3.setText(title3);
     }
 
     @Override
@@ -135,15 +145,6 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
@@ -153,4 +154,37 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_bookform, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //menu_bookform.xml에서 지정한 item 이벤트 추가
+        switch (item.getItemId()) {
+
+            default: {
+                onBackPressed();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
+            }
+
+            case R.id.bookSave:
+                onSubmit();
+                return true;
+        }
+    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
 }
