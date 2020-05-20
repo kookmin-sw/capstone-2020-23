@@ -17,8 +17,11 @@ public class HashtagModel {
     public String getCo_hashtag() {
         return co_hashtag;
     }
+
     @Override
-    public String toString(){
-        return getCo_hashtag();
+    public String toString() {
+        return "HashtagModel{" +
+                "co_hashtag='" + co_hashtag + '\'' +
+                '}';
     }
 }

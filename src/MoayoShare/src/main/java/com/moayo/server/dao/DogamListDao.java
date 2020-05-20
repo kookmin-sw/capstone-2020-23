@@ -14,4 +14,6 @@ public interface DogamListDao {
     void deleteDogamById(int id);
     DogamListModel getDogamById(int id);
     List<DogamListModel> getAllDogam();
+    List<DogamListModel> getDogamByWriterName(String writer);
+    List<DogamListModel> getDogamByDescriptionSearch(String description);
 }
