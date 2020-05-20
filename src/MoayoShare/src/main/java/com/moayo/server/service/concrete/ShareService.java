@@ -28,6 +28,13 @@ public class ShareService {
         this.logger = LoggerFactory.getLogger(ShareService.class);
     }
 
+    public boolean isDogam(int dogamId){
+        DogamListModel dogamListModel = dogamListDao.getDogamById(dogamId);
+        if(dogamListModel == null)
+            return false;
+        return true;
+    }
+
     public DogamModel getDogam(int dogamId){
         DogamModel dogamModel = new DogamModel();
         dogamModel.setDogamListModel(dogamListDao.getDogamById(dogamId));
@@ -55,5 +62,16 @@ public class ShareService {
     }
     public List<DogamListModel> getDogamList(){
         return dogamListDao.getAllDogam();
+    }
+
+    public void deleteDogam(int dogamId){
+        dogamListDao.deleteDogamById(dogamId);
+    }
+
+    public List<DogamListModel> getDogamByWriterName(String writer){
+        return dogamListDao.getDogamByWriterName(writer);
+    }
+    public List<DogamListModel> getDogamByKeyword(String keyword){
+        return dogamListDao.getDogamByDescriptionSearch(keyword);
     }
 }

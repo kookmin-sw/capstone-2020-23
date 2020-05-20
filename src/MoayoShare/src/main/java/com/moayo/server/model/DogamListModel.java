@@ -6,26 +6,40 @@ public class DogamListModel {
     private String co_description;
     private int co_status;
     private String co_password;
+    private String co_writer;
 
-    public DogamListModel(int co_dogamId, String co_title, String co_description, int co_status, String co_password) {
+    public DogamListModel(int co_dogamId, String co_title, String co_description, int co_status, String co_password, String co_writer) {
         this.co_dogamId = co_dogamId;
         this.co_title = co_title;
         this.co_description = co_description;
         this.co_status = co_status;
         this.co_password = co_password;
+        this.co_writer = co_writer;
     }
 
-    public DogamListModel(String co_title, String co_description, int co_status, String co_password) {
+    public DogamListModel(String co_title, String co_description, int co_status, String co_password, String co_writer) {
         this.co_title = co_title;
         this.co_description = co_description;
         this.co_status = co_status;
         this.co_password = co_password;
+        this.co_writer = co_writer;
     }
 
     public DogamListModel() {
 
     }
 
+    public DogamListModel(String co_title) {
+        this.co_title = co_title;
+    }
+
+    public void setCo_writer(String co_writer) {
+        this.co_writer = co_writer;
+    }
+
+    public String getCo_writer() {
+        return co_writer;
+    }
 
     public void setCo_title(String co_title) {
         this.co_title = co_title;
@@ -75,6 +89,7 @@ public class DogamListModel {
                 ", co_description='" + co_description + '\'' +
                 ", co_status=" + co_status +
                 ", co_password='" + co_password + '\'' +
+                ", co_writer='" + co_writer + '\'' +
                 '}';
     }
 }

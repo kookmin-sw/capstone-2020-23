@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -48,12 +49,49 @@ public class MainController {
     @RequestMapping(value = "/shareDogam",method = RequestMethod.POST)
     public String shareDogam(@RequestBody DogamModel dogamModel){
         logger.info(dogamModel.toString());
-        jsonParsingService.insertData(dogamModel);
+        try{
+            jsonParsingService.insertData(dogamModel);
+        }catch (Exception e){
+            return "{0001,Error}";
+        }
         return "{0000}";
     }
+
     @RequestMapping(value = "/getDogamList",method = RequestMethod.GET)
-    public List<DogamListModel> getDogamList(@RequestParam String hashtag){
-        logger.info(hashtag);
+    public List<DogamListModel> getDogamList(){
+        logger.info("getAllDogam");
         return service.getDogamList();
+    }
+
+    @RequestMapping(value = "/deleteDogam",method = RequestMethod.GET)
+    public String deleteDogam(@RequestParam int dogamId){
+        logger.info("Delete Dogam ID : " + dogamId);
+        if(!service.isDogam(dogamId))
+            return "{0001,\"dogamId wrong, Not in DB\"}";
+        service.deleteDogam(dogamId);
+        return "{0000}";
+    }
+
+    @RequestMapping(value = "/getDogamWriterName",method = RequestMethod.GET)
+    public List<DogamListModel> getDogamByUserName(@RequestParam String writer){
+        logger.info(writer);
+        List<DogamListModel> dogamListModels =  service.getDogamByWriterName(writer);
+        if(dogamListModels.isEmpty() || dogamListModels == null){
+            List<DogamListModel> errorList = new ArrayList<DogamListModel>();
+            errorList.add(new DogamListModel("{0001,\"writer wrong, Not in DB\"}"));
+            return errorList;
+        }
+        return dogamListModels;
+    }
+    @RequestMapping(value = "/getDogamKeyword" , method = RequestMethod.GET)
+    public List<DogamListModel> getDogamByKeyword(@RequestParam String keyword){
+        logger.info("Keyword : " + keyword);
+        List<DogamListModel> dogamListModels =  service.getDogamByKeyword(keyword);
+        if(dogamListModels.isEmpty() || dogamListModels == null){
+            List<DogamListModel> errorList = new ArrayList<DogamListModel>();
+            errorList.add(new DogamListModel("{0001,\"search result is nothing.\"}"));
+            return errorList;
+        }
+        return dogamListModels;
     }
 }
