@@ -54,6 +54,8 @@ public class FormMainFragment extends Fragment {
         EditText title_et = (EditText) view.findViewById(R.id.create_book_title);
         ImageView bookform_logo = (ImageView) view.findViewById(R.id.bookformImg);
         ImageView create_text = (ImageView) view.findViewById(R.id.create);
+        ImageView guide = (ImageView) view.findViewById(R.id.guide);
+        TextView guide_text = (TextView) view.findViewById(R.id.guide_text);
 
         title_et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -70,6 +72,9 @@ public class FormMainFragment extends Fragment {
                     start_btn.setTextColor(Color.parseColor("#6200EE"));
                     bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_primary));
                     create_text.setVisibility(View.VISIBLE);
+                    guide.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.guied_text_primary));
+                    guide_text.setText("버튼을 눌러 다음 단계로!");
+                    guide_text.setTextColor(Color.parseColor("#6200EE"));
 
                 }
                 else{
@@ -78,6 +83,9 @@ public class FormMainFragment extends Fragment {
                     start_btn.setTextColor(Color.parseColor("#707070"));
                     bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_gray));
                     create_text.setVisibility(View.GONE);
+                    guide.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.guide_text_gray));
+                    guide_text.setText("도감의 이름이 됩니다.");
+                    guide_text.setTextColor(Color.parseColor("#000000"));
                 }
 
             }
