@@ -40,7 +40,7 @@ public class XMLParsingServiceImpl implements XMLParsingService {
                 document.getElementsByTagName("title").item(0).getTextContent(),
                 document.getElementsByTagName("description").item(0).getTextContent(),
                 Integer.valueOf(document.getElementsByTagName("status").item(0).getTextContent()),
-                document.getElementsByTagName("password").item(0).getTextContent());
+                document.getElementsByTagName("password").item(0).getTextContent(),document.getElementsByTagName("writer").item(0).getTextContent());
 
         dogamListDao.insertDogam(dogamListModel);
         logger.info(dogamListModel.toString());

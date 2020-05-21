@@ -37,8 +37,13 @@ public class CategoryHashModel {
     public int getco_dogamId() {
         return co_dogamId;
     }
+
     @Override
-    public String toString(){
-        return "{" + co_dogamId + "," + co_categoryId + "," + co_hashtag + "}";
+    public String toString() {
+        return "CategoryHashModel{" +
+                "co_dogamId=" + co_dogamId +
+                ", co_categoryId=" + co_categoryId +
+                ", co_hashtag='" + co_hashtag + '\'' +
+                '}';
     }
 }

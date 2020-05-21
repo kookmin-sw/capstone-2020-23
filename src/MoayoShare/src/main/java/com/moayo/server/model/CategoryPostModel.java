@@ -40,7 +40,11 @@ public class CategoryPostModel {
     }
 
     @Override
-    public String toString(){
-        return "{" + co_dogamId + "," + co_categoryId + "," + co_postId + "}";
+    public String toString() {
+        return "CategoryPostModel{" +
+                "co_dogamId=" + co_dogamId +
+                ", co_categoryId=" + co_categoryId +
+                ", co_postId=" + co_postId +
+                '}';
     }
 }
