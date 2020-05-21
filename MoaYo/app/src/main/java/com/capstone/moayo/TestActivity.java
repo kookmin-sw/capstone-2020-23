@@ -261,7 +261,7 @@ public class TestActivity extends AppCompatActivity {
             CategoryDto foundCategory = categoryService.findCategoryById(1);
             List<PostDto> postDtos = postService.findPostByCategoryNodeId(foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).getId());
             foundCategory.getRootNode().getLowLayer().get(1).getLowLayer().get(1).setPosts(postDtos);
-            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory, DogamStatus.Sharing);
+            ModelForm form = ShareUtil.convertDogamToModelForm(foundCategory, 1);
             logLargeString(form.toString());
             CategoryDto categoryDto = ShareUtil.convertFormToDogam(form);
             logLargeString(categoryDto.toString());

@@ -51,7 +51,6 @@ public class ConcreteCategoryService implements CategoryService {
             int dogamId = dogamStorage.create(newCategory);
             newCategory.setId(dogamId);
             String result = categoryStorage.create(newCategory);
-
             return result;
         } catch (NullRootException | NotRootException e) {
             Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
@@ -83,7 +82,7 @@ public class ConcreteCategoryService implements CategoryService {
             }
             return categoryDtoList;
         } catch (NoSuchCategoryException | NoSuchNodeException | NotRootException e) {
-            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
         return null;
@@ -156,7 +155,7 @@ public class ConcreteCategoryService implements CategoryService {
     public String deleteCategoryNode(int id) {
         String result = "";
         try {
-            CategoryMapping foundNode = categoryStorage.retrieveById(id);
+            CategoryNode foundNode = categoryStorage.retrieveById(id);
             if(foundNode == null) {
                 throw new Exception();
             }

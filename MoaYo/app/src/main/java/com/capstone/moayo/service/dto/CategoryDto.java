@@ -40,6 +40,7 @@ public class CategoryDto {
         if(rootNode != null)
             category = new Category(title, description, password, rootNode.toCategoryNode());
         else category = new Category(title, description, password, null);
+
         category.setId(id);
         category.setStatus(status);
         return category;
