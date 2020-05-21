@@ -1,0 +1,3 @@
+[submodule "src/MoayoSearch"]
+	path = src/MoayoSearch
+	url = https://github.com/joshua-dev/instacrawler
