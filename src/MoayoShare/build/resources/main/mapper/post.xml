@@ -4,8 +4,8 @@
 
 <mapper namespace="com.moayo.server.dao.PostDao">
     <insert id="insertPost" parameterType="com.moayo.server.model.PostModel" keyProperty="co_postId" useGeneratedKeys="true">
-        INSERT INTO `MoayoShare`.`tb_postHavingLike` (`co_postId`, `co_postUrl`, `co_imageUrl`, `co_info`, `co_hashtag`) VALUES (${co_postId}, '${co_postUrl}', '${co_imageUrl}',
-        '${co_info}', '${co_hashtag}');
+        INSERT INTO `MoayoShare`.`tb_postHavingLike` ( `co_postUrl`, `co_imageUrl`, `co_hashtag`) VALUES ('${co_postUrl}', '${co_imageUrl}',
+        '${co_hashtag}');
     </insert>
     <update id="updatePost" parameterType="com.moayo.server.model.PostModel" useGeneratedKeys="true" keyProperty="co_postId">
         UPDATE `MoayoShare`.`tb_postHavingLike` SET `co_postUrl` = '${co_postUrl}', `co_imageUrl` = '${co_imageUrl}', `co_info` = '${co_info}', `co_hashtag` = '${co_hashtag}'

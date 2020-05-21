@@ -1,0 +1,3 @@
+[submodule "src/instacrawler"]
+	path = src/instacrawler
+	url = https://github.com/joshua-dev/instacrawler
