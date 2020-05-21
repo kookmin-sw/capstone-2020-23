@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TestActivity">
+
+    <Button
+        android:id="@+id/convert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="converting" />
+
+    <Button
+        android:id="@+id/create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="create" />
+
+    <Button
+        android:id="@+id/modify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="modify" />
+
+    <Button
+        android:id="@+id/find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="find" />
+
+    <Button
+        android:id="@+id/init"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="initialize" />
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="delete" />
+
+    <Button
+        android:id="@+id/createPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="createPost" />
+
+    <Button
+        android:id="@+id/findPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="findPost" />
+
+    <Button
+        android:id="@+id/removePost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="removepost" />
+
+    <Button
+        android:id="@+id/convertForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="convertForm" />
+
+    <Button
+        android:id="@+id/requestDogam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="request" />
+
+</LinearLayout>

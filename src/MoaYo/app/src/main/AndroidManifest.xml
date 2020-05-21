@@ -3,6 +3,7 @@
     package="com.capstone.moayo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,25 +12,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.IntroActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".TestActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
-        <activity android:name=".activity.ShareMenuActivity" />
-        <activity android:name=".activity.MainActivity" />
+
+        <activity android:name=".MainActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
-            android:name=".activity.BookManageActivity"
-            android:parentActivityName=".activity.MainActivity" />
+        android:name=".BookManageActivity"
+        android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".activity.BookDetailActivity"
-            android:parentActivityName=".activity.BookManageActivity" />
+            android:name=".BookDetailActivity"
+            android:parentActivityName=".BookManageActivity" />
         <activity
-            android:name=".activity.ResultActivity"
-            android:parentActivityName=".activity.BookManageActivity" />
+            android:name=".ResultActivity"
+            android:parentActivityName=".BookManageActivity" />
         <activity
-            android:name=".activity.BookFormActivity" />
+            android:name=".BookFormActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

@@ -1,33 +1,35 @@
 package com.capstone.moayo.entity;
 
 import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.storage.DogamStorage;
+import com.capstone.moayo.util.DogamStatus;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 
-public class Category implements Serializable {
+/*
+
+    0 : mutable
+    1 : immutable
+ */
+public class Category{
     private int id;
     private String title;
     private String description;
     private String password;
+    private DogamStatus status;
 
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
 
     public Category() {
-        this.id = 0;
-        this.title = null;
-        this.description = null;
-        this.password = null;
-        this.rootNode = null;
-        this.selectCategoryNode = null;
+        id = 0;
+        status = DogamStatus.NonShare;
     }
-
     public Category(String title, String description, String password,CategoryNode rootNode) {
-        this.id = 0;
+        this();
         this.title = title;
         this.description = description;
         this.password = password;
@@ -36,7 +38,13 @@ public class Category implements Serializable {
     }
 
     public CategoryDto toCategoryDto() {
-        CategoryDto categoryDto = new CategoryDto(title, description, password, rootNode.toCategoryNodeDto());
+        CategoryDto categoryDto = null;
+        if(rootNode != null)
+            categoryDto = new CategoryDto(title, description, password, rootNode.toCategoryNodeDto());
+        else categoryDto = new CategoryDto(title, description, password, null);
+
+        categoryDto.setId(id);
+        categoryDto.setStatus(status);
         return categoryDto;
     }
 
@@ -70,6 +78,14 @@ public class Category implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public DogamStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DogamStatus status) {
+        this.status = status;
     }
 
     public CategoryNode getSelectCategoryNode() {

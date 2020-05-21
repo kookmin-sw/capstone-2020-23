@@ -3,121 +3,173 @@ package com.capstone.moayo.storage.concrete;
 import android.content.Context;
 import android.util.Log;
 
+
 import com.capstone.moayo.dao.CategoryDao;
-import com.capstone.moayo.dao.DogamDao;
-import com.capstone.moayo.dao.concrete.CategoryDaoImpl;
-import com.capstone.moayo.dao.concrete.DogamDaoImpl;
-import com.capstone.moayo.dao.mapping.DogamMapping;
+import com.capstone.moayo.dao.CategoryHashtagDao;
+import com.capstone.moayo.dao.HashtagDao;
+import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
+import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
+import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.storage.CategoryStorage;
-import com.capstone.moayo.util.Exception.DaoObjectNullException;
-import com.capstone.moayo.util.Exception.DogamNullException;
-import com.capstone.moayo.util.Exception.NullCategoryException;
+import com.capstone.moayo.storage.map.MemoryMap;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 
 public class ConcreteCategoryStorage implements CategoryStorage {
     private CategoryDao categoryDao;
-    private DogamDao dogamDao;
+    private HashtagDao hashtagDao;
+    private CategoryHashtagDao categoryHashtagDao;
     private DBHelper dbHelper;
 
+    private Map<Integer, Category> categoryMap;
+
     public ConcreteCategoryStorage(Context context) {
-        try {
-            dbHelper = StorageFactoryCreator.getInstance().initDao(context);
-            categoryDao = CategoryDaoImpl.getInstance();
-            dogamDao = DogamDaoImpl.getInstance();
-        } catch (DaoObjectNullException e) {
-            e.printStackTrace();
-        }
+        dbHelper = DaoFactoryCreator.getInstance().initDao(context);
+        categoryDao = DaoFactoryCreator.getInstance().requestCategoryDao();
+        hashtagDao = DaoFactoryCreator.getInstance().requestHashtagDao();
+        categoryHashtagDao = DaoFactoryCreator.getInstance().requestCategoryHashtagDao();
+
+        categoryMap = MemoryMap.getInstance().getCategoryMap();
     }
 
     @Override
     public String create(Category category) {
-        //Insert Category Info using dogamDao in DogamTable
-        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword());
+        int dogamId = category.getId();
         CategoryNode rootNode = category.getRootNode();
-        //insert 1th layer
-        int rootId = (int) categoryDao.insert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId);
-        categoryDao.update(dbHelper,rootId,rootNode.getLevel(),rootId,rootNode.getTitle(),dogamId);
-        //insert 2nd layer
-        for(CategoryNode secondNode : rootNode.getLowLayer()) {
-            int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId);
-            //insery 3rd layer
-            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-                categoryDao.insert(dbHelper, thirdNode.getLevel(), secondId,thirdNode.getTitle(), dogamId);
+        createHashTag(rootNode.getHashtags());
+        int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId, dogamId);
+        createCategoryHashTag(dogamId, rootId, rootNode.getHashtags());
+        rootNode.setId(rootId);
+        rootNode.setParent(rootNode);
+        for (CategoryNode secondNode : rootNode.getLowLayer()) {
+            createHashTag(secondNode.getHashtags());
+            int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId, dogamId);
+            createCategoryHashTag(dogamId, secondId, secondNode.getHashtags());
+            secondNode.setId(secondId);
+            secondNode.setParent(rootNode);
+            for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                createHashTag(thirdNode.getHashtags());
+                int thirdId = (int) categoryDao.insert(dbHelper, thirdNode.getLevel(), secondId, thirdNode.getTitle(), dogamId, dogamId);
+                createCategoryHashTag(dogamId, thirdId, thirdNode.getHashtags());
+                thirdNode.setId(thirdId);
+                thirdNode.setParent(secondNode);
             }
         }
-        Log.d("Category", category.toString());
-        return "Success";
+        categoryMap.get(dogamId).setRootNode(rootNode);
+        Log.d("create category", categoryMap.get(dogamId).toString());
+        return "create category" + dogamId;
     }
 
     @Override
-    public Category retrieveByTitle(String title) {
-        Category foundCategory = null;
-        try {
-            DogamMapping dogamMapping = dogamDao.selectByTitle(dbHelper, title);
-            if(dogamMapping == null)
-                throw new DogamNullException();
+    public CategoryNode retrieveById(int id) {
+//        Iterator<CategoryNode> iterator = categoryNodeMap.values().iterator();
+//        while(iterator.hasNext()) {
+//            CategoryNode rootNode = iterator.next();
+//            if(rootNode.getId() == id) return rootNode;
+//            else {
+//                for (CategoryNode secondNode : rootNode.getLowLayer()) {
+//                    if (secondNode.getId() == id) return secondNode;
+//                    else {
+//                        for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+//                            if (thirdNode.getId() == id) return thirdNode;
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
-            CategoryNode foundCategoryNode = categoryDao.selectByDogamId(dbHelper, dogamMapping.getId());
-            if(foundCategoryNode == null)
-                throw new NullCategoryException();
-
-            foundCategory = new Category(dogamMapping.getTitle(), dogamMapping.getDesription(), dogamMapping.getPassword(), foundCategoryNode);
-        } catch (DogamNullException | NullCategoryException e) {
-            Log.d("error in storage",e.toString());
-        }
-
-        return foundCategory;
+        return null;
     }
 
     @Override
-    public Category retrieveById(int id) {
-        Category foundCategory = null;
-        try {
-            DogamMapping mapping = dogamDao.selectById(dbHelper, id);
-            Log.d("mapping", String.format("%d",mapping.getId()));
-            if(mapping == null) {
-                throw new DogamNullException();
-            }
-            CategoryNode foundNode = categoryDao.selectByDogamId(dbHelper, mapping.getId());
-            if(foundNode == null) {
-                throw new NullCategoryException();
-            }
-            foundCategory = new Category(mapping.getTitle(), mapping.getDesription(), mapping.getPassword(), foundNode);
-            Log.d("found category", foundCategory.toString());
-        } catch (DogamNullException | NullCategoryException e) {
-            Log.d("error in storage", e.toString());
-        }
+    public CategoryNode retrieveByDogamId(int id) {
+//        if(!categoryMap.containsKey(id)) {
+        // find root node
+        CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
+        if (rootNode == null) return null;
 
-        return foundCategory;
+        // find hash tags
+        for (CategoryNode secondNode : rootNode.getLowLayer()) {
+            List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
+            for (int i = 0; i < mappings.size(); i++) {
+                secondNode.getHashtags().add(mappings.get(i).getHashtag());
+            }
+            for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
+                for (int j = 0; j < mappings1.size(); j++)
+                    thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
+            }
+        }
+        categoryMap.get(id).setRootNode(rootNode);
+        return rootNode;
+//        } else {
+//            return categoryMap.get(id).getRootNode();
     }
 
     @Override
     public String update(Category category) {
-        boolean c_result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword());
-        if(c_result) {
-            CategoryNode rootNode = category.getRootNode();
-            c_result = categoryDao.update(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), category.getId());
-            if(c_result) {
-                for(CategoryNode secondNode : rootNode.getLowLayer()) {
-                    c_result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), category.getId());
-                    if(c_result) {
-                        for (CategoryNode thirdNode : secondNode.getLowLayer()) {
-                            c_result =categoryDao.update(dbHelper, thirdNode.getId(), thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), category.getId());
-                            if(!c_result) return "fail to update";
-                        }
-                    } else return "fail to update";
-                }
-            } else return "fail to update";
+        int dogamId = category.getId();
+        CategoryNode rootNode = category.getRootNode();
 
-        } else return "fail to update";
+        boolean result = categoryDao.rootUpdate(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), dogamId, dogamId);
+        if(result != true) return "fail to update";
+        createHashTag(rootNode.getHashtags());
+        updateCategoryHashTag(dogamId, rootNode.getId(), rootNode.getHashtags());
+
+        for(CategoryNode secondNode : rootNode.getLowLayer()) {
+            result = categoryDao.update(dbHelper, secondNode.getId(), secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), dogamId, dogamId);
+            if(result != true) return "fail to update";
+            createHashTag(secondNode.getHashtags());
+            updateCategoryHashTag(dogamId, secondNode.getId(), secondNode.getHashtags());
+
+            for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                result = categoryDao.update(dbHelper, thirdNode.getId(), thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), dogamId, dogamId);
+                if(result != true) return "fail to update";
+                createHashTag(thirdNode.getHashtags());
+                updateCategoryHashTag(dogamId, thirdNode.getId(), thirdNode.getHashtags());
+            }
+        }
         return "success to update";
     }
 
     @Override
     public String remove(int id) {
-        String result = dogamDao.delete(dbHelper, id) ? "success to delete" : "fail to delete";
+        String result = "";
+        boolean re = categoryDao.delete(dbHelper, id);
+        if(re != true) result = "fail to delete node";
+        else result = "success to delete node";
         return result;
+    }
+
+    private void createHashTag(List<String> hashtags) {
+        for(String hashtag : hashtags) {
+            boolean exist = hashtagDao.isExist(dbHelper, hashtag);
+            if(exist == true) continue;
+            int result = (int) hashtagDao.insert(dbHelper, new HashTagMapping(hashtag));
+        }
+    }
+
+    private void createCategoryHashTag(int dogamId, int categoryId, List<String> hashtags) {
+        for(String hashtag : hashtags) {
+            categoryHashtagDao.insert(dbHelper, new CategoryHashTagMapping(dogamId, categoryId, hashtag));
+        }
+    }
+
+    private void updateCategoryHashTag(int dogamId, int nodeId, List<String> hashtags) {
+        List<CategoryHashTagMapping> mappingList = categoryHashtagDao.selectByCategoryId(dbHelper, nodeId);
+
+        for(CategoryHashTagMapping mapping : mappingList) {
+            if(!hashtags.contains(mapping.getHashtag())) {
+                categoryHashtagDao.delete(dbHelper, mapping);
+            }
+        }
+        for(String hashtag : hashtags)
+            categoryHashtagDao.replace(dbHelper, new CategoryHashTagMapping(dogamId, nodeId, hashtag));
     }
 }

@@ -11,8 +11,9 @@ import java.util.List;
 
 public interface CategoryService {
     public String createCategory(CategoryDto categoryDto);
-    public CategoryDto findCategoryByTitle(String title);
+    public List<CategoryDto> findAll();
     public CategoryDto findCategoryById(int id);
     public String modifyCategory(CategoryDto categoryDto);
-    public String deleteCategory(int id);
+    public String deleteDogam(int id);
+    public String deleteCategoryNode(int id);
 }

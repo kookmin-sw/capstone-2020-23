@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.capstone.moayo.layout.SquareRatioLayout
+            <com.capstone.moayo.Square_Ratio_Manage.SquareLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3">
@@ -28,7 +28,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop" />
 
-            </com.capstone.moayo.layout.SquareRatioLayout>
+            </com.capstone.moayo.Square_Ratio_Manage.SquareLayout>
 
             <LinearLayout
                 android:layout_width="0dp"

@@ -2,8 +2,13 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.Exception.NotRootException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +17,17 @@ public class CategoryDto {
     private String title;
     private String description;
     private String password;
+    private DogamStatus status;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
 
+    public CategoryDto() {
+        this.id = 0;
+        this.status = DogamStatus.NonShare;
+    }
     public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
+        this();
         this.title = title;
         this.description = description;
         this.password = password;
@@ -25,7 +36,13 @@ public class CategoryDto {
     }
 
     public Category toCategory() {
-        Category category = new Category(title, description, password, rootNode.toCategoryNode());
+        Category category = null;
+        if(rootNode != null)
+            category = new Category(title, description, password, rootNode.toCategoryNode());
+        else category = new Category(title, description, password, null);
+
+        category.setId(id);
+        category.setStatus(status);
         return category;
     }
 
@@ -61,6 +78,14 @@ public class CategoryDto {
         this.password = password;
     }
 
+    public DogamStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DogamStatus status) {
+        this.status = status;
+    }
+
     public CategoryNodeDto getSelectCategory() {
         return selectCategory;
     }
@@ -77,12 +102,16 @@ public class CategoryDto {
         this.rootNode = rootNode;
     }
 
+    @Override
     public String toString() {
-        String result = String.format("{\"title\" : \"%s\"," +
-                                " \"description\" : \"%s\"," +
-                                " \"password\" : \"%s\"," +
-                                " \"rootNode\" : \"%s\"}", title, description, password, rootNode.toString());
-
-        return result;
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", selectCategory=" + selectCategory +
+                ", rootNode=" + rootNode +
+                "}\n";
     }
 }

@@ -6,28 +6,28 @@ public class PostDto {
     private int id;
     private String imgUrl;
     private String url;
-    private String info;
     private String hashtag;
     private int like;
 
     private int categoryNodeId;
+    private int dogamId;
 
-    public PostDto() {
+    public PostDto(int categoryNodeId, int dogamId) {
         this.id = 0;
+        this.categoryNodeId = categoryNodeId;
+        this.dogamId = dogamId;
     }
-    public PostDto(String imgUrl, String url, String info, String hashtag, int like) {
+    public PostDto(String imgUrl, String url, String hashtag, int like, int categoryNodeId, int dogamId) {
+        this(categoryNodeId, dogamId);
         this.imgUrl = imgUrl;
         this.url = url;
-        this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
     public Post toPost() {
-        Post post = new Post(imgUrl, url, info, hashtag, like);
-        post.setCategoryNodeId(categoryNodeId);
+        Post post = new Post(imgUrl, url, hashtag, like, categoryNodeId, dogamId);
         post.setId(id);
-
 
         return post;
     }
@@ -56,14 +56,6 @@ public class PostDto {
         this.url = url;
     }
 
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
     public String getHashtag() {
         return hashtag;
     }
@@ -86,5 +78,26 @@ public class PostDto {
 
     public void setCategoryNodeId(int categoryNodeId) {
         this.categoryNodeId = categoryNodeId;
+    }
+
+    public int getDogamId() {
+        return dogamId;
+    }
+
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", url='" + url + '\'' +
+                ", hashtag='" + hashtag + '\'' +
+                ", like=" + like +
+                ", categoryNodeId=" + categoryNodeId +
+                ", dogamId=" + dogamId +
+                "}\n";
     }
 }

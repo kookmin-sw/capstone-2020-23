@@ -6,10 +6,10 @@ public class SharedBook {
     private String nickName;
     private String comment;
 
-    public SharedBook(String url, String nickName, String comment) {
+    public SharedBook(String url, String nickNamem, String comment) {
 
         this.url = url;
-        this.nickName = nickName;
+        this.nickName = nickNamem;
         this.comment = comment;
 
     }

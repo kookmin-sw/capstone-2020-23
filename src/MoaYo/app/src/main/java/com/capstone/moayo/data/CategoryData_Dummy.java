@@ -25,17 +25,17 @@ public class CategoryData_Dummy {
 
         CategoryNode scary_movie = new CategoryNode("무서운영화", horror, 3);
 
-        ArrayList<CategoryNode> horror_lowlayer = new ArrayList<>();
-        horror_lowlayer.add(scary_movie);
-        horror.setLowLayer(horror_lowlayer);
+        ArrayList<CategoryNode> horror_rowlayer = new ArrayList<>();
+        horror_rowlayer.add(scary_movie);
+        horror.setLowLayer(horror_rowlayer);
 
-        ArrayList<CategoryNode> movie_lowlayer = new ArrayList<>();
-        movie_lowlayer.add(romance);
-        movie_lowlayer.add(thriller);
-        movie_lowlayer.add(horror);
-        movie_lowlayer.add(fantasy);
+        ArrayList<CategoryNode> movie_rowlayer = new ArrayList<>();
+        movie_rowlayer.add(romance);
+        movie_rowlayer.add(thriller);
+        movie_rowlayer.add(horror);
+        movie_rowlayer.add(fantasy);
 
-        movie.setLowLayer(movie_lowlayer);
+        movie.setLowLayer(movie_rowlayer);
 
 
         //      Node <<Fashion>>
@@ -71,7 +71,8 @@ public class CategoryData_Dummy {
 
         //  Node <<Singer>>
         CategoryNode singer = new CategoryNode("가수", null, 1);
-        singer.setUrl("https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile5.uf.tistory.com%2Fimage%2F99C86B485DCC0E3314477E");
+        singer.setUrl("https://lh3.googleusercontent.com/proxy/iz7mqs_RA1uYHQgxJwMR0c3-lo5DstNhpHgF7_s4JITb4eyBJLQmAcj1xdLTiKdw_O2THJLP8otJDdY9VCiwz2SmU8CkwQGHLjLZeEGAUItXyScsOJsusjMVbLMUz4Y");
+
         CategoryNode trot = new CategoryNode("트로트", singer, 2);
         CategoryNode ballad = new CategoryNode("발라드", singer, 2);
         CategoryNode hiphop = new CategoryNode("힙합", singer, 2);
@@ -83,22 +84,22 @@ public class CategoryData_Dummy {
         CategoryNode jangyunjung = new CategoryNode("장윤정", trot, 3);
         CategoryNode hongginyoung = new CategoryNode("홍진영", trot, 3);
 
-        ArrayList<CategoryNode> trot_lowlayer = new ArrayList<>();
-        trot_lowlayer.add(yoosanseul);
-        trot_lowlayer.add(songgain);
-        trot_lowlayer.add(jangyunjung);
-        trot_lowlayer.add(hongginyoung);
+        ArrayList<CategoryNode> trot_rowlayer = new ArrayList<>();
+        trot_rowlayer.add(yoosanseul);
+        trot_rowlayer.add(songgain);
+        trot_rowlayer.add(jangyunjung);
+        trot_rowlayer.add(hongginyoung);
 
-        trot.setLowLayer(trot_lowlayer);
+        trot.setLowLayer(trot_rowlayer);
 
-        ArrayList<CategoryNode> singer_lowlayer = new ArrayList<>();
-        singer_lowlayer.add(trot);
-        singer_lowlayer.add(ballad);
-        singer_lowlayer.add(hiphop);
-        singer_lowlayer.add(rock);
-        singer_lowlayer.add(dance);
+        ArrayList<CategoryNode> singer_rowlayer = new ArrayList<>();
+        singer_rowlayer.add(trot);
+        singer_rowlayer.add(ballad);
+        singer_rowlayer.add(hiphop);
+        singer_rowlayer.add(rock);
+        singer_rowlayer.add(dance);
 
-        singer.setLowLayer(singer_lowlayer);
+        singer.setLowLayer(singer_rowlayer);
 
 
         //맛집
@@ -119,23 +120,23 @@ public class CategoryData_Dummy {
         CategoryNode palbochae = new CategoryNode("팔보채", chinese_food, 3);
         CategoryNode china_chicken = new CategoryNode("깐풍기", chinese_food, 3);
 
-        ArrayList<CategoryNode> chinese_lowlayer = new ArrayList<>();
-        chinese_lowlayer.add(blacknoodle);
-        chinese_lowlayer.add(jjamppong);
-        chinese_lowlayer.add(sour_pork);
-        chinese_lowlayer.add(yoosanseul_food);
-        chinese_lowlayer.add(palbochae);
-        chinese_lowlayer.add(china_chicken);
-        chinese_food.setLowLayer(chinese_lowlayer);
+        ArrayList<CategoryNode> chinese_rowlayer = new ArrayList<>();
+        chinese_rowlayer.add(blacknoodle);
+        chinese_rowlayer.add(jjamppong);
+        chinese_rowlayer.add(sour_pork);
+        chinese_rowlayer.add(yoosanseul_food);
+        chinese_rowlayer.add(palbochae);
+        chinese_rowlayer.add(china_chicken);
+        chinese_food.setLowLayer(chinese_rowlayer);
 
-        ArrayList<CategoryNode> food_lowlayer = new ArrayList<>();
-        food_lowlayer.add(korean_food);
-        food_lowlayer.add(japenese_food);
-        food_lowlayer.add(chinese_food);
-        food_lowlayer.add(snack);
-        food_lowlayer.add(fast_food);
-        food_lowlayer.add(dessert);
-        food.setLowLayer(food_lowlayer);
+        ArrayList<CategoryNode> food_rowlayer = new ArrayList<>();
+        food_rowlayer.add(korean_food);
+        food_rowlayer.add(japenese_food);
+        food_rowlayer.add(chinese_food);
+        food_rowlayer.add(snack);
+        food_rowlayer.add(fast_food);
+        food_rowlayer.add(dessert);
+        food.setLowLayer(food_rowlayer);
 
 
 

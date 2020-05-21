@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="578eced0-21dc-47fb-a220-58bc041e1695" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../MoaYo/app/src/main/java/com/capstone/moayo/TestActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../MoaYo/app/src/main/java/com/capstone/moayo/TestActivity.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1bhe9yUNmBQUVvwhlpgEYnAr4ys" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="show.unlinked.gradle.project.popup" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MoayoShareApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.moayo.server.MoayoShareApplication" />
+      <module name="server.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moayo.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MoayoShareApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="578eced0-21dc-47fb-a220-58bc041e1695" name="Default Changelist" comment="" />
+      <created>1589088605200</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589088605200</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1864" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589089886172">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1864" y="202" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589089886172" />
+    <state x="1792" y="90" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1589293400858">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1792" y="90" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589293400858" />
+    <state width="422" height="466" key="DebuggerActiveHint" timestamp="1589281423792">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="422" height="466" key="DebuggerActiveHint/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589281423792" />
+    <state width="1878" height="301" key="GridCell.Tab.0.bottom" timestamp="1589295835819">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835819" />
+    <state width="1398" height="244" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1589268764724" />
+    <state width="1878" height="375" key="GridCell.Tab.0.bottom/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043567" />
+    <state width="1878" height="301" key="GridCell.Tab.0.bottom/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240609" />
+    <state width="1398" height="173" key="GridCell.Tab.0.bottom/0.23.1440.828@0.23.1440.828" timestamp="1589268693708" />
+    <state width="1878" height="301" key="GridCell.Tab.0.center" timestamp="1589295835817">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.0.center/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835817" />
+    <state width="1398" height="244" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1589268764722" />
+    <state width="1878" height="375" key="GridCell.Tab.0.center/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043565" />
+    <state width="1878" height="301" key="GridCell.Tab.0.center/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240608" />
+    <state width="1398" height="173" key="GridCell.Tab.0.center/0.23.1440.828@0.23.1440.828" timestamp="1589268693705" />
+    <state width="1878" height="301" key="GridCell.Tab.0.left" timestamp="1589295835817">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.0.left/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835817" />
+    <state width="1398" height="244" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1589268764720" />
+    <state width="1878" height="375" key="GridCell.Tab.0.left/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043565" />
+    <state width="1878" height="301" key="GridCell.Tab.0.left/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240607" />
+    <state width="1398" height="173" key="GridCell.Tab.0.left/0.23.1440.828@0.23.1440.828" timestamp="1589268693704" />
+    <state width="1878" height="301" key="GridCell.Tab.0.right" timestamp="1589295835818">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.0.right/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835818" />
+    <state width="1398" height="244" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1589268764723" />
+    <state width="1878" height="375" key="GridCell.Tab.0.right/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043625" />
+    <state width="1878" height="301" key="GridCell.Tab.0.right/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240679" />
+    <state width="1398" height="173" key="GridCell.Tab.0.right/0.23.1440.828@0.23.1440.828" timestamp="1589268693797" />
+    <state width="1878" height="301" key="GridCell.Tab.1.bottom" timestamp="1589295835821">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.1.bottom/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835821" />
+    <state width="1398" height="173" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1589268766704" />
+    <state width="1878" height="375" key="GridCell.Tab.1.bottom/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043571" />
+    <state width="1878" height="301" key="GridCell.Tab.1.bottom/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240612" />
+    <state width="1398" height="173" key="GridCell.Tab.1.bottom/0.23.1440.828@0.23.1440.828" timestamp="1589268693713" />
+    <state width="1878" height="301" key="GridCell.Tab.1.center" timestamp="1589295835820">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.1.center/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835820" />
+    <state width="1398" height="173" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1589268766701" />
+    <state width="1878" height="375" key="GridCell.Tab.1.center/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043569" />
+    <state width="1878" height="301" key="GridCell.Tab.1.center/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240610" />
+    <state width="1398" height="173" key="GridCell.Tab.1.center/0.23.1440.828@0.23.1440.828" timestamp="1589268693712" />
+    <state width="1878" height="301" key="GridCell.Tab.1.left" timestamp="1589295835819">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.1.left/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835819" />
+    <state width="1398" height="173" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1589268766699" />
+    <state width="1878" height="375" key="GridCell.Tab.1.left/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043568" />
+    <state width="1878" height="301" key="GridCell.Tab.1.left/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240610" />
+    <state width="1398" height="173" key="GridCell.Tab.1.left/0.23.1440.828@0.23.1440.828" timestamp="1589268693709" />
+    <state width="1878" height="301" key="GridCell.Tab.1.right" timestamp="1589295835820">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1878" height="301" key="GridCell.Tab.1.right/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589295835820" />
+    <state width="1398" height="173" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1589268766703" />
+    <state width="1878" height="375" key="GridCell.Tab.1.right/0.23.1440.822/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589092043570" />
+    <state width="1878" height="301" key="GridCell.Tab.1.right/0.23.1440.828/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589294240611" />
+    <state width="1398" height="173" key="GridCell.Tab.1.right/0.23.1440.828@0.23.1440.828" timestamp="1589268693713" />
+    <state x="397" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1589088608732">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="397" y="282" key="com.intellij.ide.util.TipDialog/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1589088608732" />
+    <state x="2065" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1589208554926">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2065" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1589208554926" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/moayo/server/service/XMLParsingServiceImpl.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -4,14 +4,16 @@ import android.content.Context;
 
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
-import com.capstone.moayo.service.DataBindingService;
+import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.ServiceFactory;
+import com.capstone.moayo.service.ShareService;
 
 public class ServiceFactoryCreator implements ServiceFactory{
     private volatile static ServiceFactory instance;
     private CategoryService categoryService;
-    private DataBindingService dataBindingService;
+    private SearchService searchService;
     private PostService contentService;
+    private ShareService shareService;
 
     public static synchronized ServiceFactory getInstance() {
         if(instance == null) {
@@ -33,7 +35,7 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public PostService requestContentService(Context context) {
+    public PostService requestPostService(Context context) {
         if(contentService == null) {
             contentService = new ConcretePostService(context);
         }
@@ -41,11 +43,16 @@ public class ServiceFactoryCreator implements ServiceFactory{
     }
 
     @Override
-    public DataBindingService requestDataBindingService(Context context) {
-        if(dataBindingService == null) {
-            dataBindingService = new ConcreteDataBindingService(context);
-        }
+    public SearchService requestSearchService(Context context) {
+        if(searchService == null)
+            searchService = new ConcreteSearchService(context);
+        return searchService;
+    }
 
-        return dataBindingService;
+    @Override
+    public ShareService requestShareService(Context context) {
+        if(shareService == null)
+            shareService = new ConcreteShareService(context);
+        return shareService;
     }
 }
