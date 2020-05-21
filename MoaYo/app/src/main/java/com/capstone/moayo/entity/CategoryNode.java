@@ -2,12 +2,15 @@ package com.capstone.moayo.entity;
 
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryNode {
+public class CategoryNode implements Serializable {
+
     private int id;
     private String title;
+    private String url;
     private int level;
     private List<String> hashtags;
     private int dogamId;
@@ -106,6 +109,8 @@ public class CategoryNode {
         this.title = title;
     }
 
+    public void setUrl(String url) { this.url = url; }
+
     public CategoryNode getParent() {
         return parent;
     }
@@ -117,6 +122,8 @@ public class CategoryNode {
     public String getTitle() {
         return title;
     }
+
+    public String getUrl() { return url; }
 
     public List<Post> getPosts() {
         return posts;

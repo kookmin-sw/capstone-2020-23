@@ -3,19 +3,17 @@ package com.capstone.moayo.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
+//import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.ResultActivity;
-import com.capstone.moayo.model.Category;
-import com.capstone.moayo.model.CategoryNode;
+import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 
@@ -40,7 +38,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         // TODO Auto-generated method stub
-        return categoryNodes.get(groupPosition).lowLayer.get(childPosition);
+        return categoryNodes.get(groupPosition).getLowLayer().get(childPosition);
     }
 
     @Override
@@ -54,7 +52,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view;
-        final CategoryNode currentNode = categoryNodes.get(groupPosition).lowLayer.get(childPosition);
+        final CategoryNode currentNode = categoryNodes.get(groupPosition).getLowLayer().get(childPosition);
 
         if(convertView == null) {
             view = getChildGenericView();
@@ -64,7 +62,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
         TextView text = (TextView)view.findViewById(R.id.text1);
 
-        text.setText(currentNode.title);
+        text.setText(currentNode.getTitle());
         if (isSelectedNode(currentNode, selectedNode) == true) {
             text.setTextColor(Color.parseColor("#1e90ff"));
         }
@@ -91,7 +89,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return categoryNodes.get(groupPosition).lowLayer.size();
+        return categoryNodes.get(groupPosition).getLowLayer().size();
     }
 
     @Override
@@ -134,7 +132,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 //        }
 
         TextView text = (TextView)view.findViewById(R.id.text);
-        text.setText(currentNode.title);
+        text.setText(currentNode.getTitle());
 
         if (isSelectedNode(currentNode, selectedNode) == true) {
             text.setTextColor(Color.parseColor("#1e90ff"));
@@ -219,7 +217,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 //            Log.d("state", "1. null");
             return false;
         } else {
-            if(target.title.equals(selected.title)) {
+            if(target.getTitle().equals(selected.getTitle())) {
                 return true;
             } else {
                 return false;

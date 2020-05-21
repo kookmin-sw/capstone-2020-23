@@ -9,7 +9,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.capstone.moayo.Adapter.ExpandableAdapter;
-import com.capstone.moayo.model.CategoryNode;
+import com.capstone.moayo.entity.CategoryNode;
+
+import java.util.ArrayList;
 
 
 public class BookDetailActivity extends AppCompatActivity{
@@ -24,11 +26,11 @@ public class BookDetailActivity extends AppCompatActivity{
         CategoryNode rootNode = (CategoryNode) getIntent().getSerializableExtra("categoryNode");
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(rootNode.title);
+        actionBar.setTitle(rootNode.getTitle());
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
-        myList.setAdapter(new ExpandableAdapter(this, rootNode.lowLayer));
+        myList.setAdapter(new ExpandableAdapter(this, (ArrayList<CategoryNode>) rootNode.getLowLayer()));
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);

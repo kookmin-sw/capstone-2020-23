@@ -1,7 +1,6 @@
 package com.capstone.moayo.data;
 
 import com.capstone.moayo.model.MyBook;
-import com.capstone.moayo.model.NewPost;
 
 import java.util.ArrayList;
 
