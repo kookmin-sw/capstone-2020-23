@@ -19,6 +19,7 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class BookManageActivity extends AppCompatActivity {
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
 
-    private ArrayList<CategoryNode> userBookData;
+    private ArrayList<CategoryNodeDto> userBookData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class BookManageActivity extends AppCompatActivity {
     }
 
 //    create test data
-    private ArrayList<CategoryNode> createData () {
+    private ArrayList<CategoryNodeDto> createData () {
         return new CategoryData_Dummy().getItems();
     }
 

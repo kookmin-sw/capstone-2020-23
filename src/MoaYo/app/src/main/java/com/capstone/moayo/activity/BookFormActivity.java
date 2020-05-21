@@ -18,16 +18,25 @@ import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
+import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
+import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener {
     private FragmentManager fm;
     private FragmentTransaction tran;
-    private Category category;
-    private CategoryNode rootNode;
-    private CategoryNode currentNode;
+    private CategoryDto category;
+    private CategoryNodeDto rootNode;
+    private CategoryNodeDto currentNode;
     private TextView toolbar_title;
+
+    private CategoryService categoryService;
 
 
     @Override
@@ -48,12 +57,13 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         toolbar_title.setText("도감 생성");
 
 
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         onChangeLevel(0, null);
 
     }
 
     @Override
-    public void onChangeLevel(int fraglvl, CategoryNode selectedNode) {
+    public void onChangeLevel(int fraglvl, CategoryNodeDto selectedNode) {
 
         Fragment temp = null;
 
@@ -99,20 +109,20 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
     public void initRootNode(String title) {
         if(rootNode == null) {
-            rootNode = new CategoryNode(title, null, 1);
+            rootNode = new CategoryNodeDto(title, null, 1);
         } else {
             rootNode.setTitle(title);
         }
     }
 
-    public CategoryNode addNode(CategoryNode node) {
-        currentNode.addLowLayer(node);
+    public CategoryNodeDto addNode(CategoryNodeDto node) {
+        currentNode.getLowLayer().add(node);
         return currentNode;
     }
 
-    public CategoryNode removeNode(CategoryNode node) {
-        ArrayList<CategoryNode> lowLayerList = (ArrayList) currentNode.getLowLayer();
-        for(CategoryNode target : lowLayerList) {
+    public CategoryNodeDto removeNode(CategoryNodeDto node) {
+        ArrayList<CategoryNodeDto> lowLayerList = (ArrayList) currentNode.getLowLayer();
+        for(CategoryNodeDto target : lowLayerList) {
             if(target == node) {
                 lowLayerList.remove(target);
                 break;
@@ -125,9 +135,28 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
     public void onSubmit() {
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
-        category = new Category(rootNode.getTitle(), null, null, rootNode);
+        category = new CategoryDto(rootNode.getTitle(), null, null, rootNode);
         Log.d("category", category.toString());
-        Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
+        Callable<String> callable = () -> categoryService.createCategory(category);
+        AsyncCallback<String> callback = new AsyncCallback<String>() {
+            @Override
+            public void onResult(String result) {
+                Log.d("create", result);
+                Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+
+        new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
 //        Log.d("rootNode", category.getRootNode().toString());
 
         //--------Backend 통신----------

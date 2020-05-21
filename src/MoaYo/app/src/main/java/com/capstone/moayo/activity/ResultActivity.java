@@ -29,12 +29,13 @@ import com.capstone.moayo.entity.CategoryNode;
 
 import com.capstone.moayo.model.NewPost;
 import com.capstone.moayo.model.SavedPost;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
-    private CategoryNode searchNode;
+    private CategoryNodeDto searchNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class ResultActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        searchNode = (CategoryNode) getIntent().getSerializableExtra("current_node");
+        searchNode = (CategoryNodeDto) getIntent().getSerializableExtra("current_node");
 
         //actionBar.setTitle("# "+searchNode.getTitle());
 
@@ -84,13 +85,13 @@ public class ResultActivity extends AppCompatActivity {
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
-        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNode>) getDummyRoot(searchNode).getLowLayer(), searchNode));
+        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) getDummyRoot(searchNode).getLowLayer(), searchNode));
 
 
     }
 
     //도감 검색결과 요청.
-    private ArrayList<NewPost> requestResultPost(CategoryNode node) {
+    private ArrayList<NewPost> requestResultPost(CategoryNodeDto node) {
         //인탠트를 통해 받아온 검색 노드.
         Toast.makeText(getApplicationContext(), node.getTitle(), Toast.LENGTH_SHORT).show();
 
@@ -103,7 +104,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     //저장 게시물 요청.
-    private ArrayList<SavedPost> requestSavedPost(CategoryNode node) {
+    private ArrayList<SavedPost> requestSavedPost(CategoryNodeDto node) {
         //Dummy Data(데님바지).
         if(node.getId() == 1) {
             return new SavedPost_Dummy().getSinger();
@@ -113,7 +114,7 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    private CategoryNode getDummyRoot (CategoryNode node) {
+    private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
         //첫번째 index의 dummy data 가져옴
         if(node.getId() == 1) {
             return new CategoryData_Dummy().getItems().get(0);

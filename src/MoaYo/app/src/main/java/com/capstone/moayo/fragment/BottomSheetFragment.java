@@ -19,22 +19,25 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Tag.TagsFinder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
 
     public interface OnEditNodeListener {
-        void onAddNode(CategoryNode node);
-        void onRemoveNode(CategoryNode node);
+        void onAddNode(CategoryNodeDto node);
+        void onRemoveNode(CategoryNodeDto node);
     }
 
-    private CategoryNode node;
-    private CategoryNode parentNode;
+    private CategoryNodeDto node;
+    private CategoryNodeDto parentNode;
     private String word;
     private Button cancel_btn, save_btn;
     private ImageButton delete_btn;
@@ -104,7 +107,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         delete_btn = (ImageButton) view.findViewById(R.id.dialog_tag_btn_delete);
 
         FORM_MODE = getArguments().getString("MODE");
-        parentNode = (CategoryNode) getArguments().getSerializable("parentNode");
+        parentNode = (CategoryNodeDto) getArguments().getSerializable("parentNode");
 
 
         switch (FORM_MODE) {
@@ -114,13 +117,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 delete_btn.setVisibility(View.INVISIBLE);
                 break;
             case "EDIT":
-                node = (CategoryNode) getArguments().getSerializable("selectedNode");
+                node = (CategoryNodeDto) getArguments().getSerializable("selectedNode");
                 keyword.setText(node.getTitle());
                 break;
         }
 
         //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
         tags = new ArrayList<String>();
+
         tags.add("hashtag1");
         tags.add("hashtag2");
         tags.add("hashtag3");
@@ -172,7 +176,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
 
     private void add() {
-        node = new CategoryNode(word, parentNode, parentNode.getLevel()+1);
+        node = new CategoryNodeDto(word, parentNode, parentNode.getLevel()+1);
 
         //node 객체에 선택된 해시태그들을 담음
         ArrayList<String> hashtags = new ArrayList<>();

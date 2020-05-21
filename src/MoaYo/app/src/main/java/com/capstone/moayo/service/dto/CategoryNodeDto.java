@@ -6,15 +6,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryNodeDto {
+public class CategoryNodeDto implements Serializable {
     private int id;
     private String title;
     private int level;
     private List<String> hashtags;
+    private String url;
 
     private CategoryNodeDto parent;
     private List<CategoryNodeDto> lowLayer;
@@ -116,6 +118,14 @@ public class CategoryNodeDto {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override

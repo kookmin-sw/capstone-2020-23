@@ -18,23 +18,24 @@ import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.FormListAdapter;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
 public class FormEditFragment extends Fragment implements BottomSheetFragment.OnEditNodeListener, View.OnClickListener{
 
     public interface OnChangeLevelListener{
-        void onChangeLevel(int fragId, CategoryNode selectedNode);
+        void onChangeLevel(int fragId, CategoryNodeDto selectedNode);
     }
 
     private View view;
-    private ArrayList<CategoryNode> items;
+    private ArrayList<CategoryNodeDto> items;
     private FormListAdapter adapter;
     private ListView listView;
     private Button add_btn, back_btn, save_btn;
     private OnChangeLevelListener lvl_callback;
     private BottomSheetFragment bottomSheet;
-    private CategoryNode currentNode;
+    private CategoryNodeDto currentNode;
 
     @Override
     public void onAttach(Context context) {
@@ -57,8 +58,8 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         view = inflater.inflate(R.layout.fragment_form_edit, container, false);
 
         if (getArguments() != null) {
-            currentNode = (CategoryNode) getArguments().getSerializable("currentNode");
-            items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
+            currentNode = (CategoryNodeDto) getArguments().getSerializable("currentNode");
+            items = (ArrayList<CategoryNodeDto>) currentNode.getLowLayer();
         }
 
         adapter = new FormListAdapter(getContext(), items);
@@ -123,15 +124,15 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         bottomSheet.show(getFragmentManager(),"bottomSheet");
     }
 
-    public void onAddNode(CategoryNode node) {
+    public void onAddNode(CategoryNodeDto node) {
         currentNode = ((BookFormActivity)getActivity()).addNode(node);
-        items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
+        items = (ArrayList<CategoryNodeDto>) currentNode.getLowLayer();
         adapter.notifyDataSetChanged();
     }
 
-    public void onRemoveNode(CategoryNode node) {
+    public void onRemoveNode(CategoryNodeDto node) {
         currentNode = ((BookFormActivity)getActivity()).removeNode(node);
-        items = (ArrayList<CategoryNode>) currentNode.getLowLayer();
+        items = (ArrayList<CategoryNodeDto>) currentNode.getLowLayer();
         adapter.notifyDataSetChanged();
     }
 
