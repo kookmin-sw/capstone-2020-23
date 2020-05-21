@@ -14,7 +14,7 @@
   <br />
 
 * ## 개요
-  
+
   관심 있는 걸 모아서 보고, 내 관심사를 모아서 표출하는 것은 우리에게 아주 익숙하고 중요한 일이다.
 
   매일매일 SNS에 접속해서 마음에 드는 게시물에 좋아요를 누르고, 재미있어 보이는 게시물을 보는 것은 우리에게 아주 익숙하다. 이런 SNS 중 요새 가장 대세인 걸 꼽으라면, 단연 **인스타그램**이다.
@@ -26,41 +26,42 @@
   무엇보다 여러 검색어를 동시에 넣어 검색할 수 없다는 것은 큰 아쉬움으로 남는다.
 
   그래서 우리는 카테고리를 분류해서 검색하고, 검색한 결과를 모아 도감의 형태로 보여주고 공유할 수 있는 서비스 '모아요'를 만들기로 했다.
-  
+
   <br />
-  
+
   프로젝트 '모아요'는 사용자에게 인스타그램 태그 검색에 대해 보다 정교한 검색 기능을 간편하게 제공하는 것을 목표로 한다.
-  
+
   이는 사용자가 직접 만든 카테고리, 즉 계층 (Hierarchy) 구조로 게시물을 검색하게 함으로써 이루어지는데, 계층 구조로 분류된 검색 결과는 단일 태그 검색에 비해 정확하고 체계적인 검색을 가능하게 한다.
-  
+
   계층구조 검색을 통해 최신 정보들을 실시간으로 가져오며, 이러한 카테고리 형태의 계층구조를 우리는 ‘도감’이라 정의한다. 
   즉, 사용자에 의해 ‘도감’을 생성/관리하고, 검색하는 서비스를 하나의 플랫폼으로 제공하며, 타 사용자들과 공유할 수 있는 퍼블리싱(Publishing) 기능까지 제공하는 것이 해당 프로젝트의 목표이다.
-  
+
    
   
   1. 검색 목표
   
-     A. 사용자가 작성한 카테고리에서 메타 검색을 위한 유의어 크롤
-     B. 카테고리와 얻어낸 유의어를 가지고 인스타그램 내부 게시물 크롤
+       A. 사용자가 작성한 카테고리에서 메타 검색을 위한 유의어 크롤
   
-     C. 얻어낸 게시물을 사용자에게 제공
+       B. 카테고리와 얻어낸 유의어를 가지고 인스타그램 내부 게시물 크롤
   
-      
-  
+       C. 얻어낸 게시물을 사용자에게 제공
+
+   
+
   2. 카테고리 목표
+
+      A. 사용자가 입력한 태그를 통한 계층 구조의 도감 생성
+
+  	B. 생성된 도감의 수정 및 삭제
+
+  	C. 도감을 통해 검색된 게시물을 저장
+
   
-     A. 사용자가 입력한 태그를 통한 계층 구조의 도감 생성 
-  
-     B. 생성된 도감의 수정 및 삭제 
-  
-     C. 도감을 통해 검색된 게시물을 저장
-  
-     
-  
+
   3. 공유 목표
-  
-     A. 사용자의 도감을 공유 서버 내부에 저장 
-  
+
+     A. 사용자의 도감을 공유 서버 내부에 저장
+
      B. 공유 서버 내부 정보를 사용자에게 제공 
 
 <br />
@@ -92,32 +93,31 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 
 
-1. Search Objective
+  1. Search Objective
 
-   A. Crawling significance for searching meta in categories created by users
-   B. Crawl internal posts on Instagram with categories and significant words obtained
-
-   C. Provide users with obtained posts
-
-
-
-2. Category Objectives
-
-   A. Creating a diagram of the hierarchy using tags that you enter
-
-   B. Modifying and deleting the generated drawings
-
-   C. Store posts retrieved from the diagram
+     A. Crawling significance for searching meta in categories created by users
+   
+     B. Crawl internal posts on Instagram with categories and significant words obtained
+   
+     C. Provide users with obtained posts
 
 
 
-3. Sharing Objectives
+  2. Category Objectives
 
-   A. Store your drawings inside a shared server
+     A. Creating a diagram of the hierarchy using tags that you enter
+   
+     B. Modifying and deleting the generated drawings
+   
+     C. Store posts retrieved from the diagram
 
-   B. Providing Users with Internal Information on Shared Servers
 
-<br />
+
+  3. Sharing Objectives
+
+     A. Store your drawings inside a shared server
+   
+     B. Providing Users with Internal Information on Shared Servers
 
 <br />
 
