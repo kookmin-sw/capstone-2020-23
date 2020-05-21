@@ -1,4 +1,4 @@
-package com.capstone.moayo.Adapter;
+package com.capstone.moayo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -45,7 +45,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.recycler1_main, parent, false) ;
+        View view = inflater.inflate(R.layout.recycler_main_top, parent, false) ;
         MainTopRecyclerAdapter.ViewHolder vh = new MainTopRecyclerAdapter.ViewHolder(view) ;
 
 

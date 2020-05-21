@@ -5,23 +5,9 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/moveMY"
-        android:icon="@drawable/ic_person_white_24dp"
+        android:icon="@drawable/person"
         android:title="moveMY"
         app:showAsAction="ifRoom" />
 
-    <!-- Settings, should always be in the overflow -->
-<!--    <item android:id="@+id/action_settings2"-->
-<!--        android:title="항목1"-->
-<!--        app:showAsAction="never"/>-->
-
-<!--    <item android:id="@+id/action_settings3"-->
-<!--        android:title="항목2"-->
-<!--        app:showAsAction="never"/>-->
-
-<!--    <item-->
-<!--        android:id="@+id/action_btn1"-->
-
-<!--        android:title="버튼1"-->
-<!--        app:showAsAction="always" />-->
 
 </menu>
