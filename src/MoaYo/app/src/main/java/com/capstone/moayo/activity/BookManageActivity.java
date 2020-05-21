@@ -42,7 +42,7 @@ public class BookManageActivity extends AppCompatActivity {
 
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
 //       TEST DATA 생성하여 변수에 할당.
         userBookData = createData();
@@ -57,12 +57,12 @@ public class BookManageActivity extends AppCompatActivity {
         numOfBook.setText(Integer.toString(userBookData.size()));
 
 
-        //Spinner
-        Spinner bookTypeSpinner = (Spinner)findViewById(R.id.bookManageSpinner);
-        ArrayAdapter bookTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.book_manage_spinner, android.R.layout.simple_spinner_dropdown_item);
-        bookTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bookTypeSpinner.setAdapter(bookTypeAdapter);
+//        //Spinner
+//        Spinner bookTypeSpinner = (Spinner)findViewById(R.id.bookManageSpinner);
+//        ArrayAdapter bookTypeAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.book_manage_spinner, android.R.layout.simple_spinner_dropdown_item);
+//        bookTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        bookTypeSpinner.setAdapter(bookTypeAdapter);
     }
 
 //    create test data
