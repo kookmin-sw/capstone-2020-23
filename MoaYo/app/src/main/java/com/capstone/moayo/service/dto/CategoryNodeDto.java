@@ -2,6 +2,10 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,8 @@ public class CategoryNodeDto {
     private CategoryNodeDto parent;
     private List<CategoryNodeDto> lowLayer;
     private List<PostDto> posts;
+
+    private RequestForm requestForm;
 
     public CategoryNodeDto() {
         this.id = 0;
@@ -35,9 +41,11 @@ public class CategoryNodeDto {
         for (CategoryNodeDto secondNodeDto : lowLayer) {
             CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
             secondNode.setId(secondNodeDto.getId());
+            secondNode.setHashtags(secondNodeDto.getHashtags());
             for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                 CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
                 thirdNode.setId(thirdNodeDto.getId());
+                thirdNode.setHashtags(thirdNodeDto.getHashtags());
                 secondNode.getLowLayer().add(thirdNode);
             }
             rootNode.getLowLayer().add(secondNode);
@@ -94,6 +102,14 @@ public class CategoryNodeDto {
         this.lowLayer = lowLayer;
     }
 
+    public RequestForm getRequestForm() {
+        return requestForm;
+    }
+
+    public void setRequestForm(RequestForm requestForm) {
+        this.requestForm = requestForm;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -102,17 +118,14 @@ public class CategoryNodeDto {
         this.level = level;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{\"title\" : ").append("\"").append(title).append("\"").append(",").
-                append("\"level\" : ").append("\"").append(level).append("\"").append(",").
-                append("\"lowLayer\" : [");
-        for(CategoryNodeDto lowNode : lowLayer) {
-            buffer.append(lowNode.toString());
-        }
-        buffer.append("]}");
-
-        return buffer.toString();
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", level=" + level +
+                ", hashtags=" + hashtags +
+                ", lowLayer=" + lowLayer +
+                "}\n";
     }
-
 }

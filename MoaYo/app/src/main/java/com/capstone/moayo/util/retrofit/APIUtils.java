@@ -1,9 +1,14 @@
 package com.capstone.moayo.util.retrofit;
 
 public class APIUtils {
-    public static final String BASE_URL = "https://instagram.com/p/";
+    private static final String SEARCH_URL = "http://192.168.0.22:8080";
+    private static final String SHARE_URL = "http://192.168.35.66:8080";
 
-    public static InstagramService getInstagramService() {
-        return RetrofitClient.getClient(BASE_URL).create(InstagramService.class);
+    public static SearchAPI getSearchAPI() {
+        return RetrofitClient.getSearchClient(SEARCH_URL).create(SearchAPI.class);
+    }
+
+    public static ShareAPI getShareAPI() {
+        return RetrofitClient.getShareClient(SHARE_URL).create(ShareAPI.class);
     }
 }

@@ -13,6 +13,8 @@ public class CategoryNode implements Serializable {
     private String url;
     private int level;
     private List<String> hashtags;
+    private int dogamId;
+    private int parentDogamId;
 
     private CategoryNode parent;
     private List<CategoryNode> lowLayer;
@@ -35,18 +37,37 @@ public class CategoryNode implements Serializable {
     public CategoryNodeDto toCategoryNodeDto() {
         CategoryNodeDto rootNode = new CategoryNodeDto(title, null, level);
         rootNode.setId(id);
+        rootNode.setHashtags(hashtags);
         for(CategoryNode secondNode : lowLayer) {
             CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
             secondNodeDto.setId(secondNode.getId());
+            secondNodeDto.setHashtags(secondNode.getHashtags());
             for(CategoryNode thirdNode : secondNode.getLowLayer()) {
                 CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
                 thirdNodeDto.setId(thirdNode.getId());
+                thirdNodeDto.setHashtags(thirdNode.getHashtags());
                 secondNodeDto.getLowLayer().add(thirdNodeDto);
             }
             rootNode.getLowLayer().add(secondNodeDto);
         }
 
         return rootNode;
+    }
+
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
+    }
+
+    public int getDogamId() {
+        return dogamId;
+    }
+
+    public void setParentDogamId(int parentDogamId) {
+        this.parentDogamId = parentDogamId;
+    }
+
+    public int getParentDogamId() {
+        return parentDogamId;
     }
 
     public int getId() {
@@ -117,6 +138,7 @@ public class CategoryNode implements Serializable {
         buffer.append("{\"id\" : ").append("\"").append(id).append("\"").append(",").
                 append("\"title\" : ").append("\"").append(title).append("\"").append(",").
                 append("\"level\" : ").append("\"").append(level).append("\"").append(",").
+                append("\"parentId\" : ").append("\"").append(parent.getId()).append(",").
                 append("\"lowLayer\" : [");
         for(CategoryNode lowNode : lowLayer) {
             buffer.append(lowNode.toString());

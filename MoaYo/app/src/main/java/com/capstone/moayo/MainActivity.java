@@ -16,21 +16,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.capstone.moayo.Adapter.MainTopRecyclerAdapter;
 import com.capstone.moayo.Adapter.MainCenterRecyclerAdapter;
 //import com.capstone.moayo.R;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.service.DataBindingService;
+import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.storage.StorageFactory;
+
 
 public class MainActivity extends AppCompatActivity {
     private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
 
     private CategoryService categoryService;
-    private DataBindingService dataBindingService;
+    private SearchService dataBindingService;
     private StorageFactory storageFactory;
 
     @Override
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
