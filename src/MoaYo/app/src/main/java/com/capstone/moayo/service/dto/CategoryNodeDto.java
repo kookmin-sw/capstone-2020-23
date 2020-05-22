@@ -16,7 +16,7 @@ public class CategoryNodeDto implements Serializable {
     private String title;
     private int level;
     private List<String> hashtags;
-    private String url;
+
 
     private CategoryNodeDto parent;
     private List<CategoryNodeDto> lowLayer;
@@ -118,14 +118,6 @@ public class CategoryNodeDto implements Serializable {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     @Override

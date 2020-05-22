@@ -42,39 +42,35 @@ public class ConcreteDogamStorage implements DogamStorage {
     @Override
     public DogamMapping retrieveById(int id) {
         DogamMapping foundDogam = null;
-//        if(categoryMap.containsKey(id)) {
-//            Category foundCategory = categoryMap.get(id);
-//            foundDogam = new DogamMapping();
-//            foundDogam.setId(foundCategory.getId());
-//            foundDogam.setTitle(foundCategory.getTitle());
-//            foundDogam.setDesription(foundCategory.getDescription());
-//            foundDogam.setPassword(foundCategory.getPassword());
-//            foundDogam.setStatus(foundCategory.getStatus());
-//        } else {
-        foundDogam = dogamDao.selectById(dbHelper, id);
-        Category category = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), null);
-        category.setStatus(foundDogam.getStatus());
-        categoryMap.put(category.getId(), category);
-//        }
+        if(categoryMap.containsKey(id)) {
+            Category foundCategory = categoryMap.get(id);
+            foundDogam = new DogamMapping();
+            foundDogam.setId(foundCategory.getId());
+            foundDogam.setTitle(foundCategory.getTitle());
+            foundDogam.setDesription(foundCategory.getDescription());
+            foundDogam.setPassword(foundCategory.getPassword());
+            foundDogam.setStatus(foundCategory.getStatus());
+        } else {
+            foundDogam = dogamDao.selectById(dbHelper, id);
+            Category category = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), null);
+            category.setStatus(foundDogam.getStatus());
+            categoryMap.put(category.getId(), category);
+        }
         return foundDogam;
     }
 
     @Override
-    public List<Category> retrieveAll() {
-        List<Category> dogams = new ArrayList<>();
-//        if(categoryMap.isEmpty()) {
-        DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
-        for (DogamMapping dogam : dogamMappings) {
-            Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(), null);
-            category.setId(dogam.getId());
-            dogams.add(category);
+    public Collection<Category> retrieveAll() {
+        if(categoryMap.isEmpty()) {
+            DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
+            for (DogamMapping dogam : dogamMappings) {
+                Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(), null);
+                category.setId(dogam.getId());
 
-            if(!categoryMap.containsKey(category.getId())) categoryMap.put(category.getId(), category);
+                if(!categoryMap.containsKey(category.getId())) categoryMap.put(category.getId(), category);
+            }
         }
-//        } else {
-//            dogams.addAll(categoryMap.values());
-//        }
-        return dogams;
+        return categoryMap.values();
     }
 
     @Override

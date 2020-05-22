@@ -13,12 +13,13 @@ import com.capstone.moayo.util.DogamStatus;
 public class DogamDaoImpl implements DogamDao {
 
     @Override
-    public long insert(DBHelper dbHelper, String title, String description, String password, DogamStatus status) {
+    public long insert(DBHelper dbHelper, String title, String description, String password, String url, DogamStatus status) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
         values.put(StorageInfo.CreateStorage.DOGAMDESCRIPTION,description);
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
+        values.put(StorageInfo.CreateStorage.DOGAMURL, url);
         values.put(StorageInfo.CreateStorage.DOGAMSTATUS, String.valueOf(status));
         long result =  mDB.insert(StorageInfo.CreateStorage._DOGAMTABLENAME,null,values);
         mDB.close();
@@ -26,13 +27,14 @@ public class DogamDaoImpl implements DogamDao {
     }
 
     @Override
-    public boolean update(DBHelper dbHelper, int id, String title, String description, String password, DogamStatus status) {
+    public boolean update(DBHelper dbHelper, int id, String title, String description, String password, String url, DogamStatus status) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.DOGAMID,id);
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
         values.put(StorageInfo.CreateStorage.DOGAMDESCRIPTION,description);
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
+        values.put(StorageInfo.CreateStorage.DOGAMURL, url);
         values.put(StorageInfo.CreateStorage.DOGAMSTATUS, String.valueOf(status));
         boolean result = mDB.update(StorageInfo.CreateStorage._DOGAMTABLENAME,values,"co_id=" + id,null) > 0;
         mDB.close();

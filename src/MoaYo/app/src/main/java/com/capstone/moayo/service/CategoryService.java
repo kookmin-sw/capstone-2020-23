@@ -15,5 +15,5 @@ public interface CategoryService {
     public CategoryDto findCategoryById(int id);
     public String modifyCategory(CategoryDto categoryDto);
     public String deleteDogam(int id);
-    public String deleteCategoryNode(int id);
+    public String deleteCategoryNode(int dogamId, int id);
 }

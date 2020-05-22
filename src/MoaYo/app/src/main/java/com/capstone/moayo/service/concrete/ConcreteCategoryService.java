@@ -22,6 +22,7 @@ import com.capstone.moayo.util.Exception.NullCategoryException;
 import com.capstone.moayo.util.Exception.NullRootException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ConcreteCategoryService implements CategoryService {
@@ -62,7 +63,7 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public List<CategoryDto> findAll() {
         try {
-            List<Category> categories = dogamStorage.retrieveAll();
+            Collection<Category> categories = dogamStorage.retrieveAll();
             if (categories == null)
                 throw new  NoSuchCategoryException("You don't have any category now");
 
@@ -152,14 +153,14 @@ public class ConcreteCategoryService implements CategoryService {
     }
 
     @Override
-    public String deleteCategoryNode(int id) {
+    public String deleteCategoryNode(int dogamId, int id) {
         String result = "";
         try {
-            CategoryNode foundNode = categoryStorage.retrieveById(id);
+            CategoryNode foundNode = categoryStorage.retrieveById(dogamId, id);
             if(foundNode == null) {
                 throw new Exception();
             }
-            result = categoryStorage.remove(id);
+            result = categoryStorage.remove(dogamId, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
