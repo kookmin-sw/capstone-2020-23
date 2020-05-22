@@ -18,15 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
-import com.capstone.moayo.util.Tag.TagsFinder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }

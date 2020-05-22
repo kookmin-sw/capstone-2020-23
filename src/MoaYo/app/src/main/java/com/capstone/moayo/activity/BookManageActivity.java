@@ -18,7 +18,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.entity.CategoryNode;
+
+import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -27,8 +29,8 @@ import java.util.ArrayList;
 public class BookManageActivity extends AppCompatActivity {
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
-
-    private ArrayList<CategoryNodeDto> userBookData;
+    private CategoryService categoryService;
+    private ArrayList<CategoryDto> userBookData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class BookManageActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
 //       TEST DATA 생성하여 변수에 할당.
-        userBookData = createData();
+        userBookData = getUserCategories();
 
         //ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -67,8 +69,22 @@ public class BookManageActivity extends AppCompatActivity {
     }
 
 //    create test data
-    private ArrayList<CategoryNodeDto> createData () {
-        return new CategoryData_Dummy().getItems();
+    private ArrayList<CategoryDto> getUserCategories () {
+        //-----backend 통신-----
+        ArrayList<CategoryDto> category = new ArrayList<>();
+        ArrayList<CategoryNodeDto> list = new CategoryData_Dummy().getItems();
+        for(CategoryNodeDto node: list) {
+            CategoryDto temp = new CategoryDto(node.getTitle(), "", null, node);
+            category.add(temp);
+        }
+
+        return category;
+//        categoryService = new ConcreteCategoryService(getApplicationContext());
+//        ArrayList<CategoryDto> categories_data = new ArrayList<>();
+//
+//        categories_data.add(categoryService.findCategoryById(0));
+//
+//        return  categories_data;
     }
 
     //mainToolBar에 menu.xml을 인플레이트함

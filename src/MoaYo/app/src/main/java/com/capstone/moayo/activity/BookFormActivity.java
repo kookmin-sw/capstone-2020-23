@@ -14,11 +14,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.Category;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
 import com.capstone.moayo.service.CategoryService;
+
+import com.capstone.moayo.service.concrete.ConcreteCategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -35,7 +35,6 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private CategoryNodeDto rootNode;
     private CategoryNodeDto currentNode;
     private TextView toolbar_title;
-
     private CategoryService categoryService;
 
 
@@ -160,7 +159,9 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //        Log.d("rootNode", category.getRootNode().toString());
 
         //--------Backend 통신----------
-        //service - CategoryService - create()
+        categoryService = new ConcreteCategoryService(getApplicationContext());
+        String result = categoryService.createCategory(category);
+        Log.d("create_result", result);
     }
 
     @Override

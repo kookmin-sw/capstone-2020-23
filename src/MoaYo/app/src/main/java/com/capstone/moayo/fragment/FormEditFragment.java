@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.FormListAdapter;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;

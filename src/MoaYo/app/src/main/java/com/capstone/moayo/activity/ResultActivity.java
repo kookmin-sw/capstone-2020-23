@@ -21,12 +21,10 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.adapter.ResultTopRecyclerAdapter;
 import com.capstone.moayo.adapter.ResultCenterRecyclerAdapter;
+
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.ResultPost_Dummy;
 import com.capstone.moayo.data.SavedPost_Dummy;
-
-import com.capstone.moayo.entity.CategoryNode;
-
 import com.capstone.moayo.model.NewPost;
 import com.capstone.moayo.model.SavedPost;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -105,7 +103,7 @@ public class ResultActivity extends AppCompatActivity {
 
     //저장 게시물 요청.
     private ArrayList<SavedPost> requestSavedPost(CategoryNodeDto node) {
-        //Dummy Data(데님바지).
+
         if(node.getId() == 1) {
             return new SavedPost_Dummy().getSinger();
         } else {

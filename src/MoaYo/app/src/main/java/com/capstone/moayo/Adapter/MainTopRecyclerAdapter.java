@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
