@@ -45,7 +45,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
     private ListView listview;
     private ArrayAdapter adapter;
-    private ArrayList<String> tags;
+    private ArrayList<String> synonym_tags;
 
     public void setOnEditNodeListener(OnEditNodeListener callback) {
         this.callback = callback;
@@ -106,6 +106,28 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         FORM_MODE = getArguments().getString("MODE");
         parentNode = (CategoryNodeDto) getArguments().getSerializable("parentNode");
 
+        //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
+        synonym_tags = new ArrayList<String>();
+
+        synonym_tags.add("hashtag1");
+        synonym_tags.add("hashtag2");
+        synonym_tags.add("hashtag3");
+        synonym_tags.add("hashtag4");
+        synonym_tags.add("hashtag5");
+        synonym_tags.add("hashtag6");
+        synonym_tags.add("hashtag7");
+        synonym_tags.add("hashtag8");
+        synonym_tags.add("hashtag10");
+        synonym_tags.add("hashtag9");
+        synonym_tags.add("hashtag9");
+        synonym_tags.add("hashtag9");
+        synonym_tags.add("hashtag9");
+
+
+
+        adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, synonym_tags);
+        listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
+        listview.setAdapter(adapter);
 
         switch (FORM_MODE) {
             case "ADD":
@@ -116,31 +138,20 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             case "EDIT":
                 node = (CategoryNodeDto) getArguments().getSerializable("selectedNode");
                 keyword.setText(node.getTitle());
+                save_btn.setText("Update");
+
+                //node에 저장된 태그정보들을 불러와 일치하는 hashtag setItemChecked 처리.
+                ArrayList<String> selected_tags =  (ArrayList<String>) node.getHashtags();
+                for(String tag:selected_tags) {
+                    int idx = synonym_tags.indexOf(tag);
+                    if( idx != -1)
+                        listview.setItemChecked(idx, true);
+                }
+
                 break;
         }
 
-        //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
-        tags = new ArrayList<String>();
 
-        tags.add("hashtag1");
-        tags.add("hashtag2");
-        tags.add("hashtag3");
-        tags.add("hashtag4");
-        tags.add("hashtag5");
-        tags.add("hashtag6");
-        tags.add("hashtag7");
-        tags.add("hashtag8");
-        tags.add("hashtag10");
-        tags.add("hashtag9");
-        tags.add("hashtag9");
-        tags.add("hashtag9");
-        tags.add("hashtag9");
-
-
-
-        adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, tags);
-        listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
-        listview.setAdapter(adapter);
 
         cancel_btn.setOnClickListener(this);
         save_btn.setOnClickListener(this);
@@ -180,7 +191,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         SparseBooleanArray checkedTags = listview.getCheckedItemPositions();
         for (int i = adapter.getCount()-1; i >= 0; i--) {
             if (checkedTags.get(i)) {
-                hashtags.add(tags.get(i));
+                hashtags.add(synonym_tags.get(i));
             }
         }
         node.setHashtags((List) hashtags);
@@ -192,6 +203,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
     private void edit() {
         //edit logic
+
     }
 
     private void delete() {
