@@ -10,11 +10,17 @@
     <select id="getAllDogam" resultType="com.moayo.server.model.DogamListModel">
         select * from tb_dogamList;
     </select>
+    <select id="getDogamByWriterName" resultType="com.moayo.server.model.DogamListModel" parameterType="String">
+        select * from tb_dogamList where co_writer = '${value}'
+    </select>
+    <select id="getDogamByDescriptionSearch" resultType="com.moayo.server.model.DogamListModel" parameterType="String">
+        select * from tb_dogamList where co_description LIKE '%${value}%'
+    </select>
     <insert id="insertDogam" parameterType="com.moayo.server.model.DogamListModel" useGeneratedKeys="true" keyProperty="co_dogamId">
-        INSERT INTO `tb_dogamList` (`co_title`, `co_description`, `co_status`,`co_password`) VALUES (#{co_title},#{co_description},#{co_status},#{co_password});
+        INSERT INTO `tb_dogamList` (`co_title`, `co_description`, `co_status`,`co_password`,`co_writer`) VALUES (#{co_title},#{co_description},#{co_status},#{co_password},#{co_writer});
     </insert>
     <update id="updateDogam" parameterType="com.moayo.server.model.DogamListModel">
-        UPDATE tb_dogamList SET `co_title` = #{co_title}, `co_description` = #{co_description}, `co_status` = #{co_status}, `co_password` = #{co_password} WHERE (`co_dogamId` = #{co_dogamId})
+        UPDATE tb_dogamList SET `co_title` = #{co_title}, `co_description` = #{co_description}, `co_status` = #{co_status}, `co_password` = #{co_password}, `co_writer` = #{co_writer} WHERE (`co_dogamId` = #{co_dogamId})
     </update>
     <delete id="deleteDogamByModel" parameterType="com.moayo.server.model.DogamListModel">
         DELETE FROM tb_dogamList WHERE (`co_dogamId` = #{co_dogamId});

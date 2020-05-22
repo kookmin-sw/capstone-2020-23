@@ -4,62 +4,107 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.capstone.moayo.dao.mapping.CategoryMapping;
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.entity.Category;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.storage.CategoryStorage;
+import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
+import com.capstone.moayo.util.DogamStatus;
+import com.capstone.moayo.util.Exception.MutableException;
+import com.capstone.moayo.util.Exception.NoSuchCategoryException;
+import com.capstone.moayo.util.Exception.NoSuchNodeException;
+import com.capstone.moayo.util.Exception.NotRootException;
 import com.capstone.moayo.util.Exception.NullCategoryException;
+import com.capstone.moayo.util.Exception.NullRootException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConcreteCategoryService implements CategoryService {
     private CategoryStorage categoryStorage;
+    private DogamStorage dogamStorage;
     private Context applicationContext;
+
 
     public ConcreteCategoryService(Context context) {
         this.categoryStorage = StorageFactoryCreator.getInstance().requestCategoryStorage(context);
+        this.dogamStorage = StorageFactoryCreator.getInstance().requestDogamStorage(context);
         applicationContext = context;
     }
 
     @Override
     public String createCategory(CategoryDto newCategoryDto){
+        Log.d("create category", newCategoryDto.toString());
+        try {
 
-        Category newCategory = newCategoryDto.toCategory();
+            if (newCategoryDto.getRootNode() == null)
+                throw  new NullRootException("There is no root category node");
+            if (newCategoryDto.getRootNode().getLevel() != 1)
+                throw new NotRootException("This is not a root node");
 
-        String result = categoryStorage.create(newCategory);
+            Category newCategory = newCategoryDto.toCategory();
 
-        return result;
+            int dogamId = dogamStorage.create(newCategory);
+            newCategory.setId(dogamId);
+            String result = categoryStorage.create(newCategory);
+            return result;
+        } catch (NullRootException | NotRootException e) {
+            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        return null;
     }
 
     @Override
-    public CategoryDto findCategoryByTitle(String title) {
-        CategoryDto foundCategoryDto = null;
+    public List<CategoryDto> findAll() {
         try {
-            Category foundCategory = categoryStorage.retrieveByTitle(title);
-            if(foundCategory == null)
-                throw new NullCategoryException();
+            List<Category> categories = dogamStorage.retrieveAll();
+            if (categories == null)
+                throw new  NoSuchCategoryException("You don't have any category now");
 
-            foundCategoryDto = foundCategory.toCategoryDto();
+            for (Category category : categories) {
+                CategoryNode categoryNode = categoryStorage.retrieveByDogamId(category.getId());
+                if(categoryNode == null)
+                    throw new NoSuchNodeException("There is no such node");
+                if(categoryNode.getParent() != null)
+                    throw new NotRootException("Not root node");
+                category.setRootNode(categoryNode);
+            }
 
-        } catch (NullCategoryException e) {
-            e.toString();
+            List<CategoryDto> categoryDtoList = new ArrayList<>();
+            for (Category category : categories) {
+                CategoryDto categoryDto = category.toCategoryDto();
+                categoryDtoList.add(categoryDto);
+            }
+            return categoryDtoList;
+        } catch (NoSuchCategoryException | NoSuchNodeException | NotRootException e) {
+            e.printStackTrace();
         }
 
-
-        return foundCategoryDto;
+        return null;
     }
 
     @Override
     public CategoryDto findCategoryById(int id) {
         CategoryDto foundCategoryDto = null;
         try {
-            Category foundCategory = categoryStorage.retrieveById(id);
-            if(foundCategory == null) {
-                throw new NullCategoryException();
-            }
+            DogamMapping foundDogam = dogamStorage.retrieveById(id);
+            if(foundDogam == null)
+                throw new NoSuchCategoryException("There is no such category");
 
+            CategoryNode rootNode = categoryStorage.retrieveByDogamId(foundDogam.getId());
+            if(rootNode == null)
+                throw new NoSuchNodeException("there is no such node");
+
+            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), rootNode);
+            foundCategory.setId(foundDogam.getId());
             foundCategoryDto = foundCategory.toCategoryDto();
-        } catch (NullCategoryException e) {
-            Log.d("error in service", e.toString());
+        } catch (NoSuchCategoryException | NoSuchNodeException e) {
+            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         return foundCategoryDto;
@@ -68,22 +113,56 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
-        //TODO implement code
+        try {
+            if(modifyCategory.getStatus() == DogamStatus.Shared_Mutable)
+                throw new MutableException("can not modify");
+
+            DogamMapping foundDogam = dogamStorage.retrieveById(modifyCategory.getId());
+            if (foundDogam == null)
+                throw new NoSuchCategoryException("there is no such category");
+
+            dogamStorage.update(modifyCategory);
+            String result = categoryStorage.update(modifyCategory);
+            return result;
+        } catch (NoSuchNodeException | MutableException e) {
+            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
         return null;
     }
 
     @Override
-    public String deleteCategory(int id) {
+    public String deleteDogam(int id) {
         String result = "";
         try {
-            Category foundCategory = categoryStorage.retrieveById(id);
-            if(foundCategory == null)
+            DogamMapping foundDogam = dogamStorage.retrieveById(id);
+            if(foundDogam == null)
                 throw new NullCategoryException();
-            result = categoryStorage.remove(id);
+            boolean re = dogamStorage.remove(foundDogam.getId());
+            if(re != true) {
+                result = "fail to delete dogam";
+            } else {
+                result = "success to delete dogam";
+            }
         } catch (NullCategoryException e) {
             Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
+        return result;
+    }
+
+    @Override
+    public String deleteCategoryNode(int id) {
+        String result = "";
+        try {
+            CategoryNode foundNode = categoryStorage.retrieveById(id);
+            if(foundNode == null) {
+                throw new Exception();
+            }
+            result = categoryStorage.remove(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 }

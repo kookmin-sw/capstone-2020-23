@@ -4,32 +4,31 @@ import com.capstone.moayo.service.dto.PostDto;
 
 public class Post {
     private int id;
-    private String info;
+    private String imgUrl;
+    private String url;
     private String hashtag;
     private int like;
 
-    private String imgUrl;
-    private String url;
-
 
     private int categoryNodeId;
+    private  int dogamId;
 
-    public Post() {
+    public Post(int categoryNodeId, int dogamId) {
         this.id = 0;
+        this.categoryNodeId = categoryNodeId;
+        this.dogamId = dogamId;
     }
 
-    public Post(String imgUrl, String url, String info, String hashtag, int like) {
-        this();
+    public Post(String imgUrl, String url, String hashtag, int like, int categoryNodeId, int dogamId) {
+        this(categoryNodeId, dogamId);
         this.imgUrl = imgUrl;
         this.url = url;
-        this.info = info;
         this.hashtag = hashtag;
         this.like = like;
     }
 
     public PostDto toPostDto() {
-        PostDto postDto = new PostDto(imgUrl, url, info, hashtag, like);
-        postDto.setCategoryNodeId(categoryNodeId);
+        PostDto postDto = new PostDto(imgUrl, url, hashtag, like, categoryNodeId, dogamId);
         postDto.setId(id);
 
         return postDto;
@@ -60,14 +59,6 @@ public class Post {
         return hashtag;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
     public void setLike(int like) {
         this.like = like;
     }
@@ -92,9 +83,24 @@ public class Post {
         this.categoryNodeId = categoryNodeId;
     }
 
-//    public String toString() {
-//        StringBuffer buffer = new StringBuffer();
-//        buffer.append("\"{id\" : \"").append(id).append("\"").
-//                append("\"{\" : \"").append(id).append("\"").
-//    }
+    public int getDogamId() {
+        return dogamId;
+    }
+
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
+    }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{\"id\": ").append("\"").append(id).append("\",")
+                .append("\"img_url\": ").append("\"").append(imgUrl).append("\",")
+                .append("\"url\": ").append("\"").append(url).append("\",")
+                .append("\"hashtag\": ").append("\"").append(hashtag).append("\",")
+                .append("\"like\": ").append(like).append(",")
+                .append("\"categoryNodeId\": ").append("\"").append(categoryNodeId).append("\",")
+                .append("\"dogamId\": ").append("\"").append(dogamId).append("\"}");
+
+        return buffer.toString();
+    }
 }

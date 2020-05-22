@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -76,21 +77,25 @@ public class JSONParsingServiceImpl implements JSONParsingService {
         for(int i = 1; i< levelLabelCategory.keySet().size()+1;i++){
             for(CategoryModel categoryModel : levelLabelCategory.get(i)){
                 int origin = 0;
-                if(categoryModel.getCo_categoryId() == categoryModel.getCo_parentCategoryId()){
-                    categoryModel.setCo_dogamId(dogamListModel.getCo_dogamId());
-                    origin = categoryModel.getCo_categoryId();
-                    categoryDao.foreignKeyOFF();
-                    categoryDao.insertCategory(categoryModel);
-                    categoryDao.foreignKeyON();
-                    categoryModel.setCo_parentCategoryId(categoryModel.getCo_categoryId());
-                    categoryDao.updateCategory(categoryModel);
-                    categoryModelMap.put(origin,categoryModel);
-                }else{
-                    categoryModel.setCo_dogamId(dogamListModel.getCo_dogamId());
-                    origin = categoryModel.getCo_categoryId();
-                    categoryModel.setCo_parentCategoryId(categoryModelMap.get(categoryModel.getCo_parentCategoryId()).getCo_categoryId());
-                    categoryDao.insertCategory(categoryModel);
-                    categoryModelMap.put(origin,categoryModel);
+                try{
+                    if(categoryModel.getCo_categoryId() == categoryModel.getCo_parentCategoryId()){
+                        categoryModel.setCo_dogamId(dogamListModel.getCo_dogamId());
+                        origin = categoryModel.getCo_categoryId();
+                        categoryDao.foreignKeyOFF();
+                        categoryDao.insertCategory(categoryModel);
+                        categoryDao.foreignKeyON();
+                        categoryModel.setCo_parentCategoryId(categoryModel.getCo_categoryId());
+                        categoryDao.updateCategory(categoryModel);
+                        categoryModelMap.put(origin,categoryModel);
+                    }else{
+                        categoryModel.setCo_dogamId(dogamListModel.getCo_dogamId());
+                        origin = categoryModel.getCo_categoryId();
+                        categoryModel.setCo_parentCategoryId(categoryModelMap.get(categoryModel.getCo_parentCategoryId()).getCo_categoryId());
+                        categoryDao.insertCategory(categoryModel);
+                        categoryModelMap.put(origin,categoryModel);
+                    }
+                }catch (Exception e){
+                    logger.error("category insert SQL ERROR : " + this.getClass().getName());
                 }
 
                 for(CategoryPostModel categoryPostModel : categoryPostModels){

@@ -8,6 +8,7 @@ import com.capstone.moayo.entity.CategoryNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,73 +16,45 @@ import java.util.Map;
 public class DataEntityTranslator {
 
     // use CategoryDao
-    public CategoryNode cursorToCategoryNode(Cursor c){
+    public static CategoryNode cursorToCategoryNode(Cursor c){
         // Map<ID,Pair<parent,Object>>
         Map<Integer,Pair<Integer,CategoryNode>> nodeSet = new HashMap<>();
         CategoryNode root = null;
         while(c.moveToNext()){
             CategoryNode cn = new CategoryNode();
             cn.setId(c.getInt(0));
-            cn.setTitle(c.getString(1));
-            cn.setLevel(c.getInt(3));
+            cn.setDogamId(c.getInt(1));
+            cn.setTitle(c.getString(2));
+            cn.setParentDogamId(c.getInt(4));
+            cn.setLevel(c.getInt(5));
 
-            nodeSet.put(c.getInt(0),Pair.create(c.getInt(2),cn));
+            nodeSet.put(c.getInt(0),Pair.create(c.getInt(3),cn));
         }
         c.close();
 
         for(Pair<Integer,CategoryNode> p : nodeSet.values()){
+            if(p.second.getId() == p.first) {
+                root = p.second;
+                continue;
+            }
+
             CategoryNode parent = nodeSet.get(p.first).second;
             p.second.setParent(parent);
 
             if(parent.getId() != p.second.getId())
                 parent.getLowLayer().add(p.second);
-            if(p.second.getId() == p.first)
-                root = p.second;
+        }
+
+        root.getLowLayer().sort((o1, o2) -> {
+            if(o1.getId() > o2.getId()) return 1;
+            else return -1;
+        });
+        for(CategoryNode node : root.getLowLayer()) {
+            node.getLowLayer().sort((o1, o2) -> {
+                if(o1.getId() > o2.getId()) return  1;
+                else return -1;
+            });
         }
         return root;
-    }
-
-    public CategoryNode cursorToNode(Cursor c) {
-        CategoryNode rootNode = null;
-        List<Pair<Integer, CategoryNode>> second_layer = new ArrayList<>();
-        List<Pair<Integer, CategoryNode>> third_layer = new ArrayList<>();
-        while(c.moveToNext()) {
-            CategoryNode node = new CategoryNode();
-            node.setId(c.getInt(0));
-            node.setTitle(c.getString(1));
-            node.setLevel(c.getInt(3));
-            Pair<Integer, CategoryNode> pair = new Pair<>(c.getInt(2), node);
-            switch (node.getLevel()) {
-                case 1:
-                    rootNode = node;
-                    break;
-                case 2:
-                    second_layer.add(pair);
-                    break;
-                case 3:
-                    third_layer.add(pair);
-                    break;
-                default:
-                    break;
-            }
-        }
-        c.close();
-        for(Pair<Integer, CategoryNode> second_pair : second_layer) {
-            CategoryNode secondNode = second_pair.second;
-            if(second_pair.first.equals(rootNode.getId())) {
-                rootNode.getLowLayer().add(secondNode);
-                secondNode.setParent(rootNode);
-                second_layer.remove(second_pair);
-            }
-            for(Pair<Integer, CategoryNode> third_pair : third_layer) {
-                CategoryNode thirdNode = third_pair.second;
-                if(third_pair.first.equals(secondNode.getId())) {
-                    secondNode.getLowLayer().add(thirdNode);
-                    thirdNode.setParent(secondNode);
-                    third_layer.remove(third_pair);
-                }
-            }
-        }
-        return rootNode;
     }
 }

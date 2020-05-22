@@ -2,26 +2,30 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
 
-//import java.lang.reflect.Array;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryNodeDto implements Serializable {
     private int id;
     private String title;
-    private String url;
     private int level;
     private List<String> hashtags;
-
+    private String url;
 
     private CategoryNodeDto parent;
     private List<CategoryNodeDto> lowLayer;
     private List<PostDto> posts;
 
+    private RequestForm requestForm;
+
     public CategoryNodeDto() {
         this.id = 0;
-        url = null;
         hashtags = new ArrayList<>();
         lowLayer = new ArrayList<>();
         posts = new ArrayList<>();
@@ -39,9 +43,11 @@ public class CategoryNodeDto implements Serializable {
         for (CategoryNodeDto secondNodeDto : lowLayer) {
             CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
             secondNode.setId(secondNodeDto.getId());
+            secondNode.setHashtags(secondNodeDto.getHashtags());
             for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                 CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
                 thirdNode.setId(thirdNodeDto.getId());
+                thirdNode.setHashtags(thirdNodeDto.getHashtags());
                 secondNode.getLowLayer().add(thirdNode);
             }
             rootNode.getLowLayer().add(secondNode);
@@ -54,21 +60,12 @@ public class CategoryNodeDto implements Serializable {
     }
 
     public void setId(int id) { this.id = id;}
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public CategoryNodeDto getParent() {
@@ -103,10 +100,18 @@ public class CategoryNodeDto implements Serializable {
         return lowLayer;
     }
 
-    public void addLowLayer(CategoryNodeDto node) { this.lowLayer.add(node); }
-
     public void setLowLayer(List<CategoryNodeDto> lowLayer) {
         this.lowLayer = lowLayer;
+    }
+
+    public void addLowLayer(CategoryNodeDto node) { this.lowLayer.add(node); }
+
+    public RequestForm getRequestForm() {
+        return requestForm;
+    }
+
+    public void setRequestForm(RequestForm requestForm) {
+        this.requestForm = requestForm;
     }
 
     public int getLevel() {
@@ -117,17 +122,22 @@ public class CategoryNodeDto implements Serializable {
         this.level = level;
     }
 
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{\"title\" : ").append("\"").append(title).append("\"").append(",").
-                append("\"level\" : ").append("\"").append(level).append("\"").append(",").
-                append("\"lowLayer\" : [");
-        for(CategoryNodeDto lowNode : lowLayer) {
-            buffer.append(lowNode.toString());
-        }
-        buffer.append("]}");
-
-        return buffer.toString();
+    public String getUrl() {
+        return url;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", level=" + level +
+                ", hashtags=" + hashtags +
+                ", lowLayer=" + lowLayer +
+                "}\n";
+    }
 }

@@ -1,5 +1,6 @@
 package com.capstone.moayo.data;
 
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public class CategoryData_Dummy {
         CategoryNodeDto travel = new CategoryNodeDto("여행", null, 1);
         travel.setUrl("https://image.edaily.co.kr/images/Photo/files/NP/S/2016/06/PS16060300126.jpg");
 
-        //Dummy CategoryNode
+        //Dummy CategoryNodeDto
         CategoryNodeDto dummy = new CategoryNodeDto("더미", null, 1);
         dummy.setUrl("https://image.flaticon.com/icons/png/512/130/130304.png");
 
