@@ -14,11 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.ShareMenuAdapter;
 import com.capstone.moayo.data.SharedData_Sample;
 
-public class ShareMenuActivity extends AppCompatActivity {
+public class ShareMenuActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.MainTopRecyclerAdapter;
 import com.capstone.moayo.adapter.MainCenterRecyclerAdapter;
@@ -28,7 +29,7 @@ import com.capstone.moayo.service.DataBindingService;
 import com.capstone.moayo.storage.StorageFactory;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
 
     private CategoryService categoryService;

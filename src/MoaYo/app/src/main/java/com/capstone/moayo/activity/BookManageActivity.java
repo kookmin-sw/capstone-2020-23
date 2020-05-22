@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
@@ -23,7 +24,7 @@ import com.capstone.moayo.entity.CategoryNode;
 import java.util.ArrayList;
 
 
-public class BookManageActivity extends AppCompatActivity {
+public class BookManageActivity extends BaseActivity {
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
 

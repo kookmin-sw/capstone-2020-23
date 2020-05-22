@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
@@ -23,7 +24,7 @@ import com.capstone.moayo.fragment.FormMainFragment;
 
 import java.util.ArrayList;
 
-public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener {
+public class BookFormActivity extends BaseActivity implements FormEditFragment.OnChangeLevelListener {
     private FragmentManager fm;
     private FragmentTransaction tran;
     private Category category;
