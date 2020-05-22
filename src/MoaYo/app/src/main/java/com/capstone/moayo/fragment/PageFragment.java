@@ -87,9 +87,9 @@ public class PageFragment extends Fragment implements OnClickListener {
                 // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
                 intent.putExtra("categoryNode", node);
                 startActivity(intent);
-//                v.setSelected(false);
+                v.setSelected(false);
             }
-        }, 500);
+        }, 400);
 
     }
 }
