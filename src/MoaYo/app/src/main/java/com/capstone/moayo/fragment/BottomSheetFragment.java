@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,15 +39,16 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private CategoryNodeDto parentNode;
     private String word;
     private Button cancel_btn, save_btn;
-    private ImageButton delete_btn;
+    private ImageButton delete_btn, add_tag_btn;
     private TextView keyword;
+    private EditText input_tag_et;
     private OnEditNodeListener callback;
 
     private String FORM_MODE;
 
     private ListView listview;
     private ArrayAdapter adapter;
-    private ArrayList<String> tags;
+    private ArrayList<String> synonym_tags;
 
     public void setOnEditNodeListener(OnEditNodeListener callback) {
         this.callback = callback;
@@ -102,10 +105,27 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         cancel_btn = (Button) view.findViewById(R.id.dialog_tag_btn_cancel);
         save_btn = (Button) view.findViewById(R.id.dialog_tag_btn_save);
         delete_btn = (ImageButton) view.findViewById(R.id.dialog_tag_btn_delete);
+        add_tag_btn = (ImageButton) view.findViewById(R.id.dialog_tag_ib_add_hashtag);
+
+        input_tag_et = (EditText) view.findViewById(R.id.dialog_tag_et_input);
 
         FORM_MODE = getArguments().getString("MODE");
         parentNode = (CategoryNodeDto) getArguments().getSerializable("parentNode");
 
+        //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
+        synonym_tags = new ArrayList<String>();
+
+        synonym_tags.add("hashtag1");
+        synonym_tags.add("hashtag2");
+        synonym_tags.add("hashtag3");
+        synonym_tags.add("hashtag4");
+        synonym_tags.add("hashtag5");
+
+
+
+        adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, synonym_tags);
+        listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
+        listview.setAdapter(adapter);
 
         switch (FORM_MODE) {
             case "ADD":
@@ -116,35 +136,26 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             case "EDIT":
                 node = (CategoryNodeDto) getArguments().getSerializable("selectedNode");
                 keyword.setText(node.getTitle());
+                save_btn.setText("Update");
+
+                //node에 저장된 태그정보들을 불러와 일치하는 hashtag setItemChecked 처리.
+                ArrayList<String> selected_tags =  (ArrayList<String>) node.getHashtags();
+                for(String tag:selected_tags) {
+                    int idx = synonym_tags.indexOf(tag);
+
+                    if( idx != -1) listview.setItemChecked(idx, true);
+                    else addHashTag(tag); //만일 저장된 태그가 리스트에 없을 시 추가.
+                }
+                
                 break;
         }
 
-        //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
-        tags = new ArrayList<String>();
 
-        tags.add("hashtag1");
-        tags.add("hashtag2");
-        tags.add("hashtag3");
-        tags.add("hashtag4");
-        tags.add("hashtag5");
-        tags.add("hashtag6");
-        tags.add("hashtag7");
-        tags.add("hashtag8");
-        tags.add("hashtag10");
-        tags.add("hashtag9");
-        tags.add("hashtag9");
-        tags.add("hashtag9");
-        tags.add("hashtag9");
-
-
-
-        adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, tags);
-        listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
-        listview.setAdapter(adapter);
 
         cancel_btn.setOnClickListener(this);
         save_btn.setOnClickListener(this);
         delete_btn.setOnClickListener(this);
+        add_tag_btn.setOnClickListener(this);
 
         return view;
     }
@@ -158,43 +169,57 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
             case R.id.dialog_tag_btn_save:
                 if (FORM_MODE == "ADD") {
-                    add();
+                    addKeyword();
                 } else {
-                    edit();
+                    editKeyword();
                 }
                 dismiss();
                 break;
             case R.id.dialog_tag_btn_delete:
-                delete();
+                deleteKeyword();
                 dismiss();
                 break;
+            case R.id.dialog_tag_ib_add_hashtag:
+                String custom_tag = input_tag_et.getText().toString();
+                if (!custom_tag.isEmpty()) {
+                    addHashTag(custom_tag);
+                    input_tag_et.setText(""); //입력폼 초기화
+                } else { Toast.makeText(getContext(), "검색될 해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show(); }
         }
     }
 
+    private void addHashTag(String add_tag) {
+        synonym_tags.add(add_tag); // 해시태그를 리스트에 추가.
+        listview.setItemChecked(synonym_tags.indexOf(add_tag), true); //추가된 해시태그를 자동 체크.
 
-    private void add() {
+        adapter.notifyDataSetChanged(); //업데이트된 리스트를 adapter에 적용.
+    }
+
+
+    private void addKeyword() {
         node = new CategoryNodeDto(word, parentNode, parentNode.getLevel()+1);
 
         //node 객체에 선택된 해시태그들을 담음
-        ArrayList<String> hashtags = new ArrayList<>();
+        ArrayList<String> hashTags = new ArrayList<>();
         SparseBooleanArray checkedTags = listview.getCheckedItemPositions();
         for (int i = adapter.getCount()-1; i >= 0; i--) {
             if (checkedTags.get(i)) {
-                hashtags.add(tags.get(i));
+                hashTags.add(synonym_tags.get(i));
             }
         }
-        node.setHashtags((List) hashtags);
+        node.setHashtags((List) hashTags);
 //        Log.d("node_tags", node.getHashtags().toString());
         listview.clearChoices(); // 모든 선택상태 초기화.
 
         callback.onAddNode(node);
     }
 
-    private void edit() {
+    private void editKeyword() {
         //edit logic
+
     }
 
-    private void delete() {
+    private void deleteKeyword() {
         callback.onRemoveNode(node);
     }
 

@@ -83,7 +83,6 @@ public class BookManageActivity extends AppCompatActivity {
 //        ArrayList<CategoryDto> categories_data = new ArrayList<>();
 //
 //        categories_data.add(categoryService.findCategoryById(0));
-//
 //        return  categories_data;
     }
 

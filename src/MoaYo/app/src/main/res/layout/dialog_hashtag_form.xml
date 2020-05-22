@@ -70,7 +70,7 @@
             android:hint="Hashtag" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/dialog_tag_ib_add_hashtag"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="12dp"
