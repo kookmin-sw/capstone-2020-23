@@ -121,6 +121,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
         //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
         tags = new ArrayList<String>();
+
         tags.add("hashtag1");
         tags.add("hashtag2");
         tags.add("hashtag3");

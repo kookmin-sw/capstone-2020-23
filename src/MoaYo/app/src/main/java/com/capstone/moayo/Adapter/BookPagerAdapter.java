@@ -19,6 +19,7 @@ public class BookPagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<ArrayList<CategoryDto>> pages;
 
 
+
     //페이지네이션 로직.
     public static <T> ArrayList<ArrayList<T>> split(ArrayList<T> resList, int count) {
         if (resList == null || count < 1)

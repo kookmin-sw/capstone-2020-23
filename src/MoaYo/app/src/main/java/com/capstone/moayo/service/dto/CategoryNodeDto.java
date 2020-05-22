@@ -104,8 +104,6 @@ public class CategoryNodeDto implements Serializable {
         this.lowLayer = lowLayer;
     }
 
-    public void addLowLayer(CategoryNodeDto node) { this.lowLayer.add(node); }
-
     public RequestForm getRequestForm() {
         return requestForm;
     }

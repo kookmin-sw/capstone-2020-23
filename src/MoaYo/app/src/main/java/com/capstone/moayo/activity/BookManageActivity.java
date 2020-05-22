@@ -17,11 +17,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
-//import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.entity.CategoryNode;
+
 import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.service.concrete.ConcreteCategoryService;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 

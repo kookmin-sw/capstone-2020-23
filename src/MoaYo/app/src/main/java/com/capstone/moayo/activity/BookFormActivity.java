@@ -17,11 +17,16 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
 import com.capstone.moayo.service.CategoryService;
+
 import com.capstone.moayo.service.concrete.ConcreteCategoryService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener {
     private FragmentManager fm;
@@ -51,6 +56,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         toolbar_title.setText("도감 생성");
 
 
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         onChangeLevel(0, null);
 
     }
@@ -109,7 +115,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     }
 
     public CategoryNodeDto addNode(CategoryNodeDto node) {
-        currentNode.addLowLayer(node);
+        currentNode.getLowLayer().add(node);
         return currentNode;
     }
 
@@ -130,7 +136,26 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
         category = new CategoryDto(rootNode.getTitle(), null, null, rootNode);
         Log.d("category", category.toString());
-        Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
+        Callable<String> callable = () -> categoryService.createCategory(category);
+        AsyncCallback<String> callback = new AsyncCallback<String>() {
+            @Override
+            public void onResult(String result) {
+                Log.d("create", result);
+                Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+
+        new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
 //        Log.d("rootNode", category.getRootNode().toString());
 
         //--------Backend 통신----------
