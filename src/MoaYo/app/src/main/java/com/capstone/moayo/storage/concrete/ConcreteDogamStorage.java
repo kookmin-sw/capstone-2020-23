@@ -32,7 +32,7 @@ public class ConcreteDogamStorage implements DogamStorage {
 
     @Override
     public int create(Category category) {
-        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword(), category.getStatus());
+        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword(),category.getUrl(), category.getStatus());
 
         category.setId(dogamId);
         categoryMap.put(dogamId, category);
@@ -52,7 +52,7 @@ public class ConcreteDogamStorage implements DogamStorage {
             foundDogam.setStatus(foundCategory.getStatus());
         } else {
             foundDogam = dogamDao.selectById(dbHelper, id);
-            Category category = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), null);
+            Category category = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(),"", null);
             category.setStatus(foundDogam.getStatus());
             categoryMap.put(category.getId(), category);
         }
@@ -64,7 +64,7 @@ public class ConcreteDogamStorage implements DogamStorage {
         if(categoryMap.isEmpty()) {
             DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
             for (DogamMapping dogam : dogamMappings) {
-                Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(), null);
+                Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(),"", null);
                 category.setId(dogam.getId());
 
                 if(!categoryMap.containsKey(category.getId())) categoryMap.put(category.getId(), category);
@@ -76,7 +76,7 @@ public class ConcreteDogamStorage implements DogamStorage {
     @Override
     public void update(Category category) {
         try {
-            boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword(), category.getStatus());
+            boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword(), category.getUrl(), category.getStatus());
             if(result != true)
                 throw new Exception();
         } catch (Exception e) {

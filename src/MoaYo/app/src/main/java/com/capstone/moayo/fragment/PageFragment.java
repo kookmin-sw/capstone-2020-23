@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PageFragment extends Fragment implements OnClickListener {
 
-    private ArrayList<CategoryNodeDto> book_list;
+    private ArrayList<CategoryDto> book_list;
 
     public static PageFragment create(ArrayList book) {
         PageFragment fragment = new PageFragment();
@@ -37,7 +38,7 @@ public class PageFragment extends Fragment implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        book_list= (ArrayList<CategoryNodeDto>) getArguments().getSerializable("key");
+        book_list= (ArrayList<CategoryDto>) getArguments().getSerializable("key");
 
     }
 

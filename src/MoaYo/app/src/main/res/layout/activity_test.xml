@@ -24,4 +24,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="init" />
+
+    <Button
+        android:id="@+id/requestPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RequestPost" />
+
+    <Button
+        android:id="@+id/getTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="reqeustTags" />
 </LinearLayout>

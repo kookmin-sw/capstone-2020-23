@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
 public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<CategoryNodeDto> myBooks = new ArrayList<>();
+    private ArrayList<CategoryDto> myBooks = new ArrayList<>();
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +58,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
     @Override
     public void onBindViewHolder(@NonNull MainTopRecyclerAdapter.ViewHolder vh, int position) {
 
-        CategoryNodeDto item = myBooks.get(position);
+        CategoryDto item = myBooks.get(position);
 
         Glide.with(vh.itemView.getContext()).load(item.getUrl()).into(vh.myBookPost);
 
@@ -71,7 +72,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
         return myBooks.size();
     }
 
-    public void setItems(ArrayList<CategoryNodeDto> items) {
+    public void setItems(ArrayList<CategoryDto> items) {
         this.myBooks = items;
     }
 

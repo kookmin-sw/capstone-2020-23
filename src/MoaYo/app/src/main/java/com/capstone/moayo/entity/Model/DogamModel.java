@@ -13,13 +13,16 @@ public class DogamModel {
     private int status;
     @SerializedName("co_password")
     private String password;
+    @SerializedName("co_url")
+    private String url;
 
-    public DogamModel(int id, String title, String description, int status, String password) {
+    public DogamModel(int id, String title, String description, int status, String password, String url) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.password = password;
+        this.url = url;
     }
 
     public int getId() {
@@ -62,6 +65,14 @@ public class DogamModel {
         this.password = password;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "DogamModel{" +
@@ -70,6 +81,7 @@ public class DogamModel {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 ", password='" + password + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

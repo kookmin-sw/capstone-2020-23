@@ -29,6 +29,7 @@ import com.capstone.moayo.entity.CategoryNode;
 
 import com.capstone.moayo.model.NewPost;
 import com.capstone.moayo.model.SavedPost;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -117,9 +118,9 @@ public class ResultActivity extends AppCompatActivity {
     private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
         //첫번째 index의 dummy data 가져옴
         if(node.getId() == 1) {
-            return new CategoryData_Dummy().getItems().get(0);
+            return new CategoryData_Dummy().getItems().get(0).getRootNode();
         } else {
-            return new CategoryData_Dummy().getItems().get(3);
+            return new CategoryData_Dummy().getItems().get(3).getRootNode();
         }
 
     }

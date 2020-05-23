@@ -10,6 +10,7 @@ import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
@@ -101,7 +102,7 @@ public class ConcreteCategoryService implements CategoryService {
             if(rootNode == null)
                 throw new NoSuchNodeException("there is no such node");
 
-            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), rootNode);
+            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(),"", rootNode);
             foundCategory.setId(foundDogam.getId());
             foundCategoryDto = foundCategory.toCategoryDto();
         } catch (NoSuchCategoryException | NoSuchNodeException e) {
@@ -124,6 +125,7 @@ public class ConcreteCategoryService implements CategoryService {
 
             dogamStorage.update(modifyCategory);
             String result = categoryStorage.update(modifyCategory);
+            initCache(categoryDto);
             return result;
         } catch (NoSuchNodeException | MutableException e) {
             Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
@@ -165,5 +167,16 @@ public class ConcreteCategoryService implements CategoryService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private void initCache(CategoryDto categoryDto) {
+        CategoryNodeDto rootNode = categoryDto.getRootNode();
+        rootNode.getCache().clear();
+        for(CategoryNodeDto secondNode : rootNode.getLowLayer()) {
+            secondNode.getCache().clear();
+            for(CategoryNodeDto thirdNode : secondNode.getLowLayer()) {
+                thirdNode.getCache().clear();
+            }
+        }
     }
 }

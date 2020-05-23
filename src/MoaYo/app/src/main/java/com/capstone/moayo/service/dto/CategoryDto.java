@@ -9,10 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDto {
+public class CategoryDto implements Serializable {
     private int id;
     private String title;
     private String description;

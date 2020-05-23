@@ -9,13 +9,20 @@ import android.widget.Button;
 
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.sqlite.DBHelper;
+import com.capstone.moayo.data.CategoryData_Dummy;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.SearchService;
+import com.capstone.moayo.service.ServiceFactory;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.Tag.TagsFinder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -24,8 +31,11 @@ public class TestActivity extends AppCompatActivity {
     Button findBtn;
     Button createBtn;
     Button initBtn;
+    Button requestBtn;
+    Button tagBtn;
 
     CategoryService categoryService;
+    SearchService searchService;
     DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +45,11 @@ public class TestActivity extends AppCompatActivity {
         findBtn = findViewById(R.id.find);
         createBtn = findViewById(R.id.create);
         initBtn = findViewById(R.id.init);
+        requestBtn = findViewById(R.id.requestPost);
+        tagBtn = findViewById(R.id.getTag);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         createBtn.setOnClickListener(v -> {
@@ -89,6 +102,72 @@ public class TestActivity extends AppCompatActivity {
         initBtn.setOnClickListener(v -> {
             SQLiteDatabase mDB = dbHelper.getWritableDB();
             dbHelper.upgrade(mDB);
+        });
+
+        requestBtn.setOnClickListener(v -> {
+            CategoryDto categoryDto = new CategoryDto("dummy", "dummy data", "1234", "", null);
+            CategoryNodeDto secondNode = new CategoryNodeDto("secondNode", null, 2);
+            CategoryNodeDto thirdNode = new CategoryNodeDto("thirdNode", null, 3);
+
+            secondNode.getHashtags().add("중식");
+            secondNode.getHashtags().add("중국요리");
+            secondNode.getHashtags().add("맛집");
+
+            thirdNode.getHashtags().add("짜장면");
+            thirdNode.getHashtags().add("차이나타운");
+            thirdNode.getHashtags().add("중국집");
+
+            Callable<RespondForm> callable = () -> searchService.requestData(secondNode, thirdNode);
+            AsyncCallback<RespondForm> callback = new AsyncCallback<RespondForm>() {
+                @Override
+                public void onResult(RespondForm result) {
+                    System.out.println(result.getThrid_layer().toString());
+                    System.out.println(result.getSecond_layer_cache().toString());
+                    System.out.println(result.getThird_layer_cache().toString());
+                }
+
+                @Override
+                public void exceptionOccured(Exception e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+
+            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
+        });
+
+        tagBtn.setOnClickListener(v -> {
+            Callable<List<String>> callable = () -> TagsFinder.getRelevantTags("유산슬");
+            AsyncCallback<List<String>> callback = new AsyncCallback<List<String>>() {
+                @Override
+                public void onResult(List<String> result) {
+                    for(String r : result) {
+                        System.out.println(r);
+                    }
+                }
+
+                @Override
+                public void exceptionOccured(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+
+            new AsyncExecutor<List<String>>().setCallable(callable).setCallback(callback).execute();
+//            TagsFinder tagsFinder = new TagsFinder();
+//            try {
+//                tagsFinder.getSimilarTags("중식");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
     }
 

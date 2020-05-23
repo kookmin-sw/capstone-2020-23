@@ -1,6 +1,7 @@
 package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.util.CategoryConvertor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,13 +23,14 @@ public class CategoryNodeDto implements Serializable {
     private List<CategoryNodeDto> lowLayer;
     private List<PostDto> posts;
 
-    private RequestForm requestForm;
+    private List<String> cache;
 
     public CategoryNodeDto() {
         this.id = 0;
         hashtags = new ArrayList<>();
         lowLayer = new ArrayList<>();
         posts = new ArrayList<>();
+        cache = new ArrayList<>();
     }
     public CategoryNodeDto(String title, CategoryNodeDto parent, int level) {
         this();
@@ -104,12 +106,12 @@ public class CategoryNodeDto implements Serializable {
         this.lowLayer = lowLayer;
     }
 
-    public RequestForm getRequestForm() {
-        return requestForm;
+    public List<String> getCache() {
+        return cache;
     }
 
-    public void setRequestForm(RequestForm requestForm) {
-        this.requestForm = requestForm;
+    public void setCache(List<String> cache) {
+        this.cache = cache;
     }
 
     public int getLevel() {
