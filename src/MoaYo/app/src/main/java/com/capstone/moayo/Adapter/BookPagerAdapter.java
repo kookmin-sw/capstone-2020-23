@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.capstone.moayo.fragment.PageFragment;
+
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -22,6 +23,8 @@ public class BookPagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<ArrayList<CategoryDto>> pages;
 
 
+
+    //페이지네이션 로직.
     public static <T> ArrayList<ArrayList<T>> split(ArrayList<T> resList, int count) {
         if (resList == null || count < 1)
             return null;
@@ -34,7 +37,7 @@ public class BookPagerAdapter extends FragmentStatePagerAdapter {
             int pre = size / count;
             int last = size % count;
             // 앞 pre 개 집합, 모든 크기 다 count 가지 요소
-            for (int i = 0; i <pre; i++) {
+            for (int i = 0; i < pre; i++) {
                 ArrayList<T> itemList = new ArrayList<T>();
                 for (int j = 0; j <count; j++) {
                     itemList.add(resList.get(i * count + j));
@@ -52,9 +55,6 @@ public class BookPagerAdapter extends FragmentStatePagerAdapter {
         }
         return ret;
     }
-
-//    private ArrayList<CategoryNode> myBookList = createData();
-//    private ArrayList<ArrayList<CategoryNode>> pages = split(myBookList, 9);
 
 
     public BookPagerAdapter(FragmentManager fragmentManager, ArrayList<CategoryDto> userBookData) {

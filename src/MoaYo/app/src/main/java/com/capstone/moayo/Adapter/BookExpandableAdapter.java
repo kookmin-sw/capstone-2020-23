@@ -7,13 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-//import android.widget.ExpandableListView;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.activity.ResultActivity;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -68,8 +67,6 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
             text.setTextColor(Color.parseColor("#1e90ff"));
         }
 
-//        TextView sub_text = (TextView)view.findViewById(R.id.text2);
-//        sub_text.setText(mBookData.get(groupPosition).title);
 
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.child_search_btn);
         searchBtn.setFocusable(false);
@@ -206,17 +203,9 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
     private boolean isSelectedNode(CategoryNodeDto target, CategoryNodeDto selected) {
         if(target == null || selected == null) {
-//            Log.d("state", "1. null");
             return false;
         } else {
-            if(target.getTitle().equals(selected.getTitle())) {
-                return true;
-            } else {
-                return false;
-            }
+            if (target.getTitle().equals(selected.getTitle()))  return true; else return false;
         }
-
-
-
     }
 }

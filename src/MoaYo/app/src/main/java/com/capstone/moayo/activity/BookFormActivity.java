@@ -14,11 +14,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.Category;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
 import com.capstone.moayo.service.CategoryService;
+
+import com.capstone.moayo.service.concrete.ConcreteCategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -28,6 +28,7 @@ import com.capstone.moayo.util.Async.AsyncExecutor;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+
 public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener {
     private FragmentManager fm;
     private FragmentTransaction tran;
@@ -35,7 +36,6 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
     private CategoryNodeDto rootNode;
     private CategoryNodeDto currentNode;
     private TextView toolbar_title;
-
     private CategoryService categoryService;
 
 
@@ -69,9 +69,9 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
         fm = getSupportFragmentManager();
         tran = fm.beginTransaction();
-//        tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         tran.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
                 R.anim.slide_in_left, R.anim.slide_out_right);
+
         if(selectedNode != null ) {
             currentNode = selectedNode;
         } else {
@@ -147,12 +147,9 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
             @Override
             public void exceptionOccured(Exception e) {
-
             }
-
             @Override
             public void cancelled() {
-
             }
         };
 
@@ -160,7 +157,9 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 //        Log.d("rootNode", category.getRootNode().toString());
 
         //--------Backend 통신----------
-        //service - CategoryService - create()
+//        categoryService = new ConcreteCategoryService(getApplicationContext());
+//        String result = categoryService.createCategory(category);
+//        Log.d("create_result", result);
     }
 
     @Override
