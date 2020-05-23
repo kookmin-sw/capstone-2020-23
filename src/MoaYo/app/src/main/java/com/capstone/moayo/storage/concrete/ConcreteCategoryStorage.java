@@ -9,6 +9,7 @@ import com.capstone.moayo.dao.CategoryHashtagDao;
 import com.capstone.moayo.dao.HashtagDao;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.mapping.CategoryHashTagMapping;
+import com.capstone.moayo.dao.mapping.CategoryMapping;
 import com.capstone.moayo.dao.mapping.HashTagMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Category;
@@ -46,7 +47,6 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId, dogamId);
         createCategoryHashTag(dogamId, rootId, rootNode.getHashtags());
         rootNode.setId(rootId);
-        rootNode.setParent(rootNode);
         for (CategoryNode secondNode : rootNode.getLowLayer()) {
             createHashTag(secondNode.getHashtags());
             int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootId, secondNode.getTitle(), dogamId, dogamId);
@@ -62,54 +62,54 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             }
         }
         categoryMap.get(dogamId).setRootNode(rootNode);
-        Log.d("create category", categoryMap.get(dogamId).toString());
         return "create category" + dogamId;
     }
 
     @Override
-    public CategoryNode retrieveById(int id) {
-//        Iterator<CategoryNode> iterator = categoryNodeMap.values().iterator();
-//        while(iterator.hasNext()) {
-//            CategoryNode rootNode = iterator.next();
-//            if(rootNode.getId() == id) return rootNode;
-//            else {
-//                for (CategoryNode secondNode : rootNode.getLowLayer()) {
-//                    if (secondNode.getId() == id) return secondNode;
-//                    else {
-//                        for (CategoryNode thirdNode : secondNode.getLowLayer()) {
-//                            if (thirdNode.getId() == id) return thirdNode;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
+    public CategoryNode retrieveById(int dogamId, int nodeId) {
+        if(!categoryMap.containsKey(dogamId)) {
+            CategoryMapping categoryMapping = categoryDao.selectById(dbHelper, nodeId);
+            CategoryNode foundNode = new CategoryNode(categoryMapping.getTitle(), null, categoryMapping.getLevel());
+            foundNode.setId(categoryMapping.getId());
+            return foundNode;
+        } else {
+            CategoryNode rootNode = categoryMap.get(dogamId).getRootNode();
+            Iterator<CategoryNode> secondIterator = rootNode.getLowLayer().iterator();
+            while (secondIterator.hasNext()) {
+                CategoryNode secondNode = secondIterator.next();
+                if (secondNode.getId() == nodeId) return secondNode;
+                Iterator<CategoryNode> thirdIterator = secondNode.getLowLayer().iterator();
+                while (thirdIterator.hasNext()) {
+                    CategoryNode thirdNode = thirdIterator.next();
+                    if (thirdNode.getId() == nodeId) return thirdNode;
+                }
+            }
+        }
         return null;
     }
 
     @Override
     public CategoryNode retrieveByDogamId(int id) {
-//        if(!categoryMap.containsKey(id)) {
-        // find root node
-        CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
-        if (rootNode == null) return null;
+        if(!categoryMap.containsKey(id) || categoryMap.get(id).getRootNode() == null) {
+            // find root node
+            CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
+            if (rootNode == null) return null;
 
-        // find hash tags
-        for (CategoryNode secondNode : rootNode.getLowLayer()) {
-            List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
-            for (int i = 0; i < mappings.size(); i++) {
-                secondNode.getHashtags().add(mappings.get(i).getHashtag());
+            // find hash tags
+            for (CategoryNode secondNode : rootNode.getLowLayer()) {
+                List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
+                for (int i = 0; i < mappings.size(); i++) {
+                    secondNode.getHashtags().add(mappings.get(i).getHashtag());
+                }
+                for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                    List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
+                    for (int j = 0; j < mappings1.size(); j++)
+                        thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
+                }
             }
-            for (CategoryNode thirdNode : secondNode.getLowLayer()) {
-                List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
-                for (int j = 0; j < mappings1.size(); j++)
-                    thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
-            }
+            categoryMap.get(id).setRootNode(rootNode);
         }
-        categoryMap.get(id).setRootNode(rootNode);
-        return rootNode;
-//        } else {
-//            return categoryMap.get(id).getRootNode();
+        return categoryMap.get(id).getRootNode();
     }
 
     @Override
@@ -135,15 +135,38 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                 updateCategoryHashTag(dogamId, thirdNode.getId(), thirdNode.getHashtags());
             }
         }
+
+        categoryMap.get(dogamId).setRootNode(rootNode);
         return "success to update";
     }
 
     @Override
-    public String remove(int id) {
+    public String remove(int dogamId, int id) {
         String result = "";
         boolean re = categoryDao.delete(dbHelper, id);
-        if(re != true) result = "fail to delete node";
-        else result = "success to delete node";
+        if(re != true)
+            result = "fail to delete node";
+         else  {
+             result = "success to delete node";
+             CategoryNode rootNode = categoryMap.get(dogamId).getRootNode();
+             if(rootNode.getId() == id) {
+                 categoryMap.get(dogamId).setRootNode(null);
+                 return result;
+             }
+             for(CategoryNode secondNode : rootNode.getLowLayer()) {
+                 if(secondNode.getId() == id) {
+                     rootNode.getLowLayer().remove(secondNode);
+                     return result;
+                 }
+                 for(CategoryNode thirdNode : secondNode.getLowLayer()) {
+                     if(thirdNode.getId() == id) {
+                         secondNode.getLowLayer().remove(thirdNode);
+                         return result;
+                     }
+                 }
+             }
+
+        }
         return result;
     }
 

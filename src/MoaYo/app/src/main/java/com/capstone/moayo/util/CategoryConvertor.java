@@ -13,11 +13,21 @@ public class CategoryConvertor {
         form.setSecond_layer(secondNode.getHashtags());
         form.setThird_layer(thirdNode.getHashtags());
 
-        String[] secondCache = new String[form.getSecond_layer().size()];
-        String[] thirdCache = new String[form.getThird_layer().size()];
+        if(secondNode.getCache().size() == 0) {
+            String[] secondCache = new String[secondNode.getHashtags().size()];
+            for(int i = 0; i < secondCache.length; i++) secondCache[i] = "";
+            form.setSecond_layer_cache(secondCache);
+        } else {
+            form.setSecond_layer_cache((String[]) secondNode.getCache().toArray());
+        }
 
-        for(int i = 0; i < secondCache.length; i++) secondCache[i] = "";
-        for(int i = 0; i < thirdCache.length; i++) thirdCache[i] = "";
+        if(thirdNode.getCache().size() == 0) {
+            String[] thirdCache = new String[thirdNode.getHashtags().size()];
+            for(int i = 0; i < thirdCache.length; i++) thirdCache[i] = "";
+            form.setThird_layer_cache(thirdCache);
+        } else {
+            form.setSecond_layer_cache((String[]) secondNode.getCache().toArray());
+        }
 
         return form;
     }

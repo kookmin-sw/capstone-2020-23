@@ -20,6 +20,7 @@ public class Category{
     private String description;
     private String password;
     private DogamStatus status;
+    private String url;
 
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
@@ -28,11 +29,12 @@ public class Category{
         id = 0;
         status = DogamStatus.NonShare;
     }
-    public Category(String title, String description, String password,CategoryNode rootNode) {
+    public Category(String title, String description, String password, String url, CategoryNode rootNode) {
         this();
         this.title = title;
         this.description = description;
         this.password = password;
+        this.url = url;
         this.rootNode = rootNode;
         this.selectCategoryNode = rootNode;
     }
@@ -40,8 +42,8 @@ public class Category{
     public CategoryDto toCategoryDto() {
         CategoryDto categoryDto = null;
         if(rootNode != null)
-            categoryDto = new CategoryDto(title, description, password, rootNode.toCategoryNodeDto());
-        else categoryDto = new CategoryDto(title, description, password, null);
+            categoryDto = new CategoryDto(title, description, password, url, rootNode.toCategoryNodeDto());
+        else categoryDto = new CategoryDto(title, description, password, url, null);
 
         categoryDto.setId(id);
         categoryDto.setStatus(status);
@@ -86,6 +88,14 @@ public class Category{
 
     public void setStatus(DogamStatus status) {
         this.status = status;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public CategoryNode getSelectCategoryNode() {

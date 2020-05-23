@@ -7,41 +7,30 @@ import android.util.Log;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TagsFinder{
 
-    private String relevantURL ="https://www.tagsfinder.com/ko-kr/related/";
-    private String similarURL = "https://www.tagsfinder.com/ko-kr/similar/";
+    private static final String relevantURL ="https://www.tagsfinder.com/ko-kr/related/";
+    private static final String similarURL = "https://www.tagsfinder.com/ko-kr/similar/";
 
-    public void getRelevantTags(String tag) throws Exception {
-        NetworkTask networkTask = new NetworkTask(relevantURL + tag,null);
-        networkTask.execute();
+    public static List<String> getRelevantTags(String tag) throws Exception {
+        RequestHttpConnection requestHttpConnection = new RequestHttpConnection();
+        String result = requestHttpConnection.request(relevantURL+tag, null);
+        Document document = Jsoup.parse(result);
+        String tags = document.getElementById("hashtagy").text();
+        tags = tags.replaceAll("#", "");
+        String[] hashtags = tags.split(" ");
+        return Arrays.asList(hashtags);
     }
-    public void getSimilarTags(String tag){
-        NetworkTask networkTask = new NetworkTask(similarURL + tag,null);
-        networkTask.execute();
-    }
-    public class NetworkTask extends AsyncTask<Void, Void, String>{
-        private String url;
-        private ContentValues values;
-
-        public NetworkTask(String url, ContentValues values) {
-            this.url = url;
-            this.values = values;
-        }
-
-        @Override
-        protected String doInBackground(Void... params){
-            String result;
-            RequestHttpConnection requestHttpConnection = new RequestHttpConnection();
-            result = requestHttpConnection.request(url,values);
-            return result;
-        }
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            Document document = Jsoup.parse(s);
-            // 이 부분을 수정 바랍니다.
-            System.out.println(document.getElementById("hashtagy").text());
-        }
+    public static List<String> getSimilarTags(String tag) {
+        RequestHttpConnection requestHttpConnection = new RequestHttpConnection();
+        String result = requestHttpConnection.request(similarURL + tag, null);
+        Document document = Jsoup.parse(result);
+        String tags = document.getElementById("hashtagy").text();
+        tags = tags.replaceAll("#", "");
+        String[] hashtags = tags.split(" ");
+        return Arrays.asList(hashtags);
     }
 }

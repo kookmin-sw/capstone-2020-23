@@ -135,7 +135,7 @@ public class BookFormActivity extends AppCompatActivity implements FormEditFragm
 
     public void onSubmit() {
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
-        category = new CategoryDto(rootNode.getTitle(), null, null, rootNode);
+        category = new CategoryDto(rootNode.getTitle(), null, null,null,  rootNode);
         Log.d("category", category.toString());
         Callable<String> callable = () -> categoryService.createCategory(category);
         AsyncCallback<String> callback = new AsyncCallback<String>() {

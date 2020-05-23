@@ -24,7 +24,6 @@ public class PageFragment extends Fragment implements OnClickListener {
 
     private ArrayList<CategoryDto> book_list;
 
-
     public static PageFragment create(ArrayList book) {
         PageFragment fragment = new PageFragment();
         Bundle args = new Bundle();
@@ -37,7 +36,6 @@ public class PageFragment extends Fragment implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         book_list= (ArrayList<CategoryDto>) getArguments().getSerializable("key");
 
     }

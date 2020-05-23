@@ -1,23 +1,25 @@
 package com.capstone.moayo.data;
 
 import com.capstone.moayo.entity.CategoryNode;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
 public class CategoryData_Dummy {
 
-    ArrayList<CategoryNodeDto> nodes;
+    ArrayList<CategoryDto> nodes;
 
     public CategoryData_Dummy() {
         nodes = new ArrayList<>();
     }
 
-    public ArrayList<CategoryNodeDto> getItems() {
+    public ArrayList<CategoryDto> getItems() {
         //      Node <<Movie>>
-        CategoryNodeDto movie = new CategoryNodeDto("영화", null, 1);
-        movie.setUrl("https://t1.daumcdn.net/movie/da2e6f0663514ba3aaf1f003733d08831560262646934");
+        CategoryDto movieDogam = new CategoryDto("영화", null, null,"", null);
+        movieDogam.setUrl("https://t1.daumcdn.net/movie/da2e6f0663514ba3aaf1f003733d08831560262646934");
 
+        CategoryNodeDto movie = new CategoryNodeDto("영화", null, 1);
         CategoryNodeDto romance = new CategoryNodeDto("로맨스", movie, 2);
         CategoryNodeDto thriller = new CategoryNodeDto("스릴러", movie, 2);
         CategoryNodeDto horror = new CategoryNodeDto("호러", movie,2);
@@ -37,11 +39,12 @@ public class CategoryData_Dummy {
         movie_lowlayer.add(fantasy);
 
         movie.setLowLayer(movie_lowlayer);
-
+        movieDogam.setRootNode(movie);
 
         //      Node <<Fashion>>
+        CategoryDto fashionDogam = new CategoryDto("패션", null, null, "", null);
+        fashionDogam.setUrl("https://usercontents-c.styleshare.io/images/19518035/640x-");
         CategoryNodeDto fashion = new CategoryNodeDto("패션", null, 1);
-        fashion.setUrl("https://usercontents-c.styleshare.io/images/19518035/640x-");
 //
 //        CategoryNode pants = new CategoryNode("하의", fashion, );
 //        CategoryNode denim_pants = new CategoryNode("데님바지","");
@@ -71,8 +74,9 @@ public class CategoryData_Dummy {
 //        fashion.addChild(outer);
 
         //  Node <<Singer>>
+        CategoryDto singerDogam = new CategoryDto("가수", null, null, "", null);
         CategoryNodeDto singer = new CategoryNodeDto("가수", null, 1);
-        singer.setUrl("https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile5.uf.tistory.com%2Fimage%2F99C86B485DCC0E3314477E");
+        singerDogam.setUrl("https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile5.uf.tistory.com%2Fimage%2F99C86B485DCC0E3314477E");
         CategoryNodeDto trot = new CategoryNodeDto("트로트", singer, 2);
         CategoryNodeDto ballad = new CategoryNodeDto("발라드", singer, 2);
         CategoryNodeDto hiphop = new CategoryNodeDto("힙합", singer, 2);
@@ -100,11 +104,12 @@ public class CategoryData_Dummy {
         singer_lowlayer.add(dance);
 
         singer.setLowLayer(singer_lowlayer);
-
+        singerDogam.setRootNode(singer);
 
         //맛집
+        CategoryDto foodDogam = new CategoryDto("맛집", null, null, "", null);
         CategoryNodeDto food = new CategoryNodeDto("맛집", null, 1);
-        food.setUrl("https://www.polinews.co.kr/data/photos/20190102/art_15469376601633_583641.jpg");
+        foodDogam.setUrl("https://www.polinews.co.kr/data/photos/20190102/art_15469376601633_583641.jpg");
 
         CategoryNodeDto korean_food = new CategoryNodeDto("한식", food, 2);
         CategoryNodeDto japenese_food = new CategoryNodeDto("일식", food, 2);
@@ -138,35 +143,39 @@ public class CategoryData_Dummy {
         food_lowlayer.add(dessert);
         food.setLowLayer(food_lowlayer);
 
-
+        foodDogam.setRootNode(food);
 
         //가구
+        CategoryDto furnitureDogam = new CategoryDto("가구", null, null, "", null);
         CategoryNodeDto furniture = new CategoryNodeDto("가구", null, 1);
-        furniture.setUrl("https://post-phinf.pstatic.net/MjAxODA2MTVfMjI3/MDAxNTI5MDI0OTEyNzkw.nZysM1B1Cph53JAl2hPk91kh5p1C7P1EZfV_vfiSGsMg.CYE_l4wAKZ-qKfmEFH_WdZ0uDz7x-GYsd3e3Hr1232Ag.PNG/6.png?type=w800_q75");
-
+        furnitureDogam.setUrl("https://post-phinf.pstatic.net/MjAxODA2MTVfMjI3/MDAxNTI5MDI0OTEyNzkw.nZysM1B1Cph53JAl2hPk91kh5p1C7P1EZfV_vfiSGsMg.CYE_l4wAKZ-qKfmEFH_WdZ0uDz7x-GYsd3e3Hr1232Ag.PNG/6.png?type=w800_q75");
+        furnitureDogam.setRootNode(furniture);
         //여행
+        CategoryDto travelDogam = new CategoryDto("여행", null, null, "", null);
         CategoryNodeDto travel = new CategoryNodeDto("여행", null, 1);
-        travel.setUrl("https://image.edaily.co.kr/images/Photo/files/NP/S/2016/06/PS16060300126.jpg");
-
+        travelDogam.setUrl("https://image.edaily.co.kr/images/Photo/files/NP/S/2016/06/PS16060300126.jpg");
+        travelDogam.setRootNode(travel);
         //Dummy CategoryNodeDto
+        CategoryDto dummyDogam = new CategoryDto("더미", null, null, "", null);
         CategoryNodeDto dummy = new CategoryNodeDto("더미", null, 1);
-        dummy.setUrl("https://image.flaticon.com/icons/png/512/130/130304.png");
+        dummyDogam.setUrl("https://image.flaticon.com/icons/png/512/130/130304.png");
 
+        dummyDogam.setRootNode(dummy);
 
-        nodes.add(singer);
-        nodes.add(fashion);
-        nodes.add(movie);
-        nodes.add(food);
-        nodes.add(furniture);
-        nodes.add(travel);
-        nodes.add(dummy);
-        nodes.add(dummy);
-        nodes.add(dummy);
-        nodes.add(dummy);
-        nodes.add(dummy);
-        nodes.add(dummy);
-        nodes.add(dummy);
-        nodes.add(dummy);
+        nodes.add(singerDogam);
+        nodes.add(fashionDogam);
+        nodes.add(movieDogam);
+        nodes.add(foodDogam);
+        nodes.add(furnitureDogam);
+        nodes.add(travelDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
+        nodes.add(dummyDogam);
 
 
         return nodes;

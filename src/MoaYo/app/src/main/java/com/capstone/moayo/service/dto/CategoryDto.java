@@ -19,6 +19,7 @@ public class CategoryDto implements Serializable {
     private String description;
     private String password;
     private DogamStatus status;
+    private String url;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
@@ -27,11 +28,12 @@ public class CategoryDto implements Serializable {
         this.id = 0;
         this.status = DogamStatus.NonShare;
     }
-    public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
+    public CategoryDto(String title, String description, String password, String url,  CategoryNodeDto rootNode) {
         this();
         this.title = title;
         this.description = description;
         this.password = password;
+        this.url = url;
         this.rootNode = rootNode;
         this.selectCategory = rootNode;
     }
@@ -39,8 +41,8 @@ public class CategoryDto implements Serializable {
     public Category toCategory() {
         Category category = null;
         if(rootNode != null)
-            category = new Category(title, description, password, rootNode.toCategoryNode());
-        else category = new Category(title, description, password, null);
+            category = new Category(title, description, password, url, rootNode.toCategoryNode());
+        else category = new Category(title, description, password, url, null);
 
         category.setId(id);
         category.setStatus(status);
@@ -87,6 +89,14 @@ public class CategoryDto implements Serializable {
         this.status = status;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public CategoryNodeDto getSelectCategory() {
         return selectCategory;
     }
@@ -111,7 +121,6 @@ public class CategoryDto implements Serializable {
                 ", description='" + description + '\'' +
                 ", password='" + password + '\'' +
                 ", status=" + status +
-                ", selectCategory=" + selectCategory +
                 ", rootNode=" + rootNode +
                 "}\n";
     }

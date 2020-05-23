@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface CategoryStorage {
     public String create(Category category);
-    public CategoryNode retrieveById(int id);
+    public CategoryNode retrieveById(int dogamId, int id);
     public CategoryNode retrieveByDogamId(int id);
     public String update(Category category);
-    public String remove(int id);
+    public String remove(int dogamId, int id);
 }

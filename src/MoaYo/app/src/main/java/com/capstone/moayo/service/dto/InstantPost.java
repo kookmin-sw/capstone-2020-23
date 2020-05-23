@@ -53,4 +53,14 @@ public class InstantPost {
     public void setLike(int like) {
         this.like = like;
     }
+
+    @Override
+    public String toString() {
+        return "InstantPost{" +
+                "text='" + text + '\'' +
+                ", url='" + url + '\'' +
+                ", src='" + src + '\'' +
+                ", like=" + like +
+                '}';
+    }
 }
