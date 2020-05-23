@@ -71,14 +71,8 @@ public class BookManageActivity extends AppCompatActivity {
 //    create test data
     private ArrayList<CategoryDto> getUserCategories () {
         //-----backend 통신-----
-        ArrayList<CategoryDto> category = new ArrayList<>();
-        ArrayList<CategoryNodeDto> list = new CategoryData_Dummy().getItems();
-        for(CategoryNodeDto node: list) {
-            CategoryDto temp = new CategoryDto(node.getTitle(), "", null, node);
-            category.add(temp);
-        }
-
-        return category;
+        ArrayList<CategoryDto> list = new CategoryData_Dummy().getItems();
+        return list;
 //        categoryService = new ConcreteCategoryService(getApplicationContext());
 //        ArrayList<CategoryDto> categories_data = new ArrayList<>();
 //

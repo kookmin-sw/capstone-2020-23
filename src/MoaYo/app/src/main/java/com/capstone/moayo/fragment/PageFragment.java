@@ -61,7 +61,7 @@ public class PageFragment extends Fragment implements OnClickListener {
             if (i <= book_list.size()) {
                 bookBtnView.setText(book_list.get(i-1).getTitle());
                 bookBtnView.setTag(book_list.get(i-1));
-                Glide.with(getContext()).load(book_list.get(i-1).getRootNode().getUrl()).into(circleImageView);
+                Glide.with(getContext()).load(book_list.get(i-1).getUrl()).into(circleImageView);
 
                 circleImageView.setTag(book_list.get(i-1));
                 circleImageView.setOnClickListener(this);

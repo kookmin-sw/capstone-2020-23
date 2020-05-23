@@ -1,9 +1,6 @@
 package com.capstone.moayo.service.concrete;
 
 import android.content.Context;
-import android.os.AsyncTask;
-
-import com.capstone.moayo.model.Category;
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.RequestForm;
