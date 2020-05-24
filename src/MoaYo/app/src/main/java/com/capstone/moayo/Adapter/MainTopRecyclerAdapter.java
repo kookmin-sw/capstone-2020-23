@@ -18,11 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.activity.BookDetailActivity;
-import com.capstone.moayo.activity.IntroActivity;
-import com.capstone.moayo.activity.MainActivity;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryDto;
-import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
@@ -54,7 +51,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
                     myBookName.setSelected(true);
 
                     // Button View Tag 값으로 저장된 카테고리 객체를 가져옴.
-                    CategoryNode node = (CategoryNode) v.getTag();
+                    CategoryDto category = (CategoryDto) v.getTag();
 
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable(){
@@ -62,7 +59,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
                         public void run(){
                             Intent intent = new Intent(v.getContext(), BookDetailActivity.class);
                             // intent에 CategoryNode 객체를 담아 DetailActivity로 전달함.
-                            intent.putExtra("categoryNode", node);
+                            intent.putExtra("category", category);
                             v.getContext().startActivity(intent);
                             myBookPost.setSelected(false);
                         }
