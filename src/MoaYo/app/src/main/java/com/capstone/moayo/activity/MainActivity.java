@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,23 +21,33 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.MainTopRecyclerAdapter;
 import com.capstone.moayo.adapter.MainCenterRecyclerAdapter;
 
-import com.capstone.moayo.data.CategoryData_Dummy;
+//import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
-import com.capstone.moayo.storage.StorageFactory;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
+import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 public class MainActivity extends AppCompatActivity {
 //    private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
 
     private CategoryService categoryService;
-    private StorageFactory storageFactory;
-
+    private RecyclerView topRecyclerView, centerRecyclerView;
+    private MainTopRecyclerAdapter mainTopRecyclerAdapter;
+    private MainCenterRecyclerAdapter mainCenterRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -76,20 +87,43 @@ public class MainActivity extends AppCompatActivity {
 
         // 나의 도감 리사이클러뷰 (리사이클러뷰 1)
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = findViewById(R.id.recycler1_main);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        topRecyclerView = findViewById(R.id.recycler1_main);
+        topRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         // 리사이클러뷰에 객체 지정.
-        MainTopRecyclerAdapter adapter = new MainTopRecyclerAdapter();
-        recyclerView.setAdapter(adapter);
+        mainTopRecyclerAdapter = new MainTopRecyclerAdapter();
+        topRecyclerView.setAdapter(mainTopRecyclerAdapter);
 
-        adapter.setItems(new CategoryData_Dummy().getItems());
+        Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
+        AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
+            @Override
+            public void onResult(List<CategoryDto> result) {
+//                Log.d("----------------category found----------------" , result.toString());
+                mainTopRecyclerAdapter.setItems((ArrayList<CategoryDto>) result);
+                mainTopRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void cancelled() {
+            }
+        };
+        new AsyncExecutor<List<CategoryDto>>(){
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }.setCallable(callable).setCallback(callback).execute();
 
 
         // 공유도감 리사이클러뷰 (리사이클러뷰 2)
-        RecyclerView recyclerView2 = findViewById(R.id.recycler2_main);
+        centerRecyclerView = findViewById(R.id.recycler2_main);
 //        recyclerView2.setLayoutManager(new GridLayoutManager(this, 1));
-        recyclerView2.setLayoutManager(new GridLayoutManager(this,1){
+        centerRecyclerView.setLayoutManager(new GridLayoutManager(this,1){
             @Override
             public boolean canScrollVertically() { // 세로스크롤 막기
                 return false;
@@ -102,13 +136,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        MainCenterRecyclerAdapter adapter2 = new MainCenterRecyclerAdapter();
-        recyclerView2.setAdapter(adapter2);
+        mainCenterRecyclerAdapter = new MainCenterRecyclerAdapter();
+        centerRecyclerView.setAdapter(mainCenterRecyclerAdapter);
 
         //아이템 로드
-        adapter2.setItems(new SharedData_Sample().getItems());
+        mainCenterRecyclerAdapter.setItems(new SharedData_Sample().getItems());
 
     }
+
 
 
     //mainToolBar에 menu.xml을 인플레이트함
