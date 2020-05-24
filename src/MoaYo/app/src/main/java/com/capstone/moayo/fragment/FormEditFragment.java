@@ -80,13 +80,20 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
         back_btn = (Button) view.findViewById(R.id.back_btn);
         add_btn = (Button) view.findViewById(R.id.add_keyword_btn);
-        save_btn = (Button) view.findViewById(R.id.save_btn);
+//        save_btn = (Button) view.findViewById(R.id.save_btn);
 
         back_btn.setOnClickListener(this);
         add_btn.setOnClickListener(this);
-        save_btn.setOnClickListener(this);
+//        save_btn.setOnClickListener(this);
 
         return view;
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        // Set title bar
+        ((BookFormActivity) getActivity()).setText(currentNode.getTitle(), " > ", "도감 생성", "");
     }
 
     @Override
@@ -110,7 +117,7 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
                 } else { Toast.makeText(getContext(), "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show(); }
                 break;
 
-            case R.id.save_btn:
+            case R.id.bookSave:
                 ((BookFormActivity)getActivity()).onSubmit();
                 break;
         }

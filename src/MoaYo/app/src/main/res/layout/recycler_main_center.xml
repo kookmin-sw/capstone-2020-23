@@ -17,16 +17,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/nickName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/colorBlack"
-                android:textSize="18dp" />
-
             <com.capstone.moayo.layout.SquareRatioLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -42,43 +32,78 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:background="@drawable/click_like" />
+
+                <TextView
+                    android:id="@+id/likeCount"
+                    android:layout_width="15dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:text="likes"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/search"/>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/likeCount"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="@color/colorBlack"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:textColor="@color/colorBlack"
-                android:textSize="15dp"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

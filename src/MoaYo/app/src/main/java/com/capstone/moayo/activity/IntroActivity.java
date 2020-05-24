@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.service.CategoryService;
@@ -21,7 +22,7 @@ import com.capstone.moayo.util.Async.AsyncExecutor;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class IntroActivity extends AppCompatActivity {
+public class IntroActivity extends BaseActivity {
 
     private final int SPLASH_DISPLAY_TIME = 2500;
     private CategoryService categoryService;

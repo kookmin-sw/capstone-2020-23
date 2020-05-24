@@ -1,27 +1,26 @@
 package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.MainTopRecyclerAdapter;
 import com.capstone.moayo.adapter.MainCenterRecyclerAdapter;
 
-//import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
@@ -29,13 +28,13 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class MainActivity extends AppCompatActivity {
-//    private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
+public class MainActivity extends BaseActivity {
+    private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
+
 
     private CategoryService categoryService;
     private RecyclerView topRecyclerView, centerRecyclerView;
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
 
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
-//        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
+        ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,16 +72,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        shareBookPlus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
-//                MainActivity.this.startActivity(intent);
-//
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//            }
-//        });
+        shareBookPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
 
         // 나의 도감 리사이클러뷰 (리사이클러뷰 1)

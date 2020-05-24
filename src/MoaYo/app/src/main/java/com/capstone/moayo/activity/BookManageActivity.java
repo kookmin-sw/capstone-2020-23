@@ -16,27 +16,30 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.entity.Category;
+
+import com.google.android.material.tabs.TabLayout;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
-import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 
-public class BookManageActivity extends AppCompatActivity {
+public class BookManageActivity extends BaseActivity {
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
     private CategoryService categoryService;
-
+    private TextView numOfBook;
+    private TabLayout tabLayout;
     private ArrayList<CategoryDto> userBookData;
 
     @Override
@@ -57,8 +60,11 @@ public class BookManageActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        TextView numOfBook = (TextView) findViewById(R.id.num_of_book);
+        numOfBook = (TextView) findViewById(R.id.num_of_book);
 
+        //TabLayout
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager, true);
 
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -98,12 +104,14 @@ public class BookManageActivity extends AppCompatActivity {
             }
         }.setCallable(callable).setCallback(callback).execute();
 
-        //Spinner
-        Spinner bookTypeSpinner = (Spinner)findViewById(R.id.bookManageSpinner);
-        ArrayAdapter bookTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.book_manage_spinner, android.R.layout.simple_spinner_dropdown_item);
-        bookTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bookTypeSpinner.setAdapter(bookTypeAdapter);
+
+
+//        //Spinner
+//        Spinner bookTypeSpinner = (Spinner)findViewById(R.id.bookManageSpinner);
+//        ArrayAdapter bookTypeAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.book_manage_spinner, android.R.layout.simple_spinner_dropdown_item);
+//        bookTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        bookTypeSpinner.setAdapter(bookTypeAdapter);
     }
 
 //    create test data

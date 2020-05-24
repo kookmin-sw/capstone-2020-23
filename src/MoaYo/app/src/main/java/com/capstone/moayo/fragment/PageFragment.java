@@ -2,6 +2,7 @@ package com.capstone.moayo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,11 +81,18 @@ public class PageFragment extends Fragment implements OnClickListener {
 
         CategoryDto category = (CategoryDto) v.getTag();
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+                // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
+                intent.putExtra("category", category);
+                startActivity(intent);
+                v.setSelected(false);
+            }
+        }, 400);
 
-        Intent intent = new Intent(getActivity(), BookDetailActivity.class);
-        // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
-        intent.putExtra("category", category);
-        startActivity(intent);
 
     }
 }

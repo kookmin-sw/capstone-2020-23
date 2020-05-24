@@ -5,12 +5,15 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/cursorColor</item>
 
         <!--상태바 색상-->
         <item name="android:statusBarColor">#ffffff</item>
         <item name="android:windowLightStatusBar">true</item>
+
     </style>
+
+
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>

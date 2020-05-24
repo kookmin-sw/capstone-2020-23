@@ -17,6 +17,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.adapter.ResultTopRecyclerAdapter;
@@ -32,7 +33,7 @@ import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends BaseActivity {
 
     private CategoryNodeDto searchNode;
 

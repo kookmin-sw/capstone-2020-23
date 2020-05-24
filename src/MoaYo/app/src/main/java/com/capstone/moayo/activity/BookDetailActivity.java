@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -18,7 +19,7 @@ import com.capstone.moayo.service.dto.CategoryNodeDto;
 import java.util.ArrayList;
 
 
-public class BookDetailActivity extends AppCompatActivity{
+public class BookDetailActivity extends BaseActivity {
 
     private TextView toolbar_title;
     private CategoryDto category;
