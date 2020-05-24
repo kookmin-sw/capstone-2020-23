@@ -14,17 +14,21 @@ import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.ServiceFactory;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.Tag.TagsFinder;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import retrofit2.Call;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -36,6 +40,7 @@ public class TestActivity extends AppCompatActivity {
 
     CategoryService categoryService;
     SearchService searchService;
+    ShareService shareService;
     DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class TestActivity extends AppCompatActivity {
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         createBtn.setOnClickListener(v -> {
@@ -112,30 +118,51 @@ public class TestActivity extends AppCompatActivity {
         });
 
         requestBtn.setOnClickListener(v -> {
-            CategoryDto categoryDto = new CategoryDto("dummy", "dummy data", "1234", "", null);
-            CategoryNodeDto secondNode = new CategoryNodeDto("secondNode", null, 2);
-            CategoryNodeDto thirdNode = new CategoryNodeDto("thirdNode", null, 3);
+//            CategoryDto categoryDto = new CategoryDto("dummy", "dummy data", "1234", "", null);
+//            CategoryNodeDto secondNode = new CategoryNodeDto("secondNode", null, 2);
+//            CategoryNodeDto thirdNode = new CategoryNodeDto("thirdNode", null, 3);
+//
+//            secondNode.getHashtags().add("중식");
+//            secondNode.getHashtags().add("중국요리");
+//            secondNode.getHashtags().add("맛집");
+//
+//            thirdNode.getHashtags().add("짜장면");
+//            thirdNode.getHashtags().add("차이나타운");
+//            thirdNode.getHashtags().add("중국집");
+//
+//            Callable<RespondForm> callable = () -> searchService.requestData(secondNode, thirdNode);
+//            AsyncCallback<RespondForm> callback = new AsyncCallback<RespondForm>() {
+//                @Override
+//                public void onResult(RespondForm result) {
+//                    System.out.println(result.getThrid_layer().toString());
+//                    System.out.println(result.getSecond_layer_cache().toString());
+//                    System.out.println(result.getThird_layer_cache().toString());
+//                }
+//
+//                @Override
+//                public void exceptionOccured(Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//                @Override
+//                public void cancelled() {
+//
+//                }
+//            };
+//
+//            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
+            CategoryDto categoryDto = createCategory();
 
-            secondNode.getHashtags().add("중식");
-            secondNode.getHashtags().add("중국요리");
-            secondNode.getHashtags().add("맛집");
-
-            thirdNode.getHashtags().add("짜장면");
-            thirdNode.getHashtags().add("차이나타운");
-            thirdNode.getHashtags().add("중국집");
-
-            Callable<RespondForm> callable = () -> searchService.requestData(secondNode, thirdNode);
-            AsyncCallback<RespondForm> callback = new AsyncCallback<RespondForm>() {
+            Callable<String> callable = () -> shareService.registerDogam(categoryDto, 1);
+            AsyncCallback<String> callback = new AsyncCallback<String>() {
                 @Override
-                public void onResult(RespondForm result) {
-                    System.out.println(result.getThrid_layer().toString());
-                    System.out.println(result.getSecond_layer_cache().toString());
-                    System.out.println(result.getThird_layer_cache().toString());
+                public void onResult(String result) {
+                    Log.d("result", result);
                 }
 
                 @Override
                 public void exceptionOccured(Exception e) {
-                    e.printStackTrace();
+
                 }
 
                 @Override
@@ -144,7 +171,7 @@ public class TestActivity extends AppCompatActivity {
                 }
             };
 
-            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
+            new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
         });
 
         tagBtn.setOnClickListener(v -> {

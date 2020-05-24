@@ -6,12 +6,14 @@ import android.util.Log;
 import com.capstone.moayo.dao.CategoryDao;
 import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
+import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
 import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.util.retrofit.APIUtils;
 import com.capstone.moayo.util.retrofit.ShareAPI;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,14 +27,16 @@ public class ConcreteShareStorage implements ShareStorage {
     }
 
     @Override
-    public String create(ModelForm form) {
-        Call<Void> call = shareAPI.requestCreate(form);
+    public int create(ModelForm form) {
+        int result = 0;
+        Call<Integer> call = shareAPI.requestCreate(form);
         try {
-            call.execute();
+            Response<Integer> response = call.execute();
+            result = response.body();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     @Override
@@ -52,12 +56,29 @@ public class ConcreteShareStorage implements ShareStorage {
     }
 
     @Override
-    public List<ModelForm> retrieveAll() {
+    public List<DogamModel> retrieveAll() {
+        Call<DogamModel[]> call = shareAPI.requestDogamAll();
+        try {
+            Response<DogamModel[]> response = call.execute();
+            List<DogamModel> body = Arrays.asList(response.body());
+
+            return body;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String remove(int id) {
-        return null;
+        String result = "";
+        Call<String> call = shareAPI.requsetDelete(id);
+        try {
+            Response<String> response = call.execute();
+            result = response.body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

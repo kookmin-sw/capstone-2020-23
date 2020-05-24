@@ -20,6 +20,7 @@ public class CategoryDto implements Serializable {
     private String password;
     private DogamStatus status;
     private String url;
+    private String writer;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
@@ -27,6 +28,7 @@ public class CategoryDto implements Serializable {
     public CategoryDto() {
         this.id = 0;
         this.status = DogamStatus.NonShare;
+        this.writer = "";
     }
     public CategoryDto(String title, String description, String password, String url,  CategoryNodeDto rootNode) {
         this();
@@ -46,6 +48,7 @@ public class CategoryDto implements Serializable {
 
         category.setId(id);
         category.setStatus(status);
+        category.setWriter(writer);
         return category;
     }
 
@@ -95,6 +98,14 @@ public class CategoryDto implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 
     public CategoryNodeDto getSelectCategory() {

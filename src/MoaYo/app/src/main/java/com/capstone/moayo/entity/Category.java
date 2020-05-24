@@ -21,6 +21,7 @@ public class Category{
     private String password;
     private DogamStatus status;
     private String url;
+    private String writer;
 
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
@@ -28,6 +29,7 @@ public class Category{
     public Category() {
         id = 0;
         status = DogamStatus.NonShare;
+        this.writer = "";
     }
     public Category(String title, String description, String password, String url, CategoryNode rootNode) {
         this();
@@ -47,6 +49,7 @@ public class Category{
 
         categoryDto.setId(id);
         categoryDto.setStatus(status);
+        categoryDto.setWriter(writer);
         return categoryDto;
     }
 
@@ -96,6 +99,14 @@ public class Category{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 
     public CategoryNode getSelectCategoryNode() {
