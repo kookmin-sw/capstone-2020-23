@@ -91,9 +91,16 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
     public void onResume() {
         super.onResume();
-
+        switch (currentNode.getLevel()) {
+            case 1:
+                ((BookFormActivity) getActivity()).setText(currentNode.getTitle(), " > ", "", "");
+                break;
+            case 2:
+                ((BookFormActivity) getActivity()).setText(currentNode.getParent().getTitle(), " > ", currentNode.getTitle(), "");
+                break;
+        }
         // Set title bar
-        ((BookFormActivity) getActivity()).setText(currentNode.getTitle(), " > ", "도감 생성", "");
+
     }
 
     @Override
