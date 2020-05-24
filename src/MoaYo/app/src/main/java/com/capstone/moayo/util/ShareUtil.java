@@ -22,7 +22,7 @@ public class ShareUtil {
     public static ModelForm convertDogamToModelForm(CategoryDto categoryDto, int status) {
         ModelForm form = new ModelForm();
 
-        DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription(), status, categoryDto.getPassword(), categoryDto.getUrl());
+        DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription()+";"+categoryDto.getUrl(), status, categoryDto.getPassword(), categoryDto.getWriter());
         form.setDogamModel(dogamModel);
 
         List<CategoryModel> categoryModels = new ArrayList<>();
@@ -33,6 +33,7 @@ public class ShareUtil {
 
         if(categoryDto.getRootNode() == null)
             return form;
+
         CategoryNodeDto rootNode = categoryDto.getRootNode();
         CategoryModel rootModel = new CategoryModel(rootNode.getId(), categoryDto.getId(), rootNode.getTitle(), rootNode.getLevel(), rootNode.getId());
         categoryModels.add(rootModel);
@@ -79,7 +80,8 @@ public class ShareUtil {
             categoryNodeDtos.add(nodeDto);
         }
         CategoryNodeDto rootNode = convertModelToNode(categoryModels, categoryNodeDtos);
-        CategoryDto dogam = new CategoryDto(dogamModel.getTitle(), dogamModel.getDescription(), dogamModel.getPassword(),dogamModel.getUrl(), rootNode);
+        String[] de_url = dogamModel.getDescription().split(";");
+        CategoryDto dogam = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(),de_url[1], rootNode);
         dogam.setId(dogamModel.getId());
         switch (dogamModel.getStatus()) {
             case 0:
