@@ -20,6 +20,7 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.entity.CategoryNode;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -43,7 +44,7 @@ public class BookManageActivity extends BaseActivity {
 
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
 //       TEST DATA 생성하여 변수에 할당.
         userBookData = createData();
@@ -52,6 +53,10 @@ public class BookManageActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
         viewPager.setAdapter(pagerAdapter) ;
+
+        //TabLayout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager, true);
 
         //유저가 가진 도감의 총 개수 표시.
         TextView numOfBook = (TextView) findViewById(R.id.num_of_book);
