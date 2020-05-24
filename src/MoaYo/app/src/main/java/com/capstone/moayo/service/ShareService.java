@@ -11,5 +11,5 @@ public interface ShareService {
     public List<CategoryDto> findAll();
     public List<CategoryDto> findDogamByWriter(String writer);
     public List<CategoryDto> findDogamByKeyword(String keyword);
-    public void deleteDogam(int dogamId);
+    public String deleteDogam(int dogamId);
 }

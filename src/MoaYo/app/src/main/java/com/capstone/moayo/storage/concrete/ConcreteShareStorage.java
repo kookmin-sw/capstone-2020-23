@@ -11,6 +11,7 @@ import com.capstone.moayo.entity.Model.ModelForm;
 import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.util.retrofit.APIUtils;
 import com.capstone.moayo.util.retrofit.ShareAPI;
+import com.capstone.moayo.util.retrofit.ShareResponse;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,10 +30,10 @@ public class ConcreteShareStorage implements ShareStorage {
     @Override
     public int create(ModelForm form) {
         int result = 0;
-        Call<Integer> call = shareAPI.requestCreate(form);
+        Call<ShareResponse> call = shareAPI.requestCreate(form);
         try {
-            Response<Integer> response = call.execute();
-            result = response.body();
+            Response<ShareResponse> response = call.execute();
+            result = response.body().getCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,12 +71,12 @@ public class ConcreteShareStorage implements ShareStorage {
     }
 
     @Override
-    public String remove(int id) {
-        String result = "";
-        Call<String> call = shareAPI.requsetDelete(id);
+    public int remove(int id) {
+        int result = 1;
+        Call<ShareResponse> call = shareAPI.requsetDelete(id);
         try {
-            Response<String> response = call.execute();
-            result = response.body();
+            Response<ShareResponse> response = call.execute();
+            result = response.body().getCode();
         } catch (IOException e) {
             e.printStackTrace();
         }

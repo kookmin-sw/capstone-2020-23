@@ -72,7 +72,8 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
-    public void deleteDogam(int dogamId) {
-
+    public String deleteDogam(int dogamId) {
+        int code = shareStorage.remove(dogamId);
+        return Integer.toString(code);
     }
 }

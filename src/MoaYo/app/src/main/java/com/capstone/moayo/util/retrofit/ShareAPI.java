@@ -15,11 +15,11 @@ public interface ShareAPI {
     Call<ModelForm> requestDogam(@Query("dogamId") int dogamId);
 
     @POST("/shareDogam")
-    Call<Integer> requestCreate(@Body ModelForm form);
+    Call<ShareResponse> requestCreate(@Body ModelForm form);
 
     @GET("/getDogamList")
     Call<DogamModel[]> requestDogamAll();
 
     @GET("/deleteDogam")
-    Call<String> requsetDelete(@Query("dogamId") int dogamId);
+    Call<ShareResponse> requsetDelete(@Query("dogamId") int dogamId);
 }
