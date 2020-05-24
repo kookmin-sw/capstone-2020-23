@@ -115,14 +115,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
         synonym_tags = new ArrayList<String>();
 
-        synonym_tags.add("hashtag1");
-        synonym_tags.add("hashtag2");
-        synonym_tags.add("hashtag3");
-        synonym_tags.add("hashtag4");
-        synonym_tags.add("hashtag5");
-
-
-
         adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, synonym_tags);
         listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
         listview.setAdapter(adapter);
@@ -135,20 +127,24 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
             case "EDIT":
                 node = (CategoryNodeDto) getArguments().getSerializable("selectedNode");
-                keyword.setText(node.getTitle());
+                word = node.getTitle();
+                keyword.setText(word);
                 save_btn.setText("Update");
 
                 //node에 저장된 태그정보들을 불러와 일치하는 hashtag setItemChecked 처리.
                 ArrayList<String> selected_tags =  (ArrayList<String>) node.getHashtags();
                 for(String tag:selected_tags) {
                     int idx = synonym_tags.indexOf(tag);
-
                     if( idx != -1) listview.setItemChecked(idx, true);
                     else addHashTag(tag); //만일 저장된 태그가 리스트에 없을 시 추가.
                 }
-                
                 break;
         }
+
+        //synonym_tags backend 통신
+        //word => 키워드 데이터
+        //synonym_tags에 해시태그 데이터 코드 받고 adapter.notifyDataSetChanged();
+
 
 
 
