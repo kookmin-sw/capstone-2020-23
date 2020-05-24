@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import util.JSONReturn;
 import util.XMLParsing;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,14 +48,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "/shareDogam",method = RequestMethod.POST)
-    public String shareDogam(@RequestBody DogamModel dogamModel){
+    public JSONReturn shareDogam(@RequestBody DogamModel dogamModel){
         logger.info(dogamModel.toString());
         try{
             jsonParsingService.insertData(dogamModel);
         }catch (Exception e){
-            return "{0001,Error}";
+            return new JSONReturn(0001);
         }
-        return "{0000}";
+        return new JSONReturn(0000);
     }
 
     @RequestMapping(value = "/getDogamList",method = RequestMethod.GET)
@@ -64,12 +65,12 @@ public class MainController {
     }
 
     @RequestMapping(value = "/deleteDogam",method = RequestMethod.GET)
-    public String deleteDogam(@RequestParam int dogamId){
+    public JSONReturn deleteDogam(@RequestParam int dogamId){
         logger.info("Delete Dogam ID : " + dogamId);
         if(!service.isDogam(dogamId))
-            return "{0001,\"dogamId wrong, Not in DB\"}";
+            return new JSONReturn(0001);
         service.deleteDogam(dogamId);
-        return "{0000}";
+        return new JSONReturn(0000);
     }
 
     @RequestMapping(value = "/getDogamWriterName",method = RequestMethod.GET)
