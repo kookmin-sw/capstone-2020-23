@@ -13,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.model.SavedPost;
+import com.capstone.moayo.service.dto.PostDto;
 
 import java.util.ArrayList;
 
+import retrofit2.http.POST;
+
 public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<SavedPost> saveditems = new ArrayList<>();
+    private ArrayList<PostDto> saveditems = new ArrayList<>();
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,11 +59,11 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
     @Override
     public void onBindViewHolder(@NonNull ResultTopRecyclerAdapter.ViewHolder vh, int position) {
 
-        SavedPost item = saveditems.get(position);
+        PostDto item = saveditems.get(position);
 
         Glide.with(vh.itemView.getContext()).load(item.getUrl()).into(vh.savedPost);
 
-        vh.savedTag.setText(item.getTag());
+        vh.savedTag.setText(item.getHashtag());
 
     }
 
@@ -70,7 +73,7 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
         return saveditems.size();
     }
 
-    public void setItems(ArrayList<SavedPost> items) {
+    public void setItems(ArrayList<PostDto> items) {
         this.saveditems = items;
     }
 

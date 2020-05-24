@@ -2,6 +2,7 @@ package com.capstone.moayo.service.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RequestForm {
@@ -45,5 +46,15 @@ public class RequestForm {
 
     public void setThird_layer_cache(String[] third_layer_cache) {
         this.third_layer_cache = third_layer_cache;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestForm{" +
+                "second_layer=" + second_layer +
+                ", third_layer=" + third_layer +
+                ", second_layer_cache=" + Arrays.toString(second_layer_cache) +
+                ", third_layer_cache=" + Arrays.toString(third_layer_cache) +
+                '}';
     }
 }

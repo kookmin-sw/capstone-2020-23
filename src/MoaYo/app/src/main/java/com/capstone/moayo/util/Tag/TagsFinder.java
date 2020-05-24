@@ -22,6 +22,7 @@ public class TagsFinder{
         String tags = document.getElementById("hashtagy").text();
         tags = tags.replaceAll("#", "");
         String[] hashtags = tags.split(" ");
+        for(String hashtag : hashtags) System.out.println(hashtag);
         return Arrays.asList(hashtags);
     }
     public static List<String> getSimilarTags(String tag) {
@@ -31,6 +32,7 @@ public class TagsFinder{
         String tags = document.getElementById("hashtagy").text();
         tags = tags.replaceAll("#", "");
         String[] hashtags = tags.split(" ");
+        for(String hashtag : hashtags) System.out.println(hashtag);
         return Arrays.asList(hashtags);
     }
 }

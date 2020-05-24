@@ -1,6 +1,8 @@
 package com.capstone.moayo.service.concrete;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.RequestForm;
@@ -26,12 +28,14 @@ public class ConcreteSearchService implements SearchService {
     @Override
     public RespondForm requestData(CategoryNodeDto firstNode, CategoryNodeDto secondNode) {
         RequestForm form = CategoryConvertor.generateForm(firstNode, secondNode);
+        Log.d("convert result", form.toString());
         Call<RespondForm> call = searchAPI.requestPosts(form);
         try {
             Response<RespondForm> response = call.execute();
             RespondForm resultForm = response.body();
             firstNode.setCache(Arrays.asList(resultForm.getSecond_layer_cache()));
             secondNode.setCache(Arrays.asList(resultForm.getThird_layer_cache()));
+            Log.d("request result", resultForm.getThrid_layer().toString());
             return resultForm;
         } catch (IOException e) {
             e.printStackTrace();

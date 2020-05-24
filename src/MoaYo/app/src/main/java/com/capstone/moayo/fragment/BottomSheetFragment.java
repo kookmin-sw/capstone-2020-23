@@ -21,11 +21,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.Tag.TagsFinder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
@@ -113,7 +117,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         parentNode = (CategoryNodeDto) getArguments().getSerializable("parentNode");
 
         //검색된 연관 키워드들을 ArrayList에 담아 ListView에 보여줌.
-        synonym_tags = new ArrayList<String>();
+        synonym_tags = new ArrayList<>();
 
         adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, synonym_tags);
         listview = (ListView) view.findViewById(R.id.dialog_tag_lv_hashtags);
@@ -144,6 +148,35 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         //synonym_tags backend 통신
         //word => 키워드 데이터
         //synonym_tags에 해시태그 데이터 코드 받고 adapter.notifyDataSetChanged();
+        Callable<List<String>> callable = () -> {
+            List<String> relevantTags = TagsFinder.getRelevantTags(word);
+            List<String> similarTags = TagsFinder.getSimilarTags(word);
+            List<String> tags = new ArrayList<>();
+            for(String tag : relevantTags) tags.add(tag);
+            for(String tag : similarTags) tags.add(tag);
+
+            return tags;
+        };
+
+        AsyncCallback<List<String>> callback = new AsyncCallback<List<String>>() {
+            @Override
+            public void onResult(List<String> result) {
+                for(String tag : result) synonym_tags.add(tag);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+
+        new AsyncExecutor<List<String>>().setCallback(callback).setCallable(callable).execute();
 
 
 

@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.model.NewPost;
+import com.capstone.moayo.service.dto.InstantPost;
 
 import java.util.ArrayList;
 
 public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCenterRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<NewPost> items = new ArrayList<>();
+    private ArrayList<InstantPost> items = new ArrayList<>();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -46,9 +47,9 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
     @Override
     public void onBindViewHolder(@NonNull ResultCenterRecyclerAdapter.ViewHolder vh, int position) {
 
-        NewPost item = items.get(position);
+        InstantPost item = items.get(position);
 
-        Glide.with(vh.itemView.getContext()).load(item.getUrl()).into(vh.newPost);
+        Glide.with(vh.itemView.getContext()).load(item.getSrc()).into(vh.newPost);
 
     }
 
@@ -58,7 +59,7 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
         return items.size();
     }
 
-    public void setItems(ArrayList<NewPost> items) {
+    public void setItems(ArrayList<InstantPost> items) {
         this.items = items;
     }
 

@@ -6,7 +6,7 @@ public class InstantPost {
     @SerializedName("text")
     private String text;
     @SerializedName("url")
-    private String url = "https://instagram.com/p/";
+    private String url;
     @SerializedName("src")
     private String src;
     @SerializedName("like")
@@ -14,7 +14,7 @@ public class InstantPost {
 
     public InstantPost(String text, String url, String src, int like) {
         this.text = text;
-        this.url += url;
+        this.url += "https://instagram.com/p/" + url;
         this.src = src;
         this.like = like;
     }

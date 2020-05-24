@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,19 +29,34 @@ import com.capstone.moayo.data.ResultPost_Dummy;
 import com.capstone.moayo.data.SavedPost_Dummy;
 import com.capstone.moayo.model.NewPost;
 import com.capstone.moayo.model.SavedPost;
+import com.capstone.moayo.service.PostService;
+import com.capstone.moayo.service.SearchService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.InstantPost;
+import com.capstone.moayo.service.dto.PostDto;
+import com.capstone.moayo.service.dto.RespondForm;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class ResultActivity extends BaseActivity {
 
     private CategoryNodeDto searchNode;
 
+    private PostService postService;
+    private SearchService searchService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
+        searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -68,7 +84,25 @@ public class ResultActivity extends BaseActivity {
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
         saved_recycler.setAdapter(saved_adapter) ;
 
-        saved_adapter.setItems(requestSavedPost(searchNode));
+        Callable<ArrayList<PostDto>> callable0 = () -> requestSavedPost(searchNode);
+        AsyncCallback<ArrayList<PostDto>> callback0 = new AsyncCallback<ArrayList<PostDto>>() {
+            @Override
+            public void onResult(ArrayList<PostDto> result) {
+                saved_adapter.setItems(requestSavedPost(searchNode));
+                saved_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+        new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
 
         // 검색 게시물 리사이클러뷰 (리사이클러뷰 2)
@@ -80,8 +114,27 @@ public class ResultActivity extends BaseActivity {
         result_recycler.setAdapter(result_adapter);
 
         //아이템 로드
-        result_adapter.setItems(requestResultPost(searchNode));
+        Callable<ArrayList<InstantPost>> callable1 = () -> requestResultPost(searchNode);
+        AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
+            @Override
+            public void onResult(ArrayList<InstantPost> result) {
+                result_adapter.setItems(result);
+                result_adapter.notifyDataSetChanged();
 
+                for(InstantPost post : result) Log.d("found result", post.toString());
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+        new AsyncExecutor<ArrayList<InstantPost>>().setCallable(callable1).setCallback(callback1).execute();
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
@@ -91,27 +144,19 @@ public class ResultActivity extends BaseActivity {
     }
 
     //도감 검색결과 요청.
-    private ArrayList<NewPost> requestResultPost(CategoryNodeDto node) {
+    private ArrayList<InstantPost> requestResultPost(CategoryNodeDto node) {
+
+        RespondForm foundForm = searchService.requestData(node.getParent(), node);
+        ArrayList<InstantPost> foundPost = (ArrayList<InstantPost>) foundForm.getThrid_layer();
         //인탠트를 통해 받아온 검색 노드.
-        Toast.makeText(getApplicationContext(), node.getTitle(), Toast.LENGTH_SHORT).show();
-
-
-        if(node.getId() == 1) {
-            return new ResultPost_Dummy().getSinger();
-        } else {
-            return new ResultPost_Dummy().getFood();
-        }
+//        Toast.makeText(getApplicationContext(), node.getTitle(), Toast.LENGTH_SHORT).show();
+        return foundPost;
     }
 
     //저장 게시물 요청.
-    private ArrayList<SavedPost> requestSavedPost(CategoryNodeDto node) {
-
-        if(node.getId() == 1) {
-            return new SavedPost_Dummy().getSinger();
-        } else {
-            return new SavedPost_Dummy().getFood();
-        }
-
+    private ArrayList<PostDto> requestSavedPost(CategoryNodeDto node) {
+        ArrayList<PostDto> foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
+        return foundPost;
     }
 
     private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
