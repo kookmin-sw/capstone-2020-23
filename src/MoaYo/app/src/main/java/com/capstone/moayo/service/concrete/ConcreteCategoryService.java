@@ -55,7 +55,7 @@ public class ConcreteCategoryService implements CategoryService {
             String result = categoryStorage.create(newCategory);
             return result;
         } catch (NullRootException | NotRootException e) {
-            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+            Log.d("error found in service", e.toString());
         }
 
         return null;
@@ -64,7 +64,7 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public List<CategoryDto> findAll() {
         try {
-            Collection<Category> categories = dogamStorage.retrieveAll();
+            List<Category> categories = dogamStorage.retrieveAll();
             if (categories == null)
                 throw new  NoSuchCategoryException("You don't have any category now");
 
@@ -82,9 +82,10 @@ public class ConcreteCategoryService implements CategoryService {
                 CategoryDto categoryDto = category.toCategoryDto();
                 categoryDtoList.add(categoryDto);
             }
+            Log.d("found", categoryDtoList.toString());
             return categoryDtoList;
         } catch (NoSuchCategoryException | NoSuchNodeException | NotRootException e) {
-            e.printStackTrace();
+            Log.d("error in service",e.toString());
         }
 
         return null;

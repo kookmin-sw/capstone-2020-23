@@ -7,6 +7,7 @@ public class DogamMapping {
     private String title;
     private String desription;
     private String password;
+    private String url;
     private DogamStatus status;
 
     public void setDesription(String desription) {
@@ -39,6 +40,14 @@ public class DogamMapping {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public DogamStatus getStatus() {

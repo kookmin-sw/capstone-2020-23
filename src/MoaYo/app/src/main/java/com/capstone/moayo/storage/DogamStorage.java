@@ -11,5 +11,5 @@ public interface DogamStorage {
     public DogamMapping retrieveById(int id);
     public void update(Category category);
     public boolean remove(int id);
-    public Collection<Category> retrieveAll();
+    public List<Category> retrieveAll();
 }

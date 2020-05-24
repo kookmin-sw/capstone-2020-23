@@ -45,6 +45,16 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
+    public List<CategoryDto> loadDogamByWriter(String writer) {
+        return null;
+    }
+
+    @Override
+    public List<CategoryDto> loadDogamByKeyword(String keyword) {
+        return null;
+    }
+
+    @Override
     public void deleteDogam(int dogamId) {
 
     }

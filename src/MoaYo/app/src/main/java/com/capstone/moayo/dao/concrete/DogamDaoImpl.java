@@ -95,7 +95,8 @@ public class DogamDaoImpl implements DogamDao {
             result[i].setTitle(c.getString(1));
             result[i].setDesription(c.getString(2));
             result[i].setPassword(c.getString(3));
-            result[i].setStatus(DogamStatus.valueOf(c.getString(4)));
+            result[i].setUrl(c.getString(4));
+            result[i].setStatus(DogamStatus.valueOf(c.getString(5)));
             c.moveToNext();
         }
         c.close();

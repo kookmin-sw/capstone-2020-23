@@ -67,30 +67,30 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public CategoryNode retrieveById(int dogamId, int nodeId) {
-        if(!categoryMap.containsKey(dogamId)) {
+//        if(!categoryMap.containsKey(dogamId)) {
             CategoryMapping categoryMapping = categoryDao.selectById(dbHelper, nodeId);
             CategoryNode foundNode = new CategoryNode(categoryMapping.getTitle(), null, categoryMapping.getLevel());
             foundNode.setId(categoryMapping.getId());
             return foundNode;
-        } else {
-            CategoryNode rootNode = categoryMap.get(dogamId).getRootNode();
-            Iterator<CategoryNode> secondIterator = rootNode.getLowLayer().iterator();
-            while (secondIterator.hasNext()) {
-                CategoryNode secondNode = secondIterator.next();
-                if (secondNode.getId() == nodeId) return secondNode;
-                Iterator<CategoryNode> thirdIterator = secondNode.getLowLayer().iterator();
-                while (thirdIterator.hasNext()) {
-                    CategoryNode thirdNode = thirdIterator.next();
-                    if (thirdNode.getId() == nodeId) return thirdNode;
-                }
-            }
-        }
-        return null;
+//        } else {
+//            CategoryNode rootNode = categoryMap.get(dogamId).getRootNode();
+//            Iterator<CategoryNode> secondIterator = rootNode.getLowLayer().iterator();
+//            while (secondIterator.hasNext()) {
+//                CategoryNode secondNode = secondIterator.next();
+//                if (secondNode.getId() == nodeId) return secondNode;
+//                Iterator<CategoryNode> thirdIterator = secondNode.getLowLayer().iterator();
+//                while (thirdIterator.hasNext()) {
+//                    CategoryNode thirdNode = thirdIterator.next();
+//                    if (thirdNode.getId() == nodeId) return thirdNode;
+//                }
+//            }
+//        }
+//        return null;
     }
 
     @Override
     public CategoryNode retrieveByDogamId(int id) {
-        if(!categoryMap.containsKey(id) || categoryMap.get(id).getRootNode() == null) {
+//        if(!categoryMap.containsKey(id) || categoryMap.get(id).getRootNode() == null) {
             // find root node
             CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
             if (rootNode == null) return null;
@@ -107,9 +107,9 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                         thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
                 }
             }
-            categoryMap.get(id).setRootNode(rootNode);
-        }
-        return categoryMap.get(id).getRootNode();
+//            categoryMap.get(id).setRootNode(rootNode);
+//        }
+        return rootNode;
     }
 
     @Override

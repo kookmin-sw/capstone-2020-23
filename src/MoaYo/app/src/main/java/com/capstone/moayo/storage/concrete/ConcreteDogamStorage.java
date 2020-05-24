@@ -60,17 +60,20 @@ public class ConcreteDogamStorage implements DogamStorage {
     }
 
     @Override
-    public Collection<Category> retrieveAll() {
-        if(categoryMap.isEmpty()) {
-            DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
-            for (DogamMapping dogam : dogamMappings) {
-                Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(),"", null);
-                category.setId(dogam.getId());
+    public List<Category> retrieveAll() {
+//        if(categoryMap.isEmpty()) {
+        List<Category> categories = new ArrayList<>();
+        DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
+        for (DogamMapping dogam : dogamMappings) {
+            Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(),dogam.getUrl(), null);
+            category.setId(dogam.getId());
 
-                if(!categoryMap.containsKey(category.getId())) categoryMap.put(category.getId(), category);
-            }
+            categories.add(category);
+//            if(!categoryMap.containsKey(category.getId())) categoryMap.put(category.getId(), category);
         }
-        return categoryMap.values();
+//        }
+//        return categoryMap.values();
+        return categories;
     }
 
     @Override

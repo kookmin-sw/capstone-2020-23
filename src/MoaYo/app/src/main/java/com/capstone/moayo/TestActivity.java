@@ -53,12 +53,19 @@ public class TestActivity extends AppCompatActivity {
         dbHelper = DaoFactoryCreator.getInstance().initDao(getApplicationContext());
 
         createBtn.setOnClickListener(v -> {
-            CategoryDto categoryDto = createCategory();
-            Callable<String> callable = () -> categoryService.createCategory(categoryDto);
-            AsyncCallback<String> callback = new AsyncCallback<String>() {
+            Callable<Integer> callable = () -> {
+                List<CategoryDto> categoryDtoList = categoryService.findAll();
+                if(categoryDtoList.isEmpty()) {
+                    List<CategoryDto> dummy = new CategoryData_Dummy().getItems();
+                    for(CategoryDto categoryDto : dummy)
+                        categoryService.createCategory(categoryDto);
+                }
+                return 1;
+            };
+            AsyncCallback<Integer> callback = new AsyncCallback<Integer>() {
                 @Override
-                public void onResult(String result) {
-                    Log.d("create category", result);
+                public void onResult(Integer result) {
+                    Log.d("success result", Integer.toString(result));
                 }
 
                 @Override
@@ -68,11 +75,11 @@ public class TestActivity extends AppCompatActivity {
 
                 @Override
                 public void cancelled() {
-                    Log.d("create cancelled", "");
+
                 }
             };
 
-            new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
+            new AsyncExecutor<Integer>().setCallable(callable).setCallback(callback).execute();
         });
 
         findBtn.setOnClickListener(v -> {

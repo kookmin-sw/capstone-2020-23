@@ -20,13 +20,19 @@ import java.util.Map;
 
 public class ShareUtil {
     public static ModelForm convertDogamToModelForm(CategoryDto categoryDto, int status) {
+        ModelForm form = new ModelForm();
+
         DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription(), status, categoryDto.getPassword(), categoryDto.getUrl());
+        form.setDogamModel(dogamModel);
+
         List<CategoryModel> categoryModels = new ArrayList<>();
         List<PostModel> postModels = new ArrayList<>();
         List<CategoryPostModel> categoryPostModels = new ArrayList<>();
         List<HashtagModel> hashtagModels = new ArrayList<>();
         List<CategoryHashtagModel> categoryHashtagModels = new ArrayList<>();
 
+        if(categoryDto.getRootNode() == null)
+            return form;
         CategoryNodeDto rootNode = categoryDto.getRootNode();
         CategoryModel rootModel = new CategoryModel(rootNode.getId(), categoryDto.getId(), rootNode.getTitle(), rootNode.getLevel(), rootNode.getId());
         categoryModels.add(rootModel);
@@ -47,8 +53,7 @@ public class ShareUtil {
             }
         }
 
-        ModelForm form = new ModelForm();
-        form.setDogamModel(dogamModel);
+
         form.setCategoryModels(categoryModels.toArray(new CategoryModel[0]));
         form.setPostModels(postModels.toArray(new PostModel[0]));
         form.setCategoryPostModels(categoryPostModels.toArray(new CategoryPostModel[0]));

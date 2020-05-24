@@ -115,13 +115,14 @@ public class CategoryDto implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
+        return "CategoryDto{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", password='" + password + '\'' +
                 ", status=" + status +
+                ", url='" + url + '\'' +
                 ", rootNode=" + rootNode +
-                "}\n";
+                '}';
     }
 }

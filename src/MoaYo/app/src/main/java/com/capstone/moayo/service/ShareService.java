@@ -9,5 +9,7 @@ public interface ShareService {
     public void registerDogam(CategoryDto categoryDto, int status);
     public CategoryDto loadDogamFromServer(int dogamId);
     public List<CategoryDto> loadAllFromServer();
+    public List<CategoryDto> loadDogamByWriter(String writer);
+    public List<CategoryDto> loadDogamByKeyword(String keyword);
     public void deleteDogam(int dogamId);
 }

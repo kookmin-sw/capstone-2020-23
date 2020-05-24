@@ -2,6 +2,7 @@ package com.capstone.moayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +19,17 @@ import androidx.viewpager.widget.ViewPager;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.data.CategoryData_Dummy;
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 
 public class BookManageActivity extends AppCompatActivity {
@@ -33,9 +40,15 @@ public class BookManageActivity extends AppCompatActivity {
     private ArrayList<CategoryDto> userBookData;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_manage);
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -43,22 +56,47 @@ public class BookManageActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        TextView numOfBook = (TextView) findViewById(R.id.num_of_book);
+
+
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
 //       TEST DATA 생성하여 변수에 할당.
-        userBookData = getUserCategories();
+        Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
+        AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
+            @Override
+            public void onResult(List<CategoryDto> result) {
+                userBookData = (ArrayList<CategoryDto>) result;
+                //ViewPager
+                pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
+                viewPager.setAdapter(pagerAdapter) ;
 
-        //ViewPager
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
-        viewPager.setAdapter(pagerAdapter) ;
+                //유저가 가진 도감의 총 개수 표시.
+                numOfBook.setText(Integer.toString(userBookData.size()));
+            }
 
-        //유저가 가진 도감의 총 개수 표시.
-        TextView numOfBook = (TextView) findViewById(R.id.num_of_book);
-        numOfBook.setText(Integer.toString(userBookData.size()));
+            @Override
+            public void exceptionOccured(Exception e) {
+                e.printStackTrace();
+            }
 
+            @Override
+            public void cancelled() {
+
+            }
+        };
+
+
+        new AsyncExecutor<List<CategoryDto>>(){
+            @Override
+            protected void onProgressUpdate(Void... values) {
+
+                super.onProgressUpdate(values);
+            }
+        }.setCallable(callable).setCallback(callback).execute();
 
         //Spinner
         Spinner bookTypeSpinner = (Spinner)findViewById(R.id.bookManageSpinner);
@@ -69,10 +107,10 @@ public class BookManageActivity extends AppCompatActivity {
     }
 
 //    create test data
-    private ArrayList<CategoryDto> getUserCategories () {
+    private List<CategoryDto> getUserCategories () {
         //-----backend 통신-----
-        ArrayList<CategoryDto> list = new CategoryData_Dummy().getItems();
-        return list;
+        List<CategoryDto> categoryDtoList = categoryService.findAll();
+        return categoryDtoList;
 //        categoryService = new ConcreteCategoryService(getApplicationContext());
 //        ArrayList<CategoryDto> categories_data = new ArrayList<>();
 //

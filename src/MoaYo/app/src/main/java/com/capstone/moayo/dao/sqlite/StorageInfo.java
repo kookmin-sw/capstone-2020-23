@@ -81,7 +81,7 @@ public final class StorageInfo{
                 DOGAMTITLE + " text, " +
                 DOGAMDESCRIPTION + " text, " +
                 DOGAMPASSWORD + " text, " +
-                DOGAMURL + "text, " +
+                DOGAMURL + " text, " +
                 DOGAMSTATUS + " integer);";
     }
 }
