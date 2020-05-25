@@ -141,7 +141,9 @@ public class BookManageActivity extends BaseActivity {
         switch (item.getItemId()) {
 
             default: {
-                onBackPressed();
+//                onBackPressed();
+                Intent intent = new Intent(BookManageActivity.this, MainActivity.class);
+                startActivity(intent);
                 return true;
             }
 
