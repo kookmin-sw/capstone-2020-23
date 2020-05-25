@@ -1,15 +1,18 @@
 package com.capstone.moayo.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,7 +24,6 @@ import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
 import com.capstone.moayo.service.CategoryService;
 
-import com.capstone.moayo.service.concrete.ConcreteCategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -32,15 +34,14 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 
-public class BookFormActivity extends BaseActivity implements FormEditFragment.OnChangeLevelListener {
+public class BookFormActivity extends BaseActivity implements FormEditFragment.OnChangeLevelListener, View.OnClickListener{
     private FragmentManager fm;
     private FragmentTransaction tran;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
     private CategoryNodeDto currentNode;
-    private TextView toolbar_title;
     private CategoryService categoryService;
-
+    private TextView level1_title_tv, level2_title_tv, level3_title_tv, arrow_tv_1, arrow_tv_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,22 +57,66 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
+        arrow_tv_1 = (TextView) findViewById(R.id.arrow1);
+        arrow_tv_2 = (TextView) findViewById(R.id.arrow2);
+        level1_title_tv = (TextView) findViewById(R.id.form_tv_title_1);
+        level2_title_tv = (TextView) findViewById(R.id.form_tv_title_2);
+        level3_title_tv = (TextView) findViewById(R.id.form_tv_title_3);
+
+        level1_title_tv.setOnClickListener(this);
+        level2_title_tv.setOnClickListener(this);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-        onChangeLevel(0, null);
-
+        onChangeLevel(1, null);
     }
 
-    public void setText(String title1, String arrow, String title2, String title3) {
-        TextView textView = (TextView) findViewById(R.id.form_tv_title);
-        TextView arrowText = (TextView) findViewById(R.id.arrow1);
-        TextView textView2 = (TextView) findViewById(R.id.form_tv_title_2);
-        TextView textView3 = (TextView) findViewById(R.id.form_tv_title_3);
-        textView.setText(title1);
-        arrowText.setText(arrow);
-        textView2.setText(title2);
-        textView3.setText(title3);
+
+    public void setToolbarContent(CategoryNodeDto currentNode, int level) {
+        if(currentNode != null) this.currentNode = currentNode;
+
+        arrow_tv_1.setText("");
+        arrow_tv_2.setText("");
+        level1_title_tv.setText("");
+        level2_title_tv.setText("");
+        level3_title_tv.setText("");
+
+        switch (level) {
+            case 0:
+                level1_title_tv.setText("도감 생성");
+                break;
+            case 1:
+                level1_title_tv.setText(currentNode.getTitle());
+                arrow_tv_1.setText(" > ");
+                level2_title_tv.setText("...");
+
+                break;
+            case 2:
+                level1_title_tv.setText(currentNode.getParent().getTitle());
+                arrow_tv_1.setText(" > ");
+                level2_title_tv.setText(currentNode.getTitle());
+                arrow_tv_2.setText(" > ");
+                level3_title_tv.setText("...");
+
+                break;
+        }
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.form_tv_title_1:
+                onChangeLevel(1, null);
+                break;
+
+            case R.id.form_tv_title_2:
+                onChangeLevel(2, currentNode.getParent());
+                break;
+
+        }
+    }
+
+
 
     @Override
     public void onChangeLevel(int fraglvl, CategoryNodeDto selectedNode) {
@@ -93,7 +138,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         bundle.putSerializable("currentNode", currentNode);
 
         switch (fraglvl) {
-            case 0:
+            case 1:
                 if ((temp = fm.findFragmentByTag("main")) == null)
                     temp = new FormMainFragment();
                 temp.setArguments(bundle);
@@ -114,7 +159,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
             default:
                 break;
         }
-        tran.addToBackStack(null);
+//        tran.addToBackStack(null);
         tran.commit();
     }
 
@@ -124,6 +169,10 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         } else {
             rootNode.setTitle(title);
         }
+    }
+
+    public CategoryNodeDto getRootNode() {
+        return rootNode;
     }
 
     public CategoryNodeDto addNode(CategoryNodeDto node) {
@@ -145,8 +194,9 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
     }
 
     public void onSubmit() {
+        //--------Backend 통신----------
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
-        category = new CategoryDto(rootNode.getTitle(), null, null,"https://www.polinews.co.kr/data/photos/20190102/art_15469376601633_583641.jpg",  rootNode);
+        category = new CategoryDto(rootNode.getTitle(), null, null,"https://image.flaticon.com/icons/png/512/130/130304.png",  rootNode);
         Log.d("category", category.toString());
         Callable<String> callable = () -> categoryService.createCategory(category);
         AsyncCallback<String> callback = new AsyncCallback<String>() {
@@ -167,53 +217,68 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
 //        Log.d("rootNode", category.getRootNode().toString());
 
-        //--------Backend 통신----------
-//        categoryService = new ConcreteCategoryService(getApplicationContext());
-//        String result = categoryService.createCategory(category);
-//        Log.d("create_result", result);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
-            super.onBackPressed();
-        } else {
-            getFragmentManager().popBackStack();
-        }
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_bookform, menu);
         return true;
     }
 
+    //toolbar button event handling
     public boolean onOptionsItemSelected(MenuItem item) {
-
         //menu_bookform.xml에서 지정한 item 이벤트 추가
         switch (item.getItemId()) {
 
-            default: {
-                onBackPressed();
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            case android.R.id.home: {
+                new AlertDialog.Builder(this)
+                        .setTitle("도감 생성")
+                        .setMessage("도감 생성을 취소하시겠습니까?")
+//                        .setIcon(android.R.drawable.ic_menu_save)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                // 확인시 처리 로직
+                                Intent intent = new Intent(BookFormActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }})
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                // 취소시 처리 로직
+//                                finish();
+                            }})
+                        .show();
                 return true;
             }
 
             case R.id.bookSave:
-                onSubmit();
-                return true;
+                //TODO : 도감생성 확인 로직.
+//                onSubmit();
+                if(rootNode != null ){
+                    new AlertDialog.Builder(this)
+                            .setTitle("도감 저장")
+                            .setMessage("도감을 저장할까요?")
+                            .setIcon(android.R.drawable.ic_menu_save)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    onSubmit();
+                                    Intent intent = new Intent(BookFormActivity.this, BookManageActivity.class);
+                                    startActivity(intent);
+
+                                }})
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                }})
+                            .show();
+                    return true;
+                } else {
+                    Toast.makeText(getApplicationContext(), "아직 도감이 작성되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
         }
+        return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                onBackPressed();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
+
 }

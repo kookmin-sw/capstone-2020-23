@@ -61,6 +61,8 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
             items = (ArrayList<CategoryNodeDto>) currentNode.getLowLayer();
         }
 
+
+
         adapter = new FormListAdapter(getContext(), items);
         listView = (ListView) view.findViewById(R.id.form_list_view);
         listView.setAdapter(adapter);
@@ -69,7 +71,6 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), items.get(position).getTitle(), Toast.LENGTH_SHORT).show();
                 Bundle args = new Bundle();
                 args.putString("MODE", "EDIT");
                 args.putSerializable("parentNode", currentNode);
@@ -80,20 +81,19 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
         back_btn = (Button) view.findViewById(R.id.back_btn);
         add_btn = (Button) view.findViewById(R.id.add_keyword_btn);
-//        save_btn = (Button) view.findViewById(R.id.save_btn);
 
         back_btn.setOnClickListener(this);
         add_btn.setOnClickListener(this);
-//        save_btn.setOnClickListener(this);
 
         return view;
     }
 
     public void onResume() {
         super.onResume();
-
+        ((BookFormActivity) getActivity())
+                .setToolbarContent(currentNode,currentNode.getLevel());
         // Set title bar
-        ((BookFormActivity) getActivity()).setText(currentNode.getTitle(), " > ", "도감 생성", "");
+
     }
 
     @Override
