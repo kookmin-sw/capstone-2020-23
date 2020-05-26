@@ -136,6 +136,12 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         adapter.notifyDataSetChanged();
     }
 
+    public void onSetNode(CategoryNodeDto node) {
+        currentNode = ((BookFormActivity)getActivity()).setNode(node);
+        items = (ArrayList<CategoryNodeDto>) currentNode.getLowLayer();
+        adapter.notifyDataSetChanged();
+    }
+
     public void onRemoveNode(CategoryNodeDto node) {
         currentNode = ((BookFormActivity)getActivity()).removeNode(node);
         items = (ArrayList<CategoryNodeDto>) currentNode.getLowLayer();

@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
 import com.capstone.moayo.service.CategoryService;
@@ -179,6 +180,10 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         currentNode.getLowLayer().add(node);
         return currentNode;
     }
+    public CategoryNodeDto setNode(CategoryNodeDto node) {
+        currentNode.getLowLayer().set(currentNode.getLowLayer().indexOf(node), node);
+        return currentNode;
+    }
 
     public CategoryNodeDto removeNode(CategoryNodeDto node) {
         ArrayList<CategoryNodeDto> lowLayerList = (ArrayList) currentNode.getLowLayer();
@@ -253,7 +258,6 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
 
             case R.id.bookSave:
                 //TODO : 도감생성 확인 로직.
-//                onSubmit();
                 if(rootNode != null ){
                     new AlertDialog.Builder(this)
                             .setTitle("도감 저장")
