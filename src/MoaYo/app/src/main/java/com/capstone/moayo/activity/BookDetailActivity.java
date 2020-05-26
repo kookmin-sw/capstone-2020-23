@@ -1,13 +1,12 @@
 package com.capstone.moayo.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-//import android.widget.ExpandableListView.OnChildClickListener;
-//import android.widget.ExpandableListView.OnGroupClickListener;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.BaseActivity;
@@ -57,6 +56,16 @@ public class BookDetailActivity extends BaseActivity {
 //        myList.setOnGroupClickListener(myListGroupClicked);
 
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_bookdetail, menu);
+        return true;
+    }
+
+
+
+
 
     //child listener
 //    private OnChildClickListener myListItemClicked =  new OnChildClickListener() {

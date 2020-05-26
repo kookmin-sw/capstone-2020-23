@@ -179,9 +179,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
         new AsyncExecutor<List<String>>().setCallback(callback).setCallable(callable).execute();
 
-
-
-
         cancel_btn.setOnClickListener(this);
         save_btn.setOnClickListener(this);
         delete_btn.setOnClickListener(this);

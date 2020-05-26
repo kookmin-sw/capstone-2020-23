@@ -20,7 +20,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
 import com.capstone.moayo.service.CategoryService;
