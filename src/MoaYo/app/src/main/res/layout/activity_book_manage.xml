@@ -118,6 +118,7 @@
             android:textSize="18dp"/>
 
         <TextView
+            android:id="@+id/createBook2"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginLeft="30dp"

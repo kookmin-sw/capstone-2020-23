@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,10 +51,16 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
         toolbarTitle.setText(rootNode.getTitle());
 
-
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
         myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
+//        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
+
+        TextView detail_text = (TextView)findViewById(R.id.detail_text);
+        TextView detail_text2 = (TextView)findViewById(R.id.detail_text2);
+        ImageView arrow_detail = (ImageView)findViewById(R.id.arrow_detail);
+
+        detail_text.setText(rootNode.getTitle() + "");
 
         updateBtn = (Button) findViewById(R.id.detail_btn_update);
         deleteBtn = (Button) findViewById(R.id.detail_btn_delete);
@@ -64,6 +71,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
         //listener for group click
+
+
 //        myList.setOnGroupClickListener(myListGroupClicked);
 
     }

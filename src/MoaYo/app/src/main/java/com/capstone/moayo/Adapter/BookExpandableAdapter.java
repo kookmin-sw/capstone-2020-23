@@ -3,16 +3,24 @@ package com.capstone.moayo.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.capstone.moayo.R;
+import com.capstone.moayo.activity.BookDetailActivity;
+import com.capstone.moayo.activity.BookFormActivity;
+import com.capstone.moayo.activity.MainActivity;
 import com.capstone.moayo.activity.ResultActivity;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -47,6 +55,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
+
     //ChildView에 데이터 뿌리기
     @Override
     public View getChildView(int groupPosition, int childPosition,
@@ -61,24 +70,19 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         TextView text = (TextView)view.findViewById(R.id.text1);
-
         text.setText(currentNode.getTitle());
+
+
         if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#1e90ff"));
+            text.setTextColor(Color.parseColor("#6200EE"));
         }
 
-
-        ImageButton searchBtn = (ImageButton)view.findViewById(R.id.child_search_btn);
-        searchBtn.setFocusable(false);
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-            Intent intent = new Intent(mContext, ResultActivity.class);
-            intent.putExtra("current_node", currentNode);
-
-            mContext.startActivity(intent);
-
+                Intent intent = new Intent(mContext, ResultActivity.class);
+                intent.putExtra("current_node", currentNode);
+                mContext.startActivity(intent);
             }
         });
 
@@ -119,17 +123,27 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
             view = convertView;
         }
 
-
         TextView text = (TextView)view.findViewById(R.id.text);
-        text.setText(currentNode.getTitle());
-
-        if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#1e90ff"));
-        }
-
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.group_search_btn);
+
+        text.setText(currentNode.getTitle());
         searchBtn.setFocusable(false);
 
+
+        if (isExpanded){
+            ((TextView) ((BookDetailActivity)mContext).findViewById(R.id.detail_text2)).setText(" " + text.getText());
+            text.setSelected(true);
+            searchBtn.setVisibility(view.VISIBLE);
+        }
+        else{
+//            ((TextView) ((BookDetailActivity)mContext).findViewById(R.id.detail_text2)).setText(" ...");
+            text.setSelected(false);
+            searchBtn.setVisibility(view.INVISIBLE);
+        }
+
+        if (isSelectedNode(currentNode, selectedNode) == true) {
+            text.setTextColor(Color.parseColor("#6200EE"));
+        }
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +162,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
                 mContext.startActivity(intent);
             }
         });
+
         return view;
     }
 

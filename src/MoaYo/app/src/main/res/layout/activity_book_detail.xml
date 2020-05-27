@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.BookDetailActivity">
+    tools:context=".activity.BookDetailActivity"
+    android:background="@color/backGray">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@color/backGray"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:elevation="2dp">
+        android:theme="?attr/actionBarTheme">
 
         <TextView
             android:id="@+id/detail_tv_title"

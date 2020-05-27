@@ -89,7 +89,7 @@ public class FormMainFragment extends Fragment {
                     ((BookFormActivity)getActivity()).initRootNode(title);
                     ((BookFormActivity)getActivity()).onChangeLevel(2, null);
                 } else {
-                    Toast.makeText(getContext(), "도감 명을 입력해주세요..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "도감 명을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
 
             }

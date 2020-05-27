@@ -8,7 +8,17 @@
         <item name="colorAccent">@color/cursorColor</item>
 
         <!--상태바 색상-->
-        <item name="android:statusBarColor">#ffffff</item>
+        <item name="android:statusBarColor">@color/colorWhite</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
+    <style name="BackGray" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!--상태바 색상-->
+        <item name="android:statusBarColor">@color/backGray</item>
         <item name="android:windowLightStatusBar">true</item>
 
     </style>

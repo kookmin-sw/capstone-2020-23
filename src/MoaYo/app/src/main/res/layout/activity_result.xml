@@ -137,7 +137,10 @@
         <ExpandableListView
             android:id="@+id/drawer_expandableListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider ="@null"
+            android:childDivider="@null"
+            android:groupIndicator="@null"/>
 
     </LinearLayout>
 

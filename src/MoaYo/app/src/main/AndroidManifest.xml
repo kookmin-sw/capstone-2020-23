@@ -35,7 +35,8 @@
             android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.BookDetailActivity"
-            android:parentActivityName=".activity.BookManageActivity" />
+            android:parentActivityName=".activity.BookManageActivity"
+            android:theme="@style/BackGray"/>
         <activity
             android:name=".activity.ResultActivity"
             android:parentActivityName=".activity.BookManageActivity" />

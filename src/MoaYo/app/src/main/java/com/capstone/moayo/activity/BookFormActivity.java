@@ -55,7 +55,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
 
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_clear);
 
         arrow_tv_1 = (TextView) findViewById(R.id.arrow1);
         arrow_tv_2 = (TextView) findViewById(R.id.arrow2);
@@ -244,7 +244,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
             case android.R.id.home: {
                 new AlertDialog.Builder(this)
                         .setTitle("도감 생성")
-                        .setMessage("도감 생성을 취소하시겠습니까?")
+                        .setMessage("\n도감 생성을 취소하시겠습니까?")
 //                        .setIcon(android.R.drawable.ic_menu_save)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -267,8 +267,8 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
                 if(rootNode != null ){
                     new AlertDialog.Builder(this)
                             .setTitle("도감 저장")
-                            .setMessage("도감을 저장할까요?")
-                            .setIcon(android.R.drawable.ic_menu_save)
+                            .setMessage("\n도감을 저장할까요?")
+//                            .setIcon(R.drawable.ic_save)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     onSubmit();

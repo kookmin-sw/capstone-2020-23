@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class BookManageActivity extends BaseActivity {
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         numOfBook = (TextView) findViewById(R.id.num_of_book);
+        TextView createBook2 = (TextView) findViewById(R.id.createBook2);
 
         //TabLayout
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -69,6 +71,14 @@ public class BookManageActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+
+        createBook2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookManageActivity.this, BookFormActivity.class);
+                BookManageActivity.this.startActivity(intent);
+            }
+        });
 
 //       TEST DATA 생성하여 변수에 할당.
         Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
