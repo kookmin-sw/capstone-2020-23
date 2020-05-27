@@ -1,7 +1,6 @@
 package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
@@ -25,14 +23,9 @@ import com.capstone.moayo.adapter.ResultTopRecyclerAdapter;
 import com.capstone.moayo.adapter.ResultCenterRecyclerAdapter;
 
 import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.data.ResultPost_Dummy;
-import com.capstone.moayo.data.SavedPost_Dummy;
-import com.capstone.moayo.model.NewPost;
-import com.capstone.moayo.model.SavedPost;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
-import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.PostDto;
@@ -46,6 +39,7 @@ import java.util.concurrent.Callable;
 public class ResultActivity extends BaseActivity {
 
     private CategoryNodeDto searchNode;
+    private CategoryNodeDto rootNode;
 
     private PostService postService;
     private SearchService searchService;
@@ -69,8 +63,6 @@ public class ResultActivity extends BaseActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         searchNode = (CategoryNodeDto) getIntent().getSerializableExtra("current_node");
-
-        //actionBar.setTitle("# "+searchNode.getTitle());
 
         TextView textView = (TextView) findViewById(R.id.hashtagName);
         textView.setText("# " + searchNode.getTitle());
@@ -138,18 +130,17 @@ public class ResultActivity extends BaseActivity {
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
-        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) getDummyRoot(searchNode).getLowLayer(), searchNode));
-
+//        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) getDummyRoot(searchNode).getLowLayer(), searchNode));
+        getRootNode(searchNode);
+        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer(), searchNode));
 
     }
 
     //도감 검색결과 요청.
     private ArrayList<InstantPost> requestResultPost(CategoryNodeDto node) {
-
         RespondForm foundForm = searchService.requestData(node.getParent(), node);
         ArrayList<InstantPost> foundPost = (ArrayList<InstantPost>) foundForm.getThrid_layer();
-        //인탠트를 통해 받아온 검색 노드.
-//        Toast.makeText(getApplicationContext(), node.getTitle(), Toast.LENGTH_SHORT).show();
+
         return foundPost;
     }
 
@@ -159,15 +150,23 @@ public class ResultActivity extends BaseActivity {
         return foundPost;
     }
 
-    private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
-        //첫번째 index의 dummy data 가져옴
-        if(node.getId() == 1) {
-            return new CategoryData_Dummy().getItems().get(0).getRootNode();
+    private void getRootNode(CategoryNodeDto node) {
+        if(node.getParent() != null) {
+            getRootNode(node.getParent());
         } else {
-            return new CategoryData_Dummy().getItems().get(3).getRootNode();
+            rootNode = node;
         }
-
     }
+
+//    private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
+//        //첫번째 index의 dummy data 가져옴
+//        if(node.getId() == 1) {
+//            return new CategoryData_Dummy().getItems().get(0).getRootNode();
+//        } else {
+//            return new CategoryData_Dummy().getItems().get(3).getRootNode();
+//        }
+//
+//    }
 
 
     //액션바에 menu_resul.xml 내용 지정
