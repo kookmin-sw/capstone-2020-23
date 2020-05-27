@@ -7,10 +7,10 @@
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="60dp"
         android:paddingStart="20dp"
         android:gravity="center_vertical"
-        android:textColor="@drawable/click_text"
+        android:textColor="@drawable/click_detail_text"
         android:drawableLeft="@drawable/click_view_left"
         android:drawablePadding="20dp"
         android:background="@color/colorWhite"
@@ -19,7 +19,7 @@
     <ImageButton
         android:id="@+id/group_search_btn"
         android:layout_width="wrap_content"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="match_parent"
         android:layout_weight="0"
         android:layout_gravity="end"
         android:layout_marginRight="10dp"

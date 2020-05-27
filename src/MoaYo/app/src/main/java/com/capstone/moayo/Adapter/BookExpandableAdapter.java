@@ -3,6 +3,7 @@ package com.capstone.moayo.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.capstone.moayo.R;
+import com.capstone.moayo.activity.BookDetailActivity;
+import com.capstone.moayo.activity.BookFormActivity;
+import com.capstone.moayo.activity.MainActivity;
 import com.capstone.moayo.activity.ResultActivity;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
 import java.util.ArrayList;
@@ -63,8 +70,9 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         TextView text = (TextView)view.findViewById(R.id.text1);
-
         text.setText(currentNode.getTitle());
+
+
         if (isSelectedNode(currentNode, selectedNode) == true) {
             text.setTextColor(Color.parseColor("#6200EE"));
         }
@@ -72,7 +80,6 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                text.setPressed(true);
                 Intent intent = new Intent(mContext, ResultActivity.class);
                 intent.putExtra("current_node", currentNode);
                 mContext.startActivity(intent);
@@ -116,7 +123,6 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
             view = convertView;
         }
 
-
         TextView text = (TextView)view.findViewById(R.id.text);
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.group_search_btn);
 
@@ -124,11 +130,11 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         searchBtn.setFocusable(false);
 
         if (isExpanded){
-            text.setPressed(true);
+            text.setSelected(true);
             searchBtn.setVisibility(view.VISIBLE);
         }
         else{
-            text.setPressed(false);
+            text.setSelected(false);
             searchBtn.setVisibility(view.INVISIBLE);
         }
 
@@ -153,7 +159,6 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
                 mContext.startActivity(intent);
             }
         });
-
 
         return view;
     }

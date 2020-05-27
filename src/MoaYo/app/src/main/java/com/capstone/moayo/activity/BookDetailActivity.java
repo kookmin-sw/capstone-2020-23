@@ -1,6 +1,8 @@
 package com.capstone.moayo.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 //import android.widget.ExpandableListView.OnChildClickListener;
@@ -46,10 +48,12 @@ public class BookDetailActivity extends BaseActivity {
         toolbar_title = (TextView) findViewById(R.id.detail_tv_title);
         toolbar_title.setText(rootNode.getTitle());
 
-
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
         myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
+
+        TextView detail_text = (TextView)findViewById(R.id.detail_text);
+        detail_text.setText(rootNode.getTitle() + " 도감" );
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
