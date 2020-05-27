@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.capstone.moayo.R;
@@ -47,6 +48,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
+
     //ChildView에 데이터 뿌리기
     @Override
     public View getChildView(int groupPosition, int childPosition,
@@ -64,21 +66,16 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
         text.setText(currentNode.getTitle());
         if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#1e90ff"));
+            text.setTextColor(Color.parseColor("#6200EE"));
         }
 
-
-        ImageButton searchBtn = (ImageButton)view.findViewById(R.id.child_search_btn);
-        searchBtn.setFocusable(false);
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-            Intent intent = new Intent(mContext, ResultActivity.class);
-            intent.putExtra("current_node", currentNode);
-
-            mContext.startActivity(intent);
-
+                text.setPressed(true);
+                Intent intent = new Intent(mContext, ResultActivity.class);
+                intent.putExtra("current_node", currentNode);
+                mContext.startActivity(intent);
             }
         });
 
@@ -121,15 +118,23 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
 
         TextView text = (TextView)view.findViewById(R.id.text);
-        text.setText(currentNode.getTitle());
-
-        if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#1e90ff"));
-        }
-
         ImageButton searchBtn = (ImageButton)view.findViewById(R.id.group_search_btn);
+
+        text.setText(currentNode.getTitle());
         searchBtn.setFocusable(false);
 
+        if (isExpanded){
+            text.setPressed(true);
+            searchBtn.setVisibility(view.VISIBLE);
+        }
+        else{
+            text.setPressed(false);
+            searchBtn.setVisibility(view.INVISIBLE);
+        }
+
+        if (isSelectedNode(currentNode, selectedNode) == true) {
+            text.setTextColor(Color.parseColor("#6200EE"));
+        }
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +153,8 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
                 mContext.startActivity(intent);
             }
         });
+
+
         return view;
     }
 

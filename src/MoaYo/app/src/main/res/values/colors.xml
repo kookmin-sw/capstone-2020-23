@@ -8,6 +8,7 @@
     <color name="lightPurple">#EFE5FD</color>
     <color name="darkGray">#707070</color>
     <color name="lightGray">#C3C3C3</color>
+    <color name="backGray">#F2F2F2</color>
 
     <!--editText 커서, 강조 색-->
     <color name="cursorColor">#707070</color>
