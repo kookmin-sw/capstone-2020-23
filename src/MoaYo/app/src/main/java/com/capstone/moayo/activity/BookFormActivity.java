@@ -67,7 +67,14 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         level2_title_tv.setOnClickListener(this);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-        onChangeLevel(1, null);
+
+        if(getIntent().getSerializableExtra("category") != null) {
+            category = (CategoryDto) getIntent().getSerializableExtra("category");
+            rootNode = category.getRootNode();
+            onChangeLevel(2, rootNode);
+        } else {
+            onChangeLevel(1, null);
+        }
     }
 
 
@@ -179,6 +186,10 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         currentNode.getLowLayer().add(node);
         return currentNode;
     }
+    public CategoryNodeDto setNode(CategoryNodeDto node) {
+        currentNode.getLowLayer().set(currentNode.getLowLayer().indexOf(node), node);
+        return currentNode;
+    }
 
     public CategoryNodeDto removeNode(CategoryNodeDto node) {
         ArrayList<CategoryNodeDto> lowLayerList = (ArrayList) currentNode.getLowLayer();
@@ -253,7 +264,6 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
 
             case R.id.bookSave:
                 //TODO : 도감생성 확인 로직.
-//                onSubmit();
                 if(rootNode != null ){
                     new AlertDialog.Builder(this)
                             .setTitle("도감 저장")

@@ -37,6 +37,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     public interface OnEditNodeListener {
         void onAddNode(CategoryNodeDto node);
         void onRemoveNode(CategoryNodeDto node);
+        void onSetNode(CategoryNodeDto node);
     }
 
     private CategoryNodeDto node;
@@ -178,9 +179,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
         new AsyncExecutor<List<String>>().setCallback(callback).setCallable(callable).execute();
 
-
-
-
         cancel_btn.setOnClickListener(this);
         save_btn.setOnClickListener(this);
         delete_btn.setOnClickListener(this);
@@ -228,7 +226,24 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private void addKeyword() {
         node = new CategoryNodeDto(word, parentNode, parentNode.getLevel()+1);
 
-        //node 객체에 선택된 해시태그들을 담음
+        node.setHashtags((List) getTags());
+        listview.clearChoices(); // 모든 선택상태 초기화.
+        callback.onAddNode(node);
+    }
+
+    private void editKeyword() {
+        //edit logic
+        node.setHashtags((List) getTags());
+        listview.clearChoices();
+        callback.onSetNode(node);
+    }
+
+    private void deleteKeyword() {
+        callback.onRemoveNode(node);
+    }
+
+    //선택된 해시태그 값 가져와 리스트로 리턴.
+    private ArrayList<String> getTags() {
         ArrayList<String> hashTags = new ArrayList<>();
         SparseBooleanArray checkedTags = listview.getCheckedItemPositions();
         for (int i = adapter.getCount()-1; i >= 0; i--) {
@@ -236,20 +251,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 hashTags.add(synonym_tags.get(i));
             }
         }
-        node.setHashtags((List) hashTags);
-//        Log.d("node_tags", node.getHashtags().toString());
-        listview.clearChoices(); // 모든 선택상태 초기화.
-
-        callback.onAddNode(node);
-    }
-
-    private void editKeyword() {
-        //edit logic
-
-    }
-
-    private void deleteKeyword() {
-        callback.onRemoveNode(node);
+        return hashTags;
     }
 
 
