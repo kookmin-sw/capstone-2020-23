@@ -1,10 +1,14 @@
 package com.capstone.moayo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -18,11 +22,12 @@ import com.capstone.moayo.service.dto.CategoryNodeDto;
 import java.util.ArrayList;
 
 
-public class BookDetailActivity extends BaseActivity {
+public class BookDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView toolbar_title;
+    private TextView toolbarTitle;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
+    private Button updateBtn, deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +47,19 @@ public class BookDetailActivity extends BaseActivity {
         category = (CategoryDto) getIntent().getSerializableExtra("category");
         rootNode = category.getRootNode();
 
-        toolbar_title = (TextView) findViewById(R.id.detail_tv_title);
-        toolbar_title.setText(rootNode.getTitle());
+        toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
+        toolbarTitle.setText(rootNode.getTitle());
 
 
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
         myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
+
+        updateBtn = (Button) findViewById(R.id.detail_btn_update);
+        deleteBtn = (Button) findViewById(R.id.detail_btn_delete);
+
+        updateBtn.setOnClickListener(this);
+        deleteBtn.setOnClickListener(this);
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
@@ -61,6 +72,27 @@ public class BookDetailActivity extends BaseActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_bookdetail, menu);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.detail_btn_update:
+                //TODO: BookForm 화면으로 전환
+                Intent intent = new Intent(BookDetailActivity.this, BookFormActivity.class);
+                intent.putExtra("category",category);
+                startActivity(intent);
+
+                break;
+
+            case R.id.detail_btn_delete:
+                //TODO: 도감 삭제 후 BookManage 화면으로 전환
+                //--------Backend 통신-----------
+                Toast.makeText(getApplicationContext(), "도감 삭제 이벤트", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
     }
 
 

@@ -67,7 +67,14 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         level2_title_tv.setOnClickListener(this);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-        onChangeLevel(1, null);
+
+        if(getIntent().getSerializableExtra("category") != null) {
+            category = (CategoryDto) getIntent().getSerializableExtra("category");
+            rootNode = category.getRootNode();
+            onChangeLevel(2, rootNode);
+        } else {
+            onChangeLevel(1, null);
+        }
     }
 
 
