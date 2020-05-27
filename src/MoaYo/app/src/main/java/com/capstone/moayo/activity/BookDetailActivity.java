@@ -3,7 +3,10 @@ package com.capstone.moayo.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.Adapter;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 //import android.widget.ExpandableListView.OnChildClickListener;
 //import android.widget.ExpandableListView.OnGroupClickListener;
@@ -51,13 +54,19 @@ public class BookDetailActivity extends BaseActivity {
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
         //create Data
         myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
+//        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
 
         TextView detail_text = (TextView)findViewById(R.id.detail_text);
-        detail_text.setText(rootNode.getTitle() + " 도감" );
+        TextView detail_text2 = (TextView)findViewById(R.id.detail_text2);
+        ImageView arrow_detail = (ImageView)findViewById(R.id.arrow_detail);
+
+        detail_text.setText(rootNode.getTitle() + "");
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
         //listener for group click
+
+
 //        myList.setOnGroupClickListener(myListGroupClicked);
 
     }

@@ -129,11 +129,14 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         text.setText(currentNode.getTitle());
         searchBtn.setFocusable(false);
 
+
         if (isExpanded){
+            ((TextView) ((BookDetailActivity)mContext).findViewById(R.id.detail_text2)).setText(" " + text.getText());
             text.setSelected(true);
             searchBtn.setVisibility(view.VISIBLE);
         }
         else{
+//            ((TextView) ((BookDetailActivity)mContext).findViewById(R.id.detail_text2)).setText(" ...");
             text.setSelected(false);
             searchBtn.setVisibility(view.INVISIBLE);
         }
