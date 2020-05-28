@@ -14,7 +14,7 @@ public class InstantPost {
 
     public InstantPost(String text, String url, String src, int like) {
         this.text = text;
-        this.url += "https://instagram.com/p/" + url;
+        this.url += url;
         this.src = src;
         this.like = like;
     }
@@ -35,7 +35,7 @@ public class InstantPost {
     }
 
     public void setUrl(String url) {
-        this.url = "https://instagram.com/p/" + url;
+        this.url = url;
     }
 
     public String getSrc() {
