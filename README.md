@@ -135,6 +135,8 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 <br /><br />
 
+- 주요 화면 스크린샷
+<img src="doc/image/스크린샷 2020-05-28 오후 9.59.18.png">
 
 # 4. 팀 소개
 
