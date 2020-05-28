@@ -67,7 +67,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
         ExpandableListView myList = (ExpandableListView) findViewById(R.id.expandableListView);
         //create Data
-        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
+        myList.setAdapter(new BookExpandableAdapter(this, category));
 //        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
 
         TextView detail_text = (TextView) findViewById(R.id.detail_text);

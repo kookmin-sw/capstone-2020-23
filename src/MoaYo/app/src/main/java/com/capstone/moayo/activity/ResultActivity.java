@@ -29,9 +29,11 @@ import com.capstone.moayo.adapter.ResultTopRecyclerAdapter;
 import com.capstone.moayo.adapter.ResultCenterRecyclerAdapter;
 
 import com.capstone.moayo.data.CategoryData_Dummy;
+import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
+import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.PostDto;
@@ -46,7 +48,7 @@ import java.util.concurrent.Callable;
 public class ResultActivity extends BaseActivity {
 
     private CategoryNodeDto searchNode;
-    private CategoryNodeDto rootNode;
+    private CategoryDto selectCategory;
 
     private PostService postService;
     private SearchService searchService;
@@ -80,6 +82,7 @@ public class ResultActivity extends BaseActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         searchNode = (CategoryNodeDto) getIntent().getSerializableExtra("current_node");
+        selectCategory = (CategoryDto) getIntent().getSerializableExtra("category");
 
         TextView textView = (TextView) findViewById(R.id.hashtagName);
         textView.setText("# " + searchNode.getTitle());
@@ -91,7 +94,7 @@ public class ResultActivity extends BaseActivity {
 
         // 리사이클러뷰에 객체 지정.
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
-        saved_recycler.setAdapter(saved_adapter) ;
+        saved_recycler.setAdapter(saved_adapter);
 
         progressBar = (ProgressBar) findViewById(R.id.activity_result_pb_circle);
 
@@ -138,9 +141,15 @@ public class ResultActivity extends BaseActivity {
                 Runnable clickRunnable = new Runnable() {
                     @Override
                     public void run() {
+                        if(doubleClickFlag == 1) {
+//                         todo 클릭 이벤트
+                            InstantPost selected_item = searchPost.get(position) ;
+                            Intent viewIntent = new Intent("android.intent.action.VIEW",
+                                    Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
+                            v.getContext().startActivity(viewIntent);
+                            Toast.makeText(getApplicationContext(), "single click", Toast.LENGTH_SHORT).show();
+                        }
                         doubleClickFlag = 0;
-                        // todo 클릭 이벤트
-                        Toast.makeText(getApplicationContext(), "single click", Toast.LENGTH_SHORT).show();
                     }
                 };
                 if( doubleClickFlag == 1 ) {
@@ -148,6 +157,25 @@ public class ResultActivity extends BaseActivity {
                 }else if( doubleClickFlag == 2 ) {
                     doubleClickFlag = 0;
                     // todo 더블클릭 이벤트
+                    Callable<PostDto> callable = () -> postService.createPost(searchPost.get(position), searchNode.getId(),selectCategory.getId());
+                    AsyncCallback<PostDto> callback = new AsyncCallback<PostDto>() {
+                        @Override
+                        public void onResult(PostDto result) {
+                            savePost.add(result);
+                            saved_adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void exceptionOccured(Exception e) {
+
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    };
+                    new AsyncExecutor<PostDto>().setCallable(callable).setCallback(callback).execute();
                     Toast.makeText(getApplicationContext(), "double click", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -234,8 +262,7 @@ public class ResultActivity extends BaseActivity {
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
 
         //create Data
-        getRootNode(searchNode);
-        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer(), searchNode));
+        myList.setAdapter(new BookExpandableAdapter(this, selectCategory, searchNode));
 
     }
 
@@ -253,13 +280,6 @@ public class ResultActivity extends BaseActivity {
         return foundPost;
     }
 
-    private void getRootNode(CategoryNodeDto node) {
-        if(node.getParent() != null) {
-            getRootNode(node.getParent());
-        } else {
-            rootNode = node;
-        }
-    }
 
 //    private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
 //        //첫번째 index의 dummy data 가져옴
@@ -305,6 +325,7 @@ public class ResultActivity extends BaseActivity {
         savePost.clear();
         searchPost.clear();
         searchService.initCache();
+
         super.onDestroy();
     }
 }

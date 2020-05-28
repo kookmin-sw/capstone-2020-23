@@ -20,10 +20,12 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public int createPost(InstantPost newPost, int nodeId, int dogamId) {
+    public PostDto createPost(InstantPost newPost, int nodeId, int dogamId) {
         Post post = new Post(newPost.getSrc(), newPost.getUrl(), newPost.getText(), newPost.getLike(), nodeId, dogamId);
         int postId = postStorage.createPost(post);
-        return postId;
+        post.setId(postId);
+        PostDto postDto = post.toPostDto();
+        return postDto;
     }
 
     @Override

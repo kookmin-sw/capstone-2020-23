@@ -61,9 +61,9 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
 
         PostDto item = saveditems.get(position);
 
-        Glide.with(vh.itemView.getContext()).load(item.getUrl()).into(vh.savedPost);
+        Glide.with(vh.itemView.getContext()).load(item.getImgUrl()).into(vh.savedPost);
 
-        vh.savedTag.setText(item.getHashtag());
+        vh.savedTag.setText(Integer.toString(item.getLike()));
 
     }
 

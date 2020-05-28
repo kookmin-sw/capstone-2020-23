@@ -20,6 +20,7 @@ import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.activity.MainActivity;
 import com.capstone.moayo.activity.ResultActivity;
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
@@ -28,18 +29,21 @@ import java.util.ArrayList;
 
 public class BookExpandableAdapter extends BaseExpandableListAdapter {
     Context mContext;
+    CategoryDto selectCategory;
     ArrayList<CategoryNodeDto> categoryNodes;
     CategoryNodeDto selectedNode;
 
-    public BookExpandableAdapter(Context context, ArrayList<CategoryNodeDto> nodes) {
+    public BookExpandableAdapter(Context context, CategoryDto category) {
         mContext = context;
-        categoryNodes = nodes;
+        selectCategory = category;
+        categoryNodes = (ArrayList<CategoryNodeDto>) category.getRootNode().getLowLayer();
         selectedNode = null;
     }
 
-    public BookExpandableAdapter(Context context, ArrayList<CategoryNodeDto> nodes, CategoryNodeDto selected_node) {
+    public BookExpandableAdapter(Context context, CategoryDto category, CategoryNodeDto selected_node) {
         mContext = context;
-        categoryNodes = nodes;
+        selectCategory = category;
+        categoryNodes = (ArrayList<CategoryNodeDto>) category.getRootNode().getLowLayer();
         selectedNode = selected_node;
     }
 
@@ -82,6 +86,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
             public void onClick(View view){
                 Intent intent = new Intent(mContext, ResultActivity.class);
                 intent.putExtra("current_node", currentNode);
+                intent.putExtra("category", selectCategory);
                 mContext.startActivity(intent);
             }
         });
@@ -159,6 +164,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 //                Toast.makeText(mContext , "검색!!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, ResultActivity.class);
                 intent.putExtra("current_node", currentNode);
+                intent.putExtra("category", selectCategory);
                 mContext.startActivity(intent);
             }
         });
