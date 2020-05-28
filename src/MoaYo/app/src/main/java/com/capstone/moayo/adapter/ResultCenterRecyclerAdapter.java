@@ -2,13 +2,10 @@ package com.capstone.moayo.adapter;
 
 import android.content.Context;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +18,15 @@ import java.util.ArrayList;
 public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCenterRecyclerAdapter.ViewHolder> {
 
     private ArrayList<InstantPost> items = new ArrayList<>();
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener mListener = null ;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener ;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,12 +43,9 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        // 데이터 리스트로부터 아이템 데이터 참조.
-                        InstantPost selected_item = items.get(pos) ;
-                        Intent viewIntent =
-                                new Intent("android.intent.action.VIEW",
-                                        Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
-                        v.getContext().startActivity(viewIntent);
+                        if (mListener != null) {
+                            mListener.onItemClick(v, pos) ;
+                        }
                     }
 
                 }
