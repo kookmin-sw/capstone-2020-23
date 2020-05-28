@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -118,6 +120,17 @@ public class ResultActivity extends BaseActivity {
 
         ResultCenterRecyclerAdapter result_adapter = new ResultCenterRecyclerAdapter();
         result_recycler.setAdapter(result_adapter);
+
+        result_adapter.setOnItemClickListener(new ResultCenterRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                // TODO : 아이템 클릭 이벤트를 ResultActivity 에서 처리.
+                InstantPost selected_item = searchPost.get(position) ;
+                Intent viewIntent = new Intent("android.intent.action.VIEW",
+                                        Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
+                v.getContext().startActivity(viewIntent);
+            }
+        });
 
         //아이템 로드
         Callable<ArrayList<InstantPost>> callable1 = () -> requestResultPost(searchNode);
