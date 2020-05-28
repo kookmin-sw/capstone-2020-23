@@ -6,8 +6,11 @@ import com.capstone.moayo.service.dto.RequestForm;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+import java.util.Map;
+
 public class CategoryConvertor {
-    public static RequestForm generateForm(CategoryNodeDto secondNode, CategoryNodeDto thirdNode) {
+    public static RequestForm generateForm(CategoryNodeDto secondNode, CategoryNodeDto thirdNode, Map<Integer, List<String>> cacheMap) {
         RequestForm form = new RequestForm();
 
         form.setSecond_layer(secondNode.getHashtags());

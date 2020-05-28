@@ -13,6 +13,9 @@ import com.capstone.moayo.util.retrofit.SearchAPI;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
@@ -20,27 +23,39 @@ import retrofit2.Response;
 
 public class ConcreteSearchService implements SearchService {
     private SearchAPI searchAPI;
+    private Map<Integer, List<String>> cacheMap;
 
     public ConcreteSearchService(Context context) {
         searchAPI = APIUtils.getSearchAPI();
+        cacheMap = new LinkedHashMap<>();
     }
 
     @Override
     public RespondForm requestData(CategoryNodeDto firstNode, CategoryNodeDto secondNode) {
-        RequestForm form = CategoryConvertor.generateForm(firstNode, secondNode);
+        if(cacheMap.containsKey(firstNode.getId()) && cacheMap.containsKey(secondNode.getId())) {
+
+        }
+        RequestForm form = CategoryConvertor.generateForm(firstNode, secondNode, cacheMap);
         Log.d("convert result", form.toString());
         Call<RespondForm> call = searchAPI.requestPosts(form);
         try {
             Response<RespondForm> response = call.execute();
             RespondForm resultForm = response.body();
-            firstNode.setCache(Arrays.asList(resultForm.getSecond_layer_cache()));
-            secondNode.setCache(Arrays.asList(resultForm.getThird_layer_cache()));
-            Log.d("request result", resultForm.getThrid_layer().toString());
+            cacheMap.put(firstNode.getId(), Arrays.asList(resultForm.getSecond_layer_cache()));
+            cacheMap.put(secondNode.getId(), Arrays.asList(resultForm.getThird_layer_cache()));
+            //Log.d("request result", resultForm.getThrid_layer().toString());
+            for(String cache : resultForm.getThird_layer_cache())
+                Log.d("request cache", cache);
             return resultForm;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    @Override
+    public void initCache() {
+        cacheMap.clear();
     }
 }
