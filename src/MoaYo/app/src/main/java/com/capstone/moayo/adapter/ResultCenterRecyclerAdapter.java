@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCenterRecyclerAdapter.ViewHolder> {
 
     private ArrayList<InstantPost> items = new ArrayList<>();
-
+    private Context context;
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
@@ -56,7 +56,7 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
     @NonNull
     @Override
     public ResultCenterRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.recycler_result_center, parent, false);
