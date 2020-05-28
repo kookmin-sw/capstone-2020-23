@@ -2,12 +2,15 @@ package com.capstone.moayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -36,7 +40,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_book_detail);
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
-        Toolbar toolbar = (Toolbar)findViewById(R.id.detail_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -51,22 +55,17 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
         toolbarTitle.setText(rootNode.getTitle());
 
-        ExpandableListView myList = (ExpandableListView)findViewById(R.id.expandableListView);
+        ExpandableListView myList = (ExpandableListView) findViewById(R.id.expandableListView);
         //create Data
         myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer()));
 //        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
 
-        TextView detail_text = (TextView)findViewById(R.id.detail_text);
-        TextView detail_text2 = (TextView)findViewById(R.id.detail_text2);
-        ImageView arrow_detail = (ImageView)findViewById(R.id.arrow_detail);
+        TextView detail_text = (TextView) findViewById(R.id.detail_text);
+        TextView detail_text2 = (TextView) findViewById(R.id.detail_text2);
+        ImageView arrow_detail = (ImageView) findViewById(R.id.arrow_detail);
 
         detail_text.setText(rootNode.getTitle() + "");
 
-        updateBtn = (Button) findViewById(R.id.detail_btn_update);
-        deleteBtn = (Button) findViewById(R.id.detail_btn_delete);
-
-        updateBtn.setOnClickListener(this);
-        deleteBtn.setOnClickListener(this);
 
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
@@ -83,6 +82,40 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         return true;
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //menu.xml에서 지정한 item 이벤트 추가
+        switch (item.getItemId()) {
+
+            case R.id.bookDetailMenu: {
+
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        BookDetailActivity.this, R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(getApplicationContext())
+                        .inflate(R.layout.detail_bottom_menu, (LinearLayout) findViewById(R.id.bottomSheetContainer));
+
+                updateBtn = bottomSheetView.findViewById(R.id.detail_btn_update);
+                updateBtn.setOnClickListener(this);
+                bottomSheetDialog.dismiss();
+
+
+                deleteBtn = bottomSheetView.findViewById(R.id.detail_btn_delete);
+                deleteBtn.setOnClickListener(this);
+
+
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+
+                return true;
+            }
+
+            default:
+                onBackPressed();
+                return true;
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -90,7 +123,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.detail_btn_update:
                 //TODO: BookForm 화면으로 전환
                 Intent intent = new Intent(BookDetailActivity.this, BookFormActivity.class);
-                intent.putExtra("category",category);
+                intent.putExtra("category", category);
                 startActivity(intent);
 
                 break;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomSheetContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="도감 수정"
+        android:textSize="20dp"
+        android:textColor="@drawable/click_text"
+        android:background="@drawable/click_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/detail_btn_update" />
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.5dp"-->
+<!--        android:layout_marginLeft="55dp"-->
+<!--        android:background="@color/lightGray"/>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="도감 삭제"
+        android:textSize="20dp"
+        android:textColor="@drawable/click_text"
+        android:background="@drawable/click_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/detail_btn_delete"/>
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.5dp"-->
+<!--        android:layout_marginLeft="55dp"-->
+<!--        android:background="@color/lightGray"/>-->
+
+</LinearLayout>
