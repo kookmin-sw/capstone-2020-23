@@ -1,6 +1,7 @@
 package com.capstone.moayo.fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.capstone.moayo.R;
+import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
@@ -48,7 +51,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private TextView keyword;
     private EditText input_tag_et;
     private OnEditNodeListener callback;
-
+    private ProgressBar progressBar;
     private String FORM_MODE;
 
     private ListView listview;
@@ -146,6 +149,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
         }
 
+        progressBar = (ProgressBar) view.findViewById(R.id.dialog_tag_pb_horizontal);
+//        progressBar.setVisibility(view.VISIBLE);
+        listview.setVisibility(view.INVISIBLE);
         //synonym_tags backend 통신
         //word => 키워드 데이터
         //synonym_tags에 해시태그 데이터 코드 받고 adapter.notifyDataSetChanged();
@@ -164,6 +170,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             public void onResult(List<String> result) {
                 for(String tag : result) synonym_tags.add(tag);
                 adapter.notifyDataSetChanged();
+                progressBar.setVisibility(view.GONE);
+                listview.setVisibility(view.VISIBLE);
             }
 
             @Override
@@ -177,7 +185,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             }
         };
 
-        new AsyncExecutor<List<String>>().setCallback(callback).setCallable(callable).execute();
+        new AsyncExecutor<List<String>>() {
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+//                progressBar.setMax(100);
+                progressBar.setVisibility(view.VISIBLE);
+            }
+        }.setCallback(callback).setCallable(callable).execute();
 
         cancel_btn.setOnClickListener(this);
         save_btn.setOnClickListener(this);

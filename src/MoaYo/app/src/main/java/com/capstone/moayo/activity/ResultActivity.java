@@ -13,7 +13,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.capstone.moayo.BaseActivity;
@@ -43,6 +45,7 @@ public class ResultActivity extends BaseActivity {
 
     private PostService postService;
     private SearchService searchService;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class ResultActivity extends BaseActivity {
         // 리사이클러뷰에 객체 지정.
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
         saved_recycler.setAdapter(saved_adapter) ;
+
+        progressBar = (ProgressBar) findViewById(R.id.activity_result_pb_circle);
 
         Callable<ArrayList<PostDto>> callable0 = () -> requestSavedPost(searchNode);
         AsyncCallback<ArrayList<PostDto>> callback0 = new AsyncCallback<ArrayList<PostDto>>() {
@@ -112,8 +117,9 @@ public class ResultActivity extends BaseActivity {
             public void onResult(ArrayList<InstantPost> result) {
                 result_adapter.setItems(result);
                 result_adapter.notifyDataSetChanged();
-
+                progressBar.setVisibility(View.GONE);
                 for(InstantPost post : result) Log.d("found result", post.toString());
+
             }
 
             @Override
@@ -126,7 +132,13 @@ public class ResultActivity extends BaseActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<InstantPost>>().setCallable(callable1).setCallback(callback1).execute();
+        new AsyncExecutor<ArrayList<InstantPost>>(){
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        }.setCallable(callable1).setCallback(callback1).execute();
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
         //create Data
