@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
@@ -139,10 +140,28 @@ public class ResultActivity extends BaseActivity {
                 progressBar.setVisibility(View.VISIBLE);
             }
         }.setCallable(callable1).setCallback(callback1).execute();
+
+
+
+        result_recycler.setOnScrollChangeListener(new RecyclerView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                if(!result_recycler.canScrollVertically(-1)) {
+//                    Toast.makeText(getApplicationContext(), "최상단", Toast.LENGTH_SHORT).show();
+//                } else if(!result_recycler.canScrollVertically(1)) {
+//                    Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
+//                }
+                if(!result_recycler.canScrollVertically(1)) {
+                    Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
         //Drawer
         ExpandableListView myList = (ExpandableListView)findViewById(R.id.drawer_expandableListView);
+
         //create Data
-//        myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) getDummyRoot(searchNode).getLowLayer(), searchNode));
         getRootNode(searchNode);
         myList.setAdapter(new BookExpandableAdapter(this, (ArrayList<CategoryNodeDto>) rootNode.getLowLayer(), searchNode));
 
