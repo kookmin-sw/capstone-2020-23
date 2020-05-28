@@ -29,13 +29,13 @@ public class CategoryDto implements Serializable {
         this.id = 0;
         this.status = DogamStatus.NonShare;
         this.writer = "";
+        this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
     }
-    public CategoryDto(String title, String description, String password, String url,  CategoryNodeDto rootNode) {
+    public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
         this();
         this.title = title;
         this.description = description;
         this.password = password;
-        this.url = url;
         this.rootNode = rootNode;
         this.selectCategory = rootNode;
     }
@@ -43,12 +43,13 @@ public class CategoryDto implements Serializable {
     public Category toCategory() {
         Category category = null;
         if(rootNode != null)
-            category = new Category(title, description, password, url, rootNode.toCategoryNode());
-        else category = new Category(title, description, password, url, null);
+            category = new Category(title, description, password, rootNode.toCategoryNode());
+        else category = new Category(title, description, password, null);
 
         category.setId(id);
         category.setStatus(status);
         category.setWriter(writer);
+        category.setUrl(url);
         return category;
     }
 

@@ -119,7 +119,7 @@ public class TestActivity extends AppCompatActivity {
         });
 
         requestBtn.setOnClickListener(v -> {
-            CategoryDto categoryDto = new CategoryDto("dummy", "dummy data", "1234", "", null);
+            CategoryDto categoryDto = new CategoryDto("dummy", "dummy data", "1234", null);
             CategoryNodeDto secondNode = new CategoryNodeDto("secondNode", null, 2);
             CategoryNodeDto thirdNode = new CategoryNodeDto("thirdNode", null, 3);
 
@@ -207,7 +207,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private CategoryDto createCategory() {
-        CategoryDto categoryDto = new CategoryDto("dummy dogam", "this is dummy dogam", "1234", "https://www.naver.com", null);
+        CategoryDto categoryDto = new CategoryDto("dummy dogam", "this is dummy dogam", "1234", null);
         CategoryNodeDto rootNode = new CategoryNodeDto("root node", null, 1);
         for(int i = 0; i < 3; i++) {
             CategoryNodeDto secondNode = new CategoryNodeDto(i+"th secondNode", rootNode, 2);

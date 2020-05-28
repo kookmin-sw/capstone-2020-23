@@ -30,13 +30,13 @@ public class Category{
         id = 0;
         status = DogamStatus.NonShare;
         this.writer = "";
+        this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
     }
-    public Category(String title, String description, String password, String url, CategoryNode rootNode) {
+    public Category(String title, String description, String password, CategoryNode rootNode) {
         this();
         this.title = title;
         this.description = description;
         this.password = password;
-        this.url = url;
         this.rootNode = rootNode;
         this.selectCategoryNode = rootNode;
     }
@@ -44,12 +44,13 @@ public class Category{
     public CategoryDto toCategoryDto() {
         CategoryDto categoryDto = null;
         if(rootNode != null)
-            categoryDto = new CategoryDto(title, description, password, url, rootNode.toCategoryNodeDto());
-        else categoryDto = new CategoryDto(title, description, password, url, null);
+            categoryDto = new CategoryDto(title, description, password, rootNode.toCategoryNodeDto());
+        else categoryDto = new CategoryDto(title, description, password, null);
 
         categoryDto.setId(id);
         categoryDto.setStatus(status);
         categoryDto.setWriter(writer);
+        categoryDto.setUrl(url);
         return categoryDto;
     }
 

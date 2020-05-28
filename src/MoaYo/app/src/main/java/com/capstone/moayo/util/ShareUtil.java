@@ -81,8 +81,9 @@ public class ShareUtil {
         }
         CategoryNodeDto rootNode = convertModelToNode(categoryModels, categoryNodeDtos);
         String[] de_url = dogamModel.getDescription().split(";");
-        CategoryDto dogam = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(),de_url[1], rootNode);
+        CategoryDto dogam = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), rootNode);
         dogam.setId(dogamModel.getId());
+        dogam.setUrl(de_url[1]);
         switch (dogamModel.getStatus()) {
             case 0:
                 dogam.setStatus(DogamStatus.Shared_Immutable);

@@ -64,7 +64,7 @@ public class ConcreteCategoryService implements CategoryService {
     @Override
     public List<CategoryDto> findAll() {
         try {
-            List<Category> categories = dogamStorage.retrieveAll();
+            Collection<Category> categories = dogamStorage.retrieveAll();
             if (categories == null)
                 throw new  NoSuchCategoryException("You don't have any category now");
 
@@ -103,7 +103,7 @@ public class ConcreteCategoryService implements CategoryService {
             if(rootNode == null)
                 throw new NoSuchNodeException("there is no such node");
 
-            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(),"", rootNode);
+            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), rootNode);
             foundCategory.setId(foundDogam.getId());
             foundCategoryDto = foundCategory.toCategoryDto();
         } catch (NoSuchCategoryException | NoSuchNodeException e) {

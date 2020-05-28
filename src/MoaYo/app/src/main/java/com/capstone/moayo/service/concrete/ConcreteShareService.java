@@ -50,9 +50,10 @@ public class ConcreteShareService implements ShareService {
             if(dogamModels == null) throw new Exception();
             for(DogamModel dogamModel : dogamModels) {
                 String[] de_url = dogamModel.getDescription().split(";");
-                CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), de_url[1], null);
+                CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
                 categoryDto.setId(dogamModel.getId());
                 categoryDtoList.add(categoryDto);
+                categoryDto.setUrl(de_url[1]);
             }
         } catch (Exception e) {
             e.printStackTrace();

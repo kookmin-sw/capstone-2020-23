@@ -207,7 +207,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
     public void onSubmit() {
         //--------Backend 통신----------
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
-        category = new CategoryDto(rootNode.getTitle(), null, null,"https://image.flaticon.com/icons/png/512/130/130304.png",  rootNode);
+        category = new CategoryDto(rootNode.getTitle(), null, null,  rootNode);
         Log.d("category", category.toString());
         Callable<String> callable = () -> categoryService.createCategory(category);
         AsyncCallback<String> callback = new AsyncCallback<String>() {
