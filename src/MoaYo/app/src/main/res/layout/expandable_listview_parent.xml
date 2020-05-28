@@ -24,7 +24,6 @@
         android:layout_gravity="end"
         android:layout_marginRight="20dp"
         android:scaleType="centerInside"
-        android:visibility="invisible"
         app:srcCompat="@drawable/search_result"
         android:background="@android:color/transparent" />
 

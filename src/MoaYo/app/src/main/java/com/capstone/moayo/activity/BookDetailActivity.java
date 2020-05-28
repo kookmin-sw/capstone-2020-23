@@ -32,7 +32,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private TextView toolbarTitle;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
-    private Button updateBtn, deleteBtn;
+    private Button updateBtn, deleteBtn, shareBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.bookDetailMenu: {
 
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
                         BookDetailActivity.this, R.style.BottomSheetDialogTheme
                 );
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
@@ -97,12 +97,16 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
                 updateBtn = bottomSheetView.findViewById(R.id.detail_btn_update);
                 updateBtn.setOnClickListener(this);
-                bottomSheetDialog.dismiss();
-
 
                 deleteBtn = bottomSheetView.findViewById(R.id.detail_btn_delete);
                 deleteBtn.setOnClickListener(this);
 
+                bottomSheetView.findViewById(R.id.detail_btn_back).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.dismiss();
+                    }
+                });
 
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
