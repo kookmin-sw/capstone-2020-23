@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -53,6 +54,9 @@ public class ResultActivity extends BaseActivity {
 
     private List<InstantPost> searchPost;
     private List<PostDto> savePost;
+
+    private int doubleClickFlag = 0;
+    private final long  CLICK_DELAY = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,11 +128,28 @@ public class ResultActivity extends BaseActivity {
         result_adapter.setOnItemClickListener(new ResultCenterRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                // TODO : 아이템 클릭 이벤트를 ResultActivity 에서 처리.
-                InstantPost selected_item = searchPost.get(position) ;
-                Intent viewIntent = new Intent("android.intent.action.VIEW",
-                                        Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
-                v.getContext().startActivity(viewIntent);
+//                // TODO : 아이템 클릭 이벤트를 ResultActivity 에서 처리.
+//                InstantPost selected_item = searchPost.get(position) ;
+//                Intent viewIntent = new Intent("android.intent.action.VIEW",
+//                                        Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
+//                v.getContext().startActivity(viewIntent);
+                doubleClickFlag++;
+                Handler handler = new Handler();
+                Runnable clickRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleClickFlag = 0;
+                        // todo 클릭 이벤트
+                        Toast.makeText(getApplicationContext(), "single click", Toast.LENGTH_SHORT).show();
+                    }
+                };
+                if( doubleClickFlag == 1 ) {
+                    handler.postDelayed( clickRunnable, CLICK_DELAY );
+                }else if( doubleClickFlag == 2 ) {
+                    doubleClickFlag = 0;
+                    // todo 더블클릭 이벤트
+                    Toast.makeText(getApplicationContext(), "double click", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
