@@ -23,7 +23,7 @@ public class CategoryConvertor {
             for(int i = 0; i < secondCache.length; i++) secondCache[i] = "";
             form.setSecond_layer_cache(secondCache);
         } else {
-            form.setSecond_layer_cache((String[]) cacheMap.get(0).toArray());
+            form.setSecond_layer_cache((String[]) cacheMap.get(secondNode.getId()).toArray());
         }
 
         if(cacheMap.get(thirdNode.getId()).size() == 0) {
@@ -31,7 +31,7 @@ public class CategoryConvertor {
             for(int i = 0; i < thirdCache.length; i++) thirdCache[i] = "";
             form.setThird_layer_cache(thirdCache);
         } else {
-            form.setThird_layer_cache((String[]) cacheMap.get(1).toArray());
+            form.setThird_layer_cache((String[]) cacheMap.get(thirdNode.getId()).toArray());
         }
         Log.d("generate requestForm", form.toString());
         return form;

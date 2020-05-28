@@ -49,6 +49,9 @@ public class ResultActivity extends BaseActivity {
     private SearchService searchService;
     private ProgressBar progressBar;
 
+    private List<InstantPost> searchPost;
+    private List<PostDto> savePost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,9 @@ public class ResultActivity extends BaseActivity {
 
         postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
+
+        searchPost = new ArrayList<>();
+        savePost = new ArrayList<>();
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -87,7 +93,8 @@ public class ResultActivity extends BaseActivity {
         AsyncCallback<ArrayList<PostDto>> callback0 = new AsyncCallback<ArrayList<PostDto>>() {
             @Override
             public void onResult(ArrayList<PostDto> result) {
-                saved_adapter.setItems(requestSavedPost(searchNode));
+                savePost.addAll(result);
+                saved_adapter.setItems((ArrayList<PostDto>) savePost);
                 saved_adapter.notifyDataSetChanged();
             }
 
@@ -117,7 +124,8 @@ public class ResultActivity extends BaseActivity {
         AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
             @Override
             public void onResult(ArrayList<InstantPost> result) {
-                result_adapter.setItems(result);
+                searchPost.addAll(result);
+                result_adapter.setItems((ArrayList<InstantPost>) searchPost);
                 result_adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
                 for(InstantPost post : result) Log.d("found result", post.toString());
@@ -153,6 +161,35 @@ public class ResultActivity extends BaseActivity {
 //                    Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
 //                }
                 if(!result_recycler.canScrollVertically(1)) {
+                    Callable<ArrayList<InstantPost>> callable1 = () -> (ArrayList<InstantPost>) searchService.requestData(searchNode.getParent(), searchNode);
+                    AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
+                        @Override
+                        public void onResult(ArrayList<InstantPost> result) {
+                            searchPost.addAll(result);
+                            result_adapter.setItems((ArrayList<InstantPost>) searchPost);
+                            result_adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+                            for(InstantPost post : result) Log.d("found result", post.toString());
+
+                        }
+
+                        @Override
+                        public void exceptionOccured(Exception e) {
+
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    };
+                    new AsyncExecutor<ArrayList<InstantPost>>(){
+                        @Override
+                        protected void onProgressUpdate(Void... values) {
+                            super.onProgressUpdate(values);
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+                    }.setCallable(callable1).setCallback(callback1).execute();
                     Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -231,6 +268,8 @@ public class ResultActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        savePost.clear();
+        searchPost.clear();
         searchService.initCache();
         super.onDestroy();
     }
