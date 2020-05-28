@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
-import com.capstone.moayo.model.NewPost;
 import com.capstone.moayo.service.dto.InstantPost;
 
 import java.util.ArrayList;
@@ -63,6 +62,18 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
         this.items = items;
     }
 
+
+//    @Override
+//    public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+//    {
+//        super.onScrolled(recyclerView, dx, dy);
+//        StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+//
+//        if(manager.findLastVisibleItemPosition() == manager.getItemCount()-1)
+//        {
+//            // We have reached the end of the recycler view.
+//        }
+//    }
 
 }
 
