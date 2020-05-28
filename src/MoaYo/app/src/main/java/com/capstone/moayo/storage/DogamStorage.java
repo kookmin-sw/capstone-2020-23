@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DogamStorage {
     public int create(Category category);
-    public DogamMapping retrieveById(int id);
+    public Category retrieveById(int id);
     public void update(Category category);
     public boolean remove(int id);
     public Collection<Category> retrieveAll();

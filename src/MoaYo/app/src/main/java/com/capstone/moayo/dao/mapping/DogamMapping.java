@@ -5,17 +5,17 @@ import com.capstone.moayo.util.DogamStatus;
 public class DogamMapping {
     private int id;
     private String title;
-    private String desription;
+    private String description;
     private String password;
     private String url;
     private DogamStatus status;
 
-    public void setDesription(String desription) {
-        this.desription = desription;
+    public void setDescription(String desription) {
+        this.description = desription;
     }
 
-    public String getDesription() {
-        return desription;
+    public String getDescription() {
+        return description;
     }
 
     public void setId(int id) {

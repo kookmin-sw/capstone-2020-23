@@ -2,6 +2,7 @@ package com.capstone.moayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,11 +21,16 @@ import androidx.appcompat.widget.Toolbar;
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
+import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 
 public class BookDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -34,10 +40,14 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private CategoryNodeDto rootNode;
     private Button updateBtn, deleteBtn, shareBtn;
 
+    private CategoryService categoryService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
+
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
@@ -135,6 +145,27 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.detail_btn_delete:
                 //TODO: 도감 삭제 후 BookManage 화면으로 전환
                 //--------Backend 통신-----------
+                Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
+                AsyncCallback<String> callback = new AsyncCallback<String>() {
+                    @Override
+                    public void onResult(String result) {
+                        Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
+                        startActivity(intent1);
+                        Log.d("delete result", result);
+                    }
+
+                    @Override
+                    public void exceptionOccured(Exception e) {
+                        e.toString();
+                    }
+
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+
+                new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
                 Toast.makeText(getApplicationContext(), "도감 삭제 이벤트", Toast.LENGTH_SHORT).show();
                 break;
 

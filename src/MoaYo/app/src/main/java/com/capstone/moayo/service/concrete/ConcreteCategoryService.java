@@ -95,7 +95,7 @@ public class ConcreteCategoryService implements CategoryService {
     public CategoryDto findCategoryById(int id) {
         CategoryDto foundCategoryDto = null;
         try {
-            DogamMapping foundDogam = dogamStorage.retrieveById(id);
+            Category foundDogam = dogamStorage.retrieveById(id);
             if(foundDogam == null)
                 throw new NoSuchCategoryException("There is no such category");
 
@@ -103,11 +103,11 @@ public class ConcreteCategoryService implements CategoryService {
             if(rootNode == null)
                 throw new NoSuchNodeException("there is no such node");
 
-            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), rootNode);
+            Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDescription(), foundDogam.getPassword(), rootNode);
             foundCategory.setId(foundDogam.getId());
             foundCategoryDto = foundCategory.toCategoryDto();
         } catch (NoSuchCategoryException | NoSuchNodeException e) {
-            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
         return foundCategoryDto;
@@ -120,8 +120,8 @@ public class ConcreteCategoryService implements CategoryService {
             if(modifyCategory.getStatus() == DogamStatus.Shared_Mutable)
                 throw new MutableException("can not modify");
 
-            DogamMapping foundDogam = dogamStorage.retrieveById(modifyCategory.getId());
-            if (foundDogam == null)
+            Category foundCategory = dogamStorage.retrieveById(modifyCategory.getId());
+            if (foundCategory == null)
                 throw new NoSuchCategoryException("there is no such category");
 
             dogamStorage.update(modifyCategory);
@@ -139,7 +139,7 @@ public class ConcreteCategoryService implements CategoryService {
     public String deleteDogam(int id) {
         String result = "";
         try {
-            DogamMapping foundDogam = dogamStorage.retrieveById(id);
+            Category foundDogam = dogamStorage.retrieveById(id);
             if(foundDogam == null)
                 throw new NullCategoryException();
             boolean re = dogamStorage.remove(foundDogam.getId());

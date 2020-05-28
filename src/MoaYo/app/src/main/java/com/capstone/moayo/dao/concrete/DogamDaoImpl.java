@@ -58,7 +58,7 @@ public class DogamDaoImpl implements DogamDao {
         DogamMapping dm = new DogamMapping();
         dm.setId(c.getInt(0));
         dm.setTitle(c.getString(1));
-        dm.setDesription(c.getString(2));
+        dm.setDescription(c.getString(2));
         dm.setPassword(c.getString(3));
         c.close();
         mDB.close();
@@ -74,7 +74,7 @@ public class DogamDaoImpl implements DogamDao {
         DogamMapping dm = new DogamMapping();
         dm.setId(c.getInt(0));
         dm.setTitle(c.getString(1));
-        dm.setDesription(c.getString(2));
+        dm.setDescription(c.getString(2));
         dm.setPassword(c.getString(3));
         dm.setStatus(DogamStatus.valueOf(c.getString(4)));
         c.close();
@@ -93,7 +93,7 @@ public class DogamDaoImpl implements DogamDao {
             result[i] = new DogamMapping();
             result[i].setId(c.getInt(0));
             result[i].setTitle(c.getString(1));
-            result[i].setDesription(c.getString(2));
+            result[i].setDescription(c.getString(2));
             result[i].setPassword(c.getString(3));
             result[i].setUrl(c.getString(4));
             result[i].setStatus(DogamStatus.valueOf(c.getString(5)));

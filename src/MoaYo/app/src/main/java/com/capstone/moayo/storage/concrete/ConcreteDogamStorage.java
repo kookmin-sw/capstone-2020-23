@@ -40,23 +40,18 @@ public class ConcreteDogamStorage implements DogamStorage {
     }
 
     @Override
-    public DogamMapping retrieveById(int id) {
-        DogamMapping foundDogam = null;
+    public Category retrieveById(int id) {
+        Category foundCategory = null;
         if(categoryMap.containsKey(id)) {
-            Category foundCategory = categoryMap.get(id);
-            foundDogam = new DogamMapping();
-            foundDogam.setId(foundCategory.getId());
-            foundDogam.setTitle(foundCategory.getTitle());
-            foundDogam.setDesription(foundCategory.getDescription());
-            foundDogam.setPassword(foundCategory.getPassword());
-            foundDogam.setStatus(foundCategory.getStatus());
+            foundCategory = categoryMap.get(id);
         } else {
-            foundDogam = dogamDao.selectById(dbHelper, id);
-            Category category = new Category(foundDogam.getTitle(), foundDogam.getDesription(), foundDogam.getPassword(), null);
-            category.setStatus(foundDogam.getStatus());
-            categoryMap.put(category.getId(), category);
+            DogamMapping foundDogam = dogamDao.selectById(dbHelper, id);
+             foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDescription(), foundDogam.getPassword(), null);
+            foundCategory.setStatus(foundDogam.getStatus());
+            foundCategory.setUrl(foundDogam.getUrl());
+            categoryMap.put(foundCategory.getId(), foundCategory);
         }
-        return foundDogam;
+        return foundCategory;
     }
 
     @Override
@@ -65,7 +60,7 @@ public class ConcreteDogamStorage implements DogamStorage {
             List<Category> categories = new ArrayList<>();
             DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
             for (DogamMapping dogam : dogamMappings) {
-                Category category = new Category(dogam.getTitle(), dogam.getDesription(), dogam.getPassword(), null);
+                Category category = new Category(dogam.getTitle(), dogam.getDescription(), dogam.getPassword(), null);
                 category.setId(dogam.getId());
                 category.setUrl(dogam.getUrl());
 

@@ -43,6 +43,8 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
     private CategoryService categoryService;
     private TextView level1_title_tv, level2_title_tv, level3_title_tv, arrow_tv_1, arrow_tv_2;
 
+    private boolean isCreated;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +74,10 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
             category = (CategoryDto) getIntent().getSerializableExtra("category");
             rootNode = category.getRootNode();
             onChangeLevel(2, rootNode);
+            isCreated = true;
         } else {
             onChangeLevel(1, null);
+            isCreated = false;
         }
     }
 
@@ -207,24 +211,49 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
     public void onSubmit() {
         //--------Backend 통신----------
         //사용자로부터 작성된 도감의 루트노드를 생성한 Category 객체에 등록.
-        category = new CategoryDto(rootNode.getTitle(), null, null,  rootNode);
-        Log.d("category", category.toString());
-        Callable<String> callable = () -> categoryService.createCategory(category);
-        AsyncCallback<String> callback = new AsyncCallback<String>() {
-            @Override
-            public void onResult(String result) {
-                Log.d("create", result);
-                Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
-            }
+        Callable<String> callable;
+        AsyncCallback<String> callback;
 
-            @Override
-            public void exceptionOccured(Exception e) {
-            }
-            @Override
-            public void cancelled() {
-            }
-        };
+        if (isCreated) {
+            category.setRootNode(rootNode);
+            callable = () -> categoryService.modifyCategory(category);
+            callback = new AsyncCallback<String>() {
+                @Override
+                public void onResult(String result) {
+                    Log.d("update", result);
+                    Toast.makeText(getApplicationContext(), "도감 '" + category.getTitle() + "'이 정상적인 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                }
 
+                @Override
+                public void exceptionOccured(Exception e) {
+                    e.toString();
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+
+        } else {
+            category = new CategoryDto(rootNode.getTitle(), null, null,  rootNode);
+            Log.d("category", category.toString());
+            callable = () -> categoryService.createCategory(category);
+            callback = new AsyncCallback<String>() {
+                @Override
+                public void onResult(String result) {
+                    Log.d("create", result);
+                    Toast.makeText(getApplicationContext(), "도감 '"+category.getTitle() + "'이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void exceptionOccured(Exception e) {
+                }
+                @Override
+                public void cancelled() {
+                }
+            };
+        }
         new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
 //        Log.d("rootNode", category.getRootNode().toString());
 
