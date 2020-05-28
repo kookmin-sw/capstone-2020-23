@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.capstone.moayo.service.SearchService;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.RequestForm;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.CategoryConvertor;
@@ -12,11 +13,11 @@ import com.capstone.moayo.util.retrofit.APIUtils;
 import com.capstone.moayo.util.retrofit.SearchAPI;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -31,10 +32,12 @@ public class ConcreteSearchService implements SearchService {
     }
 
     @Override
-    public RespondForm requestData(CategoryNodeDto firstNode, CategoryNodeDto secondNode) {
-        if(cacheMap.containsKey(firstNode.getId()) && cacheMap.containsKey(secondNode.getId())) {
-
+    public List<InstantPost> requestData(CategoryNodeDto firstNode, CategoryNodeDto secondNode) {
+        if(!cacheMap.containsKey(firstNode.getId()) && !cacheMap.containsKey(secondNode.getId())) {
+            cacheMap.put(firstNode.getId(), new ArrayList<>());
+            cacheMap.put(secondNode.getId(), new ArrayList<>());
         }
+
         RequestForm form = CategoryConvertor.generateForm(firstNode, secondNode, cacheMap);
         Log.d("convert result", form.toString());
         Call<RespondForm> call = searchAPI.requestPosts(form);
@@ -46,7 +49,7 @@ public class ConcreteSearchService implements SearchService {
             //Log.d("request result", resultForm.getThrid_layer().toString());
             for(String cache : resultForm.getThird_layer_cache())
                 Log.d("request cache", cache);
-            return resultForm;
+            return resultForm.getThrid_layer();
         } catch (IOException e) {
             e.printStackTrace();
         }

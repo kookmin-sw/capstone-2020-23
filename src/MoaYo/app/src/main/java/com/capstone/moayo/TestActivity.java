@@ -131,27 +131,27 @@ public class TestActivity extends AppCompatActivity {
             thirdNode.getHashtags().add("차이나타운");
             thirdNode.getHashtags().add("중국집");
 
-            Callable<RespondForm> callable = () -> searchService.requestData(secondNode, thirdNode);
-            AsyncCallback<RespondForm> callback = new AsyncCallback<RespondForm>() {
-                @Override
-                public void onResult(RespondForm result) {
-                    System.out.println(result.getThrid_layer().toString());
-                    System.out.println(result.getSecond_layer_cache().toString());
-                    System.out.println(result.getThird_layer_cache().toString());
-                }
-
-                @Override
-                public void exceptionOccured(Exception e) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void cancelled() {
-
-                }
-            };
-
-            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
+//            Callable<RespondForm> callable = () -> searchService.requestData(secondNode, thirdNode);
+//            AsyncCallback<RespondForm> callback = new AsyncCallback<RespondForm>() {
+//                @Override
+//                public void onResult(RespondForm result) {
+//                    System.out.println(result.getThrid_layer().toString());
+//                    System.out.println(result.getSecond_layer_cache().toString());
+//                    System.out.println(result.getThird_layer_cache().toString());
+//                }
+//
+//                @Override
+//                public void exceptionOccured(Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//                @Override
+//                public void cancelled() {
+//
+//                }
+//            };
+//
+//            new AsyncExecutor<RespondForm>().setCallable(callable).setCallback(callback).execute();
 //            CategoryDto categoryDto = createCategory();
 
 //            Callable<String> callable = () -> shareService.deleteDogam(61);

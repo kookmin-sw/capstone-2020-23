@@ -36,6 +36,7 @@ import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public class ResultActivity extends BaseActivity {
@@ -150,8 +151,8 @@ public class ResultActivity extends BaseActivity {
 
     //도감 검색결과 요청.
     private ArrayList<InstantPost> requestResultPost(CategoryNodeDto node) {
-        RespondForm foundForm = searchService.requestData(node.getParent(), node);
-        ArrayList<InstantPost> foundPost = (ArrayList<InstantPost>) foundForm.getThrid_layer();
+        List<InstantPost> respondPost = searchService.requestData(node.getParent(), node);
+        ArrayList<InstantPost> foundPost = (ArrayList<InstantPost>) respondPost;
 
         return foundPost;
     }
@@ -207,5 +208,11 @@ public class ResultActivity extends BaseActivity {
                 return true;
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        searchService.initCache();
+        super.onDestroy();
     }
 }
