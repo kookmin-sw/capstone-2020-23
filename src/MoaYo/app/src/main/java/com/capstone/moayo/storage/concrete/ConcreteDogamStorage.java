@@ -77,7 +77,7 @@ public class ConcreteDogamStorage implements DogamStorage {
             boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword(), category.getUrl(), category.getStatus());
             if(result != true)
                 throw new Exception();
-            categoryMap.put(category.getId(), category);
+            categoryMap.replace(category.getId(), category);
         } catch (Exception e) {
             e.printStackTrace();
         }

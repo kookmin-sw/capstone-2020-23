@@ -125,6 +125,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
         int dogamId = category.getId();
         CategoryNode rootNode = category.getRootNode();
 
+        //update root Node
         if(rootNode.getId() == 0) {
             int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId, dogamId);
             rootNode.setId(rootId);
@@ -132,10 +133,13 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             boolean result = categoryDao.rootUpdate(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), dogamId, dogamId);
             if (result != true) return "fail to update in " + rootNode.toString();
         }
-            createHashTag(rootNode.getHashtags());
-            updateCategoryHashTag(dogamId, rootNode.getId(), rootNode.getHashtags());
+
+        //update hashtag
+        createHashTag(rootNode.getHashtags());
+        updateCategoryHashTag(dogamId, rootNode.getId(), rootNode.getHashtags());
         categoryNodeMap.put(rootNode.getId(), rootNode);
 
+        //update second node
         for(CategoryNode secondNode : rootNode.getLowLayer()) {
             if(secondNode.getId() == 0) {
                 int secondId = (int) categoryDao.insert(dbHelper, secondNode.getLevel(), rootNode.getId(), secondNode.getTitle(), dogamId, dogamId);
@@ -145,10 +149,12 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                 if(result != true) return "fail to update in " + secondNode.toString();
             }
 
+            //update hashtag
             createHashTag(secondNode.getHashtags());
             updateCategoryHashTag(dogamId, secondNode.getId(), secondNode.getHashtags());
             categoryNodeMap.put(secondNode.getId(), secondNode);
 
+            //update thirdnode
             for(CategoryNode thirdNode : secondNode.getLowLayer()) {
                 if(thirdNode.getId() == 0) {
                     int thirdId = (int) categoryDao.insert(dbHelper, thirdNode.getLevel(), secondNode.getId(), thirdNode.getTitle(), dogamId, dogamId);
@@ -158,6 +164,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
                     if(result != true) return "fail to update in " + thirdNode.toString();
                 }
 
+                //update hashtag
                 createHashTag(thirdNode.getHashtags());
                 updateCategoryHashTag(dogamId, thirdNode.getId(), thirdNode.getHashtags());
                 categoryNodeMap.put(thirdNode.getId(), thirdNode);
@@ -176,23 +183,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             result = "fail to delete node";
          else  {
              result = "success to delete node";
-//             CategoryNode rootNode = categoryMap.get(dogamId).getRootNode();
-//             if(rootNode.getId() == id) {
-//                 categoryMap.get(dogamId).setRootNode(null);
-//                 return result;
-//             }
-//             for(CategoryNode secondNode : rootNode.getLowLayer()) {
-//                 if(secondNode.getId() == id) {
-//                     rootNode.getLowLayer().remove(secondNode);
-//                     return result;
-//                 }
-//                 for(CategoryNode thirdNode : secondNode.getLowLayer()) {
-//                     if(thirdNode.getId() == id) {
-//                         secondNode.getLowLayer().remove(thirdNode);
-//                         return result;
-//                     }
-//                 }
-//             }
+
             CategoryNode removeNode = categoryNodeMap.get(id);
             if(removeNode.getParent() == null) {
                 categoryNodeMap.remove(id);

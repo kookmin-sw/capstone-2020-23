@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.capstone.moayo.dao.mapping.CategoryMapping;
-import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.CategoryService;
@@ -15,7 +13,7 @@ import com.capstone.moayo.storage.CategoryStorage;
 import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.DogamStatus;
-import com.capstone.moayo.util.Exception.MutableException;
+import com.capstone.moayo.util.Exception.ImmutableException;
 import com.capstone.moayo.util.Exception.NoSuchCategoryException;
 import com.capstone.moayo.util.Exception.NoSuchNodeException;
 import com.capstone.moayo.util.Exception.NotRootException;
@@ -117,8 +115,8 @@ public class ConcreteCategoryService implements CategoryService {
     public String modifyCategory(CategoryDto categoryDto) {
         Category modifyCategory = categoryDto.toCategory();
         try {
-            if(modifyCategory.getStatus() == DogamStatus.Shared_Mutable)
-                throw new MutableException("can not modify");
+            if(modifyCategory.getStatus() == DogamStatus.Shared_Immutable)
+                throw new ImmutableException("can not modify");
 
             Category foundCategory = dogamStorage.retrieveById(modifyCategory.getId());
             if (foundCategory == null)
@@ -128,11 +126,26 @@ public class ConcreteCategoryService implements CategoryService {
             String result = categoryStorage.update(modifyCategory);
             initCache(categoryDto);
             return result;
-        } catch (NoSuchNodeException | MutableException e) {
-            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show();
+        } catch (NoSuchNodeException | ImmutableException e) {
+            Log.e("error in service",e.toString());
         }
 
         return null;
+    }
+
+    @Override
+    public boolean modifyDogam(CategoryDto categoryDto) {
+        Category modifyCateogry = categoryDto.toCategory();
+        try {
+            if(modifyCateogry.getStatus() == DogamStatus.Shared_Immutable)
+                throw new ImmutableException("can not modify");
+            dogamStorage.update(modifyCateogry);
+
+        } catch (NoSuchCategoryException | ImmutableException e) {
+            Log.e("error in service", e.toString());
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
@@ -160,6 +173,7 @@ public class ConcreteCategoryService implements CategoryService {
         String result = "";
         try {
             CategoryNode foundNode = categoryStorage.retrieveById(dogamId, id);
+            Log.d("found node", foundNode.toString());
             if(foundNode == null) {
                 throw new Exception();
             }

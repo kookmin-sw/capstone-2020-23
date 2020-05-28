@@ -32,22 +32,5 @@ public class CategoryConvertor {
         return form;
     }
 
-    public static String convertCategoryToJSON(CategoryNodeDto categoryNodeDto) {
-        try {
-            JSONObject rootObject = new JSONObject();
-            CategoryNodeDto parentNode = categoryNodeDto.getParent();
-            JSONArray firstArray = new JSONArray(parentNode.getHashtags());
-            rootObject.put("second_layer", firstArray);
-            JSONArray secondArray = new JSONArray(categoryNodeDto.getHashtags());
-            rootObject.put("third_layer", secondArray);
-
-            return rootObject.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
 }
 

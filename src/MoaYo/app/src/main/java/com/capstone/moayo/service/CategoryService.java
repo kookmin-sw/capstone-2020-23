@@ -14,6 +14,7 @@ public interface CategoryService {
     public List<CategoryDto> findAll();
     public CategoryDto findCategoryById(int id);
     public String modifyCategory(CategoryDto categoryDto);
+    public boolean modifyDogam(CategoryDto categoryDto);
     public String deleteDogam(int id);
     public String deleteCategoryNode(int dogamId, int id);
 }

@@ -138,7 +138,7 @@ public class ShareUtil {
         }
     }
 
-    private static CategoryNodeDto convertModelToNode(CategoryModel[] categoryModels, List<CategoryNodeDto> categoryNodeDtos) {
+    private static CategoryNodeDto convertModelToNode(CategoryModel[] categoryModels, @org.jetbrains.annotations.NotNull List<CategoryNodeDto> categoryNodeDtos) {
         Map<Integer, Pair<Integer, CategoryNodeDto>> nodeSet = new LinkedHashMap<>();
         CategoryNodeDto root = null;
         for(int i = 0; i < categoryNodeDtos.size(); i++) {
