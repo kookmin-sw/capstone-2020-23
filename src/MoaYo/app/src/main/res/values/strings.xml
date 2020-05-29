@@ -10,5 +10,7 @@
     <string name="new_ResultActivity">검색된 게시물</string>
     <string name="shareBook_ShareMenuActivity">유저 공유 도감</string>
     <string name="bookform_next">다음</string>
+    <string name="bookform_floating">2계층의 도감 명</string>
+    <string name="bookform_add">추가</string>
 </resources>
 

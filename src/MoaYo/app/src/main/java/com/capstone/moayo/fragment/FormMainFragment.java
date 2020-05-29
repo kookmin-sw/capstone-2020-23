@@ -63,7 +63,7 @@ public class FormMainFragment extends Fragment {
         bookform_logo = (ImageView) view.findViewById(R.id.bookformImg);
         tl = (TextInputLayout)view.findViewById(R.id.title_layout);
 
-                title_et.addTextChangedListener(new TextWatcher() {
+        title_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -87,9 +87,7 @@ public class FormMainFragment extends Fragment {
                 if(!title.isEmpty()) {
                     ((BookFormActivity)getActivity()).initRootNode(title);
                     ((BookFormActivity)getActivity()).onChangeLevel(2, null);
-                } else {
-                    tl.setError("도감 명이 입력되지 않았습니다.");
-                }
+                } else { tl.setError("도감 명이 입력되지 않았습니다."); }
 
             }
         });
