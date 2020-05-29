@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -76,7 +77,9 @@ public class ShareMenuActivity extends BaseActivity {
 
             case R.id.createBook:
 
-                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ShareMenuActivity.this, NewShareActivity.class);
+                startActivity(intent);
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;

@@ -38,7 +38,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private TextView toolbarTitle;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
-    private Button updateBtn, deleteBtn, shareBtn;
+    private Button updateBtn, deleteBtn, shareBtn, backBtn;
+    private BottomSheetDialog bottomSheetDialog;
 
     private CategoryService categoryService;
 
@@ -99,9 +100,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.bookDetailMenu: {
 
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                        BookDetailActivity.this, R.style.BottomSheetDialogTheme
-                );
+                bottomSheetDialog = new BottomSheetDialog(BookDetailActivity.this, R.style.BottomSheetDialogTheme);
+
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.detail_bottom_menu, (LinearLayout) findViewById(R.id.bottomSheetContainer));
 
@@ -111,12 +111,11 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 deleteBtn = bottomSheetView.findViewById(R.id.detail_btn_delete);
                 deleteBtn.setOnClickListener(this);
 
-                bottomSheetView.findViewById(R.id.detail_btn_back).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.dismiss();
-                    }
-                });
+                backBtn = bottomSheetView.findViewById(R.id.detail_btn_back);
+                backBtn.setOnClickListener(this);
+
+                shareBtn = bottomSheetView.findViewById(R.id.detail_btn_share);
+                shareBtn.setOnClickListener(this);
 
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
@@ -136,9 +135,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.detail_btn_update:
                 //TODO: BookForm 화면으로 전환
-                Intent intent = new Intent(BookDetailActivity.this, BookFormActivity.class);
-                intent.putExtra("category", category);
-                startActivity(intent);
+                Intent intent_update = new Intent(BookDetailActivity.this, BookFormActivity.class);
+                intent_update.putExtra("category", category);
+                startActivity(intent_update);
 
                 break;
 
@@ -168,6 +167,18 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
                 Toast.makeText(getApplicationContext(), "도감 삭제 이벤트", Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.detail_btn_share:
+                //TODO: NewShareActivity로 화면 전환(도감 데이터 전달)
+                Intent intent_share = new Intent(BookDetailActivity.this, NewShareActivity.class);
+                startActivity(intent_share);
+                break;
+
+            case R.id.detail_btn_back:
+                bottomSheetDialog.dismiss();
+                break;
+
+
 
         }
     }

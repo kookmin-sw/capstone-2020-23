@@ -30,8 +30,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ShareMenuActivity" />
         <activity android:name=".activity.MainActivity" />
+
         <activity
             android:name=".activity.BookManageActivity"
             android:parentActivityName=".activity.MainActivity" />
@@ -42,7 +42,13 @@
         <activity
             android:name=".activity.ResultActivity"
             android:parentActivityName=".activity.BookManageActivity" />
+
         <activity android:name=".activity.BookFormActivity" />
+
+        <activity android:name=".activity.ShareMenuActivity" />
+
+        <activity android:name=".activity.NewShareActivity" />
+
     </application>
 
 </manifest>
