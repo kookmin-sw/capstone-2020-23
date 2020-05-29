@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
 
         actionBar.setDisplayShowTitleEnabled(false); //앱바에서 제목을 없애고 activity_main.xml에서 설정한 제목이 뜨게 설정
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.menu);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
         ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);

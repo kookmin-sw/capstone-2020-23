@@ -1,66 +1,41 @@
 package com.capstone.moayo.adapter;
 
 import android.content.Context;
-import android.icu.text.MessagePattern;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
-import com.capstone.moayo.activity.ResultActivity;
 import com.capstone.moayo.model.SavedPost;
-import com.capstone.moayo.service.PostService;
-import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.PostDto;
-import com.capstone.moayo.util.Async.AsyncCallback;
-import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 import retrofit2.http.POST;
 
 public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecyclerAdapter.ViewHolder> {
 
     private ArrayList<PostDto> saveditems = new ArrayList<>();
-    public interface OnItemClickListener {
-        void onItemClick(View v, int position);
-    }
 
-    private OnItemClickListener listener = null;
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView savedPost;
-        TextView savedLike;
+        TextView savedTag;
 
         ViewHolder(View itemView) {
             super(itemView) ;
 
             // 뷰 객체에 대한 참조. (hold strong reference)
             savedPost = itemView.findViewById(R.id.savedPost);
-            savedLike = itemView.findViewById(R.id.savedTag);
-            itemView.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
-                if(pos != RecyclerView.NO_POSITION) {
-                    if(listener != null) {
-                        listener.onItemClick(v, pos);
-                    }
-                }
-            });
+            savedTag = itemView.findViewById(R.id.savedTag);
+
         }
     }
 
@@ -87,7 +62,8 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
         PostDto item = saveditems.get(position);
 
         Glide.with(vh.itemView.getContext()).load(item.getImgUrl()).into(vh.savedPost);
-        vh.savedLike.setText(Integer.toString(item.getLike()));
+
+        vh.savedTag.setText(Integer.toString(item.getLike()));
 
     }
 
@@ -101,9 +77,5 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
         this.saveditems = items;
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
 }
 
