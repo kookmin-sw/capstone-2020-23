@@ -2,6 +2,7 @@ package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,10 +13,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
@@ -57,7 +60,8 @@ public class ResultActivity extends BaseActivity {
     private List<InstantPost> searchPost;
     private List<PostDto> savePost;
 
-    private int doubleClickFlag = 0;
+    private int search_double_flag = 0;
+    private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
 
     @Override
@@ -96,6 +100,52 @@ public class ResultActivity extends BaseActivity {
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
         saved_recycler.setAdapter(saved_adapter);
 
+        saved_adapter.setOnItemClickListener(new ResultTopRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                save_double_flag++;
+                Handler handler = new Handler();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if(save_double_flag == 1) {
+                            PostDto postDto = savePost.get(position);
+                            Intent viewIntent = new Intent("android.intent.action.VIEW",
+                                    Uri.parse("https://www.instagram.com/p/" + postDto.getUrl()));
+                            v.getContext().startActivity(viewIntent);
+                        }
+                        save_double_flag = 0;
+                    }
+                };
+
+                if(save_double_flag == 1) {
+                    handler.postDelayed(runnable, CLICK_DELAY);
+                } else if (save_double_flag == 2) {
+                    save_double_flag = 0;
+                    PostDto postDto = savePost.get(position);
+                    Callable<String> callable = () -> postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
+                    AsyncCallback<String> callback = new AsyncCallback<String>() {
+                        @Override
+                        public void onResult(String result) {
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                            savePost.remove(postDto);
+                            saved_adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void exceptionOccured(Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    };
+                    new AsyncExecutor<String>().setCallback(callback).setCallable(callable).execute();
+                }
+            }
+        });
         progressBar = (ProgressBar) findViewById(R.id.activity_result_pb_circle);
 
         Callable<ArrayList<PostDto>> callable0 = () -> requestSavedPost(searchNode);
@@ -136,12 +186,12 @@ public class ResultActivity extends BaseActivity {
 //                Intent viewIntent = new Intent("android.intent.action.VIEW",
 //                                        Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
 //                v.getContext().startActivity(viewIntent);
-                doubleClickFlag++;
+                search_double_flag++;
                 Handler handler = new Handler();
                 Runnable clickRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        if(doubleClickFlag == 1) {
+                        if(search_double_flag == 1) {
 //                         todo 클릭 이벤트
                             InstantPost selected_item = searchPost.get(position) ;
                             Intent viewIntent = new Intent("android.intent.action.VIEW",
@@ -149,13 +199,13 @@ public class ResultActivity extends BaseActivity {
                             v.getContext().startActivity(viewIntent);
                             Toast.makeText(getApplicationContext(), "single click", Toast.LENGTH_SHORT).show();
                         }
-                        doubleClickFlag = 0;
+                        search_double_flag = 0;
                     }
                 };
-                if( doubleClickFlag == 1 ) {
+                if( search_double_flag == 1 ) {
                     handler.postDelayed( clickRunnable, CLICK_DELAY );
-                }else if( doubleClickFlag == 2 ) {
-                    doubleClickFlag = 0;
+                }else if( search_double_flag == 2 ) {
+                    search_double_flag = 0;
                     // todo 더블클릭 이벤트
                     Callable<PostDto> callable = () -> postService.createPost(searchPost.get(position), searchNode.getId(),selectCategory.getId());
                     AsyncCallback<PostDto> callback = new AsyncCallback<PostDto>() {

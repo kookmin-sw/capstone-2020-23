@@ -126,6 +126,7 @@ public class CategoryNode implements Serializable {
     public String getUrl() { return url; }
 
     public List<Post> getPosts() {
+        if(posts == null) posts = new ArrayList<>();
         return posts;
     }
 
