@@ -127,16 +127,24 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 [![intro](https://user-images.githubusercontent.com/29545214/80134505-d10e6380-85d9-11ea-908e-0eeb7d07616b.png)](https://youtu.be/prg8dxmJ_Wk)
 
+<br /><br />
 
+- 1차 중간 평가 발표 영상
 
-- 중간 평가 발표 영상
+[![mid](https://user-images.githubusercontent.com/29545214/80134624-f69b6d00-85d9-11ea-98c0-842ecc99f720.png)](https://youtu.be/WNz_1Nq_59w)
 
-[![medium](https://user-images.githubusercontent.com/29545214/80134624-f69b6d00-85d9-11ea-98c0-842ecc99f720.png)](https://youtu.be/WNz_1Nq_59w)
+<br /><br />
+
+- 2차 중간 평가 발표 영상
+
+  [![second_mid](https://user-images.githubusercontent.com/62831866/83213933-5ddeab00-a19e-11ea-8267-dfd74298bafe.png)](https://youtu.be/-az2lhSyANI)
 
 <br /><br />
 
 - 주요 화면 스크린샷
 <img src="doc/image/스크린샷 2020-05-28 오후 9.59.18.png">
+
+<br />
 
 # 4. 팀 소개
 
