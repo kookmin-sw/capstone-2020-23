@@ -43,6 +43,7 @@ public class ConcreteSearchService implements SearchService {
         Call<RespondForm> call = searchAPI.requestPosts(form);
         try {
             Response<RespondForm> response = call.execute();
+            Log.d("reqeust header", response.headers().toString());
             RespondForm resultForm = response.body();
             cacheMap.put(firstNode.getId(), Arrays.asList(resultForm.getSecond_layer_cache()));
             cacheMap.put(secondNode.getId(), Arrays.asList(resultForm.getThird_layer_cache()));

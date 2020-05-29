@@ -25,14 +25,12 @@ import java.util.concurrent.Callable;
 public class IntroActivity extends BaseActivity {
 
     private final int SPLASH_DISPLAY_TIME = 2500;
-    private CategoryService categoryService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
         ImageView image = (ImageView)findViewById(R.id.splash_logo);
         Animation anima = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha);

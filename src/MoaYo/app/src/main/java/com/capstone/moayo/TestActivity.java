@@ -64,8 +64,10 @@ public class TestActivity extends AppCompatActivity {
                 List<CategoryDto> categoryDtoList = categoryService.findAll();
                 if(categoryDtoList.isEmpty()) {
                     List<CategoryDto> dummy = new CategoryData_Dummy().getItems();
-                    for(CategoryDto categoryDto : dummy)
-                        categoryService.createCategory(categoryDto);
+                    for(CategoryDto categoryDto : dummy) {
+                        String result = categoryService.createCategory(categoryDto);
+                        Log.d("create result", result);
+                    }
                 }
                 return 1;
             };

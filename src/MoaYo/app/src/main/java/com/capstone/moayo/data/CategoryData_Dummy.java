@@ -45,6 +45,7 @@ public class CategoryData_Dummy {
         CategoryDto fashionDogam = new CategoryDto("패션", null, null, null);
         fashionDogam.setUrl("https://usercontents-c.styleshare.io/images/19518035/640x-");
         CategoryNodeDto fashion = new CategoryNodeDto("패션", null, 1);
+        fashionDogam.setRootNode(fashion);
 //
 //        CategoryNode pants = new CategoryNode("하의", fashion, );
 //        CategoryNode denim_pants = new CategoryNode("데님바지","");
