@@ -98,6 +98,7 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String text = s.toString();
                 if (text.length() > 0) setNextMode(true);
@@ -174,7 +175,7 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
 
     private void setNextMode(boolean flag) {
         if (flag) {
-            add_btn.setBackgroundColor(Color.parseColor("#6200EE"));
+            add_btn.setBackgroundColor(Color.parseColor("#663399"));
             add_btn.setTextColor(Color.parseColor("#ffffff"));
         }
     }

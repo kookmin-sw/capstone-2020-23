@@ -78,7 +78,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
 
         if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#6200EE"));
+            text.setTextColor(Color.parseColor("#663399"));
         }
 
         text.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +147,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#6200EE"));
+            text.setTextColor(Color.parseColor("#663399"));
         }
 
         searchBtn.setOnClickListener(new View.OnClickListener() {

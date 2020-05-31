@@ -221,7 +221,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
                 @Override
                 public void onResult(String result) {
                     Log.d("update", result);
-                    Toast.makeText(getApplicationContext(), "도감 '" + category.getTitle() + "'이 정상적인 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "도감 '" + category.getTitle() + "'이 정상적으로 수정되었습니다.", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

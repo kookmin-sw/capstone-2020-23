@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.capstone.moayo.R;
@@ -29,10 +30,12 @@ import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.Tag.TagsFinder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
 
 public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
@@ -51,7 +54,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private TextView keyword;
     private EditText input_tag_et;
     private OnEditNodeListener callback;
-    private ProgressBar progressBar;
+    private AVLoadingIndicatorView progressBar;
     private String FORM_MODE;
 
     private ListView listview;
@@ -149,7 +152,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
         }
 
-        progressBar = (ProgressBar) view.findViewById(R.id.dialog_tag_pb_horizontal);
+        progressBar = (AVLoadingIndicatorView) view.findViewById(R.id.dialog_tag_pb_horizontal);
 //        progressBar.setVisibility(view.VISIBLE);
         listview.setVisibility(view.INVISIBLE);
         //synonym_tags backend 통신

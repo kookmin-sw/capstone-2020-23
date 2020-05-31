@@ -104,7 +104,7 @@ public class FormMainFragment extends Fragment {
     private void setNextMode(boolean flag) {
         if (flag) {
             tl.setError(null);
-            start_btn.setBackgroundColor(Color.parseColor("#6200EE"));
+            start_btn.setBackgroundColor(Color.parseColor("#663399"));
             start_btn.setTextColor(Color.parseColor("#ffffff"));
             bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_primary));
         } else {

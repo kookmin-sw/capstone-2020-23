@@ -32,7 +32,7 @@
             android:id="@+id/create_book_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
+            android:paddingStart="30dp"
             android:hint="도감 명을 입력하세요." />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -61,6 +61,7 @@
             android:backgroundTint="@color/backGray"
             android:text="@string/bookform_next"
             android:textColor="@color/darkGray"
+            android:textStyle="bold"
             android:stateListAnimator="@null"/>
 
     </LinearLayout>

@@ -38,7 +38,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="@string/bookform_floating"
+            app:met_floatingLabelText="Keyword"
             app:met_underlineColor="@color/lightGray"
             app:met_errorColor="@color/error"
             app:met_helperText=""
@@ -52,11 +52,9 @@
             android:backgroundTint="@color/backGray"
             android:text="@string/bookform_add"
             android:textColor="@color/darkGray"
+            android:textStyle="bold"
             android:stateListAnimator="@null"/>
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>
