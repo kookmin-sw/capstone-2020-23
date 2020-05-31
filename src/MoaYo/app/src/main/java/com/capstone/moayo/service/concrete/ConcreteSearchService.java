@@ -45,12 +45,12 @@ public class ConcreteSearchService implements SearchService {
             Response<RespondForm> response = call.execute();
             Log.d("reqeust header", response.headers().toString());
             RespondForm resultForm = response.body();
-            cacheMap.put(firstNode.getId(), Arrays.asList(resultForm.getSecond_layer_cache()));
-            cacheMap.put(secondNode.getId(), Arrays.asList(resultForm.getThird_layer_cache()));
+            cacheMap.put(firstNode.getId(), Arrays.asList(resultForm.getHigher_layer_cache()));
+            cacheMap.put(secondNode.getId(), Arrays.asList(resultForm.getLower_layer_cache()));
             //Log.d("request result", resultForm.getThrid_layer().toString());
-            for(String cache : resultForm.getThird_layer_cache())
+            for(String cache : resultForm.getLower_layer_cache())
                 Log.d("request cache", cache);
-            return resultForm.getThrid_layer();
+            return resultForm.getLower_layer();
         } catch (IOException e) {
             e.printStackTrace();
         }
