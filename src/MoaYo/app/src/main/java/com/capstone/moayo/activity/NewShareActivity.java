@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -61,6 +62,13 @@ public class NewShareActivity extends BaseActivity {
                 }
                 spinner_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_list);
                 spinner.setAdapter(spinner_adapter);
+
+                if(getIntent().getSerializableExtra("target_category") != null) {
+                    CategoryDto target = (CategoryDto) getIntent().getSerializableExtra("target_category");
+                    spinner.setSelection(spinner_list.indexOf(target.getTitle()));
+                    spinner.setEnabled(false);
+//                    Log.d("getSerializable", target.toString());
+                }
             }
 
             @Override
@@ -78,9 +86,6 @@ public class NewShareActivity extends BaseActivity {
                 super.onProgressUpdate(values);
             }
         }.setCallable(callable).setCallback(callback).execute();
-
-        
-
 
         submit_btn = (Button) findViewById(R.id.activity_share_btn_submit);
         submit_btn.setOnClickListener(new View.OnClickListener() {

@@ -171,7 +171,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.detail_btn_share:
                 //TODO: NewShareActivity로 화면 전환(도감 데이터 전달)
                 Intent intent_share = new Intent(BookDetailActivity.this, NewShareActivity.class);
+                intent_share.putExtra("target_category", category);
                 startActivity(intent_share);
+
                 break;
 
             case R.id.detail_btn_back:
