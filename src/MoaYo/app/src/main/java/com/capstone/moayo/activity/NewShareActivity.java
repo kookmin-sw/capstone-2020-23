@@ -91,14 +91,20 @@ public class NewShareActivity extends BaseActivity {
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: 도감 공유 백엔드 통신 and 공유화면 전환.
+                CategoryDto share_category = categories.get((int) spinner.getSelectedItemId());
 //                Log.d("Submit Data", nickname.getText().toString() + password.getText().toString() + content.getText().toString());
-                CategoryDto share_node = categories.get((int) spinner.getSelectedItemId());
-                Log.d("seleted_node", share_node.toString());
+//                Log.d("seleted_node", share_category.toString());
+
+                share_category.setWriter(nickname.getText().toString());
+                share_category.setPassword(password.getText().toString());
+                share_category.setDescription(content.getText().toString());
+
+                //TODO: 도감 공유 백엔드 통신
+
+
 
                 Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);
                 startActivity(intent);
-
             }
         });
 
