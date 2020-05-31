@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.NewShareActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="도감 공유하기"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/activity_share_tv_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="18dp"
+            android:text="공유할 도감" />
+
+        <Spinner
+            android:id="@+id/activity_share_sp_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp" />
+
+        <TextView
+            android:id="@+id/activity_share_tv_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            android:textSize="18dp"/>
+        <EditText
+            android:id="@+id/activity_share_et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:hint="닉네임을 입력하세요" />
+
+        <TextView
+            android:id="@+id/activity_share_tv_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="임시 비밀번호"
+            android:textSize="18dp"/>
+        <EditText
+            android:id="@+id/activity_share_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_marginBottom="25dp"
+            android:hint="비밀번호를 입력하세요" />
+
+        <TextView
+            android:id="@+id/activity_share_tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="도감 소개"
+            android:textSize="18dp"/>
+        <EditText
+            android:id="@+id/activity_share_et_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:lines="5"
+            android:layout_gravity="top|left"
+            android:inputType="textMultiLine"
+            android:scrollHorizontally="false"
+            android:hint="공유할 도감에 대해 소개해주세요." />
+
+        <Button
+            android:id="@+id/activity_share_btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공유하기" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
