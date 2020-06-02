@@ -8,10 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.R;
+import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 public class FormListAdapter extends ArrayAdapter {

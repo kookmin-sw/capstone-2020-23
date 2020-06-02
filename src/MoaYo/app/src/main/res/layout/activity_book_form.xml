@@ -5,13 +5,13 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.BookFormActivity"
-    >
+    android:background="@color/backGray">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/form_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@color/backGray"
         android:minHeight="?attr/actionBarSize">
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/lightGray"
+            android:textColor="@color/darkGray"
             android:textStyle="bold"
             android:textSize="20dp" />
 
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/lightGray"
+            android:textColor="@color/darkGray"
             android:textStyle="bold"
             android:textSize="20dp" />
 

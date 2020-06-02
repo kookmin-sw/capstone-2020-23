@@ -310,6 +310,8 @@ public class ResultActivity extends BaseActivity {
                 //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.resultDisplay);
                 drawer.openDrawer(Gravity.RIGHT);
+                TextView textView = (TextView) findViewById(R.id.result_drawer_title);
+                textView.setText(searchNode.getParent().getTitle());
 
                 return true;
             }

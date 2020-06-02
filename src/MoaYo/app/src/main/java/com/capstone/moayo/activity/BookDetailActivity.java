@@ -72,7 +72,6 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
         TextView detail_text = (TextView) findViewById(R.id.detail_text);
         TextView detail_text2 = (TextView) findViewById(R.id.detail_text2);
-        ImageView arrow_detail = (ImageView) findViewById(R.id.arrow_detail);
 
         detail_text.setText(rootNode.getTitle() + "");
 

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +45,8 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
     private ListView listView;
     private Button add_btn, save_btn;
     private ImageButton back_btn;
+    private ImageView arrow_form;
+    private TextView form_text, form_text2, form_text3;
     private OnChangeLevelListener lvl_callback;
     private BottomSheetFragment bottomSheet;
     private CategoryNodeDto currentNode;
@@ -94,16 +97,21 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         back_btn = (ImageButton) view.findViewById(R.id.back_btn);
         add_btn = (Button) view.findViewById(R.id.add_keyword_btn);
         EditText input_edit = (EditText) view.findViewById(R.id.input_keyword);
+        form_text = (TextView) view.findViewById(R.id.form_text);
+        form_text2 = (TextView) view.findViewById(R.id.form_text2);
+        form_text3 = (TextView) view.findViewById(R.id.form_text3);
+        arrow_form = (ImageView) view.findViewById(R.id.arrow_form);
 
         back_btn.setOnClickListener(this);
         add_btn.setOnClickListener(this);
+
+        setText(currentNode,currentNode.getLevel());
 
         input_edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String text = s.toString();
                 if (text.length() > 0) setNextMode(true);
@@ -181,6 +189,34 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
         if (flag) {
             add_btn.setBackgroundColor(Color.parseColor("#663399"));
             add_btn.setTextColor(Color.parseColor("#ffffff"));
+        }
+        else{
+            add_btn.setBackgroundColor(Color.parseColor("#e5e5e5"));
+            add_btn.setTextColor(Color.parseColor("#707070"));
+        }
+    }
+
+    public void setText(CategoryNodeDto currentNode, int level) {
+        if(currentNode != null) this.currentNode = currentNode;
+
+        form_text.setText("");
+        form_text2.setText("");
+        form_text3.setText("");
+
+        switch (level) {
+            case 1:
+                form_text.setText(currentNode.getTitle());
+                form_text2.setText(" 도감 목록 수정");
+                form_text2.setTextColor(Color.parseColor("#663399"));
+                arrow_form.setVisibility(View.INVISIBLE);
+
+                break;
+            case 2:
+                form_text.setText(currentNode.getParent().getTitle());
+                form_text2.setText(currentNode.getTitle());
+                form_text3.setText(" 도감 목록 수정");
+                arrow_form.setVisibility(View.VISIBLE);
+                break;
         }
     }
 

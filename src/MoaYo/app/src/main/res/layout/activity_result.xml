@@ -139,11 +139,18 @@
     <!--도감 보기 탭을 펼쳤을 때 사용자의 도감을 리스트로 보여줄 화면-->
     <LinearLayout
         android:id="@+id/bookList"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
         android:gravity="center_horizontal"
         android:background="#ffffff"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/result_drawer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ExpandableListView
             android:id="@+id/drawer_expandableListView"

@@ -16,6 +16,6 @@
     <string name="directFloating">연관 태그 직접 입력</string>
     <string name="bookform_cancel">취소</string>
     <string name="bookform_done">선택완료</string>
-    <string name="bookform_list">키워드를 입력하여 도감 추가</string>
+    <string name="bookform_guide">버튼을 눌러 다음 단계로 이동</string>
 </resources>
 
