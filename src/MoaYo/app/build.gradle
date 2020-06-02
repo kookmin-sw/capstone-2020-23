@@ -61,4 +61,5 @@ dependencies {
 
     //progress library
     implementation 'com.wang.avi:library:2.1.3'
+
 }

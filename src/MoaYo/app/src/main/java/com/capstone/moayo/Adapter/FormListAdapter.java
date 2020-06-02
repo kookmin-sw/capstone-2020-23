@@ -54,7 +54,7 @@ public class FormListAdapter extends ArrayAdapter {
             trans_btn.setVisibility(View.INVISIBLE);
         } else {
             //        count.setText(Integer.toString(node.getHashtags().size()));
-            count.setText("num of child : " + Integer.toString(node.getLowLayer().size()));
+            count.setText(Integer.toString(node.getLowLayer().size()) + "개 포함");
         }
 
         trans_btn.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,17 +9,27 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <ListView
-        android:id="@+id/form_list_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="80dp"
+        android:orientation="vertical"
+        android:background="@drawable/round_backgray">
+
+        <ListView
+            android:id="@+id/form_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -34,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:hint="Keyword"
+            android:hint="키워드를 입력하세요."
             android:ems="10"
             android:inputType="textPersonName"
             app:met_floatingLabel="highlight"
@@ -57,4 +67,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

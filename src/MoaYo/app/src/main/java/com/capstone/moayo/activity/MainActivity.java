@@ -1,11 +1,13 @@
 package com.capstone.moayo.activity;
 
+import androidx.annotation.FontRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -168,6 +170,7 @@ public class MainActivity extends BaseActivity {
                 );
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.main_bottom_menu, (LinearLayout)findViewById(R.id.bottomSheetContainer));
+
 
                 bottomSheetView.findViewById(R.id.createBook).setOnClickListener(new View.OnClickListener() {
                     @Override

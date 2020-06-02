@@ -16,6 +16,8 @@
     <style name="BackGray" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/darkGray</item>
 
         <!--상태바 색상-->
         <item name="android:statusBarColor">@color/backGray</item>
@@ -24,12 +26,12 @@
     </style>
 
 
-
     <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>
 
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 

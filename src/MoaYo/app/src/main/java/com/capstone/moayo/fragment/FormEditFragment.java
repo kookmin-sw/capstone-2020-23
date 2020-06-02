@@ -12,17 +12,22 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.FormListAdapter;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
@@ -133,7 +138,6 @@ public class FormEditFragment extends Fragment implements BottomSheetFragment.On
                 String word = input_et.getText().toString();        // EditText에 입력된 문자열값을 얻기
                 if (!word.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
                     input_et.setText("");                           // EditText 입력란 초기화
-
                     Bundle args = new Bundle();
                     args.putString("MODE", "ADD");
                     args.putString("keyword", word);
