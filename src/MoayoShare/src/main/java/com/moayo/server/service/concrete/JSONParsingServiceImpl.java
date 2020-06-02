@@ -44,9 +44,12 @@ public class JSONParsingServiceImpl implements JSONParsingService {
         dogamListDao.insertDogam(dogamListModel);
         Map<Integer,CategoryModel> categoryModelMap = categoryInsert(categoryModels,dogamListModel,categoryPostModels,categoryHashModels);
         postInsert(postModels,categoryPostModels);
-        hashtagInsert(hashtagModels);
-        categoryPostDao.insertAll(categoryPostModels);
-        categoryHashDao.insertAll(categoryHashModels);
+        if(hashtagModels.length != 0)
+            hashtagInsert(hashtagModels);
+        if(categoryPostModels.length != 0)
+            categoryPostDao.insertAll(categoryPostModels);
+        if(categoryHashModels.length != 0)
+            categoryHashDao.insertAll(categoryHashModels);
     }
 
     private void hashtagInsert(HashtagModel[] hashtagModels){
