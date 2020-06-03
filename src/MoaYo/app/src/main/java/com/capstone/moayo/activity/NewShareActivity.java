@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -100,7 +99,6 @@ public class NewShareActivity extends BaseActivity {
                 share_category.setDescription(content.getText().toString());
 
                 //TODO: 도감 공유 백엔드 통신
-
 
 
                 Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);

@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.model.SharedBook;
+import com.capstone.moayo.service.dto.CategoryDto;
 
 import java.util.ArrayList;
 
 public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.ViewHolder> {
 
-    private ArrayList<SharedBook> sharedBooks = new ArrayList<>();
+    private ArrayList<CategoryDto> sharedBooks = new ArrayList<>();
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -49,14 +50,14 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ShareMenuAdapter.ViewHolder vh, int position) {
 
-        SharedBook item = sharedBooks.get(position);
+        CategoryDto item = sharedBooks.get(position);
 
         Glide.with(vh.itemView.getContext())
                 .load(item.getUrl())
                 .into(vh.sharedBookPost);
 
-        vh.nickName.setText(item.getNickName());
-        vh.comment.setText(item.getComment());
+        vh.nickName.setText(item.getTitle());
+        vh.comment.setText(item.getDescription());
     }
 
     @Override
@@ -64,7 +65,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
         return sharedBooks.size();
     }
 
-    public void setItems(ArrayList<SharedBook> items) {
+    public void setItems(ArrayList<CategoryDto> items) {
         this.sharedBooks = items;
     }
 }
