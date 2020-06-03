@@ -140,7 +140,6 @@ public class MainActivity extends BaseActivity {
 
         //아이템 로드
         mainCenterRecyclerAdapter.setItems(new SharedData_Sample().getItems());
-
     }
 
 

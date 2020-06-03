@@ -123,6 +123,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 cancelBtn = bottomSheetView.findViewById(R.id.detail_btn_cancel);
                 cancelBtn.setOnClickListener(this);
 
+                //도감 Status를 확인하여 비공유 도감(나의도감), 공유된 도감에 따른 버튼 view.
                 switch (dogamStatus){
                     case NonShare:
                         likeBtn.setVisibility(View.GONE);
