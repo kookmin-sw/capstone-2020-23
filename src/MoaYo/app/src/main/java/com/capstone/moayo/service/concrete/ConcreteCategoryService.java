@@ -184,6 +184,12 @@ public class ConcreteCategoryService implements CategoryService {
         return result;
     }
 
+    @Override
+    public void init() {
+        dogamStorage.init();
+        categoryStorage.init();
+    }
+
     private void initCache(CategoryDto categoryDto) {
         CategoryNodeDto rootNode = categoryDto.getRootNode();
         rootNode.getCache().clear();

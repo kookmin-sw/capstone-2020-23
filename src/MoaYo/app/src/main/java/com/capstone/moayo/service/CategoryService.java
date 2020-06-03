@@ -17,4 +17,5 @@ public interface CategoryService {
     public boolean modifyDogam(CategoryDto categoryDto);
     public String deleteDogam(int id);
     public String deleteCategoryNode(int dogamId, int id);
+    public void init();
 }

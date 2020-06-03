@@ -1,6 +1,7 @@
 package com.capstone.moayo.service.concrete;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Model.DogamModel;
@@ -28,6 +29,7 @@ public class ConcreteShareService implements ShareService {
     @Override
     public String registerDogam(CategoryDto categoryDto, int status) {
         ModelForm form = ShareUtil.convertDogamToModelForm(categoryDto, status);
+        Log.d("convert category to form", form.toString());
         int result = shareStorage.create(form);
         categoryDto.setStatus(DogamStatus.Sharing);
         Category category = categoryDto.toCategory();

@@ -14,4 +14,5 @@ public interface CategoryStorage {
     public CategoryNode retrieveByDogamId(int id);
     public String update(Category category);
     public String remove(int dogamId, int id);
+    public void init();
 }

@@ -18,6 +18,7 @@ import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
@@ -30,6 +31,7 @@ import java.util.concurrent.Callable;
 public class NewShareActivity extends BaseActivity {
 
     CategoryService categoryService;
+    ShareService shareService;
     Spinner spinner;
     ArrayAdapter<String> spinner_adapter;
     ArrayList<String> spinner_list;
@@ -43,6 +45,7 @@ public class NewShareActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_share);
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
         spinner_list = new ArrayList<>();
 
@@ -100,8 +103,25 @@ public class NewShareActivity extends BaseActivity {
                 share_category.setDescription(content.getText().toString());
 
                 //TODO: 도감 공유 백엔드 통신
+                Callable<String> createCall = () -> shareService.registerDogam(share_category, 1);
+                AsyncCallback<String> createCallback = new AsyncCallback<String>() {
+                    @Override
+                    public void onResult(String result) {
+                        Log.d("register share result", result);
+                    }
 
+                    @Override
+                    public void exceptionOccured(Exception e) {
+                        e.printStackTrace();
+                    }
 
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+
+                new AsyncExecutor<String>().setCallable(createCall).setCallback(createCallback).execute();
 
                 Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);
                 startActivity(intent);

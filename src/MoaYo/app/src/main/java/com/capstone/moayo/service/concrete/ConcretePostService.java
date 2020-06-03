@@ -80,4 +80,9 @@ public class ConcretePostService implements PostService {
 
         return "";
     }
+
+    @Override
+    public void init() {
+        postStorage.init();
+    }
 }

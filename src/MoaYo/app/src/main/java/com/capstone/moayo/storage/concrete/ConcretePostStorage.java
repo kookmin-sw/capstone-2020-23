@@ -124,6 +124,23 @@ public class ConcretePostStorage implements PostStorage {
         return "success to remove";
     }
 
+    @Override
+    public void init() {
+        for(CategoryNode node : categoryNodeMap.values()) {
+            List<Post> postList = new ArrayList<>();
+            List<CategoryPostMapping> categoryPostMappingList = categoryPostDao.selectByCategoryId(dbHelper, node.getId());
+            if (categoryPostMappingList == null) continue;
+
+            for (CategoryPostMapping mapping : categoryPostMappingList) {
+                PostMapping newMapping = postDao.selectById(dbHelper, mapping.getPostId());
+                Post post = new Post(newMapping.getImgUrl(), newMapping.getUrl(), newMapping.getHashTag(), newMapping.getLike(), mapping.getCategoryId(), mapping.getDogamId());
+                post.setId(newMapping.getId());
+                postList.add(post);
+            }
+            node.setPosts(postList);
+        }
+    }
+
     private void createCategoryPost(int nodeId, int dogamId, int id) {
         if(categoryPostDao.isExist(dbHelper, nodeId, id)) return;
 

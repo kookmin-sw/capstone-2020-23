@@ -13,4 +13,5 @@ public interface PostService {
     public boolean modifyPost(PostDto postDto);
     public void deletePostByNodeId(int nodeId);
     public String deletePostById(int nodeId, int postId);
+    public void init();
 }
