@@ -1,6 +1,7 @@
 package com.capstone.moayo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
+import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.model.SharedBook;
 import com.capstone.moayo.service.dto.CategoryDto;
 
@@ -58,6 +60,18 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
 
         vh.nickName.setText(item.getTitle());
         vh.comment.setText(item.getDescription());
+
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BookDetailActivity.class);
+                // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
+                intent.putExtra("category", item);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

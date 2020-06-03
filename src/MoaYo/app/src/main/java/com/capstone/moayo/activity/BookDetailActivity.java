@@ -27,6 +27,7 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -38,8 +39,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private TextView toolbarTitle;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
-    private Button updateBtn, deleteBtn, shareBtn, backBtn;
+    private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn;
     private BottomSheetDialog bottomSheetDialog;
+    private DogamStatus dogamStatus;
 
     private CategoryService categoryService;
 
@@ -61,6 +63,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         category = (CategoryDto) getIntent().getSerializableExtra("category");
+        dogamStatus = category.getStatus();
         rootNode = category.getRootNode();
 
         toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
@@ -81,10 +84,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
         //listener for group click
-
-
 //        myList.setOnGroupClickListener(myListGroupClicked);
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,6 +116,24 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
                 shareBtn = bottomSheetView.findViewById(R.id.detail_btn_share);
                 shareBtn.setOnClickListener(this);
+
+                likeBtn = bottomSheetView.findViewById(R.id.detail_btn_like);
+                likeBtn.setOnClickListener(this);
+
+                cancelBtn = bottomSheetView.findViewById(R.id.detail_btn_cancel);
+                cancelBtn.setOnClickListener(this);
+
+                switch (dogamStatus){
+                    case NonShare:
+                        likeBtn.setVisibility(View.GONE);
+                        cancelBtn.setVisibility(View.GONE);
+                        break;
+                    default:
+                        updateBtn.setVisibility(View.GONE);
+                        deleteBtn.setVisibility(View.GONE);
+                        shareBtn.setVisibility(View.GONE);
+                        break;
+                }
 
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
@@ -175,6 +193,14 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 startActivity(intent_share);
 
                 break;
+
+            case R.id.detail_btn_like:
+                //TODO: 공유도감 좋아요
+                break;
+
+            case R.id.detail_btn_cancel:
+                //TODO: PASSWORD 확인 후 공유도감 삭제(공유취소)
+                 break;
 
             case R.id.detail_btn_back:
                 bottomSheetDialog.dismiss();
