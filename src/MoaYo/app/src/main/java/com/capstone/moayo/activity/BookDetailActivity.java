@@ -1,7 +1,9 @@
 package com.capstone.moayo.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.BaseActivity;
@@ -201,7 +205,30 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.detail_btn_cancel:
                 //TODO: PASSWORD 확인 후 공유도감 삭제(공유취소)
-                 break;
+
+                EditText edittext = new EditText(this);
+                edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("공유도감 삭제");
+                builder.setMessage("도감의 비밀번호를 입력하세요.");
+                builder.setView(edittext);
+                builder.setPositiveButton("입력",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                builder.show();
+
+
+            break;
 
             case R.id.detail_btn_back:
                 bottomSheetDialog.dismiss();
