@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.BaseActivity;
+import com.capstone.moayo.CustomDialog;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.service.CategoryService;
@@ -39,7 +40,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private CategoryDto category;
     private CategoryNodeDto rootNode;
     private Button updateBtn, deleteBtn, shareBtn;
-
+    private CustomDialog customDialog;
     private CategoryService categoryService;
 
     @Override
@@ -144,28 +145,69 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.detail_btn_delete:
                 //TODO: 도감 삭제 후 BookManage 화면으로 전환
                 //--------Backend 통신-----------
+//                Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
+//                AsyncCallback<String> callback = new AsyncCallback<String>() {
+//                    @Override
+//                    public void onResult(String result) {
+//                        Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
+//                        startActivity(intent1);
+//                        Log.d("delete result", result);
+//                    }
+//
+//                    @Override
+//                    public void exceptionOccured(Exception e) {
+//                        e.toString();
+//                    }
+//
+//                    @Override
+//                    public void cancelled() {
+//
+//                    }
+//                };
+//
+//                new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
+//                Toast.makeText(getApplicationContext(), "도감 삭제 이벤트", Toast.LENGTH_SHORT).show();
+//                break;
+
                 Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
-                AsyncCallback<String> callback = new AsyncCallback<String>() {
-                    @Override
-                    public void onResult(String result) {
-                        Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
-                        startActivity(intent1);
-                        Log.d("delete result", result);
-                    }
 
-                    @Override
-                    public void exceptionOccured(Exception e) {
-                        e.toString();
-                    }
+                View.OnClickListener positiveListener = new View.OnClickListener() {
+                    public void onClick(View v) {
+                        AsyncCallback<String> callback = new AsyncCallback<String>() {
+                            @Override
+                            public void onResult(String result) {
+                                Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
+                                startActivity(intent1);
+                                Log.d("delete result", result);
+                            }
 
-                    @Override
-                    public void cancelled() {
+                            @Override
+                            public void exceptionOccured(Exception e) {
+                                e.toString();
+                            }
 
+                            @Override
+                            public void cancelled() {
+
+                            }
+                        };
+
+                        new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
+                        Toast.makeText(getApplicationContext(), "'"+ rootNode.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                     }
                 };
+                // 취소버튼 리스너
+                View.OnClickListener negativeListener = new View.OnClickListener() {
+                    public void onClick(View v) {
+                        customDialog.dismiss();
+                    }
+                };
+                customDialog = new CustomDialog(this, positiveListener,negativeListener,
+                        "도감 삭제","'" + rootNode.getTitle() + "' 도감을 삭제하시겠습니까?");
+                customDialog.setCancelable(true);
+                customDialog.setCanceledOnTouchOutside(true);
+                customDialog.show();
 
-                new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
-                Toast.makeText(getApplicationContext(), "도감 삭제 이벤트", Toast.LENGTH_SHORT).show();
                 break;
 
         }

@@ -40,6 +40,7 @@ import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ResultActivity extends BaseActivity {
 
     private PostService postService;
     private SearchService searchService;
-    private ProgressBar progressBar;
+    private AVLoadingIndicatorView progressBar;
 
     private List<InstantPost> searchPost;
     private List<PostDto> savePost;
@@ -96,7 +97,7 @@ public class ResultActivity extends BaseActivity {
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
         saved_recycler.setAdapter(saved_adapter);
 
-        progressBar = (ProgressBar) findViewById(R.id.activity_result_pb_circle);
+        progressBar = (AVLoadingIndicatorView) findViewById(R.id.activity_result_pb_circle);
 
         Callable<ArrayList<PostDto>> callable0 = () -> requestSavedPost(searchNode);
         AsyncCallback<ArrayList<PostDto>> callback0 = new AsyncCallback<ArrayList<PostDto>>() {
@@ -310,8 +311,8 @@ public class ResultActivity extends BaseActivity {
                 //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.resultDisplay);
                 drawer.openDrawer(Gravity.RIGHT);
+
                 TextView textView = (TextView) findViewById(R.id.result_drawer_title);
-                textView.setText(searchNode.getParent().getTitle());
 
                 return true;
             }

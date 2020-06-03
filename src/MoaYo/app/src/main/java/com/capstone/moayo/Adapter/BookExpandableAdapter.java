@@ -83,8 +83,6 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
         if (isSelectedNode(currentNode, selectedNode) == true) {
             text.setTextColor(Color.parseColor("#663399"));
-            Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_share_gray_32dp);
-            text.setCompoundDrawables(null, null, drawable, null);
         }
 
         text.setOnClickListener(new View.OnClickListener() {
