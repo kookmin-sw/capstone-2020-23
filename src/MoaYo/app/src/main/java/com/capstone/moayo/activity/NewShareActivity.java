@@ -2,6 +2,7 @@ package com.capstone.moayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,14 +11,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
@@ -39,6 +42,9 @@ public class NewShareActivity extends BaseActivity {
     Button submit_btn;
     EditText nickname, password, content;
     List<CategoryDto> categories;
+    RadioButton mutableBtn, immutableBtn;
+    RadioGroup radioGroup;
+    Boolean isMutable;
 
 
     @Override
@@ -55,19 +61,30 @@ public class NewShareActivity extends BaseActivity {
         content = (EditText) findViewById(R.id.activity_share_et_content);
         spinner = (Spinner) findViewById(R.id.activity_share_sp_target);
 
+        mutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_mutable);
+        immutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_immutable);
+        //수정불가 모드로 초기화.
+        immutableBtn.setChecked(true);
+        isMutable = false;
+
+        radioGroup = (RadioGroup) findViewById(R.id.activity_share_rg_type);
+        radioGroup.setOnCheckedChangeListener(radioGroupButtonChangeListener);
+
+        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         //spinner에 들어갈 나의 도감 리스트 가져옴
         Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
         AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
             @Override
             public void onResult(List<CategoryDto> result) {
                 categories = result;
-                for(CategoryDto elem:result){
+                for (CategoryDto elem : result) {
                     spinner_list.add(elem.getTitle());
                 }
                 spinner_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_list);
                 spinner.setAdapter(spinner_adapter);
 
-                if(getIntent().getSerializableExtra("target_category") != null) {
+                if (getIntent().getSerializableExtra("target_category") != null) {
                     CategoryDto target = (CategoryDto) getIntent().getSerializableExtra("target_category");
                     spinner.setSelection(spinner_list.indexOf(target.getTitle()));
                     spinner.setEnabled(false);
@@ -84,7 +101,7 @@ public class NewShareActivity extends BaseActivity {
             public void cancelled() {
             }
         };
-        new AsyncExecutor<List<CategoryDto>>(){
+        new AsyncExecutor<List<CategoryDto>>() {
             @Override
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
@@ -135,6 +152,21 @@ public class NewShareActivity extends BaseActivity {
         });
 
     }
+
+    //라디오 그룹 클릭 리스너
+    RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+            if(i == R.id.activity_share_rb_mutable){
+                Toast.makeText(NewShareActivity.this, "수정 가능 버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+                password.setEnabled(false);
+                isMutable = true;
+            } else if(i == R.id.activity_share_rb_immutable){
+                Toast.makeText(NewShareActivity.this, "수정 불가능 버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+                password.setEnabled(true);
+                isMutable = false;
+            }
+        }
+    };
 
     // Inflate menu.xml in toolBar.
     public boolean onCreateOptionsMenu(Menu menu) {

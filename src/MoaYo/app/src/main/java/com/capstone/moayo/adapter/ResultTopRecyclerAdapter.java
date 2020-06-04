@@ -1,35 +1,20 @@
 package com.capstone.moayo.adapter;
 
 import android.content.Context;
-import android.icu.text.MessagePattern;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
-import com.capstone.moayo.activity.ResultActivity;
-import com.capstone.moayo.model.SavedPost;
-import com.capstone.moayo.service.PostService;
-import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.PostDto;
-import com.capstone.moayo.util.Async.AsyncCallback;
-import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
-
-import retrofit2.http.POST;
 
 public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecyclerAdapter.ViewHolder> {
 

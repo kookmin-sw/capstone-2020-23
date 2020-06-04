@@ -32,8 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class MainActivity extends BaseActivity {
-    private Button createBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
+public class MainActivity extends BaseActivity implements View.OnClickListener{
+    private Button createBtn, shareBtn, bookManageBtn, aboutBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
+    private BottomSheetDialog bottomSheetDialog;
 
 
     private CategoryService categoryService;
@@ -140,7 +141,6 @@ public class MainActivity extends BaseActivity {
 
         //아이템 로드
         mainCenterRecyclerAdapter.setItems(new SharedData_Sample().getItems());
-
     }
 
 
@@ -163,44 +163,24 @@ public class MainActivity extends BaseActivity {
 //                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainDisplay);
 //                drawer.openDrawer(Gravity.LEFT);
 
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                bottomSheetDialog = new BottomSheetDialog(
                         MainActivity.this, R.style.BottomSheetDialogTheme
                 );
+
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.main_bottom_menu, (LinearLayout)findViewById(R.id.bottomSheetContainer));
 
-                bottomSheetView.findViewById(R.id.createBook).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, BookFormActivity.class);
-                        MainActivity.this.startActivity(intent);
-                        bottomSheetDialog.dismiss();
+                createBtn = bottomSheetView.findViewById(R.id.createBook);
+                createBtn.setOnClickListener(this);
 
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
+                shareBtn = bottomSheetView.findViewById(R.id.shareBook);
+                shareBtn.setOnClickListener(this);
 
-                bottomSheetView.findViewById(R.id.shareBook).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
-                        MainActivity.this.startActivity(intent);
-                        bottomSheetDialog.dismiss();
+                bookManageBtn = bottomSheetView.findViewById(R.id.myBook);
+                bookManageBtn.setOnClickListener(this);
 
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
-
-                bottomSheetView.findViewById(R.id.myBook).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
-                        MainActivity.this.startActivity(intent);
-                        bottomSheetDialog.dismiss();
-
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
+                aboutBtn = bottomSheetView.findViewById(R.id.setting);
+                aboutBtn.setOnClickListener(this);
 
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
@@ -215,6 +195,44 @@ public class MainActivity extends BaseActivity {
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.createBook:
+                intent = new Intent(MainActivity.this, BookFormActivity.class);
+                MainActivity.this.startActivity(intent);
+                bottomSheetDialog.dismiss();
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+
+            case R.id.shareBook:
+                intent = new Intent(MainActivity.this, ShareMenuActivity.class);
+                MainActivity.this.startActivity(intent);
+                bottomSheetDialog.dismiss();
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+
+            case R.id.myBook:
+                intent = new Intent(MainActivity.this, BookManageActivity.class);
+                MainActivity.this.startActivity(intent);
+                bottomSheetDialog.dismiss();
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+
+            case R.id.setting:
+                intent = new Intent(MainActivity.this, AboutActivity.class);
+                MainActivity.this.startActivity(intent);
+                bottomSheetDialog.dismiss();
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
         }
     }

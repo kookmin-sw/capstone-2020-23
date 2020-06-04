@@ -1,7 +1,9 @@
 package com.capstone.moayo.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.BaseActivity;
@@ -27,6 +31,7 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -38,8 +43,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private TextView toolbarTitle;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
-    private Button updateBtn, deleteBtn, shareBtn, backBtn;
+    private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn;
     private BottomSheetDialog bottomSheetDialog;
+    private DogamStatus dogamStatus;
 
     private CategoryService categoryService;
 
@@ -61,6 +67,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         category = (CategoryDto) getIntent().getSerializableExtra("category");
+        dogamStatus = category.getStatus();
         rootNode = category.getRootNode();
 
         toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
@@ -81,10 +88,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
         //listener for group click
-
-
 //        myList.setOnGroupClickListener(myListGroupClicked);
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,6 +120,25 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
                 shareBtn = bottomSheetView.findViewById(R.id.detail_btn_share);
                 shareBtn.setOnClickListener(this);
+
+                likeBtn = bottomSheetView.findViewById(R.id.detail_btn_like);
+                likeBtn.setOnClickListener(this);
+
+                cancelBtn = bottomSheetView.findViewById(R.id.detail_btn_cancel);
+                cancelBtn.setOnClickListener(this);
+
+                //도감 Status를 확인하여 비공유 도감(나의도감), 공유된 도감에 따른 버튼 view.
+                switch (dogamStatus){
+                    case NonShare:
+                        likeBtn.setVisibility(View.GONE);
+                        cancelBtn.setVisibility(View.GONE);
+                        break;
+                    default:
+                        updateBtn.setVisibility(View.GONE);
+                        deleteBtn.setVisibility(View.GONE);
+                        shareBtn.setVisibility(View.GONE);
+                        break;
+                }
 
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
@@ -175,6 +198,37 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 startActivity(intent_share);
 
                 break;
+
+            case R.id.detail_btn_like:
+                //TODO: 공유도감 좋아요
+                break;
+
+            case R.id.detail_btn_cancel:
+                //TODO: PASSWORD 확인 후 공유도감 삭제(공유취소)
+
+                EditText edittext = new EditText(this);
+                edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("공유도감 삭제");
+                builder.setMessage("도감의 비밀번호를 입력하세요.");
+                builder.setView(edittext);
+                builder.setPositiveButton("입력",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                builder.show();
+
+
+            break;
 
             case R.id.detail_btn_back:
                 bottomSheetDialog.dismiss();

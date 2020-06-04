@@ -49,6 +49,8 @@
 
         <activity android:name=".activity.NewShareActivity" />
 
+        <activity android:name=".activity.AboutActivity" />
+
     </application>
 
 </manifest>
