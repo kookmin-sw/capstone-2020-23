@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
@@ -63,6 +64,8 @@ public class MainActivity extends BaseActivity {
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
         ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
 
+        TextView emptyView = (TextView) findViewById(R.id.empty_view);
+
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +105,15 @@ public class MainActivity extends BaseActivity {
 //                Log.d("----------------category found----------------" , result.toString());
                 mainTopRecyclerAdapter.setItems((ArrayList<CategoryDto>) result);
                 mainTopRecyclerAdapter.notifyDataSetChanged();
+
+                if (result.isEmpty()) {
+                    topRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    topRecyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
             }
 
             @Override

@@ -18,5 +18,6 @@
     <string name="bookform_done">선택완료</string>
     <string name="bookform_guide">버튼을 눌러 다음 단계로 이동</string>
     <string name="result_guide">게시물을 더블클릭하여 나의 도감으로 저장하세요.</string>
+    <string name="main_guide">아직 도감이 없습니다. 도감을 생성해주세요.</string>
 </resources>
 

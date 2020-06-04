@@ -89,6 +89,7 @@ public class ResultActivity extends BaseActivity {
         textView.setText("# " + searchNode.getTitle());
 
         TextView emptyView = (TextView) findViewById(R.id.empty_view);
+        TextView result_drawer_title = (TextView) findViewById(R.id.result_drawer_title);
         TextView current_tag = (TextView) findViewById(R.id.result_drawer_tag);
 
         current_tag.setText("현재 검색 태그 : " + searchNode.getTitle());
@@ -325,8 +326,6 @@ public class ResultActivity extends BaseActivity {
                 //사용자 도감 탭 펼치기 전, 탭 화면 객체 참조
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.resultDisplay);
                 drawer.openDrawer(Gravity.RIGHT);
-
-                TextView textView = (TextView) findViewById(R.id.result_drawer_title);
 
                 return true;
             }
