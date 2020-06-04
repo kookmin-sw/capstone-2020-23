@@ -41,6 +41,7 @@ import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.wang.avi.AVLoadingIndicatorView;
+import com.capstone.moayo.util.DogamStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -292,7 +293,11 @@ public class ResultActivity extends BaseActivity {
 
     //저장 게시물 요청.
     private ArrayList<PostDto> requestSavedPost(CategoryNodeDto node) {
-        ArrayList<PostDto> foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
+        ArrayList<PostDto> foundPost = new ArrayList<>();
+        if(selectCategory.getStatus() == DogamStatus.Sharing || selectCategory.getStatus() == DogamStatus.NonShare)
+            foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
+        else
+            foundPost = (ArrayList<PostDto>) node.getPosts();
         return foundPost;
     }
 

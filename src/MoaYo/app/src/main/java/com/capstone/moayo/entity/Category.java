@@ -126,13 +126,17 @@ public class Category{
         this.rootNode = rootNode;
     }
 
+    @Override
     public String toString() {
-        String result = String.format("{\"id\" : \"%s\"," +
-                "\"title\" : \"%s\"," +
-                " \"description\" : \"%s\"," +
-                " \"password\" : \"%s\"," +
-                " \"rootNode\" : \"%s\"}", id, title, description, password, rootNode.toString());
-
-        return result;
+        return "Category{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", url='" + url + '\'' +
+                ", writer='" + writer + '\'' +
+                ", rootNode=" + rootNode +
+                '}';
     }
 }

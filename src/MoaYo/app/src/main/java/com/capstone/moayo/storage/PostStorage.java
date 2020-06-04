@@ -11,5 +11,6 @@ public interface PostStorage {
     public List<Post> retrievePostByDogamId(int dogamId);
     public Post retrievePostById(int nodeId, int postId);
     public void modifyPost(Post post);
-    public void removePost(int nodeId, int postId);
+    public String removePost(int nodeId, int postId);
+    public void init();
 }

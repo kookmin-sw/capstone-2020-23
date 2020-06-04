@@ -18,6 +18,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginBottom="1dp"
             android:gravity="center"
             android:text="도감 삭제"
             android:textSize="20dp"
@@ -25,13 +26,11 @@
             android:background="@drawable/click_button"
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_delete"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/lightGray"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginBottom="1dp"
             android:gravity="center"
             android:text="도감 수정"
             android:textSize="20dp"
@@ -39,10 +38,7 @@
             android:background="@drawable/click_button"
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_update" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/lightGray"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -53,6 +49,28 @@
             android:background="@drawable/click_button"
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_share"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="좋아요"
+            android:textSize="20dp"
+            android:textColor="@drawable/click_text"
+            android:background="@drawable/click_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/detail_btn_like"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="공유 취소"
+            android:textSize="20dp"
+            android:textColor="@drawable/click_text"
+            android:background="@drawable/click_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/detail_btn_cancel"/>
 
     </LinearLayout>
 

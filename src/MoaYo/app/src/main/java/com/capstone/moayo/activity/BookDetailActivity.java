@@ -1,7 +1,9 @@
 package com.capstone.moayo.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.BaseActivity;
@@ -23,11 +27,13 @@ import com.capstone.moayo.CustomDialog;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -37,11 +43,19 @@ import java.util.concurrent.Callable;
 public class BookDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView toolbarTitle;
+    private TextView detail_text;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
-    private Button updateBtn, deleteBtn, shareBtn;
+   
     private CustomDialog customDialog;
+    private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn;
+    private BottomSheetDialog bottomSheetDialog;
+    private DogamStatus dogamStatus;
+
+    private ExpandableListView myList;
+
     private CategoryService categoryService;
+    private ShareService shareService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +63,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_book_detail);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
@@ -60,30 +74,52 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        category = (CategoryDto) getIntent().getSerializableExtra("category");
-        rootNode = category.getRootNode();
-
         toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
-        toolbarTitle.setText(rootNode.getTitle());
-
-        ExpandableListView myList = (ExpandableListView) findViewById(R.id.expandableListView);
-        //create Data
-        myList.setAdapter(new BookExpandableAdapter(this, category));
-//        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
-
-        TextView detail_text = (TextView) findViewById(R.id.detail_text);
+        myList = (ExpandableListView) findViewById(R.id.expandableListView);
+        detail_text = (TextView) findViewById(R.id.detail_text);
         TextView detail_text2 = (TextView) findViewById(R.id.detail_text2);
 
-        detail_text.setText(rootNode.getTitle() + "");
+        category = (CategoryDto) getIntent().getSerializableExtra("category");
 
+        //create Data
+        if(category.getRootNode() == null) {
+            Callable<CategoryDto> callable = () -> shareService.findDogamById(category.getId());
+            AsyncCallback<CategoryDto> callback = new AsyncCallback<CategoryDto>() {
+                @Override
+                public void onResult(CategoryDto result) {
+                    category = result;
+                    toolbarTitle.setText(category.getTitle());
+                    myList.setAdapter(new BookExpandableAdapter(getApplicationContext(), category));
+                    dogamStatus = category.getStatus();
+                    rootNode = category.getRootNode();
+                    detail_text.setText(rootNode.getTitle() + "");
+                }
 
+                @Override
+                public void exceptionOccured(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+            new AsyncExecutor<CategoryDto>().setCallable(callable).setCallback(callback).execute();
+        } else {
+            toolbarTitle.setText(category.getTitle());
+            myList.setAdapter(new BookExpandableAdapter(this, category));
+            dogamStatus = category.getStatus();
+            rootNode = category.getRootNode();
+            detail_text.setText(rootNode.getTitle() + "");
+
+        }
+
+//        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
         //listener for group click
-
-
 //        myList.setOnGroupClickListener(myListGroupClicked);
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,12 +147,30 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 deleteBtn = bottomSheetView.findViewById(R.id.detail_btn_delete);
                 deleteBtn.setOnClickListener(this);
 
-                bottomSheetView.findViewById(R.id.detail_btn_back).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.dismiss();
-                    }
-                });
+                backBtn = bottomSheetView.findViewById(R.id.detail_btn_back);
+                backBtn.setOnClickListener(this);
+
+                shareBtn = bottomSheetView.findViewById(R.id.detail_btn_share);
+                shareBtn.setOnClickListener(this);
+
+                likeBtn = bottomSheetView.findViewById(R.id.detail_btn_like);
+                likeBtn.setOnClickListener(this);
+
+                cancelBtn = bottomSheetView.findViewById(R.id.detail_btn_cancel);
+                cancelBtn.setOnClickListener(this);
+
+                //도감 Status를 확인하여 비공유 도감(나의도감), 공유된 도감에 따른 버튼 view.
+                switch (dogamStatus){
+                    case NonShare:
+                        likeBtn.setVisibility(View.GONE);
+                        cancelBtn.setVisibility(View.GONE);
+                        break;
+                    default:
+                        updateBtn.setVisibility(View.GONE);
+                        deleteBtn.setVisibility(View.GONE);
+                        shareBtn.setVisibility(View.GONE);
+                        break;
+                }
 
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
@@ -136,9 +190,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.detail_btn_update:
                 //TODO: BookForm 화면으로 전환
-                Intent intent = new Intent(BookDetailActivity.this, BookFormActivity.class);
-                intent.putExtra("category", category);
-                startActivity(intent);
+                Intent intent_update = new Intent(BookDetailActivity.this, BookFormActivity.class);
+                intent_update.putExtra("category", category);
+                startActivity(intent_update);
 
 
                 break;
@@ -211,7 +265,56 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
                 break;
 
+            case R.id.detail_btn_share:
+                //TODO: NewShareActivity로 화면 전환(도감 데이터 전달)
+                Intent intent_share = new Intent(BookDetailActivity.this, NewShareActivity.class);
+                intent_share.putExtra("target_category", category);
+                startActivity(intent_share);
+
+                break;
+
+            case R.id.detail_btn_like:
+                //TODO: 공유도감 좋아요
+                break;
+
+            case R.id.detail_btn_cancel:
+                //TODO: PASSWORD 확인 후 공유도감 삭제(공유취소)
+
+                EditText edittext = new EditText(this);
+                edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("공유도감 삭제");
+                builder.setMessage("도감의 비밀번호를 입력하세요.");
+                builder.setView(edittext);
+                builder.setPositiveButton("입력",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                builder.show();
+
+
+            break;
+
+            case R.id.detail_btn_back:
+                bottomSheetDialog.dismiss();
+                break;
+
+
+
         }
+    }
+
+    private void loadDetail() {
+        category = shareService.findDogamById(category.getId());
     }
 
 

@@ -2,7 +2,9 @@ package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.Post;
 
-public class PostDto {
+import java.io.Serializable;
+
+public class PostDto implements Serializable {
     private int id;
     private String imgUrl;
     private String url;

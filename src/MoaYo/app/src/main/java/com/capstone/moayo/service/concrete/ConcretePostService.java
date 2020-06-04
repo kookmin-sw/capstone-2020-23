@@ -79,4 +79,9 @@ public class ConcretePostService implements PostService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void init() {
+        postStorage.init();
+    }
 }

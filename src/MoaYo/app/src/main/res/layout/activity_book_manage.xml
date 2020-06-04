@@ -33,12 +33,15 @@
             android:src="@drawable/new_logo"/>
 
         <LinearLayout
+            android:id="@+id/activity_manage_ll_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="60dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground">
             <TextView
                 android:id="@+id/num_of_book"
                 android:layout_width="wrap_content"
@@ -57,12 +60,15 @@
                 android:textColor="@color/darkGray"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/activity_manage_ll_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="30dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,12 +85,15 @@
                 android:textColor="@color/darkGray"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/activity_manage_ll_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="30dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +127,7 @@
             android:textSize="18dp"/>
 
         <TextView
-            android:id="@+id/createBook2"
+            android:id="@+id/activity_manage_tv_create"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginLeft="30dp"

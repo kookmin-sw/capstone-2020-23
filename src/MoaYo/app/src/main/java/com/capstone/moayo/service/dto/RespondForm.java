@@ -6,58 +6,58 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RespondForm {
-    @SerializedName("second_layer")
-    private List<InstantPost> second_layer;
-    @SerializedName("third_layer")
-    private List<InstantPost> thrid_layer;
-    @SerializedName("second_layer_cache")
-    private String[] second_layer_cache;
-    @SerializedName("third_layer_cache")
-    private String[] third_layer_cache;
+    @SerializedName("higher_layer")
+    private List<InstantPost> higher_layer;
+    @SerializedName("lower_layer")
+    private List<InstantPost> lower_layer;
+    @SerializedName("higher_layer_cache")
+    private String[] higher_layer_cache;
+    @SerializedName("lower_layer_cache")
+    private String[] lower_layer_cache;
 
     public RespondForm() {
 
     }
 
-    public List<InstantPost> getSecond_layer() {
-        return second_layer;
+    public List<InstantPost> getHigher_layer() {
+        return higher_layer;
     }
 
-    public void setSecond_layer(List<InstantPost> second_layer) {
-        this.second_layer = second_layer;
+    public void setHigher_layer(List<InstantPost> higher_layer) {
+        this.higher_layer = higher_layer;
     }
 
-    public List<InstantPost> getThrid_layer() {
-        return thrid_layer;
+    public List<InstantPost> getLower_layer() {
+        return lower_layer;
     }
 
-    public void setThrid_layer(List<InstantPost> thrid_layer) {
-        this.thrid_layer = thrid_layer;
+    public void setLower_layer(List<InstantPost> lower_layer) {
+        this.lower_layer = lower_layer;
     }
 
-    public String[] getSecond_layer_cache() {
-        return second_layer_cache;
+    public String[] getHigher_layer_cache() {
+        return higher_layer_cache;
     }
 
-    public void setSecond_layer_cache(String[] second_layer_cache) {
-        this.second_layer_cache = second_layer_cache;
+    public void setHigher_layer_cache(String[] higher_layer_cache) {
+        this.higher_layer_cache = higher_layer_cache;
     }
 
-    public String[] getThird_layer_cache() {
-        return third_layer_cache;
+    public String[] getLower_layer_cache() {
+        return lower_layer_cache;
     }
 
-    public void setThird_layer_cache(String[] third_layer_cache) {
-        this.third_layer_cache = third_layer_cache;
+    public void setLower_layer_cache(String[] lower_layer_cache) {
+        this.lower_layer_cache = lower_layer_cache;
     }
 
     @Override
     public String toString() {
         return "RespondForm{" +
-                "second_layer=" + second_layer +
-                ", thrid_layer=" + thrid_layer +
-                ", second_layer_cache=" + Arrays.toString(second_layer_cache) +
-                ", third_layer_cache=" + Arrays.toString(third_layer_cache) +
+                "higher_layer=" + higher_layer +
+                ", lower_layer=" + lower_layer +
+                ", higher_layer_cache=" + Arrays.toString(higher_layer_cache) +
+                ", lower_layer_cache=" + Arrays.toString(lower_layer_cache) +
                 '}';
     }
 }

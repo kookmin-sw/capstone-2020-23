@@ -1,17 +1,9 @@
 package com.capstone.moayo.service.dto;
 
 import com.capstone.moayo.entity.Category;
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.util.DogamStatus;
-import com.capstone.moayo.util.Exception.NotRootException;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryDto implements Serializable {
     private int id;
