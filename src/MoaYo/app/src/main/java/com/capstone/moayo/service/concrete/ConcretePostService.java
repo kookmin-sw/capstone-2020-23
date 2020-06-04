@@ -69,7 +69,7 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public void deletePostById(int nodeId, int postId) {
+    public String deletePostById(int nodeId, int postId) {
         try {
             Post foundPost = postStorage.retrievePostById(nodeId, postId);
 
@@ -78,6 +78,7 @@ public class ConcretePostService implements PostService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "";
     }
 
     @Override

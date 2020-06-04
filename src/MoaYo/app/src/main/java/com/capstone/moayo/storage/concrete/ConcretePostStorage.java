@@ -9,12 +9,16 @@ import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.dao.mapping.CategoryPostMapping;
 import com.capstone.moayo.dao.mapping.PostMapping;
 import com.capstone.moayo.dao.sqlite.DBHelper;
+import com.capstone.moayo.entity.Category;
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.storage.PostStorage;
+import com.capstone.moayo.storage.map.MemoryMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -24,13 +28,17 @@ public class ConcretePostStorage implements PostStorage {
     private PostDao postDao;
     private CategoryPostDao categoryPostDao;
     private DBHelper dbHelper;
-
+    private Map<Integer, Category> categoryMap;
+    private Map<Integer, CategoryNode> categoryNodeMap;
     private Context context;
 
     public ConcretePostStorage(Context context) {
         dbHelper = DaoFactoryCreator.getInstance().initDao(context);
         postDao = DaoFactoryCreator.getInstance().requsetPostDao();
         categoryPostDao = DaoFactoryCreator.getInstance().requestCategoryPostDao();
+        categoryMap = MemoryMap.getInstance().getCategoryMap();
+        categoryNodeMap = MemoryMap.getInstance().getCategoryNodeMap();
+
         this.context = context;
     }
 
@@ -50,8 +58,6 @@ public class ConcretePostStorage implements PostStorage {
 
     @Override
     public List<Post> retrievePostByNodeId(int nodeId) {
-        List<CategoryPostMapping> categoryPostMappingList = categoryPostDao.selectByCategoryId(dbHelper, nodeId);
-        if(categoryPostMappingList == null) return null;
 
         List<Post> postList = new ArrayList<>();
         if(!categoryNodeMap.keySet().contains(nodeId)) return postList;
@@ -102,12 +108,17 @@ public class ConcretePostStorage implements PostStorage {
     }
 
     @Override
-    public void removePost(int nodeId, int postId) {
+    public String removePost(int nodeId, int postId) {
         boolean result = categoryPostDao.delete(dbHelper, nodeId, postId);
-        if(result != true) return;
+        if(result != true) return "fail to remove.";
+
+        Post removePost = retrievePostById(nodeId, postId);
+        categoryNodeMap.get(nodeId).getPosts().remove(removePost);
 
         List<CategoryPostMapping> mapping = categoryPostDao.selectByPostId(dbHelper, postId);
         if(mapping.size() == 0) postDao.delete(dbHelper, postId);
+
+        return "success to remove.";
     }
 
     @Override

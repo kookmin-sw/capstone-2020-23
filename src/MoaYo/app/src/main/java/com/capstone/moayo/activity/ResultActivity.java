@@ -169,6 +169,7 @@ public class ResultActivity extends BaseActivity {
                         doubleClickFlag = 0;
                     }
                 };
+
                 if( doubleClickFlag == 1 ) {
                     handler.postDelayed( clickRunnable, CLICK_DELAY );
                 }else if( doubleClickFlag == 2 ) {
@@ -179,6 +180,7 @@ public class ResultActivity extends BaseActivity {
                         @Override
                         public void onResult(PostDto result) {
                             savePost.add(result);
+                            saved_adapter.setItems((ArrayList<PostDto>) savePost);
                             saved_adapter.notifyDataSetChanged();
                         }
 
