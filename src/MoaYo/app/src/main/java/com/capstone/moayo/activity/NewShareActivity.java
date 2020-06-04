@@ -2,6 +2,7 @@ package com.capstone.moayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +17,6 @@ import androidx.annotation.Nullable;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
@@ -50,6 +50,8 @@ public class NewShareActivity extends BaseActivity {
         password = (EditText) findViewById(R.id.activity_share_et_password);
         content = (EditText) findViewById(R.id.activity_share_et_content);
         spinner = (Spinner) findViewById(R.id.activity_share_sp_target);
+
+        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         //spinner에 들어갈 나의 도감 리스트 가져옴
         Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
@@ -100,7 +102,6 @@ public class NewShareActivity extends BaseActivity {
                 share_category.setDescription(content.getText().toString());
 
                 //TODO: 도감 공유 백엔드 통신
-
 
 
                 Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);

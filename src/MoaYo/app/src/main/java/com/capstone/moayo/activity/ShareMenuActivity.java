@@ -1,26 +1,37 @@
 package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.ShareMenuAdapter;
 import com.capstone.moayo.data.SharedData_Sample;
+import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.DogamStatus;
 
-public class ShareMenuActivity extends BaseActivity {
+import java.util.ArrayList;
+
+public class ShareMenuActivity extends BaseActivity implements View.OnClickListener  {
+
+    ImageButton search_btn;
+    EditText search_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +49,23 @@ public class ShareMenuActivity extends BaseActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
 
-        RecyclerView recyclerView2 = findViewById(R.id.recycler_shareMenu);
-        recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
+        search_text = (EditText) findViewById(R.id.activity_share_et_search);
+        search_btn = (ImageButton) findViewById(R.id.activity_share_btn_search);
+        search_btn.setOnClickListener(this);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_shareMenu);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
 
-        ShareMenuAdapter adapter2 = new ShareMenuAdapter();
-        recyclerView2.setAdapter(adapter2);
+        ShareMenuAdapter adapter = new ShareMenuAdapter();
+        recyclerView.setAdapter(adapter);
 
-        //아이템 로드
-        adapter2.setItems(new SharedData_Sample().getItems());
 
+
+
+
+        //TODO: [백엔드 통신] 공유 도감데이터 가져와 Adapter에 등록.
+        adapter.setItems(new SharedData_Sample().getItems()); //Dummy data
 
         Spinner ShareTypeSpinner = (Spinner)findViewById(R.id.shareMenuSpinner);
         ArrayAdapter shareTypeAdapter = ArrayAdapter.createFromResource(this,
@@ -64,8 +82,19 @@ public class ShareMenuActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.activity_share_btn_search:
+                String input = search_text.getText().toString();
+                Log.d("search_data", input);
+        }
+    }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+
+            public boolean onOptionsItemSelected(MenuItem item) {
 
         //menu_bookmanage.xml에서 지정한 item 이벤트 추가
         switch (item.getItemId()) {
@@ -76,7 +105,6 @@ public class ShareMenuActivity extends BaseActivity {
             }
 
             case R.id.createBook:
-
 //                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ShareMenuActivity.this, NewShareActivity.class);
                 startActivity(intent);
