@@ -31,7 +31,7 @@ import java.util.concurrent.Callable;
 
 public class IntroActivity extends BaseActivity {
 
-    private final int SPLASH_DISPLAY_TIME = 2500;
+    private final int SPLASH_DISPLAY_TIME = 2000;
     CategoryService categoryService;
     PostService postService;
     ShareService shareService;
