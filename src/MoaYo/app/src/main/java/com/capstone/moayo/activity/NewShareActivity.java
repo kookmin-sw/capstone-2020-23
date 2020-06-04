@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 
 import com.capstone.moayo.BaseActivity;
@@ -36,6 +40,9 @@ public class NewShareActivity extends BaseActivity {
     Button submit_btn;
     EditText nickname, password, content;
     List<CategoryDto> categories;
+    RadioButton mutableBtn, immutableBtn;
+    RadioGroup radioGroup;
+    Boolean isMutable;
 
 
     @Override
@@ -50,6 +57,15 @@ public class NewShareActivity extends BaseActivity {
         password = (EditText) findViewById(R.id.activity_share_et_password);
         content = (EditText) findViewById(R.id.activity_share_et_content);
         spinner = (Spinner) findViewById(R.id.activity_share_sp_target);
+//
+        mutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_mutable);
+        immutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_immutable);
+        //수정불가 모드로 초기화.
+        immutableBtn.setChecked(true);
+        isMutable = false;
+
+        radioGroup = (RadioGroup) findViewById(R.id.activity_share_rg_type);
+        radioGroup.setOnCheckedChangeListener(radioGroupButtonChangeListener);
 
         password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
@@ -101,6 +117,8 @@ public class NewShareActivity extends BaseActivity {
                 share_category.setPassword(password.getText().toString());
                 share_category.setDescription(content.getText().toString());
 
+                Log.d("share_dogam_info", share_category.toString());
+
                 //TODO: 도감 공유 백엔드 통신
 
 
@@ -110,6 +128,29 @@ public class NewShareActivity extends BaseActivity {
         });
 
     }
+
+
+//    //RadioButton Click listener
+//    RadioButton.OnClickListener radioButtonClickListener = new RadioButton.OnClickListener(){
+//        @Override public void onClick(View view) {
+//            Toast.makeText(NewShareActivity.this, "r_btn1 : "+mutableBtn.isChecked() + "r_btn2 : " +immutableBtn.isChecked() , Toast.LENGTH_SHORT).show();
+//        }
+//    };
+
+    //라디오 그룹 클릭 리스너
+    RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+            if(i == R.id.activity_share_rb_mutable){
+                Toast.makeText(NewShareActivity.this, "수정 가능 버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+                password.setEnabled(false);
+                isMutable = true;
+            } else if(i == R.id.activity_share_rb_immutable){
+                Toast.makeText(NewShareActivity.this, "수정 불가능 버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+                password.setEnabled(true);
+                isMutable = false;
+            }
+        }
+    };
 
     // Inflate menu.xml in toolBar.
     public boolean onCreateOptionsMenu(Menu menu) {
