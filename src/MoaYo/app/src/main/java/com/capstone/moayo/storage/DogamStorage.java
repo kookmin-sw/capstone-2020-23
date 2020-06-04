@@ -12,4 +12,5 @@ public interface DogamStorage {
     public void update(Category category);
     public boolean remove(int id);
     public Collection<Category> retrieveAll();
+    public void init();
 }

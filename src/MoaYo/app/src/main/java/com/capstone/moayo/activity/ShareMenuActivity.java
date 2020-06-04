@@ -22,6 +22,11 @@ import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.ShareMenuAdapter;
 import com.capstone.moayo.data.SharedData_Sample;
+import com.capstone.moayo.service.ShareService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import java.util.List;
+import java.util.concurrent.Callable;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.DogamStatus;
@@ -33,10 +38,14 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
     ImageButton search_btn;
     EditText search_text;
 
+    private ShareService shareService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_menu);
+
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -59,8 +68,26 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
 
         ShareMenuAdapter adapter = new ShareMenuAdapter();
         recyclerView.setAdapter(adapter);
+      
+        //아이템 로드
+        adapter2.setItems(new SharedData_Sample().getItems());
+        Callable<List<CategoryDto>> loadCallable = () -> shareService.findAll();
+        AsyncCallback<List<CategoryDto>> loadCallback = new AsyncCallback<List<CategoryDto>>() {
+            @Override
+            public void onResult(List<CategoryDto> result) {
 
+            }
 
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        }
 
 
 

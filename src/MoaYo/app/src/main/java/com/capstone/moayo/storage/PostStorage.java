@@ -12,4 +12,5 @@ public interface PostStorage {
     public Post retrievePostById(int nodeId, int postId);
     public void modifyPost(Post post);
     public String removePost(int nodeId, int postId);
+    public void init();
 }

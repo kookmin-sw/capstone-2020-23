@@ -90,4 +90,16 @@ public class ConcreteDogamStorage implements DogamStorage {
             categoryMap.remove(id);
         return result;
     }
+
+    @Override
+    public void init() {
+        DogamMapping[] dogamMappings = dogamDao.selectAll(dbHelper);
+        for(DogamMapping dogam : dogamMappings) {
+            Category category = new Category(dogam.getTitle(), dogam.getDescription(), dogam.getPassword(), null);
+            category.setId(dogam.getId());
+            category.setUrl(dogam.getUrl());
+
+            categoryMap.put(category.getId(), category);
+        }
+    }
 }

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
@@ -34,6 +35,7 @@ import java.util.concurrent.Callable;
 public class NewShareActivity extends BaseActivity {
 
     CategoryService categoryService;
+    ShareService shareService;
     Spinner spinner;
     ArrayAdapter<String> spinner_adapter;
     ArrayList<String> spinner_list;
@@ -50,6 +52,7 @@ public class NewShareActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_share);
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
         spinner_list = new ArrayList<>();
 
@@ -117,10 +120,31 @@ public class NewShareActivity extends BaseActivity {
                 share_category.setPassword(password.getText().toString());
                 share_category.setDescription(content.getText().toString());
 
-                Log.d("share_dogam_info", share_category.toString());
-
                 //TODO: 도감 공유 백엔드 통신
+                Callable<String> createCall = () -> shareService.registerDogam(share_category, 1);
+                AsyncCallback<String> createCallback = new AsyncCallback<String>() {
+                    @Override
+                    public void onResult(String result) {
+                        if(result.equals("0"))
+                            Toast.makeText(getApplicationContext(), String.format("도감 '%s'가 정상적으로 공유되었습니다.", share_category.getTitle()), Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), String.format("도감 '%s' 공유에 실패했습니다.", share_category.getTitle()), Toast.LENGTH_SHORT).show();
 
+                        Log.d("register share result", result);
+                    }
+
+                    @Override
+                    public void exceptionOccured(Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+
+                new AsyncExecutor<String>().setCallable(createCall).setCallback(createCallback).execute();
 
                 Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);
                 startActivity(intent);

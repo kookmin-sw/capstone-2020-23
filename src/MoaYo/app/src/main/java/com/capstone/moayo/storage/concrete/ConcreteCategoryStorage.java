@@ -96,7 +96,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public CategoryNode retrieveByDogamId(int id) {
-        if(!categoryMap.containsKey(id) || categoryMap.get(id).getRootNode() == null) {
+        if(categoryMap.get(id).getRootNode() == null) {
             // find root node
             CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
             if (rootNode == null) return null;
@@ -207,6 +207,32 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
         }
         return result;
+    }
+
+    @Override
+    public void init() {
+        for(Category category : categoryMap.values()) {
+            CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, category.getId());
+            if (rootNode == null) continue;
+
+            categoryNodeMap.put(rootNode.getId(), rootNode);
+            // find hash tags
+            for (CategoryNode secondNode : rootNode.getLowLayer()) {
+                List<CategoryHashTagMapping> mappings = categoryHashtagDao.selectByCategoryId(dbHelper, secondNode.getId());
+                for (int i = 0; i < mappings.size(); i++) {
+                    secondNode.getHashtags().add(mappings.get(i).getHashtag());
+                }
+                categoryNodeMap.put(secondNode.getId(), secondNode);
+
+                for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                    List<CategoryHashTagMapping> mappings1 = categoryHashtagDao.selectByCategoryId(dbHelper, thirdNode.getId());
+                    for (int j = 0; j < mappings1.size(); j++)
+                        thirdNode.getHashtags().add(mappings1.get(j).getHashtag());
+                    categoryNodeMap.put(thirdNode.getId(), thirdNode);
+                }
+            }
+            categoryMap.get(category.getId()).setRootNode(rootNode);
+        }
     }
 
     private void createHashTag(List<String> hashtags) {
