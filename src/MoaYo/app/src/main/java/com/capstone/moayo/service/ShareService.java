@@ -6,10 +6,12 @@ import com.capstone.moayo.util.DogamStatus;
 import java.util.List;
 
 public interface ShareService {
-    public String registerDogam(CategoryDto categoryDto, int status);
-    public CategoryDto findDogamById(int dogamId);
-    public List<CategoryDto> findAll();
-    public List<CategoryDto> findDogamByWriter(String writer);
-    public List<CategoryDto> findDogamByKeyword(String keyword);
-    public String deleteDogam(int dogamId);
+    String registerDogam(CategoryDto categoryDto, int status);
+    CategoryDto findDogamById(int dogamId);
+    List<CategoryDto> findAll();
+    List<CategoryDto> findDogamByWriter(String writer);
+    List<CategoryDto> findDogamByKeyword(String keyword);
+    String deleteDogam(int dogamId);
+    List<CategoryDto> sortByLike(List<CategoryDto> categoryDtos);
+    List<CategoryDto> sortByTime(List<CategoryDto> categoryDtos);
 }

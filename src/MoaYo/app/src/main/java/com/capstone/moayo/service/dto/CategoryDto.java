@@ -13,6 +13,8 @@ public class CategoryDto implements Serializable {
     private DogamStatus status;
     private String url;
     private String writer;
+    private int like;
+    private String time;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
@@ -115,6 +117,22 @@ public class CategoryDto implements Serializable {
 
     public void setRootNode(CategoryNodeDto rootNode) {
         this.rootNode = rootNode;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override

@@ -23,6 +23,7 @@ public class ShareUtil {
         ModelForm form = new ModelForm();
 
         DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription()+";"+categoryDto.getUrl(), status, categoryDto.getPassword(), categoryDto.getWriter());
+        dogamModel.setTime(categoryDto.getTime());
         form.setDogamModel(dogamModel);
 
         List<CategoryModel> categoryModels = new ArrayList<>();
@@ -93,6 +94,7 @@ public class ShareUtil {
                 dogam.setStatus(DogamStatus.Shared_Mutable);
         }
 
+        dogam.setTime(dogamModel.getTime());
         return dogam;
     }
 

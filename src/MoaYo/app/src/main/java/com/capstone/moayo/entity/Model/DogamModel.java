@@ -15,6 +15,8 @@ public class DogamModel {
     private String password;
     @SerializedName("co_writer")
     private String writer;
+    @SerializedName("co_time")
+    private String time;
 
     public DogamModel(int id, String title, String description, int status, String password, String writer) {
         this.id = id;
@@ -73,6 +75,14 @@ public class DogamModel {
         this.writer = writer;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "DogamModel{" +
@@ -82,6 +92,7 @@ public class DogamModel {
                 ", status=" + status +
                 ", password='" + password + '\'' +
                 ", writer='" + writer + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

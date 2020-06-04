@@ -19,7 +19,11 @@ import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.ShareUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ConcreteShareService implements ShareService {
@@ -35,6 +39,7 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public String registerDogam(CategoryDto categoryDto, int status) {
+        categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         for(CategoryNodeDto secondNode : categoryDto.getRootNode().getLowLayer()) {
             List<Post> secondPosts = postStorage.retrievePostByNodeId(secondNode.getId());
             for(Post post : secondPosts) {
@@ -101,5 +106,33 @@ public class ConcreteShareService implements ShareService {
     public String deleteDogam(int dogamId) {
         int code = shareStorage.remove(dogamId);
         return Integer.toString(code);
+    }
+
+    @Override
+    public List<CategoryDto> sortByLike(List<CategoryDto> categoryDtos) {
+        categoryDtos.sort((o1, o2) -> {
+            if(o1.getLike() > o2.getLike())
+                return 1;
+            else
+                return -1;
+        });
+
+        return categoryDtos;
+    }
+
+    @Override
+    public List<CategoryDto> sortByTime(List<CategoryDto> categoryDtos) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        categoryDtos.sort((o1, o2) -> {
+            try {
+                Date date1 = format.parse(o1.getTime());
+                Date date2 = format.parse(o2.getTime());
+                return date1.compareTo(date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return  0;
+        });
+        return categoryDtos;
     }
 }
