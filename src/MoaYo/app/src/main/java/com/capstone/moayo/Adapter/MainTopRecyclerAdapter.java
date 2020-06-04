@@ -53,17 +53,11 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
                     // Button View Tag 값으로 저장된 카테고리 객체를 가져옴.
                     CategoryDto category = (CategoryDto) v.getTag();
 
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable(){
-                        @Override
-                        public void run(){
-                            Intent intent = new Intent(v.getContext(), BookDetailActivity.class);
-                            // intent에 CategoryNode 객체를 담아 DetailActivity로 전달함.
-                            intent.putExtra("category", category);
-                            v.getContext().startActivity(intent);
-                            myBookPost.setSelected(false);
-                        }
-                    }, 400);
+                    Intent intent = new Intent(v.getContext(), BookDetailActivity.class);
+                    // intent에 CategoryNode 객체를 담아 DetailActivity로 전달함.
+                    intent.putExtra("category", category);
+                    v.getContext().startActivity(intent);
+                    myBookPost.setSelected(false);
                 }
             });
         }

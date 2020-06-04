@@ -81,17 +81,11 @@ public class PageFragment extends Fragment implements OnClickListener {
 
         CategoryDto category = (CategoryDto) v.getTag();
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            @Override
-            public void run(){
-                Intent intent = new Intent(getActivity(), BookDetailActivity.class);
-                // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
-                intent.putExtra("category", category);
-                startActivity(intent);
-                v.setSelected(false);
-            }
-        }, 400);
+        Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+        // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
+        intent.putExtra("category", category);
+        startActivity(intent);
+        v.setSelected(false);
 
 
     }

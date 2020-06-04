@@ -88,6 +88,11 @@ public class ResultActivity extends BaseActivity {
         TextView textView = (TextView) findViewById(R.id.hashtagName);
         textView.setText("# " + searchNode.getTitle());
 
+        TextView emptyView = (TextView) findViewById(R.id.empty_view);
+        TextView current_tag = (TextView) findViewById(R.id.result_drawer_tag);
+
+        current_tag.setText("현재 검색 태그 : " + searchNode.getTitle());
+
         // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         RecyclerView saved_recycler = findViewById(R.id.recycler1_result);
@@ -98,6 +103,15 @@ public class ResultActivity extends BaseActivity {
         saved_recycler.setAdapter(saved_adapter);
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.activity_result_pb_circle);
+
+        if (savePost.isEmpty()) {
+            saved_recycler.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            saved_recycler.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         Callable<ArrayList<PostDto>> callable0 = () -> requestSavedPost(searchNode);
         AsyncCallback<ArrayList<PostDto>> callback0 = new AsyncCallback<ArrayList<PostDto>>() {
