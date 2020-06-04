@@ -67,12 +67,17 @@ public class ConcreteCategoryService implements CategoryService {
                 throw new  NoSuchCategoryException("You don't have any category now");
 
             for (Category category : categories) {
-                CategoryNode categoryNode = categoryStorage.retrieveByDogamId(category.getId());
+                CategoryNode categoryNode = category.getRootNode();
+
+                if(categoryNode == null) {
+                    categoryNode = categoryStorage.retrieveByDogamId(category.getId());
+                    category.setRootNode(categoryNode);
+                }
                 if(categoryNode == null)
                     throw new NoSuchNodeException("There is no such node");
                 if(categoryNode.getParent() != null)
                     throw new NotRootException("Not root node");
-                category.setRootNode(categoryNode);
+
             }
 
             List<CategoryDto> categoryDtoList = new ArrayList<>();

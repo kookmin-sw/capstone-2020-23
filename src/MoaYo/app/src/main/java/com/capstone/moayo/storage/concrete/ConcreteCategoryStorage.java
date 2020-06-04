@@ -96,7 +96,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
     @Override
     public CategoryNode retrieveByDogamId(int id) {
-        if(!categoryMap.containsKey(id) || categoryMap.get(id).getRootNode() == null) {
+        if(categoryMap.get(id).getRootNode() == null) {
             // find root node
             CategoryNode rootNode = categoryDao.selectByDogamId(dbHelper, id);
             if (rootNode == null) return null;

@@ -1,6 +1,7 @@
 package com.capstone.moayo.entity;
 
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.PostDto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,15 +39,25 @@ public class CategoryNode implements Serializable {
         CategoryNodeDto rootNode = new CategoryNodeDto(title, null, level);
         rootNode.setId(id);
         rootNode.setHashtags(hashtags);
+        for(Post post : posts)
+            rootNode.getPosts().add(post.toPostDto());
+
         for(CategoryNode secondNode : lowLayer) {
             CategoryNodeDto secondNodeDto = new CategoryNodeDto(secondNode.getTitle(), rootNode, secondNode.getLevel());
             secondNodeDto.setId(secondNode.getId());
             secondNodeDto.setHashtags(secondNode.getHashtags());
+            for(Post post : posts)
+                secondNodeDto.getPosts().add(post.toPostDto());
+
             for(CategoryNode thirdNode : secondNode.getLowLayer()) {
                 CategoryNodeDto thirdNodeDto = new CategoryNodeDto(thirdNode.getTitle(), secondNodeDto, thirdNode.getLevel());
                 thirdNodeDto.setId(thirdNode.getId());
                 thirdNodeDto.setHashtags(thirdNode.getHashtags());
+                for(Post post : posts)
+                    thirdNodeDto.getPosts().add(post.toPostDto());
+
                 secondNodeDto.getLowLayer().add(thirdNodeDto);
+
             }
             rootNode.getLowLayer().add(secondNodeDto);
         }
@@ -134,18 +145,16 @@ public class CategoryNode implements Serializable {
         this.posts = posts;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{\"id\" : ").append("\"").append(id).append("\"").append(",").
-                append("\"title\" : ").append("\"").append(title).append("\"").append(",").
-                append("\"level\" : ").append("\"").append(level).append("\"").append(",").
-                append("\"parentId\" : ").append("\"").append(parent.getId()).append(",").
-                append("\"lowLayer\" : [");
-        for(CategoryNode lowNode : lowLayer) {
-            buffer.append(lowNode.toString());
-        }
-        buffer.append("]}");
-
-        return buffer.toString();
+        return "CategoryNode{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", level=" + level +
+                ", hashtags=" + hashtags +
+                ", posts=" + posts +
+                ", lowLayer=" + lowLayer +
+                '}';
     }
 }

@@ -6,10 +6,15 @@ import android.util.Log;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
+import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.storage.DogamStorage;
+import com.capstone.moayo.storage.PostStorage;
 import com.capstone.moayo.storage.ShareStorage;
+import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.ShareUtil;
@@ -20,14 +25,29 @@ import java.util.List;
 public class ConcreteShareService implements ShareService {
     private ShareStorage shareStorage;
     private DogamStorage dogamStorage;
+    private PostStorage postStorage;
 
     public ConcreteShareService(Context context) {
         this.dogamStorage = StorageFactoryCreator.getInstance().requestDogamStorage(context);
+        this.postStorage = StorageFactoryCreator.getInstance().requestPostStorage(context);
         this.shareStorage = StorageFactoryCreator.getInstance().requestShareStoraget(context);
     }
 
     @Override
     public String registerDogam(CategoryDto categoryDto, int status) {
+        for(CategoryNodeDto secondNode : categoryDto.getRootNode().getLowLayer()) {
+            List<Post> secondPosts = postStorage.retrievePostByNodeId(secondNode.getId());
+            for(Post post : secondPosts) {
+                secondNode.getPosts().add(post.toPostDto());
+            }
+            for(CategoryNodeDto thirdNode : secondNode.getLowLayer()) {
+                List<Post> thirdPosts = postStorage.retrievePostByNodeId(thirdNode.getId());
+                for(Post post : thirdPosts) {
+                    thirdNode.getPosts().add(post.toPostDto());
+                }
+            }
+        }
+
         ModelForm form = ShareUtil.convertDogamToModelForm(categoryDto, status);
         Log.d("convert category to form", form.toString());
         int result = shareStorage.create(form);

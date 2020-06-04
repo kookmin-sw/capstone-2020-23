@@ -46,10 +46,16 @@ public class CategoryNodeDto implements Serializable {
             CategoryNode secondNode = new CategoryNode(secondNodeDto.getTitle(), rootNode, secondNodeDto.getLevel()); // 2nd node
             secondNode.setId(secondNodeDto.getId());
             secondNode.setHashtags(secondNodeDto.getHashtags());
+            for(PostDto postDto : posts) {
+                secondNode.getPosts().add(postDto.toPost());
+            }
             for (CategoryNodeDto thirdNodeDto : secondNodeDto.getLowLayer()) {
                 CategoryNode thirdNode = new CategoryNode(thirdNodeDto.getTitle(), secondNode, thirdNodeDto.getLevel()); // 3rd node
                 thirdNode.setId(thirdNodeDto.getId());
                 thirdNode.setHashtags(thirdNodeDto.getHashtags());
+                for(PostDto postDto : posts) {
+                    thirdNode.getPosts().add(postDto.toPost());
+                }
                 secondNode.getLowLayer().add(thirdNode);
             }
             rootNode.getLowLayer().add(secondNode);
@@ -124,12 +130,13 @@ public class CategoryNodeDto implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
+        return "CategoryNodeDto{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", level=" + level +
                 ", hashtags=" + hashtags +
+                ", posts=" + posts +
                 ", lowLayer=" + lowLayer +
-                "}\n";
+                '}';
     }
 }

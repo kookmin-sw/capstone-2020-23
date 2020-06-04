@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -107,6 +108,11 @@ public class NewShareActivity extends BaseActivity {
                 AsyncCallback<String> createCallback = new AsyncCallback<String>() {
                     @Override
                     public void onResult(String result) {
+                        if(result.equals("0"))
+                            Toast.makeText(getApplicationContext(), String.format("도감 '%s'가 정상적으로 공유되었습니다.", share_category.getTitle()), Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), String.format("도감 '%s' 공유에 실패했습니다.", share_category.getTitle()), Toast.LENGTH_SHORT).show();
+
                         Log.d("register share result", result);
                     }
 

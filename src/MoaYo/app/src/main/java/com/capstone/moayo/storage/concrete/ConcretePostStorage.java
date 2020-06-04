@@ -126,18 +126,35 @@ public class ConcretePostStorage implements PostStorage {
 
     @Override
     public void init() {
-        for(CategoryNode node : categoryNodeMap.values()) {
-            List<Post> postList = new ArrayList<>();
-            List<CategoryPostMapping> categoryPostMappingList = categoryPostDao.selectByCategoryId(dbHelper, node.getId());
-            if (categoryPostMappingList == null) continue;
+        for (Category category : categoryMap.values()) {
+            CategoryNode rootNode = category.getRootNode();
+            categoryNodeMap.put(rootNode.getId(), rootNode);
+            for (CategoryNode secondNode : rootNode.getLowLayer()) {
+                List<CategoryPostMapping> mappingList = categoryPostDao.selectByCategoryId(dbHelper, secondNode.getId());
+                if (mappingList == null) continue;
 
-            for (CategoryPostMapping mapping : categoryPostMappingList) {
-                PostMapping newMapping = postDao.selectById(dbHelper, mapping.getPostId());
-                Post post = new Post(newMapping.getImgUrl(), newMapping.getUrl(), newMapping.getHashTag(), newMapping.getLike(), mapping.getCategoryId(), mapping.getDogamId());
-                post.setId(newMapping.getId());
-                postList.add(post);
+                for (CategoryPostMapping mapping : mappingList) {
+                    PostMapping postMapping = postDao.selectById(dbHelper, mapping.getPostId());
+                    Post post = new Post(postMapping.getImgUrl(), postMapping.getUrl(), postMapping.getHashTag(), postMapping.getLike(), mapping.getCategoryId(), mapping.getDogamId());
+                    post.setId(postMapping.getId());
+                    secondNode.getPosts().add(post);
+                }
+                categoryNodeMap.put(secondNode.getId(), secondNode);
+                for (CategoryNode thirdNode : secondNode.getLowLayer()) {
+                    List<CategoryPostMapping> mappingList1 = categoryPostDao.selectByCategoryId(dbHelper, thirdNode.getId());
+                    {
+                        if (mappingList == null) continue;
+
+                        for (CategoryPostMapping mapping : mappingList1) {
+                            PostMapping postMapping = postDao.selectById(dbHelper, mapping.getPostId());
+                            Post post = new Post(postMapping.getImgUrl(), postMapping.getUrl(), postMapping.getHashTag(), postMapping.getLike(), mapping.getCategoryId(), mapping.getDogamId());
+                            post.setId(postMapping.getId());
+                            thirdNode.getPosts().add(post);
+                        }
+                        categoryNodeMap.put(thirdNode.getId(), thirdNode);
+                    }
+                }
             }
-            node.setPosts(postList);
         }
     }
 
