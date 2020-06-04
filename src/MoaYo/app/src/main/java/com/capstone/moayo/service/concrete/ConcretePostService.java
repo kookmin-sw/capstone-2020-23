@@ -69,16 +69,15 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
-    public String deletePostById(int nodeId, int postId) {
+    public void deletePostById(int nodeId, int postId) {
         try {
-            String result = postStorage.removePost(nodeId, postId);
+            Post foundPost = postStorage.retrievePostById(nodeId, postId);
 
-            return result;
+            postStorage.removePost(nodeId, postId);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return "";
     }
 
     @Override

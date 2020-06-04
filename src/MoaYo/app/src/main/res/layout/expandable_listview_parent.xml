@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="?android:attr/listPreferredItemHeight"
         android:paddingStart="20dp"
         android:gravity="center_vertical"
         android:textColor="@drawable/click_detail_text"

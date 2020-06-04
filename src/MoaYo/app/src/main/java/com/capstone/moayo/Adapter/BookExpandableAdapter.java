@@ -2,7 +2,9 @@ package com.capstone.moayo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -14,7 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.activity.BookDetailActivity;
@@ -79,7 +83,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
 
         if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#6200EE"));
+            text.setTextColor(Color.parseColor("#663399"));
         }
 
         text.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +146,12 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
             searchBtn.setVisibility(view.VISIBLE);
         }
         else{
-//            ((TextView) ((BookDetailActivity)mContext).findViewById(R.id.detail_text2)).setText(" ...");
             text.setSelected(false);
             searchBtn.setVisibility(view.INVISIBLE);
         }
 
         if (isSelectedNode(currentNode, selectedNode) == true) {
-            text.setTextColor(Color.parseColor("#6200EE"));
+            text.setTextColor(Color.parseColor("#663399"));
         }
 
         searchBtn.setOnClickListener(new View.OnClickListener() {

@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.moayo.BaseActivity;
+import com.capstone.moayo.CustomDialog;
 import com.capstone.moayo.R;
 import com.capstone.moayo.fragment.FormEditFragment;
 import com.capstone.moayo.fragment.FormMainFragment;
@@ -42,6 +43,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
     private CategoryNodeDto currentNode;
     private CategoryService categoryService;
     private TextView level1_title_tv, level2_title_tv, level3_title_tv, arrow_tv_1, arrow_tv_2;
+    private CustomDialog customDialog;
 
     private boolean isCreated;
 
@@ -221,7 +223,7 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
                 @Override
                 public void onResult(String result) {
                     Log.d("update", result);
-                    Toast.makeText(getApplicationContext(), "도감 '" + category.getTitle() + "'이 정상적인 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "도감 '" + category.getTitle() + "'이 정상적으로 수정되었습니다.", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -271,50 +273,55 @@ public class BookFormActivity extends BaseActivity implements FormEditFragment.O
         switch (item.getItemId()) {
 
             case android.R.id.home: {
-                new AlertDialog.Builder(this)
-                        .setTitle("도감 생성")
-                        .setMessage("\n도감 생성을 취소하시겠습니까?")
-//                        .setIcon(android.R.drawable.ic_menu_save)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                // 확인시 처리 로직
-                                Intent intent = new Intent(BookFormActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }})
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                // 취소시 처리 로직
-//                                finish();
-                            }})
-                        .show();
+                View.OnClickListener positiveListener = new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(BookFormActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                };
+                // 취소버튼 리스너
+                View.OnClickListener negativeListener = new View.OnClickListener() {
+                    public void onClick(View v) {
+                        customDialog.dismiss();
+                    }
+                };
+                customDialog = new CustomDialog(this, positiveListener,negativeListener,"도감 취소","도감 생성을 취소하시겠습니까?");
+                customDialog.setCancelable(true);
+                customDialog.setCanceledOnTouchOutside(true);
+                customDialog.show();
+
                 return true;
             }
 
             case R.id.bookSave:
                 //TODO : 도감생성 확인 로직.
                 if(rootNode != null ){
-                    new AlertDialog.Builder(this)
-                            .setTitle("도감 저장")
-                            .setMessage("\n도감을 저장할까요?")
-//                            .setIcon(R.drawable.ic_save)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    onSubmit();
-                                    Intent intent = new Intent(BookFormActivity.this, BookManageActivity.class);
-                                    startActivity(intent);
+                    // 확인버튼 리스너
+                    View.OnClickListener positiveListener = new View.OnClickListener() {
+                        public void onClick(View v) {
+                            onSubmit();
+                            Intent intent = new Intent(BookFormActivity.this, BookManageActivity.class);
+                            startActivity(intent);
+                        }
+                    };
+                    // 취소버튼 리스너
+                    View.OnClickListener negativeListener = new View.OnClickListener() {
+                        public void onClick(View v) {
+                            customDialog.dismiss();
+                        }
+                    };
+                    customDialog = new CustomDialog(this, positiveListener,negativeListener,"도감 저장","도감을 저장하시겠습니까?");
+                    customDialog.setCancelable(true);
+                    customDialog.setCanceledOnTouchOutside(true);
+                    customDialog.show();
 
-                                }})
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                }})
-                            .show();
-                    return true;
+                        return true;
                 } else {
-                    Toast.makeText(getApplicationContext(), "아직 도감이 작성되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "아직 도감이 작성되지 않았습니다.", Toast.LENGTH_SHORT).show();
                     return true;
                 }
-
         }
         return super.onOptionsItemSelected(item);
     }

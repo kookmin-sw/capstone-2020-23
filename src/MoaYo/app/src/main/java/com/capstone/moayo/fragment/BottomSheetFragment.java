@@ -1,8 +1,9 @@
 package com.capstone.moayo.fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,10 +31,12 @@ import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.Tag.TagsFinder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
 
 public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     public static BottomSheetFragment getInstance() { return new BottomSheetFragment(); }
@@ -47,11 +51,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private CategoryNodeDto parentNode;
     private String word;
     private Button cancel_btn, save_btn;
-    private ImageButton delete_btn, add_tag_btn;
-    private TextView keyword;
+    private ImageButton add_tag_btn;
+    private TextView form_dialog_title, delete_btn;
     private EditText input_tag_et;
     private OnEditNodeListener callback;
-    private ProgressBar progressBar;
+    private AVLoadingIndicatorView progressBar;
     private String FORM_MODE;
 
     private ListView listview;
@@ -72,7 +76,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             public void onShow(DialogInterface dialogInterface) {
                 //Disables outside touch
                 d.getWindow().findViewById(R.id.touch_outside).setOnClickListener(null);
-                //Prevents dragging behavior
+//                //Prevents dragging behavior
                 View content = d.getWindow().findViewById(R.id.design_bottom_sheet);
                 ((CoordinatorLayout.LayoutParams) content.getLayoutParams()).setBehavior(null);
             }
@@ -87,7 +91,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         Dialog dialog = getDialog();
         if (dialog != null) {
             View bottomSheet = dialog.findViewById(R.id.design_bottom_sheet);
-            bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT; //setting full size Dialog.
+            bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;//setting full size Dialog.
         }
 //        final View view = getView();
 //        view.post(new Runnable() {
@@ -109,10 +113,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_hashtag_form, container,false);
 
-        keyword = (TextView) view.findViewById(R.id.dialog_tag_tv_keyword);
+        form_dialog_title = (TextView) view.findViewById(R.id.form_dialog_title);
         cancel_btn = (Button) view.findViewById(R.id.dialog_tag_btn_cancel);
         save_btn = (Button) view.findViewById(R.id.dialog_tag_btn_save);
-        delete_btn = (ImageButton) view.findViewById(R.id.dialog_tag_btn_delete);
+        delete_btn = (TextView) view.findViewById(R.id.dialog_tag_btn_delete);
         add_tag_btn = (ImageButton) view.findViewById(R.id.dialog_tag_ib_add_hashtag);
 
         input_tag_et = (EditText) view.findViewById(R.id.dialog_tag_et_input);
@@ -130,14 +134,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         switch (FORM_MODE) {
             case "ADD":
                 word = getArguments().getString("keyword");
-                keyword.setText(word);
-                delete_btn.setVisibility(View.INVISIBLE);
+                form_dialog_title.setText("'" + word + "'" + " 의 관련 태그 목록");
+                delete_btn.setVisibility(View.GONE);
                 break;
             case "EDIT":
                 node = (CategoryNodeDto) getArguments().getSerializable("selectedNode");
                 word = node.getTitle();
-                keyword.setText(word);
-                save_btn.setText("Update");
+                form_dialog_title.setText("관련 태그 목록 수정");
+                delete_btn.setText("'" + word + "' 삭제");
+                save_btn.setText("수정완료");
 
                 //node에 저장된 태그정보들을 불러와 일치하는 hashtag setItemChecked 처리.
                 ArrayList<String> selected_tags =  (ArrayList<String>) node.getHashtags();
@@ -149,7 +154,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 break;
         }
 
-        progressBar = (ProgressBar) view.findViewById(R.id.dialog_tag_pb_horizontal);
+        progressBar = (AVLoadingIndicatorView) view.findViewById(R.id.dialog_tag_pb_horizontal);
 //        progressBar.setVisibility(view.VISIBLE);
         listview.setVisibility(view.INVISIBLE);
         //synonym_tags backend 통신
@@ -226,7 +231,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 if (!custom_tag.isEmpty()) {
                     addHashTag(custom_tag);
                     input_tag_et.setText(""); //입력폼 초기화
-                } else { Toast.makeText(getContext(), "검색될 해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show(); }
+                } else { input_tag_et.setError("입력되지 않았습니다."); }
         }
     }
 

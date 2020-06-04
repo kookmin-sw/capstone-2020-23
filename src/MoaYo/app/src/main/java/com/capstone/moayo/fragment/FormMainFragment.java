@@ -8,6 +8,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import com.capstone.moayo.activity.BookFormActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class FormMainFragment extends Fragment {
 
@@ -29,9 +34,7 @@ public class FormMainFragment extends Fragment {
     private CategoryNodeDto rootNode;
     private EditText title_et;
     private ImageView bookform_logo;
-    private ImageView create_text;
-    private ImageView guide;
-    private TextView guide_text;
+    private TextInputLayout tl;
 
 
     @Override
@@ -42,7 +45,6 @@ public class FormMainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     public void onResume(){
@@ -59,9 +61,7 @@ public class FormMainFragment extends Fragment {
 
         title_et = (EditText) view.findViewById(R.id.create_book_title);
         bookform_logo = (ImageView) view.findViewById(R.id.bookformImg);
-        create_text = (ImageView) view.findViewById(R.id.create);
-        guide = (ImageView) view.findViewById(R.id.guide);
-        guide_text = (TextView) view.findViewById(R.id.guide_text);
+        tl = (TextInputLayout)view.findViewById(R.id.title_layout);
 
         title_et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,7 +72,6 @@ public class FormMainFragment extends Fragment {
                 String text = s.toString();
                 if (text.length() > 0) setNextMode(true);
                 else setNextMode(false);
-
 
             }
             @Override
@@ -88,9 +87,7 @@ public class FormMainFragment extends Fragment {
                 if(!title.isEmpty()) {
                     ((BookFormActivity)getActivity()).initRootNode(title);
                     ((BookFormActivity)getActivity()).onChangeLevel(2, null);
-                } else {
-                    Toast.makeText(getContext(), "도감 명을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }
+                } else { tl.setError("도감 명이 입력되지 않았습니다."); }
 
             }
         });
@@ -106,23 +103,14 @@ public class FormMainFragment extends Fragment {
 
     private void setNextMode(boolean flag) {
         if (flag) {
-            title_et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_primary));
-            start_btn.setBackgroundColor(Color.parseColor("#EFE5FD"));
-            start_btn.setTextColor(Color.parseColor("#6200EE"));
+            tl.setError(null);
+            start_btn.setBackgroundColor(Color.parseColor("#663399"));
+            start_btn.setTextColor(Color.parseColor("#ffffff"));
             bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_primary));
-            create_text.setVisibility(View.VISIBLE);
-            guide.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.guied_text_primary));
-            guide_text.setText("버튼을 눌러 다음 단계로!");
-            guide_text.setTextColor(Color.parseColor("#6200EE"));
         } else {
-            title_et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_gray));
-            start_btn.setBackgroundColor(Color.parseColor("#ffffff"));
+            start_btn.setBackgroundColor(Color.parseColor("#F2F2F2"));
             start_btn.setTextColor(Color.parseColor("#707070"));
             bookform_logo.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.logo_gray));
-            create_text.setVisibility(View.GONE);
-            guide.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.guide_text_gray));
-            guide_text.setText("도감의 이름이 됩니다.");
-            guide_text.setTextColor(Color.parseColor("#000000"));
         }
     }
 

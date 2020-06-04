@@ -1,11 +1,13 @@
 package com.capstone.moayo.activity;
 
+import androidx.annotation.FontRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
@@ -57,10 +60,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         actionBar.setDisplayShowTitleEnabled(false); //앱바에서 제목을 없애고 activity_main.xml에서 설정한 제목이 뜨게 설정
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.menu);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
         ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
+
+        TextView emptyView = (TextView) findViewById(R.id.empty_view);
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +106,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 //                Log.d("----------------category found----------------" , result.toString());
                 mainTopRecyclerAdapter.setItems((ArrayList<CategoryDto>) result);
                 mainTopRecyclerAdapter.notifyDataSetChanged();
+
+                if (result.isEmpty()) {
+                    topRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    topRecyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
             }
 
             @Override

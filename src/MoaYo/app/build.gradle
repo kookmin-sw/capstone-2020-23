@@ -55,4 +55,13 @@ dependencies {
 
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
+
+    //editText library
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
+    //progress library
+    implementation 'com.wang.avi:library:2.1.3'
+
+
+
 }

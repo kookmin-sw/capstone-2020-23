@@ -32,7 +32,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:text="@string/myBook_MainActivity"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="0dp"
@@ -68,12 +69,26 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler1_main"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:overScrollMode="never"
-                    android:scrollbars="none" />
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler1_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        android:scrollbars="none" />
+
+                    <TextView
+                        android:id="@+id/empty_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="97dp"
+                        android:gravity="center"
+                        android:text="@string/main_guide"
+                        android:textColor="@color/lightGray" />
+
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -101,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="@string/shareBook_MainActivity"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <View
                         android:layout_width="0dp"

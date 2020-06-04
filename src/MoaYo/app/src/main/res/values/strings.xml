@@ -3,12 +3,21 @@
     <string name="create_Book">새로 도감 생성</string>
     <string name="share_Book">도감 공유게시판</string>
     <string name="my_Book">나의 도감 관리</string>
-    <string name="setting">환경 설정</string>
     <string name="main_menu">바로가기 메뉴</string>
     <string name="myBook_MainActivity">나의 도감</string>
     <string name="shareBook_MainActivity">모두의 도감</string>
     <string name="myBook_ResultActivity">저장한 게시물</string>
     <string name="new_ResultActivity">검색된 게시물</string>
     <string name="shareBook_ShareMenuActivity">유저 공유 도감</string>
+    <string name="bookform_next">다음</string>
+    <string name="bookform_add">추가</string>
+    <string name="bookform_list_title">연관 태그 목록</string>
+    <string name="direct">직접입력</string>
+    <string name="directFloating">연관 태그 직접 입력</string>
+    <string name="bookform_cancel">취소</string>
+    <string name="bookform_done">선택완료</string>
+    <string name="bookform_guide">버튼을 눌러 다음 단계로 이동</string>
+    <string name="result_guide">게시물을 더블클릭하여 나의 도감으로 저장하세요.</string>
+    <string name="main_guide">아직 도감이 없습니다. 도감을 생성해주세요.</string>
 </resources>
 
