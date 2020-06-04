@@ -38,11 +38,13 @@ public class ConcreteShareService implements ShareService {
         for(CategoryNodeDto secondNode : categoryDto.getRootNode().getLowLayer()) {
             List<Post> secondPosts = postStorage.retrievePostByNodeId(secondNode.getId());
             for(Post post : secondPosts) {
+                post.setHashtag(post.getHashtag().trim());
                 secondNode.getPosts().add(post.toPostDto());
             }
             for(CategoryNodeDto thirdNode : secondNode.getLowLayer()) {
                 List<Post> thirdPosts = postStorage.retrievePostByNodeId(thirdNode.getId());
                 for(Post post : thirdPosts) {
+                    post.setHashtag(post.getHashtag().trim());
                     thirdNode.getPosts().add(post.toPostDto());
                 }
             }
@@ -75,7 +77,8 @@ public class ConcreteShareService implements ShareService {
                 CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
                 categoryDto.setId(dogamModel.getId());
                 categoryDtoList.add(categoryDto);
-                categoryDto.setUrl(de_url[1]);
+                if(de_url.length != 1)
+                    categoryDto.setUrl(de_url[1]);
             }
         } catch (Exception e) {
             e.printStackTrace();

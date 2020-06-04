@@ -125,10 +125,13 @@ public class NewShareActivity extends BaseActivity {
                 AsyncCallback<String> createCallback = new AsyncCallback<String>() {
                     @Override
                     public void onResult(String result) {
-                        if(result.equals("0"))
+                        if(!NewShareActivity.this.isFinishing() && result.equals("0"))
                             Toast.makeText(getApplicationContext(), String.format("도감 '%s'가 정상적으로 공유되었습니다.", share_category.getTitle()), Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getApplicationContext(), String.format("도감 '%s' 공유에 실패했습니다.", share_category.getTitle()), Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);
+                        startActivity(intent);
 
                         Log.d("register share result", result);
                     }
@@ -145,9 +148,6 @@ public class NewShareActivity extends BaseActivity {
                 };
 
                 new AsyncExecutor<String>().setCallable(createCall).setCallback(createCallback).execute();
-
-                Intent intent = new Intent(NewShareActivity.this, ShareMenuActivity.class);
-                startActivity(intent);
             }
         });
 

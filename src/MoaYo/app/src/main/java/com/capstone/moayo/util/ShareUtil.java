@@ -75,15 +75,16 @@ public class ShareUtil {
         for(int i = 0; i < categoryModels.length; i++) {
             CategoryNodeDto nodeDto = new CategoryNodeDto(categoryModels[i].getName(), null, categoryModels[i].getLevel());
             nodeDto.setId(categoryModels[i].getId());
-            convertPost(nodeDto.getPosts(), postModels, categoryPostModels, nodeDto.getId());
-            convertHash(nodeDto.getHashtags(), categoryHashtagModels, nodeDto.getId());
+            convertPost(nodeDto, postModels, categoryPostModels, nodeDto.getId());
+            convertHash(nodeDto, categoryHashtagModels, nodeDto.getId());
             categoryNodeDtos.add(nodeDto);
         }
         CategoryNodeDto rootNode = convertModelToNode(categoryModels, categoryNodeDtos);
         String[] de_url = dogamModel.getDescription().split(";");
         CategoryDto dogam = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), rootNode);
         dogam.setId(dogamModel.getId());
-        dogam.setUrl(de_url[1]);
+        if(de_url.length != 1)
+            dogam.setUrl(de_url[1]);
         switch (dogamModel.getStatus()) {
             case 0:
                 dogam.setStatus(DogamStatus.Shared_Immutable);
@@ -105,11 +106,11 @@ public class ShareUtil {
     }
 
     // convert postModel & categoryPostModel -> PostDto
-    private static void convertPost(List<PostDto> postDtos, PostModel[] postModels, CategoryPostModel[] categoryPostModels, int nodeId) {
+    private static void convertPost(CategoryNodeDto nodeDto, PostModel[] postModels, CategoryPostModel[] categoryPostModels, int nodeId) {
         for(PostModel postModel : postModels) {
             for(CategoryPostModel categoryPostModel : categoryPostModels) {
                 if(categoryPostModel.getCategoryId() == nodeId && categoryPostModel.getPostId() == postModel.getId()) {
-                    postDtos.add(new PostDto(postModel.getImgUrl(), postModel.getUrl(), postModel.getHashtag(), 0, nodeId, categoryPostModel.getDogamId()));
+                    nodeDto.getPosts().add(new PostDto(postModel.getImgUrl(), postModel.getUrl(), postModel.getHashtag(), 0, nodeId, categoryPostModel.getDogamId()));
                 }
             }
         }
@@ -130,10 +131,10 @@ public class ShareUtil {
     }
 
     //convert CategoryHashtagModel -> hashtags
-    private static void convertHash(List<String> hashtags, CategoryHashtagModel[] categoryHashtagModels, int nodeId) {
+    private static void convertHash(CategoryNodeDto nodeDto, CategoryHashtagModel[] categoryHashtagModels, int nodeId) {
         for(CategoryHashtagModel categoryHashtagModel : categoryHashtagModels) {
             if(categoryHashtagModel.getCategoryId() == nodeId) {
-                hashtags.add(categoryHashtagModel.getHashtag());
+                nodeDto.getHashtags().add(categoryHashtagModel.getHashtag());
             }
         }
     }

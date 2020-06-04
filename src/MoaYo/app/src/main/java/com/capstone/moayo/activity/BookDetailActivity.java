@@ -26,6 +26,7 @@ import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -41,13 +42,17 @@ import java.util.concurrent.Callable;
 public class BookDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView toolbarTitle;
+    private TextView detail_text;
     private CategoryDto category;
     private CategoryNodeDto rootNode;
     private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn;
     private BottomSheetDialog bottomSheetDialog;
     private DogamStatus dogamStatus;
 
+    private ExpandableListView myList;
+
     private CategoryService categoryService;
+    private ShareService shareService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_book_detail);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
-
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
@@ -66,25 +71,49 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        category = (CategoryDto) getIntent().getSerializableExtra("category");
-        dogamStatus = category.getStatus();
-        rootNode = category.getRootNode();
-
         toolbarTitle = (TextView) findViewById(R.id.detail_tv_title);
-        toolbarTitle.setText(rootNode.getTitle());
-
-        ExpandableListView myList = (ExpandableListView) findViewById(R.id.expandableListView);
-        //create Data
-        myList.setAdapter(new BookExpandableAdapter(this, category));
-//        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
-
-        TextView detail_text = (TextView) findViewById(R.id.detail_text);
+        myList = (ExpandableListView) findViewById(R.id.expandableListView);
+        detail_text = (TextView) findViewById(R.id.detail_text);
         TextView detail_text2 = (TextView) findViewById(R.id.detail_text2);
         ImageView arrow_detail = (ImageView) findViewById(R.id.arrow_detail);
 
-        detail_text.setText(rootNode.getTitle() + "");
+        category = (CategoryDto) getIntent().getSerializableExtra("category");
 
+        //create Data
+        if(category.getRootNode() == null) {
+            Callable<CategoryDto> callable = () -> shareService.findDogamById(category.getId());
+            AsyncCallback<CategoryDto> callback = new AsyncCallback<CategoryDto>() {
+                @Override
+                public void onResult(CategoryDto result) {
+                    category = result;
+                    toolbarTitle.setText(category.getTitle());
+                    myList.setAdapter(new BookExpandableAdapter(getApplicationContext(), category));
+                    dogamStatus = category.getStatus();
+                    rootNode = category.getRootNode();
+                    detail_text.setText(rootNode.getTitle() + "");
+                }
 
+                @Override
+                public void exceptionOccured(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
+                }
+            };
+            new AsyncExecutor<CategoryDto>().setCallable(callable).setCallback(callback).execute();
+        } else {
+            toolbarTitle.setText(category.getTitle());
+            myList.setAdapter(new BookExpandableAdapter(this, category));
+            dogamStatus = category.getStatus();
+            rootNode = category.getRootNode();
+            detail_text.setText(rootNode.getTitle() + "");
+
+        }
+
+//        CustomAdapter mAdapter = new CustomAdapter (getApplicationContext(), R.layout.cmtview_custom, myList, MainActivity.this);
         //listener for child click
 //        myList.setOnChildClickListener(myListItemClicked);
         //listener for group click
@@ -237,6 +266,10 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
 
         }
+    }
+
+    private void loadDetail() {
+        category = shareService.findDogamById(category.getId());
     }
 
 

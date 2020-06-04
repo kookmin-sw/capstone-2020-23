@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.DogamStatus;
 
 import java.util.ArrayList;
@@ -70,12 +71,13 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
         recyclerView.setAdapter(adapter);
       
         //아이템 로드
-        adapter2.setItems(new SharedData_Sample().getItems());
+        adapter.setItems(new SharedData_Sample().getItems());
         Callable<List<CategoryDto>> loadCallable = () -> shareService.findAll();
         AsyncCallback<List<CategoryDto>> loadCallback = new AsyncCallback<List<CategoryDto>>() {
             @Override
             public void onResult(List<CategoryDto> result) {
-
+                adapter.setItems((ArrayList<CategoryDto>) result);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -87,12 +89,14 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
             public void cancelled() {
 
             }
-        }
+        };
 
-
-
-        //TODO: [백엔드 통신] 공유 도감데이터 가져와 Adapter에 등록.
-        adapter.setItems(new SharedData_Sample().getItems()); //Dummy data
+        new AsyncExecutor<List<CategoryDto>>() {
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }.setCallable(loadCallable).setCallback(loadCallback).execute();
 
         Spinner ShareTypeSpinner = (Spinner)findViewById(R.id.shareMenuSpinner);
         ArrayAdapter shareTypeAdapter = ArrayAdapter.createFromResource(this,

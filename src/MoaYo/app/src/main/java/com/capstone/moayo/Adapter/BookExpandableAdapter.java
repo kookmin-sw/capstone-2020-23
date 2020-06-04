@@ -3,6 +3,7 @@ package com.capstone.moayo.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +88,7 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
                 Intent intent = new Intent(mContext, ResultActivity.class);
                 intent.putExtra("current_node", currentNode);
                 intent.putExtra("category", selectCategory);
-                mContext.startActivity(intent);
+                mContext.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
 

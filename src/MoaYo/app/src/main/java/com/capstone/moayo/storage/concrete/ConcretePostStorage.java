@@ -64,9 +64,10 @@ public class ConcretePostStorage implements PostStorage {
     @Override
     public List<Post> retrievePostByNodeId(int nodeId) {
         List<Post> postList = new ArrayList<>();
+        if(!categoryNodeMap.keySet().contains(nodeId)) return postList;
         if(categoryNodeMap.get(nodeId).getPosts().isEmpty()) {
             List<CategoryPostMapping> categoryPostMappingList = categoryPostDao.selectByCategoryId(dbHelper, nodeId);
-            if (categoryPostMappingList == null) return null;
+            if (categoryPostMappingList == null) return postList;
 
             for (CategoryPostMapping mapping : categoryPostMappingList) {
                 PostMapping newMapping = postDao.selectById(dbHelper, mapping.getPostId());
