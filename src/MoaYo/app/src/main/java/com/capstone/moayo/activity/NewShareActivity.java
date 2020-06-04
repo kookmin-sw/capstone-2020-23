@@ -57,7 +57,7 @@ public class NewShareActivity extends BaseActivity {
         password = (EditText) findViewById(R.id.activity_share_et_password);
         content = (EditText) findViewById(R.id.activity_share_et_content);
         spinner = (Spinner) findViewById(R.id.activity_share_sp_target);
-//
+
         mutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_mutable);
         immutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_immutable);
         //수정불가 모드로 초기화.
@@ -75,13 +75,13 @@ public class NewShareActivity extends BaseActivity {
             @Override
             public void onResult(List<CategoryDto> result) {
                 categories = result;
-                for(CategoryDto elem:result){
+                for (CategoryDto elem : result) {
                     spinner_list.add(elem.getTitle());
                 }
                 spinner_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_list);
                 spinner.setAdapter(spinner_adapter);
 
-                if(getIntent().getSerializableExtra("target_category") != null) {
+                if (getIntent().getSerializableExtra("target_category") != null) {
                     CategoryDto target = (CategoryDto) getIntent().getSerializableExtra("target_category");
                     spinner.setSelection(spinner_list.indexOf(target.getTitle()));
                     spinner.setEnabled(false);
@@ -98,7 +98,7 @@ public class NewShareActivity extends BaseActivity {
             public void cancelled() {
             }
         };
-        new AsyncExecutor<List<CategoryDto>>(){
+        new AsyncExecutor<List<CategoryDto>>() {
             @Override
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
@@ -128,14 +128,6 @@ public class NewShareActivity extends BaseActivity {
         });
 
     }
-
-
-//    //RadioButton Click listener
-//    RadioButton.OnClickListener radioButtonClickListener = new RadioButton.OnClickListener(){
-//        @Override public void onClick(View view) {
-//            Toast.makeText(NewShareActivity.this, "r_btn1 : "+mutableBtn.isChecked() + "r_btn2 : " +immutableBtn.isChecked() , Toast.LENGTH_SHORT).show();
-//        }
-//    };
 
     //라디오 그룹 클릭 리스너
     RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
