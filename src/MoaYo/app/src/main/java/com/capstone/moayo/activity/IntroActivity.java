@@ -14,6 +14,8 @@ import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.PostService;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
@@ -25,6 +27,9 @@ import java.util.concurrent.Callable;
 public class IntroActivity extends BaseActivity {
 
     private final int SPLASH_DISPLAY_TIME = 2000;
+    CategoryService categoryService;
+    PostService postService;
+    ShareService shareService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

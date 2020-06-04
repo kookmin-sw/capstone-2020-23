@@ -16,11 +16,11 @@
         android:usesCleartextTraffic="true">
 
         <activity android:name=".TestActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
 
         <activity android:name=".activity.IntroActivity">
@@ -30,8 +30,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ShareMenuActivity" />
         <activity android:name=".activity.MainActivity" />
+
         <activity
             android:name=".activity.BookManageActivity"
             android:parentActivityName=".activity.MainActivity" />
@@ -42,9 +42,17 @@
         <activity
             android:name=".activity.ResultActivity"
             android:parentActivityName=".activity.BookManageActivity" />
+
         <activity android:name=".activity.BookFormActivity"
             android:theme="@style/BackGray"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity android:name=".activity.ShareMenuActivity" />
+
+        <activity android:name=".activity.NewShareActivity" />
+
+        <activity android:name=".activity.AboutActivity" />
+
     </application>
 
 </manifest>

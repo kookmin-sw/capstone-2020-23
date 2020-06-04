@@ -183,40 +183,6 @@ public class MainActivity extends BaseActivity {
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.main_bottom_menu, (LinearLayout)findViewById(R.id.bottomSheetContainer));
 
-
-                bottomSheetView.findViewById(R.id.createBook).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, BookFormActivity.class);
-                        MainActivity.this.startActivity(intent);
-                        bottomSheetDialog.dismiss();
-
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
-
-                bottomSheetView.findViewById(R.id.shareBook).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, ShareMenuActivity.class);
-                        MainActivity.this.startActivity(intent);
-                        bottomSheetDialog.dismiss();
-
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
-
-                bottomSheetView.findViewById(R.id.myBook).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, BookManageActivity.class);
-                        MainActivity.this.startActivity(intent);
-                        bottomSheetDialog.dismiss();
-
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
-
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
 

@@ -16,7 +16,6 @@ import com.capstone.moayo.service.dto.PostDto;
 
 import java.util.ArrayList;
 
-
 public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecyclerAdapter.ViewHolder> {
 
     private ArrayList<PostDto> saveditems = new ArrayList<>();
