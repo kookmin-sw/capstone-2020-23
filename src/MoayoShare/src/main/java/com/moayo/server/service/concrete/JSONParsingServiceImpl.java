@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -30,7 +32,7 @@ public class JSONParsingServiceImpl implements JSONParsingService {
     private Logger logger;
 
     public JSONParsingServiceImpl() {
-        logger = LoggerFactory.getLogger(XMLParsingServiceImpl.class);
+        logger = LoggerFactory.getLogger(JSONParsingServiceImpl.class);
     }
 
     public void insertData(DogamModel dogamModel){
@@ -40,6 +42,7 @@ public class JSONParsingServiceImpl implements JSONParsingService {
         PostModel[] postModels = dogamModel.getPostModels();
         CategoryHashModel[] categoryHashModels = dogamModel.getCategoryHashModels();
         CategoryPostModel[] categoryPostModels = dogamModel.getCategoryPostModels();
+
 
         dogamListDao.insertDogam(dogamListModel);
         Map<Integer,CategoryModel> categoryModelMap = categoryInsert(categoryModels,dogamListModel,categoryPostModels,categoryHashModels);

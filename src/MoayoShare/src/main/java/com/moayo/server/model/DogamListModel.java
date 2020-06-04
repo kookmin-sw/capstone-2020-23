@@ -1,5 +1,8 @@
 package com.moayo.server.model;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 public class DogamListModel {
     private int co_dogamId;
     private String co_title;
@@ -7,22 +10,26 @@ public class DogamListModel {
     private int co_status;
     private String co_password;
     private String co_writer;
+    private int co_like;
+    private Timestamp co_date;
 
-    public DogamListModel(int co_dogamId, String co_title, String co_description, int co_status, String co_password, String co_writer) {
+    public DogamListModel(int co_dogamId, String co_title, String co_description, int co_status, String co_password, String co_writer, int co_like) {
         this.co_dogamId = co_dogamId;
         this.co_title = co_title;
         this.co_description = co_description;
         this.co_status = co_status;
         this.co_password = co_password;
         this.co_writer = co_writer;
+        this.co_like = co_like;
     }
 
-    public DogamListModel(String co_title, String co_description, int co_status, String co_password, String co_writer) {
+    public DogamListModel(String co_title, String co_description, int co_status, String co_password, String co_writer, int co_like) {
         this.co_title = co_title;
         this.co_description = co_description;
         this.co_status = co_status;
         this.co_password = co_password;
         this.co_writer = co_writer;
+        this.co_like = co_like;
     }
 
     public DogamListModel() {
@@ -31,6 +38,22 @@ public class DogamListModel {
 
     public DogamListModel(String co_title) {
         this.co_title = co_title;
+    }
+
+    public int getCo_like() {
+        return co_like;
+    }
+
+    public void setCo_like(int co_like) {
+        this.co_like = co_like;
+    }
+
+    public Timestamp getCo_date() {
+        return co_date;
+    }
+
+    public void setCo_date(Timestamp co_date) {
+        this.co_date = co_date;
     }
 
     public void setCo_writer(String co_writer) {
@@ -90,6 +113,8 @@ public class DogamListModel {
                 ", co_status=" + co_status +
                 ", co_password='" + co_password + '\'' +
                 ", co_writer='" + co_writer + '\'' +
+                ", co_like=" + co_like +
+                ", co_date=" + co_date +
                 '}';
     }
 }

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,19 +26,19 @@ import java.util.List;
 public class MainController {
     @Autowired
     ShareService service;
-    @Autowired
-    XMLParsingService xmlParsingService;
+//    @Autowired
+//    XMLParsingService xmlParsingService;
     @Autowired
     JSONParsingService jsonParsingService;
 
     private Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
-    public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
-        Document doc = XMLParsing.XMLParsing(body);
-        DogamListModel dogamListModel = xmlParsingService.insertData(doc);
-        return dogamListModel;
-    }
+//    @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
+//    public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
+//        Document doc = XMLParsing.XMLParsing(body);
+//        DogamListModel dogamListModel = xmlParsingService.insertData(doc);
+//        return dogamListModel;
+//    }
 
     @RequestMapping(value = "/getDogam",method = RequestMethod.GET)
     public DogamModel getDogam(HttpServletRequest req,HttpServletResponse res,@RequestParam int dogamId){
