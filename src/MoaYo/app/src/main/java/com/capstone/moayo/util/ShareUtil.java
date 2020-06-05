@@ -13,7 +13,10 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.PostDto;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +26,7 @@ public class ShareUtil {
         ModelForm form = new ModelForm();
 
         DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription()+";"+categoryDto.getUrl(), status, categoryDto.getPassword(), categoryDto.getWriter());
-        dogamModel.setTime(categoryDto.getTime());
+        dogamModel.setDate(new Timestamp(System.currentTimeMillis()));
         dogamModel.setLike(categoryDto.getLike());
         form.setDogamModel(dogamModel);
 
@@ -98,7 +101,8 @@ public class ShareUtil {
                 dogam.setStatus(DogamStatus.Shared_Mutable);
         }
 
-        dogam.setTime(dogamModel.getTime());
+        Timestamp ts = dogamModel.getDate();
+        dogam.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
         dogam.setLike(dogamModel.getLike());
         return dogam;
     }

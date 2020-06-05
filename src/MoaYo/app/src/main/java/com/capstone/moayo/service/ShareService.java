@@ -11,6 +11,7 @@ public interface ShareService {
     List<CategoryDto> findAll();
     List<CategoryDto> findDogamByWriter(String writer);
     List<CategoryDto> findDogamByKeyword(String keyword);
+    int updateLike(int dogamId);
     String deleteDogam(int dogamId);
     List<CategoryDto> sortByLike(List<CategoryDto> categoryDtos);
     List<CategoryDto> sortByTime(List<CategoryDto> categoryDtos);

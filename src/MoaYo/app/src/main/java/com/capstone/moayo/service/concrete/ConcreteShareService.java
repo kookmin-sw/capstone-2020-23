@@ -103,6 +103,12 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
+    public int updateLike(int dogamId) {
+
+        return 0;
+    }
+
+    @Override
     public String deleteDogam(int dogamId) {
         int code = shareStorage.remove(dogamId);
         return Integer.toString(code);

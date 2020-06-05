@@ -2,6 +2,8 @@ package com.capstone.moayo.entity.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Timestamp;
+
 public class DogamModel {
     @SerializedName("co_dogamId")
     private int id;
@@ -15,8 +17,8 @@ public class DogamModel {
     private String password;
     @SerializedName("co_writer")
     private String writer;
-    @SerializedName("co_time")
-    private String time;
+    @SerializedName("co_date")
+    private Timestamp date;
     @SerializedName("co_like")
     private int like;
 
@@ -77,12 +79,12 @@ public class DogamModel {
         this.writer = writer;
     }
 
-    public String getTime() {
-        return time;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public int getLike() {
@@ -102,7 +104,7 @@ public class DogamModel {
                 ", status=" + status +
                 ", password='" + password + '\'' +
                 ", writer='" + writer + '\'' +
-                ", time='" + time + '\'' +
+                ", time='" + date + '\'' +
                 '}';
     }
 }
