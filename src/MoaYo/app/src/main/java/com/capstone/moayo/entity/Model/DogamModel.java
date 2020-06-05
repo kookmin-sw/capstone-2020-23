@@ -17,6 +17,8 @@ public class DogamModel {
     private String writer;
     @SerializedName("co_time")
     private String time;
+    @SerializedName("co_like")
+    private int like;
 
     public DogamModel(int id, String title, String description, int status, String password, String writer) {
         this.id = id;
@@ -81,6 +83,14 @@ public class DogamModel {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 
     @Override

@@ -24,6 +24,7 @@ public class ShareUtil {
 
         DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription()+";"+categoryDto.getUrl(), status, categoryDto.getPassword(), categoryDto.getWriter());
         dogamModel.setTime(categoryDto.getTime());
+        dogamModel.setLike(categoryDto.getLike());
         form.setDogamModel(dogamModel);
 
         List<CategoryModel> categoryModels = new ArrayList<>();
@@ -86,6 +87,9 @@ public class ShareUtil {
         dogam.setId(dogamModel.getId());
         if(de_url.length != 1)
             dogam.setUrl(de_url[1]);
+        else {
+            dogam.setUrl("https://image.flaticon.com/icons/png/512/130/130304.png");
+        }
         switch (dogamModel.getStatus()) {
             case 0:
                 dogam.setStatus(DogamStatus.Shared_Immutable);
@@ -95,6 +99,7 @@ public class ShareUtil {
         }
 
         dogam.setTime(dogamModel.getTime());
+        dogam.setLike(dogamModel.getLike());
         return dogam;
     }
 
