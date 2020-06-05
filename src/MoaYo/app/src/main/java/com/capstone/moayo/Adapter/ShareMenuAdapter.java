@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.activity.BookDetailActivity;
-import com.capstone.moayo.service.ShareService;
-import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 
 import java.util.ArrayList;
@@ -27,7 +26,8 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView sharedBookPost;
-        TextView nickName, comment;
+        TextView nickName, comment, like_count;
+        ImageButton like_btn;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -35,6 +35,8 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
             sharedBookPost = itemView.findViewById(R.id.sharedBookPost);
             nickName = itemView.findViewById(R.id.nickName);
             comment = itemView.findViewById(R.id.comment);
+            like_btn = (ImageButton) itemView.findViewById(R.id.recycler_share_like);
+            like_count = (TextView) itemView.findViewById(R.id.recycler_share_like_count);
         }
     }
     @NonNull
@@ -61,6 +63,23 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
 
         vh.nickName.setText(item.getTitle());
         vh.comment.setText(item.getDescription());
+        vh.like_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //테스트 보여주기 용 로직.
+                if(vh.like_btn.isSelected()) {
+                    vh.like_btn.setSelected(false);
+                    vh.like_count.setText("0");
+                } else {
+                    vh.like_btn.setSelected(true);
+                    vh.like_count.setText("1");
+//                    vh.like_count.setText(String.valueOf(Integer.parseInt(vh.like_count.getText().toString()) + 1));
+                }
+                
+                //TODO: 도감 좋아요 백엔드통신
+            }
+        });
 
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
