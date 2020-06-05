@@ -1,6 +1,7 @@
 package com.capstone.moayo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +60,9 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
         PostDto item = saveditems.get(position);
 
         Glide.with(vh.itemView.getContext()).load(item.getImgUrl()).into(vh.savedPost);
-
         vh.savedTag.setText(Integer.toString(item.getLike()));
+
+//        Log.d("Saved Post :", item.toString());
 
     }
 
@@ -71,7 +73,7 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
     }
 
     public void setItems(ArrayList<PostDto> items) {
-        this.saveditems = items;
+        this.saveditems = items;Log.d("saved_items : ", saveditems.toString());
     }
 
 }

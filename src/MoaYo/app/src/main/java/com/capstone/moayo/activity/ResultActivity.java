@@ -93,6 +93,8 @@ public class ResultActivity extends BaseActivity {
         TextView result_drawer_title = (TextView) findViewById(R.id.result_drawer_title);
         TextView current_tag = (TextView) findViewById(R.id.result_drawer_tag);
 
+        result_drawer_title.setText(selectCategory.getTitle());
+
         current_tag.setText("현재 검색 태그 : " + searchNode.getTitle());
 
         // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
@@ -106,22 +108,28 @@ public class ResultActivity extends BaseActivity {
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.activity_result_pb_circle);
 
-        if (savePost.isEmpty()) {
-            saved_recycler.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }
-        else {
-            saved_recycler.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
+        saved_recycler.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+
 
         Callable<ArrayList<PostDto>> callable0 = () -> requestSavedPost(searchNode);
         AsyncCallback<ArrayList<PostDto>> callback0 = new AsyncCallback<ArrayList<PostDto>>() {
             @Override
             public void onResult(ArrayList<PostDto> result) {
+                Log.d("PostDto:result data info", result.toString());
                 savePost.addAll(result);
                 saved_adapter.setItems((ArrayList<PostDto>) savePost);
                 saved_adapter.notifyDataSetChanged();
+
+                if (savePost.isEmpty()) {
+                    saved_recycler.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    saved_recycler.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
+
+
             }
 
             @Override
@@ -182,6 +190,14 @@ public class ResultActivity extends BaseActivity {
                             savePost.add(result);
                             saved_adapter.setItems((ArrayList<PostDto>) savePost);
                             saved_adapter.notifyDataSetChanged();
+
+                            if (savePost.isEmpty()) {
+                                saved_recycler.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                            } else {
+                                saved_recycler.setVisibility(View.VISIBLE);
+                                emptyView.setVisibility(View.GONE);
+                            }
                         }
 
                         @Override
