@@ -16,6 +16,7 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.service.dto.PostDto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecyclerAdapter.ViewHolder> {
 
@@ -73,7 +74,9 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
     }
 
     public void setItems(ArrayList<PostDto> items) {
-        this.saveditems = items;Log.d("saved_items : ", saveditems.toString());
+        Collections.reverse(items);
+        this.saveditems = items;
+//        Log.d("saved_items : ", saveditems.toString());
     }
 
 }

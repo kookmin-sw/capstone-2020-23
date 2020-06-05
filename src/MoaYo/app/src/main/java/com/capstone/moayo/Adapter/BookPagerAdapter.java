@@ -6,10 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.capstone.moayo.fragment.PageFragment;
 
-import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryDto;
-import com.capstone.moayo.service.dto.CategoryNodeDto;
-//import com.capstone.moayo.model.MyBook;
 
 import java.util.ArrayList;
 
@@ -69,7 +66,6 @@ public class BookPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         return PageFragment.create(pages.get(position));
     }
 

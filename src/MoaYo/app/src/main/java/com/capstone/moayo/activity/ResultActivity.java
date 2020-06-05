@@ -97,7 +97,7 @@ public class ResultActivity extends BaseActivity {
 
         current_tag.setText("현재 검색 태그 : " + searchNode.getTitle());
 
-        // 저장된 게시물 리사이클러뷰 (리사이클러뷰 1)
+        // 저장된 게시물 리사이클러뷰
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         RecyclerView saved_recycler = findViewById(R.id.recycler1_result);
         saved_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
@@ -145,7 +145,7 @@ public class ResultActivity extends BaseActivity {
         new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
 
-        // 검색 게시물 리사이클러뷰 (리사이클러뷰 2)
+        // 검색 게시물 리사이클러뷰
         RecyclerView result_recycler = findViewById(R.id.recycler2_result);
         result_recycler.setLayoutManager(new GridLayoutManager(this,3));
 

@@ -14,6 +14,7 @@ import com.capstone.moayo.R;
 import com.capstone.moayo.service.dto.InstantPost;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCenterRecyclerAdapter.ViewHolder> {
 
@@ -47,7 +48,6 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
                             mListener.onItemClick(v, pos) ;
                         }
                     }
-
                 }
             });
         }
@@ -67,13 +67,9 @@ public class ResultCenterRecyclerAdapter extends RecyclerView.Adapter<ResultCent
 
     @Override
     public void onBindViewHolder(@NonNull ResultCenterRecyclerAdapter.ViewHolder vh, int position) {
-
         InstantPost item = items.get(position);
-
         Glide.with(vh.itemView.getContext()).load(item.getSrc()).into(vh.newPost);
-
     }
-
 
     @Override
     public int getItemCount() {

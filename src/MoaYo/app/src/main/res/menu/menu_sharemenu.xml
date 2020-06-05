@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/newShare"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="newShare"
+        android:id="@+id/menu_share_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="search"
         app:showAsAction="ifRoom" />
+
 
 </menu>

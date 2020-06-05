@@ -18,6 +18,7 @@ import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.service.dto.CategoryDto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRecyclerAdapter.ViewHolder> {
 
@@ -95,6 +96,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     }
 
     public void setItems(ArrayList<CategoryDto> items) {
+        Collections.reverse(items);
         this.sharedBooks = items;
     }
 }
