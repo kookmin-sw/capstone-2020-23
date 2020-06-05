@@ -28,4 +28,12 @@
     <delete id="deleteDogamById" parameterType="int">
         DELETE FROM tb_dogamList WHERE (co_dogamId = #{id})
     </delete>
+
+    <update id="like" parameterType="int">
+        UPDATE tb_dogamList SET `co_like` = `co_like` + 1 where `co_dogamId` = #{dogamId}
+    </update>
+
+    <update id="disLike" parameterType="int">
+        UPDATE tb_dogamList SET `co_like` = `co_like` - 1 where `co_dogamId` = #{dogamId}
+    </update>
 </mapper>
