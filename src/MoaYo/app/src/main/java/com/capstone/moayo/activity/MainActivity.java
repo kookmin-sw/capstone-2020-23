@@ -26,6 +26,7 @@ import com.capstone.moayo.adapter.MainCenterRecyclerAdapter;
 
 import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     private CategoryService categoryService;
+    private ShareService shareService;
     private RecyclerView topRecyclerView, centerRecyclerView;
     private MainTopRecyclerAdapter mainTopRecyclerAdapter;
     private MainCenterRecyclerAdapter mainCenterRecyclerAdapter;
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -99,8 +102,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mainTopRecyclerAdapter = new MainTopRecyclerAdapter();
         topRecyclerView.setAdapter(mainTopRecyclerAdapter);
 
-        Callable<List<CategoryDto>> callable = () -> categoryService.findAll();
-        AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
+        Callable<List<CategoryDto>> myBookcallable = () -> categoryService.findAll();
+        AsyncCallback<List<CategoryDto>> myBookcallback = new AsyncCallback<List<CategoryDto>>() {
             @Override
             public void onResult(List<CategoryDto> result) {
 //                Log.d("----------------category found----------------" , result.toString());
@@ -131,7 +134,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
             }
-        }.setCallable(callable).setCallback(callback).execute();
+        }.setCallable(myBookcallable).setCallback(myBookcallback).execute();
 
 
         // 공유도감 리사이클러뷰 (리사이클러뷰 2)
@@ -152,6 +155,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         mainCenterRecyclerAdapter = new MainCenterRecyclerAdapter();
         centerRecyclerView.setAdapter(mainCenterRecyclerAdapter);
+
+        Callable<List<CategoryDto>> shareBookcallable = () -> shareService.findAll();
+        AsyncCallback<List<CategoryDto>> shareBookcallback = new AsyncCallback<List<CategoryDto>>() {
+            @Override
+            public void onResult(List<CategoryDto> result) {
+//                Log.d("----------------category found----------------" , result.toString());
+                mainCenterRecyclerAdapter.setItems((ArrayList<CategoryDto>) result);
+                mainCenterRecyclerAdapter.notifyDataSetChanged();
+
+                if (result.isEmpty()) {
+                    centerRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    centerRecyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void cancelled() {
+            }
+        };
+        new AsyncExecutor<List<CategoryDto>>(){
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }.setCallable(shareBookcallable).setCallback(shareBookcallback).execute();
 
         //아이템 로드
         mainCenterRecyclerAdapter.setItems(new SharedData_Sample().getItems());
