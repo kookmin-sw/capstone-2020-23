@@ -69,13 +69,15 @@
             android:orientation="vertical"
             android:clickable="true"
             android:background="?attr/selectableItemBackground">
+
             <TextView
+                android:id="@+id/num_of_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
+                android:textColor="@color/colorBlack"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"/>
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,13 +96,15 @@
             android:orientation="vertical"
             android:clickable="true"
             android:background="?attr/selectableItemBackground">
+
             <TextView
+                android:id="@+id/num_of_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
+                android:textColor="@color/colorBlack"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"/>
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

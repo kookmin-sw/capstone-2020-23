@@ -33,7 +33,7 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
     private CategoryService categoryService;
-    private TextView numOfBook, createTV;
+    private TextView numOfBook, createTV, numOfShare, numOfLike;
     private TabLayout tabLayout;
     private ArrayList<CategoryDto> userBookData, userSharedData, userLikedData;
     private LinearLayout shareLayout, likeLayout, totalLayout;
@@ -62,6 +62,7 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
 
         numOfBook = (TextView) findViewById(R.id.num_of_book);
         createTV = (TextView) findViewById(R.id.activity_manage_tv_create);
+        numOfShare = (TextView) findViewById(R.id.num_of_share);
 
         shareLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_share);
         likeLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_like);
@@ -96,6 +97,14 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
                         userSharedData.add(obj);
                     }
                 });
+                numOfShare.setText(Integer.toString(userSharedData.size()));
+
+                userLikedData = new ArrayList<>();
+                userLikedData.forEach(obj -> {
+                    if(obj.isLiked()) userLikedData.add(obj);
+                });
+                if(!userLikedData.isEmpty())
+                    numOfLike.setText(Integer.toString(userLikedData.size()));
             }
 
             @Override
@@ -175,9 +184,10 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void onResume() {
+        super.onResume();
         userBookData = (ArrayList<CategoryDto>) categoryService.findAll();
         pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
         viewPager.setAdapter(pagerAdapter);
-        super.onResume();
+
     }
 }

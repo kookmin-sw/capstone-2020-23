@@ -15,6 +15,7 @@ public class CategoryDto implements Serializable {
     private String writer;
     private int like;
     private String time;
+    private boolean isLiked;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
@@ -24,6 +25,7 @@ public class CategoryDto implements Serializable {
         this.status = DogamStatus.NonShare;
         this.writer = "";
         this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
+        this.isLiked = false;
     }
     public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
         this();
@@ -44,6 +46,7 @@ public class CategoryDto implements Serializable {
         category.setStatus(status);
         category.setWriter(writer);
         category.setUrl(url);
+        category.setLiked(isLiked);
         return category;
     }
 
@@ -133,6 +136,14 @@ public class CategoryDto implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     @Override

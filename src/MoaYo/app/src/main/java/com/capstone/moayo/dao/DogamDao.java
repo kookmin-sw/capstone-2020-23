@@ -8,9 +8,9 @@ import com.capstone.moayo.util.DogamStatus;
 
 public interface DogamDao {
 
-    public long insert(DBHelper dbHelper, String title, String description, String password, String url, DogamStatus status);
+    public long insert(DBHelper dbHelper, String title, String description, String password, String url, DogamStatus status, boolean isLiked);
 
-    public boolean update(DBHelper dbHelper,int id,String title,String description,String password, String url, DogamStatus status);
+    public boolean update(DBHelper dbHelper,int id,String title,String description,String password, String url, DogamStatus status, boolean isLiked);
 
     public boolean delete(DBHelper dbHelper,int id);
     // 커서 이용한 뒤 close()할것.

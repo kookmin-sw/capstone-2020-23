@@ -49,7 +49,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
    
     private CustomDialog customDialog;
     private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn;
-    private BottomSheetDialog bottomSheetDialog;
+    BottomSheetDialog bottomSheetDialog;
     private DogamStatus dogamStatus;
 
     private ExpandableListView myList;
@@ -135,7 +135,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.bookDetailMenu: {
 
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                /*final BottomSheetDialog*/ bottomSheetDialog = new BottomSheetDialog(
                         BookDetailActivity.this, R.style.BottomSheetDialogTheme
                 );
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
@@ -164,6 +164,17 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                     case NonShare:
                         likeBtn.setVisibility(View.GONE);
                         cancelBtn.setVisibility(View.GONE);
+                        break;
+                    case Shared_Mutable:
+                        shareBtn.setVisibility(View.GONE);
+                        break;
+                    case Shared_Immutable:
+                        shareBtn.setVisibility(View.GONE);
+                        updateBtn.setVisibility(View.GONE);
+                        break;
+                    case Sharing:
+                        likeBtn.setVisibility(View.GONE);
+                        shareBtn.setVisibility(View.GONE);
                         break;
                     default:
                         updateBtn.setVisibility(View.GONE);
@@ -199,31 +210,6 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.detail_btn_delete:
                 //TODO: 도감 삭제 후 BookManage 화면으로 전환
-                //--------Backend 통신-----------
-//                Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
-//                AsyncCallback<String> callback = new AsyncCallback<String>() {
-//                    @Override
-//                    public void onResult(String result) {
-//                        Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
-//                        startActivity(intent1);
-//                        Log.d("delete result", result);
-//                    }
-//
-//                    @Override
-//                    public void exceptionOccured(Exception e) {
-//                        e.toString();
-//                    }
-//
-//                    @Override
-//                    public void cancelled() {
-//
-//                    }
-//                };
-//
-//                new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
-//                Toast.makeText(getApplicationContext(), "도감 삭제 이벤트", Toast.LENGTH_SHORT).show();
-//                break;
-
                 Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
 
                 View.OnClickListener positiveListener = new View.OnClickListener() {
@@ -248,7 +234,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                         };
 
                         new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
-                        Toast.makeText(getApplicationContext(), "'"+ rootNode.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "'"+ category.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                     }
                 };
                 // 취소버튼 리스너
@@ -258,7 +244,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                     }
                 };
                 customDialog = new CustomDialog(this, positiveListener,negativeListener,
-                        "도감 삭제","'" + rootNode.getTitle() + "' 도감을 삭제하시겠습니까?");
+                        "도감 삭제","'" + category.getTitle() + "' 도감을 삭제하시겠습니까?");
                 customDialog.setCancelable(true);
                 customDialog.setCanceledOnTouchOutside(true);
                 customDialog.show();
@@ -274,7 +260,37 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.detail_btn_like:
+
                 //TODO: 공유도감 좋아요
+                if(category.getStatus() == DogamStatus.NonShare || category.getStatus() == DogamStatus.Sharing)
+                    Toast.makeText(getApplicationContext(), String.format("도감 %s는 이미 좋아합니다..", category.getTitle()), Toast.LENGTH_SHORT).show();
+                else {
+                    Callable<Integer> likeCallable = () -> shareService.updateLike(category.getId(), true);
+                    AsyncCallback<Integer> likeCallback = new AsyncCallback<Integer>() {
+                        @Override
+                        public void onResult(Integer result) {
+                            if(result == 0)
+                                Toast.makeText(getApplicationContext(), String.format("도감 %s를 좋아요 도감에 추가하였습니다.", category.getTitle()), Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getApplicationContext(), String.format("도감 %s 추가에 실패했습니다.", category.getTitle()), Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void exceptionOccured(Exception e) {
+                            Log.e("like error", e.toString());
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    };
+
+                    new AsyncExecutor<Integer>().setCallable(likeCallable).setCallback(likeCallback).execute();
+                }
+
+                bottomSheetDialog.dismiss();
                 break;
 
             case R.id.detail_btn_cancel:

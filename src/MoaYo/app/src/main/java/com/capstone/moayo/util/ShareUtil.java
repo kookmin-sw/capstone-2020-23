@@ -94,10 +94,10 @@ public class ShareUtil {
         }
         switch (dogamModel.getStatus()) {
             case 0:
-                dogam.setStatus(DogamStatus.Shared_Immutable);
+                dogam.setStatus(DogamStatus.Shared_Mutable);
                 break;
             case 1:
-                dogam.setStatus(DogamStatus.Shared_Mutable);
+                dogam.setStatus(DogamStatus.Shared_Immutable);
         }
 
         Timestamp ts = dogamModel.getDate();

@@ -22,6 +22,7 @@ public class Category{
     private DogamStatus status;
     private String url;
     private String writer;
+    private boolean isLiked;
 
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
@@ -31,6 +32,7 @@ public class Category{
         status = DogamStatus.NonShare;
         this.writer = "";
         this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
+        this.isLiked = false;
     }
     public Category(String title, String description, String password, CategoryNode rootNode) {
         this();
@@ -51,6 +53,7 @@ public class Category{
         categoryDto.setStatus(status);
         categoryDto.setWriter(writer);
         categoryDto.setUrl(url);
+        categoryDto.setLiked(isLiked);
         return categoryDto;
     }
 
@@ -124,6 +127,14 @@ public class Category{
 
     public void setRootNode(CategoryNode rootNode) {
         this.rootNode = rootNode;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     @Override

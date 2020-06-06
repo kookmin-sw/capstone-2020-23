@@ -9,6 +9,7 @@ public class DogamMapping {
     private String password;
     private String url;
     private DogamStatus status;
+    private boolean isLiked;
 
     public void setDescription(String desription) {
         this.description = desription;
@@ -56,5 +57,13 @@ public class DogamMapping {
 
     public void setStatus(DogamStatus status) {
         this.status = status;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 }

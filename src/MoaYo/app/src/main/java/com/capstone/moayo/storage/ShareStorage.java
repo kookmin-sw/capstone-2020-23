@@ -11,4 +11,7 @@ public interface ShareStorage {
     public ModelForm retrieveById(int id);
     public List<DogamModel> retrieveAll();
     public int remove(int id);
+    int updateLike(int id);
+    int updateDisLike(int id);
+
 }

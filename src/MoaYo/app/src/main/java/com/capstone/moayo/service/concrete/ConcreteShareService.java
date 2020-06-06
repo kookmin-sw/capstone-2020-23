@@ -19,6 +19,7 @@ import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.ShareUtil;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,9 +82,17 @@ public class ConcreteShareService implements ShareService {
                 String[] de_url = dogamModel.getDescription().split(";");
                 CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
                 categoryDto.setId(dogamModel.getId());
-                categoryDtoList.add(categoryDto);
                 if(de_url.length != 1)
                     categoryDto.setUrl(de_url[1]);
+                if(dogamModel.getStatus() == 0) categoryDto.setStatus(DogamStatus.Shared_Mutable);
+                else categoryDto.setStatus(DogamStatus.Shared_Immutable);
+
+                categoryDto.setLike(dogamModel.getLike());
+                Timestamp ts = dogamModel.getDate();
+                if(ts != null)
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss").format(ts));
+                categoryDtoList.add(categoryDto);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,9 +112,13 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
-    public int updateLike(int dogamId) {
-
-        return 0;
+    public int updateLike(int dogamId, boolean isLiked) {
+        int result = 0;
+        if(isLiked) result = shareStorage.updateLike(dogamId);
+        else result = shareStorage.updateDisLike(dogamId);
+        if(result == 0) Log.d("success to update like", Integer.toString(result));
+        else Log.e("fail to update like", Integer.toString(result));
+        return result;
     }
 
     @Override

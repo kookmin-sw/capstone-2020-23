@@ -8,6 +8,7 @@ import com.capstone.moayo.dao.DogamDao;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
 import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
+import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.util.retrofit.APIUtils;
 import com.capstone.moayo.util.retrofit.ShareAPI;
@@ -81,5 +82,33 @@ public class ConcreteShareStorage implements ShareStorage {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public int updateLike(int id) {
+        int result;
+        Call<ShareResponse> call = shareAPI.requestDogamLike(id);
+        try {
+            Response<ShareResponse> response = call.execute();
+            result = response.body().getCode();
+            return result;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+    @Override
+    public int updateDisLike(int id) {
+        int result;
+        Call<ShareResponse> call = shareAPI.requestDogamDisLike(id);
+        try {
+            Response<ShareResponse> response = call.execute();
+            result = response.body().getCode();
+            return result;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 }
