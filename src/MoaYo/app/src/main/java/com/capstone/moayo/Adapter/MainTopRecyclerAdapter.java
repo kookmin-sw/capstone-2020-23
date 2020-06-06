@@ -22,6 +22,7 @@ import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.service.dto.CategoryDto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecyclerAdapter.ViewHolder> {
 
@@ -98,6 +99,7 @@ public class MainTopRecyclerAdapter extends RecyclerView.Adapter<MainTopRecycler
     }
 
     public void setItems(ArrayList<CategoryDto> items) {
+        Collections.reverse(items);
         this.myBooks = items;
     }
 

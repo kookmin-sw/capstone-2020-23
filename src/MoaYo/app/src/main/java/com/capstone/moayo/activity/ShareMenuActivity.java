@@ -1,45 +1,38 @@
 package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.ShareMenuAdapter;
-import com.capstone.moayo.data.SharedData_Sample;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import java.util.List;
 import java.util.concurrent.Callable;
 import com.capstone.moayo.service.dto.CategoryDto;
-import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.util.Async.AsyncExecutor;
-import com.capstone.moayo.util.DogamStatus;
 
 import java.util.ArrayList;
 
-public class ShareMenuActivity extends BaseActivity implements View.OnClickListener  {
-
-    ImageButton search_btn;
-    EditText search_text;
+public class ShareMenuActivity extends BaseActivity  {
 
     private ShareService shareService;
+    private ShareMenuAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +52,14 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
 
-        search_text = (EditText) findViewById(R.id.activity_share_et_search);
-        search_btn = (ImageButton) findViewById(R.id.activity_share_btn_search);
-        search_btn.setOnClickListener(this);
-
         RecyclerView recyclerView = findViewById(R.id.recycler_shareMenu);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
-
-        ShareMenuAdapter adapter = new ShareMenuAdapter();
+        adapter = new ShareMenuAdapter();
         recyclerView.setAdapter(adapter);
       
         //아이템 로드
-        adapter.setItems(new SharedData_Sample().getItems());
+//        adapter.setItems(new SharedData_Sample().getItems());
         Callable<List<CategoryDto>> loadCallable = () -> shareService.findAll();
         AsyncCallback<List<CategoryDto>> loadCallback = new AsyncCallback<List<CategoryDto>>() {
             @Override
@@ -82,7 +70,6 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void exceptionOccured(Exception e) {
-
             }
 
             @Override
@@ -97,36 +84,18 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
                 super.onProgressUpdate(values);
             }
         }.setCallable(loadCallable).setCallback(loadCallback).execute();
-
-        Spinner ShareTypeSpinner = (Spinner)findViewById(R.id.shareMenuSpinner);
-        ArrayAdapter shareTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.share_menu_spinner, android.R.layout.simple_spinner_dropdown_item);
-        shareTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ShareTypeSpinner.setAdapter(shareTypeAdapter);
     }
 
     //mainToolBar에 menu.xml을 인플레이트함
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_bookmanage, menu);
+        menuInflater.inflate(R.menu.menu_sharemenu, menu);
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_share_btn_search:
-                String input = search_text.getText().toString();
-                Log.d("search_data", input);
-        }
-    }
 
-
-
-
-            public boolean onOptionsItemSelected(MenuItem item) {
-
+    public boolean onOptionsItemSelected(MenuItem item) {
         //menu_bookmanage.xml에서 지정한 item 이벤트 추가
         switch (item.getItemId()) {
 
@@ -135,15 +104,51 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
                 return true;
             }
 
-            case R.id.createBook:
-//                Toast.makeText(getApplicationContext(), "NewShareActivity로 이동함", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ShareMenuActivity.this, NewShareActivity.class);
-                startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            case R.id.menu_share_search:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("도감 검색");
+
+                final View customLayout = getLayoutInflater().inflate(R.layout.dialog_book_search, null);
+                builder.setView(customLayout);
+                EditText search_keyword_et = customLayout.findViewById(R.id.dialog_search_et);
+                Spinner search_type_sp = customLayout.findViewById(R.id.dialog_search_sp);
+
+                builder.setPositiveButton("검색",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {}
+                        });
+
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String type = search_type_sp.getSelectedItem().toString();
+                                String keyword = search_keyword_et.getText().toString();
+
+                                if(!keyword.isEmpty()) {
+                                    int search_type_num = 1;
+                                    switch (type){
+                                        case "키워드":
+                                            search_type_num = 1;
+                                        case "닉네임":
+                                            search_type_num = 2;
+                                    }
+
+                                    //TODO : 도감 검색 백엔드 통신.
+//                                adapter.setItems((ArrayList<CategoryDto>) result);
+//                                adapter.notifyDataSetChanged();
+                                    Toast.makeText(getApplicationContext(), type+ " - " + keyword ,Toast.LENGTH_LONG).show();
+                                    dialog.dismiss();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "검색어를 입력해주세요",Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
                 return true;
-
-
         }
     }
 }

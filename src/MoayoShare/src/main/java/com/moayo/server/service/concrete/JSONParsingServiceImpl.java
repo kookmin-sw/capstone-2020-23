@@ -55,6 +55,16 @@ public class JSONParsingServiceImpl implements JSONParsingService {
             categoryHashDao.insertAll(categoryHashModels);
     }
 
+    @Override
+    public void like(int dogamId) {
+        dogamListDao.like(dogamId);
+    }
+
+    @Override
+    public void disLike(int dogamId) {
+        dogamListDao.disLike(dogamId);
+    }
+
     private void hashtagInsert(HashtagModel[] hashtagModels){
         for(HashtagModel hashtagModel : hashtagModels){
             try{
@@ -65,6 +75,7 @@ public class JSONParsingServiceImpl implements JSONParsingService {
             }
         }
     }
+
     private void postInsert(PostModel[] postModels,CategoryPostModel[] categoryPostModels){
         for(PostModel postModel : postModels){
             int origin = postModel.getCo_postId();

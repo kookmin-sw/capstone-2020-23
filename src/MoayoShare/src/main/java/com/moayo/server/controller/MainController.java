@@ -39,6 +39,29 @@ public class MainController {
 //        DogamListModel dogamListModel = xmlParsingService.insertData(doc);
 //        return dogamListModel;
 //    }
+    @RequestMapping(value = "/dogamLike", method = RequestMethod.GET)
+    public JSONReturn like(@RequestParam int dogamId){
+        try{
+            logger.info("DogamId : " + dogamId + " Like.");
+            jsonParsingService.like(dogamId);
+            return new JSONReturn(0000);
+        }catch (Exception e){
+            logger.error("Dogam Id Error : " + dogamId);
+            return new JSONReturn(0001);
+        }
+    }
+
+    @RequestMapping(value = "/dogamDislike", method = RequestMethod.GET)
+    public JSONReturn disLike(@RequestParam int dogamId){
+        try{
+            logger.info("DogamId : " + dogamId + " DisLike.");
+            jsonParsingService.disLike(dogamId);
+            return new JSONReturn(0000);
+        }catch (Exception e){
+            logger.error("Dogam Id Error : " + dogamId);
+            return new JSONReturn(0001);
+        }
+    }
 
     @RequestMapping(value = "/getDogam",method = RequestMethod.GET)
     public DogamModel getDogam(HttpServletRequest req,HttpServletResponse res,@RequestParam int dogamId){
