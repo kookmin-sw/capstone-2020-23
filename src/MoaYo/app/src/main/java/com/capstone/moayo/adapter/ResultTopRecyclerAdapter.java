@@ -20,7 +20,13 @@ import java.util.ArrayList;
 public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecyclerAdapter.ViewHolder> {
 
     private ArrayList<PostDto> saveditems = new ArrayList<>();
-
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+    private OnItemClickListener listener = null;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,6 +39,14 @@ public class ResultTopRecyclerAdapter extends RecyclerView.Adapter<ResultTopRecy
             // 뷰 객체에 대한 참조. (hold strong reference)
             savedPost = itemView.findViewById(R.id.savedPost);
             savedTag = itemView.findViewById(R.id.savedTag);
+            itemView.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if(pos != RecyclerView.NO_POSITION) {
+                    if(listener != null) {
+                        listener.onItemClick(v, pos);
+                    }
+                }
+            });
 
         }
     }

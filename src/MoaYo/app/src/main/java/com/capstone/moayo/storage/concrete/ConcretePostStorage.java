@@ -44,16 +44,9 @@ public class ConcretePostStorage implements PostStorage {
 
     @Override
     public int createPost(Post post) {
-        if(postDao.isExist(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()))) {
-            PostMapping postMapping = postDao.selectByUrl(dbHelper, post.getUrl());
-            createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postMapping.getId());
-            return postMapping.getId();
-        } else {
-            int postId = (int) postDao.insert(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
-            createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postId);
-            return postId;
-        }
-
+        int postId = (int) postDao.insert(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
+        createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postId);
+        return postId;
     }
 
     @Override

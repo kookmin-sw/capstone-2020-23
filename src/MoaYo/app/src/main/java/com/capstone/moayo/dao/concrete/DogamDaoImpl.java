@@ -60,6 +60,8 @@ public class DogamDaoImpl implements DogamDao {
         dm.setTitle(c.getString(1));
         dm.setDescription(c.getString(2));
         dm.setPassword(c.getString(3));
+        dm.setUrl(c.getString(4));
+        dm.setStatus(DogamStatus.valueOf(c.getString(5)));
         c.close();
         mDB.close();
 

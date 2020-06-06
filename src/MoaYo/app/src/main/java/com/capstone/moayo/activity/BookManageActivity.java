@@ -85,7 +85,7 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
                 userBookData = (ArrayList<CategoryDto>) result;
                 //ViewPager
                 pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
-                viewPager.setAdapter(pagerAdapter) ;
+                viewPager.setAdapter(pagerAdapter);
 
                 //유저가 가진 도감의 총 개수 표시.
                 numOfBook.setText(Integer.toString(userBookData.size()));
@@ -171,5 +171,13 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        userBookData = (ArrayList<CategoryDto>) categoryService.findAll();
+        pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
+        viewPager.setAdapter(pagerAdapter);
+        super.onResume();
     }
 }
