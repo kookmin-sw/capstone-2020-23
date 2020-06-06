@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,13 +27,19 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.internal.NavigationMenu;
 
 import java.util.ArrayList;
+
 
 public class ShareMenuActivity extends BaseActivity  {
 
     private ShareService shareService;
     private ShareMenuAdapter adapter;
+    private FloatingActionButton sort, add, open;
+
+    boolean isMenuOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,19 @@ public class ShareMenuActivity extends BaseActivity  {
 
         adapter = new ShareMenuAdapter();
         recyclerView.setAdapter(adapter);
-      
+
+        //floating action menu 선언
+        sort = (FloatingActionButton) findViewById(R.id.fabSub1);
+        add = (FloatingActionButton) findViewById(R.id. fabSub2);
+        open = (FloatingActionButton) findViewById(R.id.fabMain);
+
+        open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuOpen();
+            }
+        });
+
         //아이템 로드
 //        adapter.setItems(new SharedData_Sample().getItems());
         Callable<List<CategoryDto>> loadCallable = () -> shareService.findAll();
@@ -84,6 +103,23 @@ public class ShareMenuActivity extends BaseActivity  {
                 super.onProgressUpdate(values);
             }
         }.setCallable(loadCallable).setCallback(loadCallback).execute();
+    }
+
+    private void menuOpen(){
+        if(!isMenuOpen) {
+            open.animate().rotation(45);
+            add.animate().translationY(-getResources().getDimension(R.dimen.add));
+            sort.animate().translationY(-getResources().getDimension(R.dimen.sort));
+
+            isMenuOpen = true;
+        }
+        else{
+            open.animate().rotation(0);
+            add.animate().translationY(0);
+            sort.animate().translationY(0);
+
+            isMenuOpen = false;
+        }
     }
 
     //mainToolBar에 menu.xml을 인플레이트함

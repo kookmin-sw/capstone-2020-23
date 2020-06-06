@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
@@ -53,6 +55,15 @@ public class NewShareActivity extends BaseActivity {
         setContentView(R.layout.activity_new_share);
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         spinner_list = new ArrayList<>();
 
@@ -167,15 +178,6 @@ public class NewShareActivity extends BaseActivity {
             }
         }
     };
-
-    // Inflate menu.xml in toolBar.
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
 
     //menu button onclick
     public boolean onOptionsItemSelected(MenuItem item) {

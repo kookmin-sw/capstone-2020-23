@@ -2,6 +2,8 @@ package com.capstone.moayo.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -128,6 +131,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean onOptionsItemSelected(MenuItem item) {
 
         //menu.xml에서 지정한 item 이벤트 추가
@@ -135,7 +139,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.bookDetailMenu: {
 
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                bottomSheetDialog = new BottomSheetDialog(
                         BookDetailActivity.this, R.style.BottomSheetDialogTheme
                 );
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
@@ -143,6 +147,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
                 updateBtn = bottomSheetView.findViewById(R.id.detail_btn_update);
                 updateBtn.setOnClickListener(this);
+
 
                 deleteBtn = bottomSheetView.findViewById(R.id.detail_btn_delete);
                 deleteBtn.setOnClickListener(this);
@@ -193,11 +198,12 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 Intent intent_update = new Intent(BookDetailActivity.this, BookFormActivity.class);
                 intent_update.putExtra("category", category);
                 startActivity(intent_update);
-
+                bottomSheetDialog.dismiss();
 
                 break;
 
             case R.id.detail_btn_delete:
+                bottomSheetDialog.dismiss();
                 //TODO: 도감 삭제 후 BookManage 화면으로 전환
                 //--------Backend 통신-----------
 //                Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
@@ -270,6 +276,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 Intent intent_share = new Intent(BookDetailActivity.this, NewShareActivity.class);
                 intent_share.putExtra("target_category", category);
                 startActivity(intent_share);
+                bottomSheetDialog.dismiss();
 
                 break;
 

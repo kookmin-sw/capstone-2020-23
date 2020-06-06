@@ -9,8 +9,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="3dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,12 +20,13 @@
             <com.capstone.moayo.layout.SquareRatioLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="3.5">
 
                 <ImageView
                     android:id="@+id/sharedBookPost"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="10dp"
                     android:scaleType="centerCrop" />
 
             </com.capstone.moayo.layout.SquareRatioLayout>
@@ -36,26 +37,29 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical"
-                android:layout_weight="7">
+                android:layout_weight="6.5">
 
                 <TextView
                     android:id="@+id/nickName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"/>
+                    android:textSize="12dp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:textSize="12dp"/>
+                    android:lines="3"
+                    android:textSize="15dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    >
+                    android:layout_marginTop="5dp"
+                    android:gravity="right">
+
                     <ImageButton
                         android:id="@+id/recycler_share_like"
                         android:layout_width="wrap_content"
