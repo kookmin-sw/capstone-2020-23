@@ -27,6 +27,7 @@ import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class NewShareActivity extends AppCompatActivity {
     RadioButton mutableBtn, immutableBtn;
     RadioGroup radioGroup;
     Boolean isMutable;
-
+    TextInputLayout tl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +69,10 @@ public class NewShareActivity extends AppCompatActivity {
         nickname = (EditText) findViewById(R.id.activity_share_et_nickname);
         password = (EditText) findViewById(R.id.activity_share_et_password);
         content = (EditText) findViewById(R.id.activity_share_et_content);
+        tl = (TextInputLayout)findViewById(R.id.content_layout);
         spinner = (Spinner) findViewById(R.id.activity_share_sp_target);
+
+        tl.setCounterEnabled(true);
 
         mutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_mutable);
         immutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_immutable);
