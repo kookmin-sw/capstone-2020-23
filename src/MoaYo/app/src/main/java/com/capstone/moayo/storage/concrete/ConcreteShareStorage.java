@@ -1,14 +1,13 @@
 package com.capstone.moayo.storage.concrete;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.capstone.moayo.dao.CategoryDao;
-import com.capstone.moayo.dao.DogamDao;
+import com.capstone.moayo.dao.DogamLikeDao;
 import com.capstone.moayo.dao.concrete.DaoFactoryCreator;
+import com.capstone.moayo.dao.mapping.DogamLikeMapping;
+import com.capstone.moayo.dao.sqlite.DBHelper;
 import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
-import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.util.retrofit.APIUtils;
 import com.capstone.moayo.util.retrofit.ShareAPI;
@@ -23,22 +22,25 @@ import retrofit2.Response;
 
 public class ConcreteShareStorage implements ShareStorage {
     private ShareAPI shareAPI;
+    private DogamLikeDao dogamLikeDao;
+    private DBHelper dbHelper;
 
     public ConcreteShareStorage(Context context) {
         this.shareAPI = APIUtils.getShareAPI();
+        this.dogamLikeDao = DaoFactoryCreator.getInstance().requestDogamLikeDao();
+        this.dbHelper = DaoFactoryCreator.getInstance().initDao(context);
     }
 
     @Override
-    public int create(ModelForm form) {
-        int result = 0;
+    public ShareResponse create(ModelForm form) {
         Call<ShareResponse> call = shareAPI.requestCreate(form);
         try {
             Response<ShareResponse> response = call.execute();
-            result = response.body().getCode();
+            return response.body();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return new ShareResponse();
     }
 
     @Override
@@ -58,6 +60,12 @@ public class ConcreteShareStorage implements ShareStorage {
     }
 
     @Override
+    public DogamLikeMapping retrieveLiked(int id) {
+        DogamLikeMapping mapping = dogamLikeDao.selectById(dbHelper, id);
+        return mapping;
+    }
+
+    @Override
     public List<DogamModel> retrieveAll() {
         Call<DogamModel[]> call = shareAPI.requestDogamAll();
         try {
@@ -66,6 +74,34 @@ public class ConcreteShareStorage implements ShareStorage {
 
             return body;
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<DogamModel> retrieveByWriter(String writer) {
+        Call<DogamModel[]> call = shareAPI.requestDogamByWriter(writer);
+        try {
+            Response<DogamModel[]> response = call.execute();
+            List<DogamModel> body = Arrays.asList(response.body());
+
+            return body;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<DogamModel> retrieveByKeyword(String keyword) {
+        Call<DogamModel[]> call = shareAPI.requestDogamByKeyword(keyword);
+        try {
+            Response<DogamModel[]> response = call.execute();
+            List<DogamModel> body = Arrays.asList(response.body());
+
+            return body;
+        }catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -91,6 +127,11 @@ public class ConcreteShareStorage implements ShareStorage {
         try {
             Response<ShareResponse> response = call.execute();
             result = response.body().getCode();
+            if(result == 0) {
+                if (dogamLikeDao.selectById(dbHelper, id) == null)
+                    dogamLikeDao.insert(dbHelper, id, true);
+                else dogamLikeDao.update(dbHelper, id, true);
+            }
             return result;
         }catch (IOException e) {
             e.printStackTrace();
@@ -105,6 +146,11 @@ public class ConcreteShareStorage implements ShareStorage {
         try {
             Response<ShareResponse> response = call.execute();
             result = response.body().getCode();
+            if(result == 0) {
+                if (dogamLikeDao.selectById(dbHelper, id) == null)
+                    dogamLikeDao.insert(dbHelper, id, false);
+                else dogamLikeDao.update(dbHelper, id, false);
+            }
             return result;
         }catch (IOException e) {
             e.printStackTrace();

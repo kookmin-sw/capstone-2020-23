@@ -8,8 +8,10 @@ public class DogamMapping {
     private String description;
     private String password;
     private String url;
+    private String writer;
     private DogamStatus status;
     private boolean isLiked;
+    private int sharedDogamId;
 
     public void setDescription(String desription) {
         this.description = desription;
@@ -59,11 +61,27 @@ public class DogamMapping {
         this.status = status;
     }
 
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
+    }
+
     public boolean isLiked() {
         return isLiked;
     }
 
     public void setLiked(boolean liked) {
         isLiked = liked;
+    }
+
+    public int getSharedDogamId() {
+        return sharedDogamId;
+    }
+
+    public void setSharedDogamId(int sharedDogamId) {
+        this.sharedDogamId = sharedDogamId;
     }
 }

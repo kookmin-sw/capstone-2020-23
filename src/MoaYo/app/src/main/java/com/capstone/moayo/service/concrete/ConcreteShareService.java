@@ -3,6 +3,8 @@ package com.capstone.moayo.service.concrete;
 import android.content.Context;
 import android.util.Log;
 
+import com.capstone.moayo.dao.mapping.DogamLikeMapping;
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
@@ -16,8 +18,10 @@ import com.capstone.moayo.storage.PostStorage;
 import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
+import com.capstone.moayo.storage.map.MemoryMap;
 import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.ShareUtil;
+import com.capstone.moayo.util.retrofit.ShareResponse;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -58,17 +62,25 @@ public class ConcreteShareService implements ShareService {
 
         ModelForm form = ShareUtil.convertDogamToModelForm(categoryDto, status);
         Log.d("convert category to form", form.toString());
-        int result = shareStorage.create(form);
+        ShareResponse result = shareStorage.create(form);
+        //update database
         categoryDto.setStatus(DogamStatus.Sharing);
+        categoryDto.setSharedDogamId(result.getDogamId());
         Category category = categoryDto.toCategory();
         dogamStorage.update(category);
-        return Integer.toString(result);
+
+        return Integer.toString(result.getCode());
     }
 
     @Override
     public CategoryDto findDogamById(int dogamId) {
+        CategoryDto foundCategory;
         ModelForm foundForm = shareStorage.retrieveById(dogamId);
-        CategoryDto foundCategory = ShareUtil.convertFormToDogam(foundForm);
+        DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamId);
+        if(mapping != null)
+            foundCategory = ShareUtil.convertFormToDogam(foundForm, mapping.isLiked());
+        else
+            foundCategory = ShareUtil.convertFormToDogam(foundForm,false);
         return foundCategory;
     }
 
@@ -91,6 +103,10 @@ public class ConcreteShareService implements ShareService {
                 Timestamp ts = dogamModel.getDate();
                 if(ts != null)
                     categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss").format(ts));
+
+                DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
+                if(mapping != null) categoryDto.setLiked(mapping.isLiked());
+                else categoryDto.setLiked(false);
                 categoryDtoList.add(categoryDto);
 
             }
@@ -103,6 +119,7 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public List<CategoryDto> findDogamByWriter(String writer) {
+
         return null;
     }
 
@@ -124,6 +141,10 @@ public class ConcreteShareService implements ShareService {
     @Override
     public String deleteDogam(int dogamId) {
         int code = shareStorage.remove(dogamId);
+        Category category = MemoryMap.getInstance().getCategoryMap().get(dogamId);
+        category.setSharedDogamId(0);
+        category.setStatus(DogamStatus.NonShare);
+        dogamStorage.update(category);
         return Integer.toString(code);
     }
 

@@ -361,10 +361,18 @@ public class ResultActivity extends AppCompatActivity {
     //저장 게시물 요청.
     private ArrayList<PostDto> requestSavedPost(CategoryNodeDto node) {
         ArrayList<PostDto> foundPost = new ArrayList<>();
-        if(selectCategory.getStatus() == DogamStatus.Sharing || selectCategory.getStatus() == DogamStatus.NonShare)
-            foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
-        else
-            foundPost = (ArrayList<PostDto>) node.getPosts();
+        switch (selectCategory.getStatus()) {
+            case Sharing:
+            case NonShare:
+            case Sharing_Immutable:
+            case Sharing_Mutable:
+                foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
+                break;
+            case Shared_Immutable:
+            case Shared_Mutable:
+                foundPost = (ArrayList<PostDto>) node.getPosts();
+                break;
+        }
         return foundPost;
     }
 

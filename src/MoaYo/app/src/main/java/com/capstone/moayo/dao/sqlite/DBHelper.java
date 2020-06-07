@@ -23,6 +23,7 @@ public class DBHelper {
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CREATE0);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CPCREATE);
             sqLiteDatabase.execSQL(StorageInfo.CreateStorage._CHCREATE);
+            sqLiteDatabase.execSQL(StorageInfo.CreateStorage._DLCREATE);
         }
 
         public DatabaseHelper(Context context, String name, CursorFactory factory, int version){
@@ -37,6 +38,7 @@ public class DBHelper {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._TABLENAME1);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._DOGAMTABLENAME);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._HTABLENAME);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + StorageInfo.CreateStorage._DOGAMLIKENAME);
             onCreate(sqLiteDatabase);
         }
     }

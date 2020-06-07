@@ -16,6 +16,7 @@ public class CategoryDto implements Serializable {
     private int like;
     private String time;
     private boolean isLiked;
+    private int sharedDogamId;
 
     private CategoryNodeDto selectCategory;
     private CategoryNodeDto rootNode;
@@ -26,6 +27,7 @@ public class CategoryDto implements Serializable {
         this.writer = "";
         this.url = "https://user-images.githubusercontent.com/56514477/83964054-2500ad80-a8e5-11ea-8b6d-400e5daeef7f.jpg";
         this.isLiked = false;
+        this.sharedDogamId = 0;
     }
     public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
         this();
@@ -47,6 +49,7 @@ public class CategoryDto implements Serializable {
         category.setWriter(writer);
         category.setUrl(url);
         category.setLiked(isLiked);
+        category.setSharedDogamId(sharedDogamId);
         return category;
     }
 
@@ -144,6 +147,14 @@ public class CategoryDto implements Serializable {
 
     public void setLiked(boolean liked) {
         isLiked = liked;
+    }
+
+    public int getSharedDogamId() {
+        return sharedDogamId;
+    }
+
+    public void setSharedDogamId(int sharedDogamId) {
+        this.sharedDogamId = sharedDogamId;
     }
 
     @Override

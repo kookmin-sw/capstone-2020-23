@@ -32,10 +32,12 @@ import com.capstone.moayo.CustomDialog;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.service.CategoryService;
+import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
+import com.capstone.moayo.service.dto.PostDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.DogamStatus;
@@ -52,7 +54,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     private CategoryNodeDto rootNode;
    
     private CustomDialog customDialog;
-    private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn;
+    private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn, sharingBtn;
     BottomSheetDialog bottomSheetDialog;
     private DogamStatus dogamStatus;
 
@@ -60,6 +62,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
     private CategoryService categoryService;
     private ShareService shareService;
+    private PostService postService;
 
     private AlertDialog dialog;
 
@@ -70,6 +73,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
+        postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         //리소스 파일에서 추가한 툴바를 앱바로 지정하기
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
@@ -167,22 +171,36 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                 cancelBtn = bottomSheetView.findViewById(R.id.detail_btn_cancel);
                 cancelBtn.setOnClickListener(this);
 
+                sharingBtn = bottomSheetView.findViewById(R.id.detail_btn_sharing);
+                sharingBtn.setOnClickListener(this);
+
                 //도감 Status를 확인하여 비공유 도감(나의도감), 공유된 도감에 따른 버튼 view.
                 switch (dogamStatus){
                     case NonShare:
                         likeBtn.setVisibility(View.GONE);
                         cancelBtn.setVisibility(View.GONE);
+                        sharingBtn.setVisibility(View.GONE);
                         break;
                     case Shared_Mutable:
-                        shareBtn.setVisibility(View.GONE);
-                        break;
                     case Shared_Immutable:
                         shareBtn.setVisibility(View.GONE);
                         updateBtn.setVisibility(View.GONE);
+                        cancelBtn.setVisibility(View.GONE);
+                        deleteBtn.setVisibility(View.GONE);
                         break;
                     case Sharing:
                         likeBtn.setVisibility(View.GONE);
                         shareBtn.setVisibility(View.GONE);
+                        sharingBtn.setVisibility(View.GONE);
+                        break;
+                    case Sharing_Mutable:
+                        shareBtn.setVisibility(View.GONE);
+                        cancelBtn.setVisibility(View.GONE);
+                        break;
+                    case Sharing_Immutable:
+                        shareBtn.setVisibility(View.GONE);
+                        updateBtn.setVisibility(View.GONE);
+                        cancelBtn.setVisibility(View.GONE);
                         break;
                     default:
                         updateBtn.setVisibility(View.GONE);
@@ -219,45 +237,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.detail_btn_delete:
                 bottomSheetDialog.dismiss();
                 //TODO: 도감 삭제 후 BookManage 화면으로 전환
-                Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
-
-                View.OnClickListener positiveListener = new View.OnClickListener() {
-                    public void onClick(View v) {
-                        AsyncCallback<String> callback = new AsyncCallback<String>() {
-                            @Override
-                            public void onResult(String result) {
-                                Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
-                                startActivity(intent1);
-                                Log.d("delete result", result);
-                            }
-
-                            @Override
-                            public void exceptionOccured(Exception e) {
-                                e.toString();
-                            }
-
-                            @Override
-                            public void cancelled() {
-
-                            }
-                        };
-
-                        new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
-                        Toast.makeText(getApplicationContext(), "'"+ category.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                };
-                // 취소버튼 리스너
-                View.OnClickListener negativeListener = new View.OnClickListener() {
-                    public void onClick(View v) {
-                        customDialog.dismiss();
-                    }
-                };
-                customDialog = new CustomDialog(this, positiveListener,negativeListener,
-                        "도감 삭제","'" + category.getTitle() + "' 도감을 삭제하시겠습니까?");
-                customDialog.setCancelable(true);
-                customDialog.setCanceledOnTouchOutside(true);
-                customDialog.show();
-
+                delete();
                 break;
 
             case R.id.detail_btn_share:
@@ -305,46 +285,36 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.detail_btn_cancel:
                 //TODO: PASSWORD 확인 후 공유도감 삭제(공유취소)
+                if(category.getPassword() != "") {
+                    EditText edittext = new EditText(this);
+                    edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-                bottomSheetDialog.dismiss();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("공유도감 삭제");
+                    builder.setMessage("도감의 비밀번호를 입력하세요.");
+                    builder.setView(edittext);
+                    builder.setPositiveButton("입력",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    cancelShare();
+                                }
+                            });
+                    builder.setNegativeButton("취소",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-                final View customLayout = getLayoutInflater().inflate(R.layout.dialog_password, null);
-                builder.setView(customLayout);
-
-                EditText dialog_password = customLayout.findViewById(R.id.dialog_password);
-                dialog_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-                TextView title = customLayout.findViewById(R.id.dialog_title);
-                title.setText("공유도감 삭제");
-                Button password_bt = customLayout.findViewById(R.id.password_bt);
-
-                password_bt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String password = dialog_password.getText().toString();
-
-                        if(!password.isEmpty()) {
-                            Toast.makeText(getApplicationContext(),dialog_password.getText().toString() ,Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "비밀먼호를 입력해주세요",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
-                dialog = builder.create();
-
-                WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-                params.y = -30;
-                dialog.getWindow().setAttributes(params);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.show();
-
+                                }
+                            });
+                    builder.show();
+                } else {
+                    cancelShare();
+                }
             break;
 
+            case R.id.detail_btn_sharing:
+                //TODO: 도감 공유 받기
+                create();
+                break;
             case R.id.detail_btn_back:
                 bottomSheetDialog.dismiss();
                 break;
@@ -352,8 +322,124 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void loadDetail() {
-        category = shareService.findDogamById(category.getId());
+    private void create() {
+        Callable<String> callable = () ->  {
+            String result = categoryService.createCategory(category);
+            int dogamId = Integer.parseInt(result);
+            CategoryDto foundCategory = categoryService.findCategoryById(dogamId);
+            for(int i = 0; i < foundCategory.getRootNode().getLowLayer().size(); i++) {
+                CategoryNodeDto secondNode = foundCategory.getRootNode().getLowLayer().get(i);
+                if(!category.getRootNode().getLowLayer().get(i).getPosts().isEmpty()) {
+                    for(PostDto postDto : category.getRootNode().getLowLayer().get(i).getPosts())
+                        result = postService.createPost(postDto, secondNode.getId(), dogamId);
+                }
+                for(int j = 0; j < foundCategory.getRootNode().getLowLayer().get(i).getLowLayer().size(); j++) {
+                    CategoryNodeDto thirdNode = secondNode.getLowLayer().get(j);
+                    if(!category.getRootNode().getLowLayer().get(i).getLowLayer().get(j).getPosts().isEmpty()) {
+                        for(PostDto postDto : category.getRootNode().getLowLayer().get(i).getLowLayer().get(j).getPosts())
+                            result = postService.createPost(postDto, thirdNode.getId(), dogamId);
+                    }
+                }
+            }
+
+            return result;
+        };
+        AsyncCallback<String> callback = new AsyncCallback<String>() {
+            @Override
+            public void onResult(String result) {
+                Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
+                startActivity(intent1);
+                Log.d("create category", result);
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+        View.OnClickListener positiveListener = v -> {
+            new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
+        };
+
+        View.OnClickListener negativeListener = v -> {
+            customDialog.dismiss();
+        };
+        customDialog = new CustomDialog(this, positiveListener,negativeListener,
+                "도감 저장","'" + category.getTitle() + "' 도감을 저장하시겠습니까?");
+        customDialog.setCancelable(true);
+        customDialog.setCanceledOnTouchOutside(true);
+        customDialog.show();
+    }
+
+    private void delete() {
+        Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
+
+        View.OnClickListener positiveListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                AsyncCallback<String> callback = new AsyncCallback<String>() {
+                    @Override
+                    public void onResult(String result) {
+                        Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
+                        startActivity(intent1);
+                        Log.d("delete result", result);
+                    }
+
+                    @Override
+                    public void exceptionOccured(Exception e) {
+                        e.toString();
+                    }
+
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+
+                new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
+                Toast.makeText(getApplicationContext(), "'"+ category.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        };
+        // 취소버튼 리스너
+        View.OnClickListener negativeListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                customDialog.dismiss();
+            }
+        };
+        customDialog = new CustomDialog(this, positiveListener,negativeListener,
+                "도감 삭제","'" + category.getTitle() + "' 도감을 삭제하시겠습니까?");
+        customDialog.setCancelable(true);
+        customDialog.setCanceledOnTouchOutside(true);
+        customDialog.show();
+    }
+
+    private void cancelShare() {
+        Callable<String> callable = () -> shareService.deleteDogam(category.getSharedDogamId());
+        AsyncCallback<String> callback = new AsyncCallback<String>() {
+            @Override
+            public void onResult(String result) {
+                Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
+                startActivity(intent1);
+                Log.d("delete result", result);
+                Toast.makeText(getApplicationContext(), "'"+ category.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void exceptionOccured(Exception e) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+
+        new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
     }
 
 
