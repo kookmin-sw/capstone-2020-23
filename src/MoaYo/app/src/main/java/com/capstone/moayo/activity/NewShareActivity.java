@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,8 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.ShareService;
@@ -27,12 +27,13 @@ import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class NewShareActivity extends BaseActivity {
+public class NewShareActivity extends AppCompatActivity {
 
     CategoryService categoryService;
     ShareService shareService;
@@ -45,7 +46,7 @@ public class NewShareActivity extends BaseActivity {
     RadioButton mutableBtn, immutableBtn;
     RadioGroup radioGroup;
     Boolean isMutable;
-
+    TextInputLayout tl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,12 +55,24 @@ public class NewShareActivity extends BaseActivity {
         categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
         shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+
         spinner_list = new ArrayList<>();
 
         nickname = (EditText) findViewById(R.id.activity_share_et_nickname);
         password = (EditText) findViewById(R.id.activity_share_et_password);
         content = (EditText) findViewById(R.id.activity_share_et_content);
+        tl = (TextInputLayout)findViewById(R.id.content_layout);
         spinner = (Spinner) findViewById(R.id.activity_share_sp_target);
+
+        tl.setCounterEnabled(true);
 
         mutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_mutable);
         immutableBtn = (RadioButton) findViewById(R.id.activity_share_rb_immutable);
@@ -172,15 +185,6 @@ public class NewShareActivity extends BaseActivity {
             }
         }
     };
-
-    // Inflate menu.xml in toolBar.
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
 
     //menu button onclick
     public boolean onOptionsItemSelected(MenuItem item) {

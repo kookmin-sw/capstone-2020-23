@@ -36,7 +36,12 @@
             android:text="도감 저장"
             android:textColor="@drawable/click_text"
             android:textSize="20dp" />
-
+      
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
+      
         <Button
             android:id="@+id/detail_btn_update"
             style="?android:attr/borderlessButtonStyle"
@@ -48,6 +53,11 @@
             android:text="도감 수정"
             android:textColor="@drawable/click_text"
             android:textSize="20dp" />
+      
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
 
         <Button
             android:layout_width="match_parent"
@@ -61,6 +71,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_delete"/>
 
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -71,6 +82,11 @@
             android:background="@drawable/click_button"
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_like"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
 
         <Button
             android:layout_width="match_parent"

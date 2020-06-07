@@ -14,17 +14,17 @@ import androidx.annotation.NonNull;
 
 public class CustomDialog extends Dialog {
 
-    private Context mcontext;
-    private TextView mPositiveButton, mNegativeButton;
+private Context mcontext;
+private TextView mPositiveButton, mNegativeButton;
 
-    private TextView dialog_title, dialog_content;
-    private String mTitle, mContent;
+private TextView dialog_title, dialog_content;
+private String mTitle, mContent;
 
-    private View.OnClickListener mPositiveListener;
-    private View.OnClickListener mNegativeListener;
+private View.OnClickListener mPositiveListener;
+private View.OnClickListener mNegativeListener;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+@Override
+protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //다이얼로그 밖의 화면은 흐리게
@@ -33,7 +33,7 @@ public class CustomDialog extends Dialog {
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         setContentView(R.layout.custom_dialog);
@@ -51,19 +51,17 @@ public class CustomDialog extends Dialog {
         dialog_title.setText(mTitle);
         dialog_content.setText(mContent);
 
-    }
+        }
 
-    //생성자 생성
-    public CustomDialog(@NonNull Context context,
-                        View.OnClickListener positiveListener,
-                        View.OnClickListener negativeListener,
-                        String title, String content
-    )
-    {
+//생성자 생성
+public CustomDialog(@NonNull Context context,
+        View.OnClickListener positiveListener,
+        View.OnClickListener negativeListener,
+        String title, String content) {
+
         super(context);
         this.mPositiveListener = positiveListener;
         this.mNegativeListener = negativeListener;
         this.mTitle = title;
-        this.mContent = content;
-    }
+        this.mContent = content; }
 }

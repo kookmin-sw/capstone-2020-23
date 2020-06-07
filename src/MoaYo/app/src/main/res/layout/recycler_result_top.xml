@@ -29,16 +29,19 @@
 
             <TextView
                 android:id="@+id/savedTag"
+                android:drawableLeft="@drawable/ic_favorite_result"
+                android:paddingStart="5dp"
+                android:paddingRight="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="hashtag"
+                android:text="1"
                 android:textColor="@android:color/white"
                 android:textSize="12dp"
-                android:background="@drawable/round_background_black"/>
+                android:background="@drawable/round_background_black" />
 
         </LinearLayout>
 
