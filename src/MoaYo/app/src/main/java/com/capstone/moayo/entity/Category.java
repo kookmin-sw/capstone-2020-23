@@ -159,6 +159,8 @@ public class Category{
                 ", status=" + status +
                 ", url='" + url + '\'' +
                 ", writer='" + writer + '\'' +
+                ", isLiked=" + isLiked +
+                ", sharedDogamId=" + sharedDogamId +
                 ", rootNode=" + rootNode +
                 '}';
     }

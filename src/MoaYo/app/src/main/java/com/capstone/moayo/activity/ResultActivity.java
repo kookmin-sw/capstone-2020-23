@@ -63,6 +63,7 @@ public class ResultActivity extends AppCompatActivity {
     private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
 
+    private AsyncExecutor saveExecutor, searchExecutor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +191,7 @@ public class ResultActivity extends AppCompatActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
+        saveExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
 
         // 검색 게시물 리사이클러뷰
@@ -231,6 +232,10 @@ public class ResultActivity extends AppCompatActivity {
                 }else if( doubleClickFlag == 2 ) {
                     doubleClickFlag = 0;
                     // todo 더블클릭 이벤트
+                    if(selectCategory.getStatus() == DogamStatus.Shared_Immutable || selectCategory.getStatus() == DogamStatus.Shared_Mutable) {
+                        Toast.makeText(getApplicationContext(), String.format("먼저 도감 '%s'를 저장해야 합니다.", selectCategory.getTitle()), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Callable<PostDto> callable = () -> postService.createPost(searchPost.get(position), searchNode.getId(),selectCategory.getId());
                     AsyncCallback<PostDto> callback = new AsyncCallback<PostDto>() {
                         @Override
@@ -288,7 +293,7 @@ public class ResultActivity extends AppCompatActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<InstantPost>>(){
+        searchExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<InstantPost>>(){
             @Override
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
@@ -329,7 +334,7 @@ public class ResultActivity extends AppCompatActivity {
 
                         }
                     };
-                    new AsyncExecutor<ArrayList<InstantPost>>(){
+                    searchExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<InstantPost>>(){
                         @Override
                         protected void onProgressUpdate(Void... values) {
                             super.onProgressUpdate(values);
@@ -421,6 +426,8 @@ public class ResultActivity extends AppCompatActivity {
         savePost.clear();
         searchPost.clear();
         searchService.initCache();
+        saveExecutor.cancel(true);
+        searchExecutor.cancel(true);
         super.onDestroy();
     }
 }

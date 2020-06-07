@@ -2,6 +2,7 @@ package com.capstone.moayo.util;
 
 import android.util.Pair;
 
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.entity.Model.CategoryHashtagModel;
 import com.capstone.moayo.entity.Model.CategoryModel;
 import com.capstone.moayo.entity.Model.CategoryPostModel;
@@ -169,8 +170,18 @@ public class ShareUtil {
 
             if(parent.getId() != p.second.getId())
                 parent.getLowLayer().add(p.second);
-        }
 
+            root.getLowLayer().sort((o1, o2) -> {
+                if(o1.getId() > o2.getId()) return 1;
+                else return -1;
+            });
+            for(CategoryNodeDto node : root.getLowLayer()) {
+                node.getLowLayer().sort((o1, o2) -> {
+                    if (o1.getId() > o2.getId()) return 1;
+                    else return -1;
+                });
+            }
+        }
         return root;
     }
 }
