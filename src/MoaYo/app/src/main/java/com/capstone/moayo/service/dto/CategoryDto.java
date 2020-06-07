@@ -166,6 +166,11 @@ public class CategoryDto implements Serializable {
                 ", password='" + password + '\'' +
                 ", status=" + status +
                 ", url='" + url + '\'' +
+                ", writer='" + writer + '\'' +
+                ", like=" + like +
+                ", time='" + time + '\'' +
+                ", isLiked=" + isLiked +
+                ", sharedDogamId=" + sharedDogamId +
                 ", rootNode=" + rootNode +
                 '}';
     }

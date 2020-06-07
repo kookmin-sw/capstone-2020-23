@@ -235,6 +235,10 @@ public class ResultActivity extends BaseActivity {
                 }else if( doubleClickFlag == 2 ) {
                     doubleClickFlag = 0;
                     // todo 더블클릭 이벤트
+                    if(selectCategory.getStatus() == DogamStatus.Shared_Immutable || selectCategory.getStatus() == DogamStatus.Shared_Mutable) {
+                        Toast.makeText(getApplicationContext(), String.format("먼저 도감 '%s'를 저장해야 합니다.", selectCategory.getTitle()), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Callable<PostDto> callable = () -> postService.createPost(searchPost.get(position), searchNode.getId(),selectCategory.getId());
                     AsyncCallback<PostDto> callback = new AsyncCallback<PostDto>() {
                         @Override

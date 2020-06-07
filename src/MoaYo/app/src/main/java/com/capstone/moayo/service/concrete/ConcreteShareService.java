@@ -129,6 +129,13 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
+    public boolean findDogamLiked(int id) {
+        DogamLikeMapping dogamLikeMapping = shareStorage.retrieveLiked(id);
+        if(dogamLikeMapping == null) return false;
+        return dogamLikeMapping.isLiked();
+    }
+
+    @Override
     public int updateLike(int dogamId, boolean isLiked) {
         int result = 0;
         if(isLiked) result = shareStorage.updateLike(dogamId);
@@ -139,9 +146,10 @@ public class ConcreteShareService implements ShareService {
     }
 
     @Override
-    public String deleteDogam(int dogamId) {
-        int code = shareStorage.remove(dogamId);
+    public String deleteDogam(int dogamId, int sharedId) {
+        int code = shareStorage.remove(sharedId);
         Category category = MemoryMap.getInstance().getCategoryMap().get(dogamId);
+        assert category != null;
         category.setSharedDogamId(0);
         category.setStatus(DogamStatus.NonShare);
         dogamStorage.update(category);

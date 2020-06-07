@@ -60,6 +60,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private ShareService shareService;
     private PostService postService;
 
+    private boolean isLiked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         TextView detail_text2 = (TextView) findViewById(R.id.detail_text2);
 
         category = (CategoryDto) getIntent().getSerializableExtra("category");
+        isLiked = shareService.findDogamLiked(category.getId());
 
         //create Data
         if(category.getRootNode() == null) {
@@ -167,32 +170,39 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 sharingBtn.setOnClickListener(this);
 
                 //도감 Status를 확인하여 비공유 도감(나의도감), 공유된 도감에 따른 버튼 view.
-                switch (dogamStatus){
-                    case NonShare:
+                switch (dogamStatus) {
+                    case NonShare: //공유, 수정, 삭제
                         likeBtn.setVisibility(View.GONE);
                         cancelBtn.setVisibility(View.GONE);
                         sharingBtn.setVisibility(View.GONE);
                         break;
                     case Shared_Mutable:
-                    case Shared_Immutable:
+                    case Shared_Immutable: //저장, 좋아요(좋아요취소)
                         shareBtn.setVisibility(View.GONE);
                         updateBtn.setVisibility(View.GONE);
                         cancelBtn.setVisibility(View.GONE);
                         deleteBtn.setVisibility(View.GONE);
+                        if(isLiked) {
+                            likeBtn.setText("좋아요 취소");
+                        }
                         break;
-                    case Sharing:
+                    case Sharing: // 수정, 취소, 삭제
                         likeBtn.setVisibility(View.GONE);
                         shareBtn.setVisibility(View.GONE);
                         sharingBtn.setVisibility(View.GONE);
                         break;
-                    case Sharing_Mutable:
+                    case Sharing_Mutable: // 수정, 삭제
                         shareBtn.setVisibility(View.GONE);
                         cancelBtn.setVisibility(View.GONE);
+                        likeBtn.setVisibility(View.GONE);
+                        sharingBtn.setVisibility(View.GONE);
                         break;
-                    case Sharing_Immutable:
+                    case Sharing_Immutable: //삭제
+                        sharingBtn.setVisibility(View.GONE);
                         shareBtn.setVisibility(View.GONE);
                         updateBtn.setVisibility(View.GONE);
                         cancelBtn.setVisibility(View.GONE);
+                        likeBtn.setVisibility(View.GONE);
                         break;
                     default:
                         updateBtn.setVisibility(View.GONE);
@@ -240,36 +250,43 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.detail_btn_like:
-
+                Callable<Integer> likeCallable;
                 //TODO: 공유도감 좋아요
-                if(category.getStatus() == DogamStatus.NonShare || category.getStatus() == DogamStatus.Sharing)
-                    Toast.makeText(getApplicationContext(), String.format("도감 %s는 이미 좋아합니다..", category.getTitle()), Toast.LENGTH_SHORT).show();
-                else {
-                    Callable<Integer> likeCallable = () -> shareService.updateLike(category.getId(), true);
-                    AsyncCallback<Integer> likeCallback = new AsyncCallback<Integer>() {
-                        @Override
-                        public void onResult(Integer result) {
-                            if(result == 0)
-                                Toast.makeText(getApplicationContext(), String.format("도감 %s를 좋아요 도감에 추가하였습니다.", category.getTitle()), Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(getApplicationContext(), String.format("도감 %s 추가에 실패했습니다.", category.getTitle()), Toast.LENGTH_SHORT).show();
-
+                if(isLiked)
+                    likeCallable = () -> shareService.updateLike(category.getId(), false);
+                else
+                    likeCallable = () -> shareService.updateLike(category.getId(), true);
+                AsyncCallback<Integer> likeCallback = new AsyncCallback<Integer>() {
+                    @Override
+                    public void onResult(Integer result) {
+                        if(result == 0) {
+                            if (isLiked) {
+                                Toast.makeText(getApplicationContext(), String.format("cancel like '%s'", category.getTitle()), Toast.LENGTH_SHORT).show();
+                                likeBtn.setText("좋아요");
+                                isLiked = false;
+                            } else {
+                                Toast.makeText(getApplicationContext(), String.format("like '%s'", category.getTitle()), Toast.LENGTH_SHORT).show();
+                                likeBtn.setText("좋아요 취소");
+                                isLiked = true;
+                            }
                         }
+                        else
+                            Toast.makeText(getApplicationContext(), String.format("도감 %s 추가에 실패했습니다.", category.getTitle()), Toast.LENGTH_SHORT).show();
 
-                        @Override
-                        public void exceptionOccured(Exception e) {
-                            Log.e("like error", e.toString());
-                        }
+                    }
 
-                        @Override
-                        public void cancelled() {
+                    @Override
+                    public void exceptionOccured(Exception e) {
+                        Log.e("like error", e.toString());
+                    }
 
-                        }
-                    };
+                    @Override
+                    public void cancelled() {
 
-                    new AsyncExecutor<Integer>().setCallable(likeCallable).setCallback(likeCallback).execute();
-                }
+                    }
+                };
 
+                new AsyncExecutor<Integer>().setCallable(likeCallable).setCallback(likeCallback).execute();
                 bottomSheetDialog.dismiss();
                 break;
 
@@ -287,7 +304,11 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                     builder.setPositiveButton("입력",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    cancelShare();
+                                    if (edittext.getText().toString().equals(category.getPassword())) {
+                                        cancelShare();
+                                    }
+                                    else
+                                        Toast.makeText(getApplicationContext(), "잘못된 비밀번호입니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
                     builder.setNegativeButton("취소",
@@ -305,7 +326,19 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.detail_btn_sharing:
                 //TODO: 도감 공유 받기
-                create();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("공유 도감 저장");
+                if(category.getStatus() == DogamStatus.Shared_Immutable)
+                    builder.setMessage("해당 도감은 수정이 불가능합니다.\n 저장하시겠습니까?");
+                else
+                    builder.setMessage("해당 도감은 수정이 가능합니다.\n 저장하시겠습니까?");
+                builder.setPositiveButton("저장", (dialog, which) -> {
+                    create();
+                });
+                builder.setNegativeButton("취소", (dialog, which) -> {
+                   dialog.dismiss();
+                });
+                builder.show();
                 break;
             case R.id.detail_btn_back:
                 bottomSheetDialog.dismiss();
@@ -412,14 +445,17 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void cancelShare() {
-        Callable<String> callable = () -> shareService.deleteDogam(category.getSharedDogamId());
+        Callable<String> callable = () -> shareService.deleteDogam(category.getId(), category.getSharedDogamId());
         AsyncCallback<String> callback = new AsyncCallback<String>() {
             @Override
             public void onResult(String result) {
                 Intent intent1 = new Intent(BookDetailActivity.this, BookManageActivity.class);
                 startActivity(intent1);
                 Log.d("delete result", result);
-                Toast.makeText(getApplicationContext(), "'"+ category.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                if(Integer.parseInt(result) == 0)
+                    Toast.makeText(getApplicationContext(), "'"+ category.getTitle() +"' 도감이 정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "도감 삭제 오류", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -436,9 +472,10 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         new AsyncExecutor<String>().setCallable(callable).setCallback(callback).execute();
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     //child listener
 //    private OnChildClickListener myListItemClicked =  new OnChildClickListener() {
