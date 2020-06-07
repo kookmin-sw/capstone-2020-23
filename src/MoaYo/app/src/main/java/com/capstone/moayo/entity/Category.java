@@ -24,6 +24,8 @@ public class Category{
     private String writer;
     private boolean isLiked;
 
+    private int sharedDogamId;
+
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
 
@@ -33,6 +35,7 @@ public class Category{
         this.writer = "";
         this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
         this.isLiked = false;
+        sharedDogamId = 0;
     }
     public Category(String title, String description, String password, CategoryNode rootNode) {
         this();
@@ -54,6 +57,7 @@ public class Category{
         categoryDto.setWriter(writer);
         categoryDto.setUrl(url);
         categoryDto.setLiked(isLiked);
+        categoryDto.setSharedDogamId(sharedDogamId);
         return categoryDto;
     }
 
@@ -135,6 +139,14 @@ public class Category{
 
     public void setLiked(boolean liked) {
         isLiked = liked;
+    }
+
+    public int getSharedDogamId() {
+        return sharedDogamId;
+    }
+
+    public void setSharedDogamId(int sharedDogamId) {
+        this.sharedDogamId = sharedDogamId;
     }
 
     @Override

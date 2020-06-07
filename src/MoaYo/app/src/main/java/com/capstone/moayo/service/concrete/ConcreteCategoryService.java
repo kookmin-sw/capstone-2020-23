@@ -40,13 +40,16 @@ public class ConcreteCategoryService implements CategoryService {
     public String createCategory(CategoryDto newCategoryDto){
         Log.d("create category", newCategoryDto.toString());
         try {
-
             if (newCategoryDto.getRootNode() == null)
                 throw  new NullRootException("There is no root category node");
             if (newCategoryDto.getRootNode().getLevel() != 1)
                 throw new NotRootException("This is not a root node");
 
+            if(newCategoryDto.getStatus() == DogamStatus.Shared_Immutable) newCategoryDto.setStatus(DogamStatus.Sharing_Immutable);
+            else if (newCategoryDto.getStatus() == DogamStatus.Shared_Mutable) newCategoryDto.setStatus(DogamStatus.Sharing_Mutable);
+
             Category newCategory = newCategoryDto.toCategory();
+            newCategory.setSharedDogamId(newCategoryDto.getId());
 
             int dogamId = dogamStorage.create(newCategory);
             newCategory.setId(dogamId);
@@ -108,6 +111,12 @@ public class ConcreteCategoryService implements CategoryService {
 
             Category foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDescription(), foundDogam.getPassword(), rootNode);
             foundCategory.setId(foundDogam.getId());
+            foundCategory.setStatus(foundDogam.getStatus());
+            foundCategory.setWriter(foundDogam.getWriter());
+            foundCategory.setUrl(foundDogam.getUrl());
+            foundCategory.setLiked(foundDogam.isLiked());
+            foundCategory.setSharedDogamId(foundDogam.getSharedDogamId());
+
             foundCategoryDto = foundCategory.toCategoryDto();
         } catch (NoSuchCategoryException | NoSuchNodeException e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.capstone.moayo.dao.mapping.DogamLikeMapping;
+import com.capstone.moayo.dao.mapping.DogamMapping;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
@@ -17,8 +18,10 @@ import com.capstone.moayo.storage.PostStorage;
 import com.capstone.moayo.storage.ShareStorage;
 import com.capstone.moayo.storage.StorageFactory;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
+import com.capstone.moayo.storage.map.MemoryMap;
 import com.capstone.moayo.util.DogamStatus;
 import com.capstone.moayo.util.ShareUtil;
+import com.capstone.moayo.util.retrofit.ShareResponse;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -59,11 +62,14 @@ public class ConcreteShareService implements ShareService {
 
         ModelForm form = ShareUtil.convertDogamToModelForm(categoryDto, status);
         Log.d("convert category to form", form.toString());
-        int result = shareStorage.create(form);
+        ShareResponse result = shareStorage.create(form);
+        //update database
         categoryDto.setStatus(DogamStatus.Sharing);
+        categoryDto.setSharedDogamId(result.getDogamId());
         Category category = categoryDto.toCategory();
         dogamStorage.update(category);
-        return Integer.toString(result);
+
+        return Integer.toString(result.getCode());
     }
 
     @Override
@@ -135,6 +141,10 @@ public class ConcreteShareService implements ShareService {
     @Override
     public String deleteDogam(int dogamId) {
         int code = shareStorage.remove(dogamId);
+        Category category = MemoryMap.getInstance().getCategoryMap().get(dogamId);
+        category.setSharedDogamId(0);
+        category.setStatus(DogamStatus.NonShare);
+        dogamStorage.update(category);
         return Integer.toString(code);
     }
 

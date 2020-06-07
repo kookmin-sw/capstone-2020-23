@@ -37,6 +37,16 @@ public class ConcretePostService implements PostService {
     }
 
     @Override
+    public String createPost(PostDto newPostDto, int nodeId, int dogamId) {
+        Post post = newPostDto.toPost();
+        post.setCategoryNodeId(nodeId);
+        post.setDogamId(dogamId);
+        int postId = postStorage.createPost(post);
+        post.setId(postId);
+        return String.valueOf(postId);
+    }
+
+    @Override
     public List<PostDto> findPostByCategoryNodeId(int nodeId) {
         List<PostDto> postDtoList = new ArrayList<>();
         List<Post> postList = postStorage.retrievePostByNodeId(nodeId);

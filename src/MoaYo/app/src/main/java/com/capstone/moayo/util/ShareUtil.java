@@ -104,6 +104,7 @@ public class ShareUtil {
         dogam.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
         dogam.setLike(dogamModel.getLike());
         dogam.setLiked(isLiked);
+        dogam.setWriter(dogamModel.getWriter());
         return dogam;
     }
 

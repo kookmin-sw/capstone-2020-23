@@ -74,7 +74,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             }
         }
         categoryMap.get(dogamId).setRootNode(rootNode);
-        return "create category" + dogamId;
+        return Integer.toString(dogamId);
     }
 
     @Override

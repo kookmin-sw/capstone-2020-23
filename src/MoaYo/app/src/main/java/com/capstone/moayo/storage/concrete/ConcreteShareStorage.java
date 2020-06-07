@@ -32,17 +32,15 @@ public class ConcreteShareStorage implements ShareStorage {
     }
 
     @Override
-    public int create(ModelForm form) {
-        int result = 1;
+    public ShareResponse create(ModelForm form) {
         Call<ShareResponse> call = shareAPI.requestCreate(form);
         try {
             Response<ShareResponse> response = call.execute();
-            if(response.body().getCode() == 0) return response.body().getDogamId();
-            else return response.body().getCode();
+            return response.body();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return new ShareResponse();
     }
 
     @Override
