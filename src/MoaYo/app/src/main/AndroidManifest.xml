@@ -47,7 +47,8 @@
             android:theme="@style/BackGray"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity android:name=".activity.ShareMenuActivity" />
+        <activity android:name=".activity.ShareMenuActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity android:name=".activity.NewShareActivity"
             android:theme="@style/BackGray"/>

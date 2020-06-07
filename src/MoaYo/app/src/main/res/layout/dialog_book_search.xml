@@ -1,22 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Spinner
-        android:id="@+id/dialog_search_sp"
-        android:layout_width="200dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/search_spinner_entries"
-        android:layout_marginLeft="5dp"/>
-    <EditText
-        android:id="@+id/dialog_search_et"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:background="@drawable/round_dialog"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_remove_circle"
+            android:layout_gravity="center_horizontal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_circle"
+            android:layout_gravity="center_horizontal"/>
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/search_result"
+            android:layout_gravity="center_horizontal"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/colorWhite">
+
+        <EditText
+            android:id="@+id/dialog_search_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/lightGray"
+            android:hint="@string/search_hint"
+            android:singleLine="true"
+            android:lines="1" />
+
+        <Spinner
+            android:id="@+id/dialog_search_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/search_spinner_entries"
+            android:backgroundTint="@color/lightGray"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"/>
+        android:orientation="vertical"
+        android:background="@drawable/main_bottom_menu_">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:background="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/searchBt_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/search"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
 
 </LinearLayout>

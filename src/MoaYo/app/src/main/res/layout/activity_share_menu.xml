@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.ShareMenuActivity"
-    android:background="@color/backGray">
+    android:background="@color/backGray"
+    android:id="@+id/sharemenu_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,14 +19,20 @@
         android:elevation="2dp">
 
         <TextView
+            android:id="@+id/sharemenu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="공유게시판"
             android:textSize="20dp"
-            android:textColor="@color/colorBlack"/>
+            android:textColor="@color/colorBlack"
+            android:visibility="visible"/>
 
     </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_shareMenu"
@@ -37,12 +44,13 @@
         android:overScrollMode="never"/>
 
     <FrameLayout
+        android:id="@+id/floatingMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:clickable="false"
         android:layout_gravity="right"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:padding="10dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSub1"
@@ -50,25 +58,41 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
-            android:src="@drawable/floating_sort"
+            app:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/floating_sort"
             app:backgroundTint="@color/colorWhite"
-            app:rippleColor="@color/colorWhite"
+            app:elevation="7dp"
             app:fabSize="mini"
-            app:elevation="5dp"
-            app:pressedTranslationZ="5dp"/>
+            app:pressedTranslationZ="5dp"
+            app:rippleColor="@color/colorWhite" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSub2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/floating_add"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="10dp"
+            app:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/floating_add"
+            app:backgroundTint="@color/colorWhite"
+            app:elevation="7dp"
+            app:fabSize="mini"
+            app:pressedTranslationZ="5dp"
+            app:rippleColor="@color/colorWhite" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSub3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
             app:backgroundTint="@color/colorWhite"
-            app:rippleColor="@color/colorWhite"
+            app:elevation="7dp"
             app:fabSize="mini"
-            app:elevation="5dp"
-            app:pressedTranslationZ="5dp"/>
+            app:pressedTranslationZ="5dp"
+            app:rippleColor="@color/colorWhite"
+            app:srcCompat="@drawable/ic_person_gray_32dp"
+            app:tint="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabMain"
@@ -76,14 +100,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
-            app:tint="@color/colorWhite"
-            app:srcCompat="@drawable/ic_add_white_24dp"
             app:backgroundTint="@color/colorPrimary"
+            app:elevation="7dp"
+            app:pressedTranslationZ="5dp"
             app:rippleColor="@color/colorPrimary"
-            app:elevation="5dp"
-            app:pressedTranslationZ="5dp"/>
-
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:tint="@color/colorWhite" />
 
     </FrameLayout>
+
 
 </FrameLayout>

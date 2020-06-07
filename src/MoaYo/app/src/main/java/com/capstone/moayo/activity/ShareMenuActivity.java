@@ -1,20 +1,24 @@
 package com.capstone.moayo.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.capstone.moayo.BaseActivity;
@@ -28,16 +32,16 @@ import java.util.concurrent.Callable;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenu;
 
 import java.util.ArrayList;
 
 
-public class ShareMenuActivity extends BaseActivity  {
+public class ShareMenuActivity extends BaseActivity implements View.OnClickListener {
 
     private ShareService shareService;
     private ShareMenuAdapter adapter;
-    private FloatingActionButton sort, add, open;
+    private FloatingActionButton sort, add, my, open;
+    private AlertDialog dialog;
 
     boolean isMenuOpen = false;
 
@@ -68,7 +72,26 @@ public class ShareMenuActivity extends BaseActivity  {
         //floating action menu 선언
         sort = (FloatingActionButton) findViewById(R.id.fabSub1);
         add = (FloatingActionButton) findViewById(R.id. fabSub2);
+        my = (FloatingActionButton) findViewById(R.id.fabSub3);
         open = (FloatingActionButton) findViewById(R.id.fabMain);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 0){
+                    sort.hide();
+                    add.hide();
+                    my.hide();
+                    open.hide();
+                }
+                else if(dy < 0) {
+                    sort.show();
+                    add.show();
+                    my.show();
+                    open.show();
+                }
+            }
+        });
 
         open.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,14 +130,21 @@ public class ShareMenuActivity extends BaseActivity  {
 
     private void menuOpen(){
         if(!isMenuOpen) {
+
             open.animate().rotation(45);
+            my.animate().translationY(-getResources().getDimension(R.dimen.my));
             add.animate().translationY(-getResources().getDimension(R.dimen.add));
             sort.animate().translationY(-getResources().getDimension(R.dimen.sort));
+
+            my.setOnClickListener(this);
+            add.setOnClickListener(this);
+            sort.setOnClickListener(this);
 
             isMenuOpen = true;
         }
         else{
             open.animate().rotation(0);
+            my.animate().translationY(0);
             add.animate().translationY(0);
             sort.animate().translationY(0);
 
@@ -143,48 +173,69 @@ public class ShareMenuActivity extends BaseActivity  {
 
             case R.id.menu_share_search:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("도감 검색");
 
                 final View customLayout = getLayoutInflater().inflate(R.layout.dialog_book_search, null);
                 builder.setView(customLayout);
+
                 EditText search_keyword_et = customLayout.findViewById(R.id.dialog_search_et);
                 Spinner search_type_sp = customLayout.findViewById(R.id.dialog_search_sp);
+                TextView search_bt = customLayout.findViewById(R.id.searchBt_dialog);
 
-                builder.setPositiveButton("검색",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {}
-                        });
+                search_bt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
+                        String type = search_type_sp.getSelectedItem().toString();
+                        String keyword = search_keyword_et.getText().toString();
 
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String type = search_type_sp.getSelectedItem().toString();
-                                String keyword = search_keyword_et.getText().toString();
+                        if(!keyword.isEmpty()) {
+                            int search_type_num = 1;
+                            switch (type){
+                                case "태그":
+                                    search_type_num = 1;
+                                case "닉네임":
+                                    search_type_num = 2;
+                            }
 
-                                if(!keyword.isEmpty()) {
-                                    int search_type_num = 1;
-                                    switch (type){
-                                        case "키워드":
-                                            search_type_num = 1;
-                                        case "닉네임":
-                                            search_type_num = 2;
-                                    }
-
-                                    //TODO : 도감 검색 백엔드 통신.
+                            //TODO : 도감 검색 백엔드 통신.
 //                                adapter.setItems((ArrayList<CategoryDto>) result);
 //                                adapter.notifyDataSetChanged();
-                                    Toast.makeText(getApplicationContext(), type+ " - " + keyword ,Toast.LENGTH_LONG).show();
-                                    dialog.dismiss();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "검색어를 입력해주세요",Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                            Toast.makeText(getApplicationContext(), type+ " - " + keyword ,Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "검색어를 입력해주세요",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
+                dialog = builder.create();
+
+                WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                params.y = -30;
+                dialog.getWindow().setAttributes(params);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.show();
+
                 return true;
+        }
+    }
+
+    @Override
+    public void onClick(View v){
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.fabSub1:
+                Toast.makeText(this, "정렬 방식 변경 이벤트", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fabSub2:
+                Intent intent = new Intent(ShareMenuActivity.this, NewShareActivity.class);
+                ShareMenuActivity.this.startActivity(intent);
+                break;
+            case R.id.fabSub3:
+                Intent intent1 = new Intent(ShareMenuActivity.this, BookManageActivity.class);
+                ShareMenuActivity.this.startActivity(intent1);
         }
     }
 }
