@@ -135,7 +135,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
             case R.id.bookDetailMenu: {
 
-                /*final BottomSheetDialog*/ bottomSheetDialog = new BottomSheetDialog(
+                bottomSheetDialog = new BottomSheetDialog(
                         BookDetailActivity.this, R.style.BottomSheetDialogTheme
                 );
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())

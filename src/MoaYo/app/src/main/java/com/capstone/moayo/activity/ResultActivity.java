@@ -28,8 +28,6 @@ import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.adapter.ResultTopRecyclerAdapter;
 import com.capstone.moayo.adapter.ResultCenterRecyclerAdapter;
 
-import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
