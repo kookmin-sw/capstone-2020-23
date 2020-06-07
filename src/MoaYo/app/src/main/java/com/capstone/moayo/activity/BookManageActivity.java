@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.util.DogamStatus;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 
-public class BookManageActivity extends BaseActivity implements View.OnClickListener{
+public class BookManageActivity extends AppCompatActivity implements View.OnClickListener{
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
     private CategoryService categoryService;

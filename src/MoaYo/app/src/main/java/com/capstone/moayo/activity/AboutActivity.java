@@ -5,10 +5,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.Nullable;
-import com.capstone.moayo.BaseActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.capstone.moayo.R;
 
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,35 +1,25 @@
 package com.capstone.moayo.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.capstone.moayo.BaseActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.capstone.moayo.R;
-import com.capstone.moayo.data.CategoryData_Dummy;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.ShareService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
-import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.storage.map.MemoryMap;
-import com.capstone.moayo.util.Async.AsyncCallback;
-import com.capstone.moayo.util.Async.AsyncExecutor;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
-public class IntroActivity extends BaseActivity {
+public class IntroActivity extends AppCompatActivity {
 
     private final int SPLASH_DISPLAY_TIME = 2000;
     CategoryService categoryService;
