@@ -32,22 +32,22 @@ public class MainController {
     JSONParsingService jsonParsingService;
 
     private Logger logger = LoggerFactory.getLogger(MainController.class);
-
 //    @RequestMapping(value = "/xmlParsing",method = RequestMethod.POST)
 //    public DogamListModel xmlParsing(HttpServletResponse res,HttpServletRequest req,@RequestBody String body) throws IOException, SAXException, ParserConfigurationException {
 //        Document doc = XMLParsing.XMLParsing(body);
 //        DogamListModel dogamListModel = xmlParsingService.insertData(doc);
 //        return dogamListModel;
 //    }
+
     @RequestMapping(value = "/dogamLike", method = RequestMethod.GET)
     public JSONReturn like(@RequestParam int dogamId){
         try{
             logger.info("DogamId : " + dogamId + " Like.");
             jsonParsingService.like(dogamId);
-            return new JSONReturn(0000);
+            return new JSONReturn(0000,dogamId);
         }catch (Exception e){
             logger.error("Dogam Id Error : " + dogamId);
-            return new JSONReturn(0001);
+            return new JSONReturn(0001,dogamId);
         }
     }
 
@@ -56,10 +56,10 @@ public class MainController {
         try{
             logger.info("DogamId : " + dogamId + " DisLike.");
             jsonParsingService.disLike(dogamId);
-            return new JSONReturn(0000);
+            return new JSONReturn(0000,dogamId);
         }catch (Exception e){
             logger.error("Dogam Id Error : " + dogamId);
-            return new JSONReturn(0001);
+            return new JSONReturn(0001,dogamId);
         }
     }
 
@@ -77,9 +77,9 @@ public class MainController {
         try{
             jsonParsingService.insertData(dogamModel);
         }catch (Exception e){
-            return new JSONReturn(0001);
+            return new JSONReturn(0001,dogamModel.getDogamListModel().getCo_dogamId());
         }
-        return new JSONReturn(0000);
+        return new JSONReturn(0000,dogamModel.getDogamListModel().getCo_dogamId());
     }
 
     @RequestMapping(value = "/getDogamList",method = RequestMethod.GET)
@@ -92,9 +92,9 @@ public class MainController {
     public JSONReturn deleteDogam(@RequestParam int dogamId){
         logger.info("Delete Dogam ID : " + dogamId);
         if(!service.isDogam(dogamId))
-            return new JSONReturn(0001);
+            return new JSONReturn(0001,dogamId);
         service.deleteDogam(dogamId);
-        return new JSONReturn(0000);
+        return new JSONReturn(0000,dogamId);
     }
 
     @RequestMapping(value = "/getDogamWriterName",method = RequestMethod.GET)
