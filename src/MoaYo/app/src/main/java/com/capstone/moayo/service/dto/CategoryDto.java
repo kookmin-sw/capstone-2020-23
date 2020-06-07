@@ -23,7 +23,7 @@ public class CategoryDto implements Serializable {
         this.id = 0;
         this.status = DogamStatus.NonShare;
         this.writer = "";
-        this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
+        this.url = "https://user-images.githubusercontent.com/56514477/83964054-2500ad80-a8e5-11ea-8b6d-400e5daeef7f.jpg";
     }
     public CategoryDto(String title, String description, String password, CategoryNodeDto rootNode) {
         this();

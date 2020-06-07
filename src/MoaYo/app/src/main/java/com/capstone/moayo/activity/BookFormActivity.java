@@ -1,6 +1,5 @@
 package com.capstone.moayo.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.CustomDialog;
 import com.capstone.moayo.R;
 import com.capstone.moayo.fragment.FormEditFragment;
@@ -35,7 +33,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 
-public class BookFormActivity extends BaseActivity implements FormEditFragment.OnChangeLevelListener, View.OnClickListener{
+public class BookFormActivity extends AppCompatActivity implements FormEditFragment.OnChangeLevelListener, View.OnClickListener{
     private FragmentManager fm;
     private FragmentTransaction tran;
     private CategoryDto category;

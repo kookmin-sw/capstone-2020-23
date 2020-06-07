@@ -58,13 +58,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
-            app:tint="@color/colorPrimary"
+            app:tint="@color/colorWhite"
             app:srcCompat="@drawable/floating_sort"
-            app:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorPrimary"
             app:elevation="7dp"
             app:fabSize="mini"
             app:pressedTranslationZ="5dp"
-            app:rippleColor="@color/colorWhite" />
+            app:rippleColor="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSub2"
@@ -72,13 +72,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
-            app:tint="@color/colorPrimary"
+            app:tint="@color/colorWhite"
             app:srcCompat="@drawable/floating_add"
-            app:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorPrimary"
             app:elevation="7dp"
             app:fabSize="mini"
             app:pressedTranslationZ="5dp"
-            app:rippleColor="@color/colorWhite" />
+            app:rippleColor="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSub3"
@@ -86,13 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
-            app:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorPrimary"
             app:elevation="7dp"
             app:fabSize="mini"
             app:pressedTranslationZ="5dp"
-            app:rippleColor="@color/colorWhite"
+            app:rippleColor="@color/colorPrimary"
             app:srcCompat="@drawable/ic_person_gray_32dp"
-            app:tint="@color/colorPrimary" />
+            app:tint="@color/colorWhite" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabMain"
@@ -100,10 +100,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="10dp"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
             app:elevation="7dp"
             app:pressedTranslationZ="5dp"
-            app:rippleColor="@color/colorPrimary"
+            app:rippleColor="@color/colorPrimaryDark"
             app:srcCompat="@drawable/ic_add_black_24dp"
             app:tint="@color/colorWhite" />
 

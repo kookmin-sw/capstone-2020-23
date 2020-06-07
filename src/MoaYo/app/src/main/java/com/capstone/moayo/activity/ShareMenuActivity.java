@@ -3,6 +3,7 @@ package com.capstone.moayo.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.ShareMenuAdapter;
 import com.capstone.moayo.service.ShareService;
@@ -36,7 +36,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 
-public class ShareMenuActivity extends BaseActivity implements View.OnClickListener {
+public class ShareMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ShareService shareService;
     private ShareMenuAdapter adapter;
@@ -179,7 +179,7 @@ public class ShareMenuActivity extends BaseActivity implements View.OnClickListe
 
                 EditText search_keyword_et = customLayout.findViewById(R.id.dialog_search_et);
                 Spinner search_type_sp = customLayout.findViewById(R.id.dialog_search_sp);
-                TextView search_bt = customLayout.findViewById(R.id.searchBt_dialog);
+                Button search_bt = customLayout.findViewById(R.id.searchBt_dialog);
 
                 search_bt.setOnClickListener(new View.OnClickListener() {
                     @Override

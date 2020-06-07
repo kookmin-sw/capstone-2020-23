@@ -21,6 +21,8 @@
     <string name="main_guide">아직 도감이 없습니다. 도감을 생성해주세요.</string>
     <string name="search">검색</string>
     <string name="search_hint">검색어를 입력하세요.</string>
+    <string name="delete_password">도감의 비밀번호를 입력하세요.</string>
+    <string name="confirm">확인</string>
 
     <string-array name="search_spinner_entries">
         <item>태그</item>
