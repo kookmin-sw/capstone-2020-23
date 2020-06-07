@@ -11,5 +11,7 @@ public interface DaoFactory {
     public DogamDao requestDogamDao();
     public HashtagDao requestHashtagDao();
     public PostDao requsetPostDao();
+    public DogamLikeDao requestDogamLikeDao();
     public DBHelper initDao(Context context);
+
 }

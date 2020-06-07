@@ -8,6 +8,7 @@ import com.capstone.moayo.dao.CategoryHashtagDao;
 import com.capstone.moayo.dao.CategoryPostDao;
 import com.capstone.moayo.dao.DaoFactory;
 import com.capstone.moayo.dao.DogamDao;
+import com.capstone.moayo.dao.DogamLikeDao;
 import com.capstone.moayo.dao.HashtagDao;
 import com.capstone.moayo.dao.PostDao;
 import com.capstone.moayo.dao.sqlite.DBHelper;
@@ -20,6 +21,7 @@ public class DaoFactoryCreator implements DaoFactory {
     private DogamDao dogamDao;
     private HashtagDao hashtagDao;
     private PostDao postDao;
+    private DogamLikeDao dogamLikeDao;
     private DBHelper dbHelper;
 
     public static synchronized DaoFactory getInstance() {
@@ -74,6 +76,13 @@ public class DaoFactoryCreator implements DaoFactory {
         if(postDao == null)
             postDao = new PostDaoImpl();
         return postDao;
+    }
+
+    @Override
+    public DogamLikeDao requestDogamLikeDao() {
+        if(dogamLikeDao == null)
+            dogamLikeDao = new DogamLikeDaoImpl();
+        return dogamLikeDao;
     }
 
     @Override

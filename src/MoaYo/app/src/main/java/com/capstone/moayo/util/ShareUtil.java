@@ -68,7 +68,7 @@ public class ShareUtil {
         return form;
     }
 
-    public static CategoryDto convertFormToDogam(ModelForm form) {
+    public static CategoryDto convertFormToDogam(ModelForm form, boolean isLiked) {
         DogamModel dogamModel = form.getDogamModel();
         CategoryModel[] categoryModels = form.getCategoryModels();
         PostModel[] postModels = form.getPostModels();
@@ -103,6 +103,7 @@ public class ShareUtil {
         Timestamp ts = dogamModel.getDate();
         dogam.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
         dogam.setLike(dogamModel.getLike());
+        dogam.setLiked(isLiked);
         return dogam;
     }
 

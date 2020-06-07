@@ -85,5 +85,14 @@ public final class StorageInfo{
                 DOGAMURL + " text, " +
                 DOGAMISLIKED + " integer, " +
                 DOGAMSTATUS + " integer);";
+
+        // tb_dogam_Liked
+        public static final String LIKEID = "co_dogamId";
+        public static final String ISLIKED = "co_isLiked";
+        public static final String _DOGAMLIKENAME = "tb_dogamLiked";
+        public static final String _DLCREATE = "create table if not exists " + _DOGAMLIKENAME + "(" +
+                LIKEID + " integer, " +
+                ISLIKED + " integer);";
+
     }
 }

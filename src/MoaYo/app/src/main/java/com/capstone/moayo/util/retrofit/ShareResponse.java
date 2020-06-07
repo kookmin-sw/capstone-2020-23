@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 public class ShareResponse {
     @SerializedName("code")
     int code;
-    @SerializedName("message")
-    String message;
+    @SerializedName("dogamId")
+    int dogamId;
 
     public int getCode() {
         return code;
@@ -16,11 +16,11 @@ public class ShareResponse {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public int getDogamId() {
+        return dogamId;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setDogamId(int dogamId) {
+        this.dogamId = dogamId;
     }
 }

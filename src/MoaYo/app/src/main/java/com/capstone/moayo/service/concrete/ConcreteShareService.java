@@ -3,6 +3,7 @@ package com.capstone.moayo.service.concrete;
 import android.content.Context;
 import android.util.Log;
 
+import com.capstone.moayo.dao.mapping.DogamLikeMapping;
 import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Model.DogamModel;
 import com.capstone.moayo.entity.Model.ModelForm;
@@ -67,8 +68,13 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public CategoryDto findDogamById(int dogamId) {
+        CategoryDto foundCategory;
         ModelForm foundForm = shareStorage.retrieveById(dogamId);
-        CategoryDto foundCategory = ShareUtil.convertFormToDogam(foundForm);
+        DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamId);
+        if(mapping != null)
+            foundCategory = ShareUtil.convertFormToDogam(foundForm, mapping.isLiked());
+        else
+            foundCategory = ShareUtil.convertFormToDogam(foundForm,false);
         return foundCategory;
     }
 
@@ -91,6 +97,10 @@ public class ConcreteShareService implements ShareService {
                 Timestamp ts = dogamModel.getDate();
                 if(ts != null)
                     categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss").format(ts));
+
+                DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
+                if(mapping != null) categoryDto.setLiked(mapping.isLiked());
+                else categoryDto.setLiked(false);
                 categoryDtoList.add(categoryDto);
 
             }
@@ -103,6 +113,7 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public List<CategoryDto> findDogamByWriter(String writer) {
+
         return null;
     }
 

@@ -74,6 +74,8 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
         vh.nickName.setText(item.getTitle());
         vh.comment.setText(item.getDescription());
         vh.like_count.setText(Integer.toString(item.getLike()));
+        if(item.isLiked()) vh.like_btn.setSelected(true);
+        else vh.like_btn.setSelected(false);
         vh.like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
