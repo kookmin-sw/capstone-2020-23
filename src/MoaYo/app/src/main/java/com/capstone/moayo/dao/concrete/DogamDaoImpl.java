@@ -13,7 +13,7 @@ import com.capstone.moayo.util.DogamStatus;
 public class DogamDaoImpl implements DogamDao {
 
     @Override
-    public long insert(DBHelper dbHelper, String title, String description, String password, String url, DogamStatus status) {
+    public long insert(DBHelper dbHelper, String title, String description, String password, String url, DogamStatus status, boolean isLiked) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.DOGAMTITLE,title);
@@ -21,13 +21,15 @@ public class DogamDaoImpl implements DogamDao {
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
         values.put(StorageInfo.CreateStorage.DOGAMURL, url);
         values.put(StorageInfo.CreateStorage.DOGAMSTATUS, String.valueOf(status));
+        if(isLiked) values.put(StorageInfo.CreateStorage.DOGAMISLIKED, 0);
+        else values.put(StorageInfo.CreateStorage.DOGAMISLIKED, 1);
         long result =  mDB.insert(StorageInfo.CreateStorage._DOGAMTABLENAME,null,values);
         mDB.close();
         return result;
     }
 
     @Override
-    public boolean update(DBHelper dbHelper, int id, String title, String description, String password, String url, DogamStatus status) {
+    public boolean update(DBHelper dbHelper, int id, String title, String description, String password, String url, DogamStatus status, boolean isLiked) {
         SQLiteDatabase mDB = dbHelper.getWritableDB();
         ContentValues values = new ContentValues();
         values.put(StorageInfo.CreateStorage.DOGAMID,id);
@@ -36,6 +38,8 @@ public class DogamDaoImpl implements DogamDao {
         values.put(StorageInfo.CreateStorage.DOGAMPASSWORD,password);
         values.put(StorageInfo.CreateStorage.DOGAMURL, url);
         values.put(StorageInfo.CreateStorage.DOGAMSTATUS, String.valueOf(status));
+        if(isLiked) values.put(StorageInfo.CreateStorage.DOGAMISLIKED, 0);
+        else values.put(StorageInfo.CreateStorage.DOGAMISLIKED, 1);
         boolean result = mDB.update(StorageInfo.CreateStorage._DOGAMTABLENAME,values,"co_id=" + id,null) > 0;
         mDB.close();
         return result;
@@ -60,6 +64,11 @@ public class DogamDaoImpl implements DogamDao {
         dm.setTitle(c.getString(1));
         dm.setDescription(c.getString(2));
         dm.setPassword(c.getString(3));
+        dm.setUrl(c.getString(4));
+        if(c.getInt(5) == 0) dm.setLiked(true);
+        else dm.setLiked(false);
+        dm.setStatus(DogamStatus.valueOf(c.getString(6)));
+
         c.close();
         mDB.close();
 
@@ -76,7 +85,10 @@ public class DogamDaoImpl implements DogamDao {
         dm.setTitle(c.getString(1));
         dm.setDescription(c.getString(2));
         dm.setPassword(c.getString(3));
-        dm.setStatus(DogamStatus.valueOf(c.getString(4)));
+        dm.setUrl(c.getString(4));
+        if(c.getInt(5) == 0) dm.setLiked(true);
+        else dm.setLiked(false);
+        dm.setStatus(DogamStatus.valueOf(c.getString(6)));
         c.close();
         mDB.close();
 
@@ -96,7 +108,9 @@ public class DogamDaoImpl implements DogamDao {
             result[i].setDescription(c.getString(2));
             result[i].setPassword(c.getString(3));
             result[i].setUrl(c.getString(4));
-            result[i].setStatus(DogamStatus.valueOf(c.getString(5)));
+            if(c.getInt(5) == 0) result[i].setLiked(true);
+            else result[i].setLiked(false);
+            result[i].setStatus(DogamStatus.valueOf(c.getString(6)));
             c.moveToNext();
         }
         c.close();

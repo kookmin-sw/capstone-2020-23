@@ -30,6 +30,7 @@ import com.capstone.moayo.adapter.ResultCenterRecyclerAdapter;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
+import com.capstone.moayo.service.ServiceFactory;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
@@ -51,12 +52,15 @@ public class ResultActivity extends AppCompatActivity {
 
     private PostService postService;
     private SearchService searchService;
+    private CategoryService categoryService;
+
     private AVLoadingIndicatorView progressBar;
 
     private List<InstantPost> searchPost;
     private List<PostDto> savePost;
 
     private int doubleClickFlag = 0;
+    private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
 
     @Override
@@ -66,6 +70,7 @@ public class ResultActivity extends AppCompatActivity {
 
         postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
         searchPost = new ArrayList<>();
         savePost = new ArrayList<>();
@@ -101,6 +106,52 @@ public class ResultActivity extends AppCompatActivity {
 
         // 리사이클러뷰에 객체 지정.
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
+        saved_adapter.setOnItemClickListener(new ResultTopRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                save_double_flag++;
+                Handler handler = new Handler();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if(save_double_flag == 1) {
+                            PostDto postDto = savePost.get(position);
+                            Intent viewIntent = new Intent("android.intent.action.VIEW",
+                                    Uri.parse("https://www.instagram.com/p/" + postDto.getUrl()));
+                            v.getContext().startActivity(viewIntent);
+                        }
+                        save_double_flag = 0;
+                    }
+                };
+
+                if(save_double_flag == 1) {
+                    handler.postDelayed(runnable, CLICK_DELAY);
+                } else if (save_double_flag == 2) {
+                    save_double_flag = 0;
+                    PostDto postDto = savePost.get(position);
+                    Callable<String> callable = () -> postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
+                    AsyncCallback<String> callback = new AsyncCallback<String>() {
+                        @Override
+                        public void onResult(String result) {
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                            savePost.remove(postDto);
+                            saved_adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void exceptionOccured(Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    };
+                    new AsyncExecutor<String>().setCallback(callback).setCallable(callable).execute();
+                }
+            }
+        });
         saved_recycler.setAdapter(saved_adapter);
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.activity_result_pb_circle);
@@ -186,6 +237,7 @@ public class ResultActivity extends AppCompatActivity {
                         public void onResult(PostDto result) {
                             savePost.add(result);
                             saved_adapter.setItems((ArrayList<PostDto>) savePost);
+                            selectCategory.setUrl(result.getImgUrl());
                             saved_adapter.notifyDataSetChanged();
 
                             if (savePost.isEmpty()) {
@@ -361,7 +413,6 @@ public class ResultActivity extends AppCompatActivity {
         savePost.clear();
         searchPost.clear();
         searchService.initCache();
-
         super.onDestroy();
     }
 }

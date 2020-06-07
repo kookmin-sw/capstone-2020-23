@@ -85,7 +85,7 @@ public class ConcreteCategoryService implements CategoryService {
                 CategoryDto categoryDto = category.toCategoryDto();
                 categoryDtoList.add(categoryDto);
             }
-            Log.d("found", categoryDtoList.toString());
+//            Log.d("found", categoryDtoList.toString());
             return categoryDtoList;
         } catch (NoSuchCategoryException | NoSuchNodeException | NotRootException e) {
             Log.d("error in service",e.toString());

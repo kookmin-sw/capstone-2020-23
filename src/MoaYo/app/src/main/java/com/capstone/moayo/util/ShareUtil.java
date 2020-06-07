@@ -16,7 +16,6 @@ import com.capstone.moayo.service.dto.PostDto;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class ShareUtil {
         ModelForm form = new ModelForm();
 
         DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription()+";"+categoryDto.getUrl(), status, categoryDto.getPassword(), categoryDto.getWriter());
-        dogamModel.setDate(new Timestamp(System.currentTimeMillis()));
+        dogamModel.setDate(null);
         dogamModel.setLike(categoryDto.getLike());
         form.setDogamModel(dogamModel);
 
@@ -95,10 +94,10 @@ public class ShareUtil {
         }
         switch (dogamModel.getStatus()) {
             case 0:
-                dogam.setStatus(DogamStatus.Shared_Immutable);
+                dogam.setStatus(DogamStatus.Shared_Mutable);
                 break;
             case 1:
-                dogam.setStatus(DogamStatus.Shared_Mutable);
+                dogam.setStatus(DogamStatus.Shared_Immutable);
         }
 
         Timestamp ts = dogamModel.getDate();
@@ -110,7 +109,7 @@ public class ShareUtil {
     // convert PostDto -> postModel & categoryPostModel
     private static void convertPost(List<PostModel> postModels, List<CategoryPostModel> categoryPostModels, int dogamId, CategoryNodeDto categoryNodeDto) {
         for(PostDto postDto : categoryNodeDto.getPosts()) {
-            postModels.add(new PostModel(postDto.getId(), postDto.getUrl(), postDto.getImgUrl(), postDto.getHashtag()));
+            postModels.add(new PostModel(postDto.getId(), postDto.getUrl(), postDto.getImgUrl(), postDto.getHashtag(), postDto.getLike()));
             categoryPostModels.add(new CategoryPostModel(dogamId, categoryNodeDto.getId(), postDto.getId()));
 
         }
@@ -121,7 +120,7 @@ public class ShareUtil {
         for(PostModel postModel : postModels) {
             for(CategoryPostModel categoryPostModel : categoryPostModels) {
                 if(categoryPostModel.getCategoryId() == nodeId && categoryPostModel.getPostId() == postModel.getId()) {
-                    nodeDto.getPosts().add(new PostDto(postModel.getImgUrl(), postModel.getUrl(), postModel.getHashtag(), 0, nodeId, categoryPostModel.getDogamId()));
+                    nodeDto.getPosts().add(new PostDto(postModel.getImgUrl(), postModel.getUrl(), postModel.getHashtag(), postModel.getLike(), nodeId, categoryPostModel.getDogamId()));
                 }
             }
         }

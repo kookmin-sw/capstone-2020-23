@@ -75,6 +75,7 @@ public final class StorageInfo{
         public static final String DOGAMPASSWORD = "co_password";
         public static final String DOGAMSTATUS = "co_status";
         public static final String DOGAMURL = "co_url";
+        public static final String DOGAMISLIKED = "co_isLiked";
         public static final String _DOGAMTABLENAME = "tb_dogamlist";
         public static final String _DOGAMCREATE = "create table if not exists " + _DOGAMTABLENAME + "(" +
                 DOGAMID + " integer primary key autoincrement, " +
@@ -82,6 +83,7 @@ public final class StorageInfo{
                 DOGAMDESCRIPTION + " text, " +
                 DOGAMPASSWORD + " text, " +
                 DOGAMURL + " text, " +
+                DOGAMISLIKED + " integer, " +
                 DOGAMSTATUS + " integer);";
     }
 }

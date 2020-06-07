@@ -134,7 +134,12 @@ public class NewShareActivity extends AppCompatActivity {
                 share_category.setDescription(content.getText().toString());
 
                 //TODO: 도감 공유 백엔드 통신
-                Callable<String> createCall = () -> shareService.registerDogam(share_category, 1);
+                Callable<String> createCall = null;
+                if(isMutable)
+                    createCall = () -> shareService.registerDogam(share_category, 0);
+                else
+                    createCall = () -> shareService.registerDogam(share_category, 1);
+
                 AsyncCallback<String> createCallback = new AsyncCallback<String>() {
                     @Override
                     public void onResult(String result) {

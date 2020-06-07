@@ -46,6 +46,7 @@ public class CategoryDto implements Serializable {
         category.setStatus(status);
         category.setWriter(writer);
         category.setUrl(url);
+        category.setLiked(isLiked);
         return category;
     }
 
