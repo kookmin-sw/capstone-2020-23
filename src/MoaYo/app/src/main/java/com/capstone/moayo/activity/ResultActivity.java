@@ -67,6 +67,7 @@ public class ResultActivity extends BaseActivity {
     private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
 
+    private AsyncExecutor saveExecutor, searchExecutor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,7 +195,7 @@ public class ResultActivity extends BaseActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
+        saveExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
 
         // 검색 게시물 리사이클러뷰
@@ -296,7 +297,7 @@ public class ResultActivity extends BaseActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<InstantPost>>(){
+        searchExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<InstantPost>>(){
             @Override
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
@@ -337,7 +338,7 @@ public class ResultActivity extends BaseActivity {
 
                         }
                     };
-                    new AsyncExecutor<ArrayList<InstantPost>>(){
+                    searchExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<InstantPost>>(){
                         @Override
                         protected void onProgressUpdate(Void... values) {
                             super.onProgressUpdate(values);
@@ -429,6 +430,8 @@ public class ResultActivity extends BaseActivity {
         savePost.clear();
         searchPost.clear();
         searchService.initCache();
+        saveExecutor.cancel(true);
+        searchExecutor.cancel(true);
         super.onDestroy();
     }
 }
