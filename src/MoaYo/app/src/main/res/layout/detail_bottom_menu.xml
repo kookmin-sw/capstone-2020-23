@@ -52,8 +52,7 @@
             android:gravity="center"
             android:text="도감 수정"
             android:textColor="@drawable/click_text"
-            android:textSize="20dp"
-            android:id="@+id/detail_btn_update" />
+            android:textSize="20dp" />
       
         <View
             android:layout_width="match_parent"
