@@ -1,7 +1,10 @@
 package com.capstone.moayo.activity;
 
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -10,19 +13,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.CustomDialog;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
@@ -36,11 +41,10 @@ import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 
-public class BookDetailActivity extends BaseActivity implements View.OnClickListener {
+public class BookDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView toolbarTitle;
     private TextView detail_text;
@@ -56,6 +60,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
     private CategoryService categoryService;
     private ShareService shareService;
+
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +134,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean onOptionsItemSelected(MenuItem item) {
 
         //menu.xml에서 지정한 item 이벤트 추가
@@ -143,6 +150,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
                 updateBtn = bottomSheetView.findViewById(R.id.detail_btn_update);
                 updateBtn.setOnClickListener(this);
+
 
                 deleteBtn = bottomSheetView.findViewById(R.id.detail_btn_delete);
                 deleteBtn.setOnClickListener(this);
@@ -204,11 +212,12 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 Intent intent_update = new Intent(BookDetailActivity.this, BookFormActivity.class);
                 intent_update.putExtra("category", category);
                 startActivity(intent_update);
-
+                bottomSheetDialog.dismiss();
 
                 break;
 
             case R.id.detail_btn_delete:
+                bottomSheetDialog.dismiss();
                 //TODO: 도감 삭제 후 BookManage 화면으로 전환
                 Callable<String> callable = () -> categoryService.deleteDogam(category.getId());
 
@@ -256,6 +265,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 Intent intent_share = new Intent(BookDetailActivity.this, NewShareActivity.class);
                 intent_share.putExtra("target_category", category);
                 startActivity(intent_share);
+                bottomSheetDialog.dismiss();
 
                 break;
 
@@ -296,35 +306,48 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.detail_btn_cancel:
                 //TODO: PASSWORD 확인 후 공유도감 삭제(공유취소)
 
-                EditText edittext = new EditText(this);
-                edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                bottomSheetDialog.dismiss();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("공유도감 삭제");
-                builder.setMessage("도감의 비밀번호를 입력하세요.");
-                builder.setView(edittext);
-                builder.setPositiveButton("입력",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
-                            }
-                        });
-                builder.setNegativeButton("취소",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        });
-                builder.show();
+                final View customLayout = getLayoutInflater().inflate(R.layout.dialog_password, null);
+                builder.setView(customLayout);
 
+                EditText dialog_password = customLayout.findViewById(R.id.dialog_password);
+                dialog_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                TextView title = customLayout.findViewById(R.id.dialog_title);
+                title.setText("공유도감 삭제");
+                Button password_bt = customLayout.findViewById(R.id.password_bt);
+
+                password_bt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String password = dialog_password.getText().toString();
+
+                        if(!password.isEmpty()) {
+                            Toast.makeText(getApplicationContext(),dialog_password.getText().toString() ,Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "비밀먼호를 입력해주세요",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+                dialog = builder.create();
+
+                WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                params.y = -30;
+                dialog.getWindow().setAttributes(params);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.show();
 
             break;
 
             case R.id.detail_btn_back:
                 bottomSheetDialog.dismiss();
                 break;
-
-
 
         }
     }

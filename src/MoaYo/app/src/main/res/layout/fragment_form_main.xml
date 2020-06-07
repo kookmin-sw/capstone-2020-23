@@ -46,7 +46,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="30dp"
-                android:hint="도감 명을 입력하세요." />
+                android:hint="도감 명을 입력하세요."
+                android:singleLine="true"
+                android:lines="1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

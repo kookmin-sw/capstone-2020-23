@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".BaseApplication"
         android:usesCleartextTraffic="true">
 
         <activity android:name=".TestActivity">
@@ -47,9 +46,11 @@
             android:theme="@style/BackGray"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity android:name=".activity.ShareMenuActivity" />
+        <activity android:name=".activity.ShareMenuActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
-        <activity android:name=".activity.NewShareActivity" />
+        <activity android:name=".activity.NewShareActivity"
+            android:theme="@style/BackGray"/>
 
         <activity android:name=".activity.AboutActivity" />
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheetContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,12 +26,11 @@
         android:text="@string/create_Book"
         android:textSize="20dp"
         android:textColor="@drawable/click_text"
-        android:fontFamily="@font/nanum__normal"
         android:drawableLeft="@drawable/click_create_button_left"
         android:drawablePadding="10dp"
         android:background="@drawable/click_button"
-        style="?android:attr/borderlessButtonStyle"
-        android:id="@+id/createBook" />
+        android:id="@+id/createBook"
+        style="?android:attr/borderlessButtonStyle" />
 
     <View
         android:layout_width="match_parent"
@@ -49,7 +47,6 @@
         android:text="@string/share_Book"
         android:textSize="20dp"
         android:textColor="@drawable/click_text"
-        android:fontFamily="@font/nanum__normal"
         android:drawableLeft="@drawable/click_share_button_left"
         android:drawablePadding="10dp"
         android:background="@drawable/click_button"
