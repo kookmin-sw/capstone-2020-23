@@ -62,6 +62,7 @@ public class ResultActivity extends AppCompatActivity {
     private int doubleClickFlag = 0;
     private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
+    private boolean isScrolled = false;
 
     private AsyncExecutor saveExecutor, searchExecutor;
     @Override
@@ -306,6 +307,10 @@ public class ResultActivity extends AppCompatActivity {
         result_recycler.setOnScrollChangeListener(new RecyclerView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(isScrolled) {
+                    Toast.makeText(getApplicationContext(), "도감을 가져오는 중입니다...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 //                if(!result_recycler.canScrollVertically(-1)) {
 //                    Toast.makeText(getApplicationContext(), "최상단", Toast.LENGTH_SHORT).show();
 //                } else if(!result_recycler.canScrollVertically(1)) {
@@ -320,13 +325,14 @@ public class ResultActivity extends AppCompatActivity {
                             result_adapter.setItems((ArrayList<InstantPost>) searchPost);
                             result_adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
+                            isScrolled = false;
                             for(InstantPost post : result) Log.d("found result", post.toString());
 
                         }
 
                         @Override
                         public void exceptionOccured(Exception e) {
-
+                            e.printStackTrace();
                         }
 
                         @Override
@@ -341,7 +347,7 @@ public class ResultActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.VISIBLE);
                         }
                     }.setCallable(callable1).setCallback(callback1).execute();
-                    Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "게시물을 더 가져옵니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

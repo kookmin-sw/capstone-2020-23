@@ -45,6 +45,8 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
 
     boolean isMenuOpen = false;
 
+    private AsyncExecutor shareExecutor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,11 +198,31 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
                                 case "닉네임":
                                     search_type_num = 2;
                             }
-
                             //TODO : 도감 검색 백엔드 통신.
-//                                adapter.setItems((ArrayList<CategoryDto>) result);
-//                                adapter.notifyDataSetChanged();
-                            Toast.makeText(getApplicationContext(), type+ " - " + keyword ,Toast.LENGTH_LONG).show();
+                            Callable<List<CategoryDto>> callable;
+                            if(search_type_num==1) callable = () -> shareService.findDogamByKeyword(keyword);
+                            else callable = () -> shareService.findDogamByWriter(keyword);
+
+                            AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
+                                @Override
+                                public void onResult(List<CategoryDto> result) {
+                                    adapter.setItems((ArrayList<CategoryDto>) result);
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(getApplicationContext(), String.format("%s '%s' 관련 도감입니다.", type, keyword), Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void exceptionOccured(Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void cancelled() {
+
+                                }
+                            };
+
+                            shareExecutor = (AsyncExecutor) new AsyncExecutor<List<CategoryDto>>().setCallable(callable).setCallback(callback).execute();
                             dialog.dismiss();
                         } else {
                             Toast.makeText(getApplicationContext(), "검색어를 입력해주세요",Toast.LENGTH_LONG).show();
