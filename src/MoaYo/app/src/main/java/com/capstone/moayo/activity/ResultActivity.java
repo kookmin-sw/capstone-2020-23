@@ -66,6 +66,7 @@ public class ResultActivity extends AppCompatActivity {
     private int doubleClickFlag = 0;
     private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
+    private boolean isScrolled = false;
 
     private AsyncExecutor saveExecutor, searchExecutor;
     @Override
@@ -311,6 +312,12 @@ public class ResultActivity extends AppCompatActivity {
         result_recycler.setOnScrollChangeListener(new RecyclerView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if(isScrolled) {
+                    Toast.makeText(getApplicationContext(), "도감을 가져오는 중입니다...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(!result_recycler.canScrollVertically(1)) {
                     Callable<ArrayList<InstantPost>> callable1 = () -> (ArrayList<InstantPost>) searchService.requestData(searchNode.getParent(), searchNode);
                     AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
@@ -321,7 +328,7 @@ public class ResultActivity extends AppCompatActivity {
                             result_adapter.notifyDataSetChanged();
 
                             progressBar.setVisibility(View.GONE);
-//                            result_recycler.setVisibility(View.VISIBLE);
+                            isScrolled = false;
 
                             for(InstantPost post : result) Log.d("found result", post.toString());
 
@@ -329,7 +336,7 @@ public class ResultActivity extends AppCompatActivity {
 
                         @Override
                         public void exceptionOccured(Exception e) {
-
+                            e.printStackTrace();
                         }
 
                         @Override
@@ -387,16 +394,6 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-//    private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
-//        //첫번째 index의 dummy data 가져옴
-//        if(node.getId() == 1) {
-//            return new CategoryData_Dummy().getItems().get(0).getRootNode();
-//        } else {
-//            return new CategoryData_Dummy().getItems().get(3).getRootNode();
-//        }
-//
-//    }
-
 
     //액션바에 menu_resul.xml 내용 지정
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -421,9 +418,6 @@ public class ResultActivity extends AppCompatActivity {
             }
             default:
                 onBackPressed();
-//                Intent intent = new Intent(ResultActivity.this, BookDetailActivity.class);
-//                intent.putExtra("category", selectCategory);
-//                startActivity(intent);
                 return true;
         }
 

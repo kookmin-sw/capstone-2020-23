@@ -119,13 +119,70 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public List<CategoryDto> findDogamByWriter(String writer) {
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        try {
+            List<DogamModel> dogamModels = shareStorage.retrieveByWriter(writer);
+            if(dogamModels.isEmpty()) throw new Exception();
 
-        return null;
+            for(DogamModel dogamModel : dogamModels) {
+                String[] de_url = dogamModel.getDescription().split(";");
+                CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
+                categoryDto.setWriter(dogamModel.getWriter());
+                if(de_url.length != 1)
+                    categoryDto.setUrl(de_url[1]);
+                if(dogamModel.getStatus() == 0) categoryDto.setStatus(DogamStatus.Shared_Mutable);
+                else categoryDto.setStatus(DogamStatus.Shared_Immutable);
+
+                categoryDto.setLike(dogamModel.getLike());
+                Timestamp ts = dogamModel.getDate();
+                if(ts != null)
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
+
+                DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
+                if(mapping != null) categoryDto.setLiked(mapping.isLiked());
+                else categoryDto.setLiked(false);
+
+                categoryDtoList.add(categoryDto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryDtoList;
     }
 
     @Override
     public List<CategoryDto> findDogamByKeyword(String keyword) {
-        return null;
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        try {
+            List<DogamModel> dogamModels = shareStorage.retrieveByKeyword(keyword);
+            if(dogamModels.isEmpty()) throw new Exception();
+
+            for(DogamModel dogamModel : dogamModels) {
+                String[] de_url = dogamModel.getDescription().split(";");
+                CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
+                categoryDto.setWriter(dogamModel.getWriter());
+                if(de_url.length != 1)
+                    categoryDto.setUrl(de_url[1]);
+                if(dogamModel.getStatus() == 0) categoryDto.setStatus(DogamStatus.Shared_Mutable);
+                else categoryDto.setStatus(DogamStatus.Shared_Immutable);
+
+                categoryDto.setLike(dogamModel.getLike());
+                Timestamp ts = dogamModel.getDate();
+                if(ts != null)
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
+
+                DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
+                if(mapping != null) categoryDto.setLiked(mapping.isLiked());
+                else categoryDto.setLiked(false);
+
+                categoryDtoList.add(categoryDto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryDtoList;
     }
 
     @Override
@@ -160,9 +217,9 @@ public class ConcreteShareService implements ShareService {
     public List<CategoryDto> sortByLike(List<CategoryDto> categoryDtos) {
         categoryDtos.sort((o1, o2) -> {
             if(o1.getLike() > o2.getLike())
-                return 1;
-            else
                 return -1;
+            else
+                return 1;
         });
 
         return categoryDtos;
@@ -172,14 +229,25 @@ public class ConcreteShareService implements ShareService {
     public List<CategoryDto> sortByTime(List<CategoryDto> categoryDtos) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         categoryDtos.sort((o1, o2) -> {
-            try {
-                Date date1 = format.parse(o1.getTime());
-                Date date2 = format.parse(o2.getTime());
-                return date1.compareTo(date2);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            //                Date date1 = format.parse(o1.getTime());
+//                Date date2 = format.parse(o2.getTime());
+            if(o1.getTime() != null && o2.getTime() != null){
+                String[] time = o1.getTime().split("T");
+                Date date1 = Timestamp.valueOf(time[0] + " " + time[1]);
+                time = o2.getTime().split("T");
+                Date date2 = Timestamp.valueOf(time[0] + " " + time[1]);
+                return date1.compareTo(date2)*-1;
+            }else{
+                if(o1.getTime() != null || o2.getTime() != null){
+                    if(o1.getTime() != null){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                }else{
+                    return 0;
+                }
             }
-            return  0;
         });
         return categoryDtos;
     }

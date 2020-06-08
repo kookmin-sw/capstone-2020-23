@@ -16,7 +16,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
-import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.tabs.TabLayout;
 import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
@@ -33,9 +32,9 @@ public class BookManageActivity extends AppCompatActivity implements View.OnClic
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
     private CategoryService categoryService;
-    private TextView numOfBook, createTV, numOfShare, numOfLike;
+    private TextView numOfBook, createTV, numOfShared, numOfSharing;
     private TabLayout tabLayout;
-    private ArrayList<CategoryDto> userBookData, userSharedData, userLikedData;
+    private ArrayList<CategoryDto> userBookData, userSharingData, userSharedData;
     private LinearLayout shareLayout, likeLayout, totalLayout;
 
     @Override
@@ -62,10 +61,11 @@ public class BookManageActivity extends AppCompatActivity implements View.OnClic
 
         numOfBook = (TextView) findViewById(R.id.num_of_book);
         createTV = (TextView) findViewById(R.id.activity_manage_tv_create);
-        numOfShare = (TextView) findViewById(R.id.num_of_share);
+        numOfShared = (TextView) findViewById(R.id.num_of_shared);
+        numOfSharing = findViewById(R.id.num_of_sharing);
 
-        shareLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_share);
-        likeLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_like);
+        shareLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_shared);
+        likeLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_sharing);
         totalLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_total);
 
         //TabLayout
@@ -91,20 +91,25 @@ public class BookManageActivity extends AppCompatActivity implements View.OnClic
                 //유저가 가진 도감의 총 개수 표시.
                 numOfBook.setText(Integer.toString(userBookData.size()));
 
+                userSharingData = new ArrayList<>();
                 userSharedData = new ArrayList<>();
+
                 userBookData.forEach(obj -> {
-                    if(obj.getStatus() == DogamStatus.Sharing) {
-                        userSharedData.add(obj);
+                    switch (obj.getStatus()) {
+                        case Sharing:
+                            userSharingData.add(obj);
+                            break;
+                        case Sharing_Immutable:
+                        case Sharing_Mutable:
+                            userSharedData.add(obj);
+                            break;
+                        default:
+                            break;
                     }
                 });
-                numOfShare.setText(Integer.toString(userSharedData.size()));
 
-                userLikedData = new ArrayList<>();
-                userLikedData.forEach(obj -> {
-                    if(obj.isLiked()) userLikedData.add(obj);
-                });
-                if(!userLikedData.isEmpty())
-                    numOfLike.setText(Integer.toString(userLikedData.size()));
+                numOfSharing.setText(Integer.toString(userSharingData.size()));
+                numOfShared.setText(Integer.toString(userSharedData.size()));
             }
 
             @Override
@@ -139,13 +144,19 @@ public class BookManageActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.activity_manage_ll_share:
+            case R.id.activity_manage_ll_shared:
+                pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userSharedData);
+                viewPager.setAdapter(pagerAdapter);
                 break;
 
-            case R.id.activity_manage_ll_like:
+            case R.id.activity_manage_ll_sharing:
+                pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userSharingData);
+                viewPager.setAdapter(pagerAdapter);
                 break;
 
             case R.id.activity_manage_ll_total:
+                pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
+                viewPager.setAdapter(pagerAdapter);
                 break;
 
             case R.id.activity_manage_tv_create:
@@ -183,10 +194,9 @@ public class BookManageActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onResume() {
-        super.onResume();
         userBookData = (ArrayList<CategoryDto>) categoryService.findAll();
         pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
         viewPager.setAdapter(pagerAdapter);
-
+        super.onResume();
     }
 }
