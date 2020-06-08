@@ -59,31 +59,7 @@
                 android:textColor="@color/darkGray"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/activity_manage_ll_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="18dp"
-                android:textColor="@color/colorBlack"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="likes"
-                android:textSize="18dp"
-                android:textColor="@color/darkGray"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/activity_manage_ll_share"
+            android:id="@+id/activity_manage_ll_sharing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -94,19 +70,47 @@
             android:background="?attr/selectableItemBackground">
 
             <TextView
-                android:id="@+id/num_of_share"
+                android:id="@+id/num_of_sharing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="sharing"
+                android:textColor="@color/darkGray"
+                android:textSize="18dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/activity_manage_ll_shared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/num_of_shared"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="18dp"
                 android:textColor="@color/colorBlack"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="share"
-                android:textSize="18dp"
-                android:textColor="@color/darkGray"/>
+                android:text="shared"
+                android:textColor="@color/darkGray"
+                android:textSize="18dp" />
         </LinearLayout>
     </LinearLayout>
 
