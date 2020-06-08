@@ -20,6 +20,18 @@ public interface ShareAPI {
     @GET("/getDogamList")
     Call<DogamModel[]> requestDogamAll();
 
+    @GET("/getDogamWriterName")
+    Call<DogamModel[]> requestDogamByWriter(@Query("writer") String wirter);
+
+    @GET("getDogamKeyword")
+    Call<DogamModel[]> requestDogamByKeyword(@Query("keyword") String keyword);
+
     @GET("/deleteDogam")
     Call<ShareResponse> requsetDelete(@Query("dogamId") int dogamId);
+
+    @GET("/dogamLike")
+    Call<ShareResponse> requestDogamLike(@Query("dogamId") int dogamId);
+
+    @GET("/dogamDislike")
+    Call<ShareResponse> requestDogamDisLike(@Query("dogamId") int dogamId);
 }

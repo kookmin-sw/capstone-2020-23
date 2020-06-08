@@ -16,6 +16,50 @@
         android:background="@drawable/round_background_white">
 
         <Button
+            android:id="@+id/detail_btn_share"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/click_button"
+            android:gravity="center"
+            android:text="도감 공유"
+            android:textColor="@drawable/click_text"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/detail_btn_sharing"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/click_button"
+            android:gravity="center"
+            android:text="도감 저장"
+            android:textColor="@drawable/click_text"
+            android:textSize="20dp" />
+      
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
+      
+        <Button
+            android:id="@+id/detail_btn_update"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="1dp"
+            android:background="@drawable/click_button"
+            android:gravity="center"
+            android:text="도감 수정"
+            android:textColor="@drawable/click_text"
+            android:textSize="20dp" />
+      
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="1dp"
@@ -27,28 +71,6 @@
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_delete"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="1dp"
-            android:gravity="center"
-            android:text="도감 수정"
-            android:textSize="20dp"
-            android:textColor="@drawable/click_text"
-            android:background="@drawable/click_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/detail_btn_update" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:text="도감 공유"
-            android:textSize="20dp"
-            android:textColor="@drawable/click_text"
-            android:background="@drawable/click_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/detail_btn_share"/>
 
         <Button
             android:layout_width="match_parent"
@@ -60,6 +82,11 @@
             android:background="@drawable/click_button"
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/detail_btn_like"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
 
         <Button
             android:layout_width="match_parent"

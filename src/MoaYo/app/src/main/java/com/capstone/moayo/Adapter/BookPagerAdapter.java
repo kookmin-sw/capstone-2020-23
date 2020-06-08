@@ -1,5 +1,6 @@
 package com.capstone.moayo.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -18,7 +19,6 @@ public class BookPagerAdapter extends FragmentStatePagerAdapter {
 //   페이지네이터의 역할 수행
 
     private ArrayList<ArrayList<CategoryDto>> pages;
-
 
 
     //페이지네이션 로직.

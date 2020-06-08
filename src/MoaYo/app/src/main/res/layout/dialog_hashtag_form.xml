@@ -90,13 +90,15 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/dialog_tag_et_input"
-            android:layout_width="359dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/direct"
+            android:singleLine="true"
+            android:lines="1"
             app:met_errorColor="@color/error"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="@string/directFloating"

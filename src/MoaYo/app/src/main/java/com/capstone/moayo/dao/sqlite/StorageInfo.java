@@ -75,6 +75,9 @@ public final class StorageInfo{
         public static final String DOGAMPASSWORD = "co_password";
         public static final String DOGAMSTATUS = "co_status";
         public static final String DOGAMURL = "co_url";
+        public static final String DOGAMISLIKED = "co_isLiked";
+        public static final String DOGAMWRITER = "co_writer";
+        public static final String DOGAMSHARED = "co_sharedDogamId";
         public static final String _DOGAMTABLENAME = "tb_dogamlist";
         public static final String _DOGAMCREATE = "create table if not exists " + _DOGAMTABLENAME + "(" +
                 DOGAMID + " integer primary key autoincrement, " +
@@ -82,6 +85,18 @@ public final class StorageInfo{
                 DOGAMDESCRIPTION + " text, " +
                 DOGAMPASSWORD + " text, " +
                 DOGAMURL + " text, " +
-                DOGAMSTATUS + " integer);";
+                DOGAMISLIKED + " integer, " +
+                DOGAMSTATUS + " integer, " +
+                DOGAMWRITER + " text, " +
+                DOGAMSHARED + " integer);";
+
+        // tb_dogam_Liked
+        public static final String LIKEID = "co_dogamId";
+        public static final String ISLIKED = "co_isLiked";
+        public static final String _DOGAMLIKENAME = "tb_dogamLiked";
+        public static final String _DLCREATE = "create table if not exists " + _DOGAMLIKENAME + "(" +
+                LIKEID + " integer, " +
+                ISLIKED + " integer);";
+
     }
 }

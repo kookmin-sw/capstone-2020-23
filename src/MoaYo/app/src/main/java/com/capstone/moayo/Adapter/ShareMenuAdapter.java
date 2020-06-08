@@ -1,7 +1,9 @@
 package com.capstone.moayo.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.R;
 import com.capstone.moayo.activity.BookDetailActivity;
+import com.capstone.moayo.service.ShareService;
+import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.util.Async.AsyncCallback;
+import com.capstone.moayo.util.Async.AsyncExecutor;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.ViewHolder> {
 
     private ArrayList<CategoryDto> sharedBooks = new ArrayList<>();
+    private ShareService shareService = ServiceFactoryCreator.getInstance().requestShareService(null);
+    Callable<Integer> callable;
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -52,6 +61,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
         return vh ;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ShareMenuAdapter.ViewHolder vh, int position) {
 
@@ -63,21 +73,47 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
 
         vh.nickName.setText(item.getTitle());
         vh.comment.setText(item.getDescription());
+        vh.like_count.setText(Integer.toString(item.getLike()));
+        if(item.isLiked()) vh.like_btn.setSelected(true);
+        else vh.like_btn.setSelected(false);
         vh.like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: 도감 좋아요 백엔드통신
 
                 //테스트 보여주기 용 로직.
                 if(vh.like_btn.isSelected()) {
-                    vh.like_btn.setSelected(false);
-                    vh.like_count.setText("0");
+                    callable = () -> shareService.updateLike(item.getId(), false);
                 } else {
-                    vh.like_btn.setSelected(true);
-                    vh.like_count.setText("1");
+                    callable = () -> shareService.updateLike(item.getId(), true);
 //                    vh.like_count.setText(String.valueOf(Integer.parseInt(vh.like_count.getText().toString()) + 1));
                 }
+
+                AsyncCallback<Integer> likeCallback = new AsyncCallback<Integer>() {
+                    @Override
+                    public void onResult(Integer result) {
+                        if(vh.like_btn.isSelected()) {
+                            vh.like_btn.setSelected(false);
+                            vh.like_count.setText(Integer.toString(Integer.parseInt(vh.like_count.getText().toString()) - 1));
+                        } else {
+                            vh.like_btn.setSelected(true);
+                            vh.like_count.setText(Integer.toString(Integer.parseInt(vh.like_count.getText().toString()) + 1));
+                        }
+                    }
+
+                    @Override
+                    public void exceptionOccured(Exception e) {
+                        Log.e("error in shareMenuAdapter", e.toString());
+                    }
+
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+
+                new AsyncExecutor<Integer>().setCallable(callable).setCallback(likeCallback).execute();
                 
-                //TODO: 도감 좋아요 백엔드통신
             }
         });
 

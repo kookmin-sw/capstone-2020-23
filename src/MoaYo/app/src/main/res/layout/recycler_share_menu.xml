@@ -9,8 +9,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="3dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,42 +20,48 @@
             <com.capstone.moayo.layout.SquareRatioLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="3.5">
 
                 <ImageView
                     android:id="@+id/sharedBookPost"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="5dp"
                     android:scaleType="centerCrop" />
 
             </com.capstone.moayo.layout.SquareRatioLayout>
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical"
-                android:layout_weight="7">
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="6.5">
 
                 <TextView
                     android:id="@+id/nickName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"/>
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"/>
 
                 <TextView
                     android:id="@+id/comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:textSize="12dp"/>
+                    android:layout_marginTop="25dp"
+                    android:lines="3"
+                    android:textSize="15dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    >
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="bottom">
+
                     <ImageButton
                         android:id="@+id/recycler_share_like"
                         android:layout_width="wrap_content"
@@ -65,26 +71,38 @@
 
                     <TextView
                         android:id="@+id/recycler_share_like_count"
-                        android:layout_width="15dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="24dp"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="bottom|center"
                         android:text="0"
                         android:textColor="@color/colorBlack"
-                        android:textSize="15dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
-                        android:gravity="center"
-                        android:layout_marginLeft="5dp"
+                        android:gravity="bottom"
                         android:layout_marginRight="10dp"
-                        android:text="likes"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="15dp" />
+                        android:text=" likes"
+                        android:textColor="@color/darkGray"
+                        android:textSize="13dp" />
+
                 </LinearLayout>
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/sharedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_gravity="bottom|end"
+                    android:gravity="bottom"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="2020.06.07"
+                    android:textColor="@color/lightGray"
+                    android:textSize="13dp" />
+
+            </FrameLayout>
 
         </LinearLayout>
 

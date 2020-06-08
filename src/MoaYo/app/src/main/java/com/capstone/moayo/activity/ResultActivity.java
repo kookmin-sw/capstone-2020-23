@@ -1,6 +1,7 @@
 package com.capstone.moayo.activity;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,26 +19,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookExpandableAdapter;
 import com.capstone.moayo.adapter.ResultTopRecyclerAdapter;
 import com.capstone.moayo.adapter.ResultCenterRecyclerAdapter;
 
-import com.capstone.moayo.data.CategoryData_Dummy;
-import com.capstone.moayo.entity.Post;
+import com.capstone.moayo.service.CategoryService;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.SearchService;
+import com.capstone.moayo.service.ServiceFactory;
 import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.service.dto.CategoryNodeDto;
 import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.PostDto;
-import com.capstone.moayo.service.dto.RespondForm;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -47,21 +45,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class ResultActivity extends BaseActivity {
+public class ResultActivity extends AppCompatActivity {
 
     private CategoryNodeDto searchNode;
     private CategoryDto selectCategory;
 
     private PostService postService;
     private SearchService searchService;
+    private CategoryService categoryService;
+
     private AVLoadingIndicatorView progressBar;
 
     private List<InstantPost> searchPost;
     private List<PostDto> savePost;
 
     private int doubleClickFlag = 0;
+    private int save_double_flag = 0;
     private final long  CLICK_DELAY = 250;
 
+    private AsyncExecutor saveExecutor, searchExecutor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,7 @@ public class ResultActivity extends BaseActivity {
 
         postService = ServiceFactoryCreator.getInstance().requestPostService(getApplicationContext());
         searchService = ServiceFactoryCreator.getInstance().requestSearchService(getApplicationContext());
+        categoryService = ServiceFactoryCreator.getInstance().requestCategoryService(getApplicationContext());
 
         searchPost = new ArrayList<>();
         savePost = new ArrayList<>();
@@ -104,6 +107,52 @@ public class ResultActivity extends BaseActivity {
 
         // 리사이클러뷰에 객체 지정.
         ResultTopRecyclerAdapter saved_adapter = new ResultTopRecyclerAdapter();
+        saved_adapter.setOnItemClickListener(new ResultTopRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                save_double_flag++;
+                Handler handler = new Handler();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if(save_double_flag == 1) {
+                            PostDto postDto = savePost.get(position);
+                            Intent viewIntent = new Intent("android.intent.action.VIEW",
+                                    Uri.parse("https://www.instagram.com/p/" + postDto.getUrl()));
+                            v.getContext().startActivity(viewIntent);
+                        }
+                        save_double_flag = 0;
+                    }
+                };
+
+                if(save_double_flag == 1) {
+                    handler.postDelayed(runnable, CLICK_DELAY);
+                } else if (save_double_flag == 2) {
+                    save_double_flag = 0;
+                    PostDto postDto = savePost.get(position);
+                    Callable<String> callable = () -> postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
+                    AsyncCallback<String> callback = new AsyncCallback<String>() {
+                        @Override
+                        public void onResult(String result) {
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                            savePost.remove(postDto);
+                            saved_adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void exceptionOccured(Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    };
+                    new AsyncExecutor<String>().setCallback(callback).setCallable(callable).execute();
+                }
+            }
+        });
         saved_recycler.setAdapter(saved_adapter);
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.activity_result_pb_circle);
@@ -142,7 +191,7 @@ public class ResultActivity extends BaseActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
+        saveExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
 
         // 검색 게시물 리사이클러뷰
@@ -183,12 +232,17 @@ public class ResultActivity extends BaseActivity {
                 }else if( doubleClickFlag == 2 ) {
                     doubleClickFlag = 0;
                     // todo 더블클릭 이벤트
+                    if(selectCategory.getStatus() == DogamStatus.Shared_Immutable || selectCategory.getStatus() == DogamStatus.Shared_Mutable) {
+                        Toast.makeText(getApplicationContext(), String.format("먼저 도감 '%s'를 저장해야 합니다.", selectCategory.getTitle()), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Callable<PostDto> callable = () -> postService.createPost(searchPost.get(position), searchNode.getId(),selectCategory.getId());
                     AsyncCallback<PostDto> callback = new AsyncCallback<PostDto>() {
                         @Override
                         public void onResult(PostDto result) {
                             savePost.add(result);
                             saved_adapter.setItems((ArrayList<PostDto>) savePost);
+                            selectCategory.setUrl(result.getImgUrl());
                             saved_adapter.notifyDataSetChanged();
 
                             if (savePost.isEmpty()) {
@@ -239,7 +293,7 @@ public class ResultActivity extends BaseActivity {
 
             }
         };
-        new AsyncExecutor<ArrayList<InstantPost>>(){
+        searchExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<InstantPost>>(){
             @Override
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
@@ -280,7 +334,7 @@ public class ResultActivity extends BaseActivity {
 
                         }
                     };
-                    new AsyncExecutor<ArrayList<InstantPost>>(){
+                    searchExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<InstantPost>>(){
                         @Override
                         protected void onProgressUpdate(Void... values) {
                             super.onProgressUpdate(values);
@@ -312,10 +366,18 @@ public class ResultActivity extends BaseActivity {
     //저장 게시물 요청.
     private ArrayList<PostDto> requestSavedPost(CategoryNodeDto node) {
         ArrayList<PostDto> foundPost = new ArrayList<>();
-        if(selectCategory.getStatus() == DogamStatus.Sharing || selectCategory.getStatus() == DogamStatus.NonShare)
-            foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
-        else
-            foundPost = (ArrayList<PostDto>) node.getPosts();
+        switch (selectCategory.getStatus()) {
+            case Sharing:
+            case NonShare:
+            case Sharing_Immutable:
+            case Sharing_Mutable:
+                foundPost = (ArrayList<PostDto>) postService.findPostByCategoryNodeId(node.getId());
+                break;
+            case Shared_Immutable:
+            case Shared_Mutable:
+                foundPost = (ArrayList<PostDto>) node.getPosts();
+                break;
+        }
         return foundPost;
     }
 
@@ -364,7 +426,8 @@ public class ResultActivity extends BaseActivity {
         savePost.clear();
         searchPost.clear();
         searchService.initCache();
-
+        saveExecutor.cancel(true);
+        searchExecutor.cancel(true);
         super.onDestroy();
     }
 }

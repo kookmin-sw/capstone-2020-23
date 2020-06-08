@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="my">70dp</dimen>
+    <dimen name="add">130dp</dimen>
+    <dimen name="sort">190dp</dimen>
+</resources>

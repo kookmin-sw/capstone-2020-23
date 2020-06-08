@@ -2,6 +2,7 @@ package com.capstone.moayo.util;
 
 import android.util.Pair;
 
+import com.capstone.moayo.entity.CategoryNode;
 import com.capstone.moayo.entity.Model.CategoryHashtagModel;
 import com.capstone.moayo.entity.Model.CategoryModel;
 import com.capstone.moayo.entity.Model.CategoryPostModel;
@@ -16,7 +17,6 @@ import com.capstone.moayo.service.dto.PostDto;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class ShareUtil {
         ModelForm form = new ModelForm();
 
         DogamModel dogamModel = new DogamModel(categoryDto.getId(), categoryDto.getTitle(), categoryDto.getDescription()+";"+categoryDto.getUrl(), status, categoryDto.getPassword(), categoryDto.getWriter());
-        dogamModel.setDate(new Timestamp(System.currentTimeMillis()));
+        dogamModel.setDate(null);
         dogamModel.setLike(categoryDto.getLike());
         form.setDogamModel(dogamModel);
 
@@ -69,7 +69,7 @@ public class ShareUtil {
         return form;
     }
 
-    public static CategoryDto convertFormToDogam(ModelForm form) {
+    public static CategoryDto convertFormToDogam(ModelForm form, boolean isLiked) {
         DogamModel dogamModel = form.getDogamModel();
         CategoryModel[] categoryModels = form.getCategoryModels();
         PostModel[] postModels = form.getPostModels();
@@ -95,22 +95,24 @@ public class ShareUtil {
         }
         switch (dogamModel.getStatus()) {
             case 0:
-                dogam.setStatus(DogamStatus.Shared_Immutable);
+                dogam.setStatus(DogamStatus.Shared_Mutable);
                 break;
             case 1:
-                dogam.setStatus(DogamStatus.Shared_Mutable);
+                dogam.setStatus(DogamStatus.Shared_Immutable);
         }
 
         Timestamp ts = dogamModel.getDate();
         dogam.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
         dogam.setLike(dogamModel.getLike());
+        dogam.setLiked(isLiked);
+        dogam.setWriter(dogamModel.getWriter());
         return dogam;
     }
 
     // convert PostDto -> postModel & categoryPostModel
     private static void convertPost(List<PostModel> postModels, List<CategoryPostModel> categoryPostModels, int dogamId, CategoryNodeDto categoryNodeDto) {
         for(PostDto postDto : categoryNodeDto.getPosts()) {
-            postModels.add(new PostModel(postDto.getId(), postDto.getUrl(), postDto.getImgUrl(), postDto.getHashtag()));
+            postModels.add(new PostModel(postDto.getId(), postDto.getUrl(), postDto.getImgUrl(), postDto.getHashtag(), postDto.getLike()));
             categoryPostModels.add(new CategoryPostModel(dogamId, categoryNodeDto.getId(), postDto.getId()));
 
         }
@@ -121,7 +123,7 @@ public class ShareUtil {
         for(PostModel postModel : postModels) {
             for(CategoryPostModel categoryPostModel : categoryPostModels) {
                 if(categoryPostModel.getCategoryId() == nodeId && categoryPostModel.getPostId() == postModel.getId()) {
-                    nodeDto.getPosts().add(new PostDto(postModel.getImgUrl(), postModel.getUrl(), postModel.getHashtag(), 0, nodeId, categoryPostModel.getDogamId()));
+                    nodeDto.getPosts().add(new PostDto(postModel.getImgUrl(), postModel.getUrl(), postModel.getHashtag(), postModel.getLike(), nodeId, categoryPostModel.getDogamId()));
                 }
             }
         }
@@ -168,8 +170,18 @@ public class ShareUtil {
 
             if(parent.getId() != p.second.getId())
                 parent.getLowLayer().add(p.second);
-        }
 
+            root.getLowLayer().sort((o1, o2) -> {
+                if(o1.getId() > o2.getId()) return 1;
+                else return -1;
+            });
+            for(CategoryNodeDto node : root.getLowLayer()) {
+                node.getLowLayer().sort((o1, o2) -> {
+                    if (o1.getId() > o2.getId()) return 1;
+                    else return -1;
+                });
+            }
+        }
         return root;
     }
 }

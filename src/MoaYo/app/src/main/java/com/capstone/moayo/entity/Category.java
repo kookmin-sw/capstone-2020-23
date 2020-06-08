@@ -22,6 +22,9 @@ public class Category{
     private DogamStatus status;
     private String url;
     private String writer;
+    private boolean isLiked;
+
+    private int sharedDogamId;
 
     private CategoryNode selectCategoryNode;
     private CategoryNode rootNode;
@@ -31,6 +34,8 @@ public class Category{
         status = DogamStatus.NonShare;
         this.writer = "";
         this.url = "https://image.flaticon.com/icons/png/512/130/130304.png";
+        this.isLiked = false;
+        sharedDogamId = 0;
     }
     public Category(String title, String description, String password, CategoryNode rootNode) {
         this();
@@ -51,6 +56,8 @@ public class Category{
         categoryDto.setStatus(status);
         categoryDto.setWriter(writer);
         categoryDto.setUrl(url);
+        categoryDto.setLiked(isLiked);
+        categoryDto.setSharedDogamId(sharedDogamId);
         return categoryDto;
     }
 
@@ -126,6 +133,22 @@ public class Category{
         this.rootNode = rootNode;
     }
 
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public int getSharedDogamId() {
+        return sharedDogamId;
+    }
+
+    public void setSharedDogamId(int sharedDogamId) {
+        this.sharedDogamId = sharedDogamId;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
@@ -136,6 +159,8 @@ public class Category{
                 ", status=" + status +
                 ", url='" + url + '\'' +
                 ", writer='" + writer + '\'' +
+                ", isLiked=" + isLiked +
+                ", sharedDogamId=" + sharedDogamId +
                 ", rootNode=" + rootNode +
                 '}';
     }

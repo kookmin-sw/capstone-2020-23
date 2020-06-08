@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="18dp"
-                android:textStyle="bold"
                 android:textColor="@color/colorBlack"/>
             <TextView
                 android:id="@+id/totalTextView"
@@ -74,7 +73,6 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="18dp"
-                android:textStyle="bold"
                 android:textColor="@color/colorBlack"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -94,12 +92,13 @@
             android:orientation="vertical"
             android:clickable="true"
             android:background="?attr/selectableItemBackground">
+
             <TextView
+                android:id="@+id/num_of_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="18dp"
-                android:textStyle="bold"
                 android:textColor="@color/colorBlack"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -145,6 +144,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/lightGray"/>
+  
 <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="50dp"-->
@@ -181,25 +181,18 @@
 
 <!--    </LinearLayout>-->
 
-    <FrameLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="35dp"
+        android:background="@android:color/transparent"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"/>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"/>
-
-    </FrameLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import com.capstone.moayo.BaseActivity;
 import com.capstone.moayo.R;
 import com.capstone.moayo.adapter.BookPagerAdapter;
 import com.capstone.moayo.util.DogamStatus;
@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 
-public class BookManageActivity extends BaseActivity implements View.OnClickListener{
+public class BookManageActivity extends AppCompatActivity implements View.OnClickListener{
     private ViewPager viewPager ;
     private BookPagerAdapter pagerAdapter ;
     private CategoryService categoryService;
-    private TextView numOfBook, createTV;
+    private TextView numOfBook, createTV, numOfShare, numOfLike;
     private TabLayout tabLayout;
     private ArrayList<CategoryDto> userBookData, userSharedData, userLikedData;
     private LinearLayout shareLayout, likeLayout, totalLayout;
@@ -62,6 +62,7 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
 
         numOfBook = (TextView) findViewById(R.id.num_of_book);
         createTV = (TextView) findViewById(R.id.activity_manage_tv_create);
+        numOfShare = (TextView) findViewById(R.id.num_of_share);
 
         shareLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_share);
         likeLayout = (LinearLayout) findViewById(R.id.activity_manage_ll_like);
@@ -85,7 +86,7 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
                 userBookData = (ArrayList<CategoryDto>) result;
                 //ViewPager
                 pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
-                viewPager.setAdapter(pagerAdapter) ;
+                viewPager.setAdapter(pagerAdapter);
 
                 //유저가 가진 도감의 총 개수 표시.
                 numOfBook.setText(Integer.toString(userBookData.size()));
@@ -96,6 +97,14 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
                         userSharedData.add(obj);
                     }
                 });
+                numOfShare.setText(Integer.toString(userSharedData.size()));
+
+                userLikedData = new ArrayList<>();
+                userLikedData.forEach(obj -> {
+                    if(obj.isLiked()) userLikedData.add(obj);
+                });
+                if(!userLikedData.isEmpty())
+                    numOfLike.setText(Integer.toString(userLikedData.size()));
             }
 
             @Override
@@ -171,5 +180,14 @@ public class BookManageActivity extends BaseActivity implements View.OnClickList
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userBookData = (ArrayList<CategoryDto>) categoryService.findAll();
+        pagerAdapter = new BookPagerAdapter(getSupportFragmentManager(), userBookData);
+        viewPager.setAdapter(pagerAdapter);
+
     }
 }

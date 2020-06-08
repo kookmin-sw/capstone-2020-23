@@ -74,7 +74,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
             }
         }
         categoryMap.get(dogamId).setRootNode(rootNode);
-        return "create category" + dogamId;
+        return Integer.toString(dogamId);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ConcreteCategoryStorage implements CategoryStorage {
 
         //update root Node
         if(rootNode.getId() == 0) {
-            int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), 0, rootNode.getTitle(), dogamId, dogamId);
+            int rootId = (int) categoryDao.rootInsert(dbHelper, rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), dogamId, dogamId);
             rootNode.setId(rootId);
         } else {
             boolean result = categoryDao.rootUpdate(dbHelper, rootNode.getId(), rootNode.getLevel(), rootNode.getId(), rootNode.getTitle(), dogamId, dogamId);

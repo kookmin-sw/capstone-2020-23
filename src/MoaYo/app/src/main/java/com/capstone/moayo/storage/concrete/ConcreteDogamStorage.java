@@ -32,7 +32,7 @@ public class ConcreteDogamStorage implements DogamStorage {
 
     @Override
     public int create(Category category) {
-        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword(), category.getUrl(), category.getStatus());
+        int dogamId = (int) dogamDao.insert(dbHelper, category.getTitle(), category.getDescription(), category.getPassword(), category.getUrl(), category.getStatus(), category.isLiked(), category.getSharedDogamId(), category.getWriter());
 
         category.setId(dogamId);
         categoryMap.put(dogamId, category);
@@ -41,14 +41,18 @@ public class ConcreteDogamStorage implements DogamStorage {
 
     @Override
     public Category retrieveById(int id) {
-        Category foundCategory = null;
+        Category foundCategory;
         if(categoryMap.containsKey(id)) {
             foundCategory = categoryMap.get(id);
         } else {
             DogamMapping foundDogam = dogamDao.selectById(dbHelper, id);
              foundCategory = new Category(foundDogam.getTitle(), foundDogam.getDescription(), foundDogam.getPassword(), null);
-            foundCategory.setStatus(foundDogam.getStatus());
-            foundCategory.setUrl(foundDogam.getUrl());
+             foundCategory.setStatus(foundDogam.getStatus());
+             foundCategory.setUrl(foundDogam.getUrl());
+             foundCategory.setId(foundDogam.getId());
+             foundCategory.setLiked(foundDogam.isLiked());
+             foundCategory.setWriter(foundDogam.getWriter());
+             foundCategory.setSharedDogamId(foundDogam.getSharedDogamId());
             categoryMap.put(foundCategory.getId(), foundCategory);
         }
         return foundCategory;
@@ -63,7 +67,10 @@ public class ConcreteDogamStorage implements DogamStorage {
                 Category category = new Category(dogam.getTitle(), dogam.getDescription(), dogam.getPassword(), null);
                 category.setId(dogam.getId());
                 category.setUrl(dogam.getUrl());
-
+                category.setStatus(dogam.getStatus());
+                category.setLiked(dogam.isLiked());
+                category.setWriter(dogam.getWriter());
+                category.setSharedDogamId(dogam.getSharedDogamId());
                 categories.add(category);
                 if(!categoryMap.containsKey(category.getId())) categoryMap.put(category.getId(), category);
             }
@@ -74,7 +81,7 @@ public class ConcreteDogamStorage implements DogamStorage {
     @Override
     public void update(Category category) {
         try {
-            boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword(), category.getUrl(), category.getStatus());
+            boolean result = dogamDao.update(dbHelper, category.getId(), category.getTitle(), category.getDescription(), category.getPassword(), category.getUrl(), category.getStatus(), category.isLiked(), category.getSharedDogamId(), category.getWriter());
             if(result != true)
                 throw new Exception();
             categoryMap.replace(category.getId(), category);
@@ -98,7 +105,10 @@ public class ConcreteDogamStorage implements DogamStorage {
             Category category = new Category(dogam.getTitle(), dogam.getDescription(), dogam.getPassword(), null);
             category.setId(dogam.getId());
             category.setUrl(dogam.getUrl());
-
+            category.setStatus(dogam.getStatus());
+            category.setLiked(dogam.isLiked());
+            category.setWriter(dogam.getWriter());
+            category.setSharedDogamId(dogam.getSharedDogamId());
             categoryMap.put(category.getId(), category);
         }
     }

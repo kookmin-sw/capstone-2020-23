@@ -2,10 +2,13 @@ package com.capstone.moayo.service.concrete;
 
 import android.content.Context;
 
+import com.capstone.moayo.dao.mapping.DogamMapping;
+import com.capstone.moayo.entity.Category;
 import com.capstone.moayo.entity.Post;
 import com.capstone.moayo.service.PostService;
 import com.capstone.moayo.service.dto.InstantPost;
 import com.capstone.moayo.service.dto.PostDto;
+import com.capstone.moayo.storage.DogamStorage;
 import com.capstone.moayo.storage.PostStorage;
 import com.capstone.moayo.storage.concrete.StorageFactoryCreator;
 
@@ -14,18 +17,33 @@ import java.util.List;
 
 public class ConcretePostService implements PostService {
     private PostStorage postStorage;
+    private DogamStorage dogamStorage;
 
     public ConcretePostService(Context context) {
         postStorage = StorageFactoryCreator.getInstance().requestPostStorage(context);
+        dogamStorage = StorageFactoryCreator.getInstance().requestDogamStorage(context);
     }
 
     @Override
     public PostDto createPost(InstantPost newPost, int nodeId, int dogamId) {
         Post post = new Post(newPost.getSrc(), newPost.getUrl(), newPost.getText(), newPost.getLike(), nodeId, dogamId);
         int postId = postStorage.createPost(post);
+        Category category = dogamStorage.retrieveById(dogamId);
+        category.setUrl(post.getImgUrl());
+        dogamStorage.update(category);
         post.setId(postId);
         PostDto postDto = post.toPostDto();
         return postDto;
+    }
+
+    @Override
+    public String createPost(PostDto newPostDto, int nodeId, int dogamId) {
+        Post post = newPostDto.toPost();
+        post.setCategoryNodeId(nodeId);
+        post.setDogamId(dogamId);
+        int postId = postStorage.createPost(post);
+        post.setId(postId);
+        return String.valueOf(postId);
     }
 
     @Override
