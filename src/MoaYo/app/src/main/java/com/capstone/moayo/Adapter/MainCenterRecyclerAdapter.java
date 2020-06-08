@@ -48,7 +48,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         ImageView sharedBookPost;
         TextView nickName, comment, sharedDate;
         ImageButton like;
-        TextView likeCount, sharedDate;
+        TextView likeCount;
 
         ViewHolder(View itemView) {
             super(itemView);
