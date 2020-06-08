@@ -82,7 +82,7 @@
                         android:scrollbars="none" />
 
                     <TextView
-                        android:id="@+id/empty_view"
+                        android:id="@+id/activity_tv_empty_top"
                         android:layout_width="match_parent"
                         android:layout_height="97dp"
                         android:gravity="center"
@@ -135,13 +135,26 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler2_main"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:overScrollMode="never" />
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler2_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:overScrollMode="never" />
+
+                    <TextView
+                        android:id="@+id/activity_tv_empty_center"
+                        android:layout_width="match_parent"
+                        android:layout_height="97dp"
+                        android:gravity="center"
+                        android:text="@string/share_guide"
+                        android:textColor="@color/lightGray" />
+                </FrameLayout>
 
             </LinearLayout>
         </LinearLayout>

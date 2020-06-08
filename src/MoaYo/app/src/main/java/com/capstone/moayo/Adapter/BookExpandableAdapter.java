@@ -138,16 +138,15 @@ public class BookExpandableAdapter extends BaseExpandableListAdapter {
 
         text.setText(currentNode.getTitle());
         searchBtn.setFocusable(false);
+//        searchBtn.setVisibility(View.VISIBLE);
 
 
         if (isExpanded){
-//            ((TextView) ((BookDetailActivity)mContext).findViewById(R.id.detail_text2)).setText(" " + text.getText());
             text.setSelected(true);
-            searchBtn.setVisibility(view.VISIBLE);
-        }
-        else{
+            searchBtn.setVisibility(View.VISIBLE);
+        } else {
             text.setSelected(false);
-            searchBtn.setVisibility(view.INVISIBLE);
+            searchBtn.setVisibility(View.INVISIBLE);
         }
 
         if (isSelectedNode(currentNode, selectedNode) == true) {

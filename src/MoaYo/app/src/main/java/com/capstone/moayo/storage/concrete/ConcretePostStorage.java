@@ -46,6 +46,7 @@ public class ConcretePostStorage implements PostStorage {
     public int createPost(Post post) {
         int postId = (int) postDao.insert(dbHelper, new PostMapping(post.getId(), post.getUrl(), post.getImgUrl(), post.getHashtag(), post.getLike()));
         createCategoryPost(post.getCategoryNodeId(), post.getDogamId(), postId);
+        categoryNodeMap.get(post.getCategoryNodeId()).getPosts().add(post);
         return postId;
     }
 

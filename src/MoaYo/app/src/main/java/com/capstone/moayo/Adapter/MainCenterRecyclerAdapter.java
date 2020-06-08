@@ -24,8 +24,12 @@ import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.TimeUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRecyclerAdapter.ViewHolder> {
@@ -33,13 +37,18 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     private ArrayList<CategoryDto> sharedBooks = new ArrayList<>();
     private ShareService shareService = ServiceFactoryCreator.getInstance().requestShareService(null);
     private Callable<Integer> likeCallable;
+    private Context mContext;
+
+    public MainCenterRecyclerAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView sharedBookPost;
         TextView nickName, comment, sharedDate;
         ImageButton like;
-        TextView likeCount;
+        TextView likeCount, sharedDate;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -117,13 +126,12 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BookDetailActivity.class);
+                Intent intent = new Intent(mContext, BookDetailActivity.class);
                 // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
                 intent.putExtra("category", item);
-                v.getContext().startActivity(intent);
+                mContext.startActivity(intent);
             }
         });
-
     }
 
 
