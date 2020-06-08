@@ -55,7 +55,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
    
     private CustomDialog customDialog;
     private Button updateBtn, deleteBtn, shareBtn, backBtn, likeBtn, cancelBtn, sharingBtn;
-    BottomSheetDialog bottomSheetDialog;
+    private BottomSheetDialog bottomSheetDialog;
     private DogamStatus dogamStatus;
 
     private ExpandableListView myList;

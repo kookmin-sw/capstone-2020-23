@@ -172,7 +172,9 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
         switch (item.getItemId()) {
 
             default: {
-                onBackPressed();
+//                onBackPressed();
+                Intent intent = new Intent(ShareMenuActivity.this, MainActivity.class);
+                startActivity(intent);
                 return true;
             }
 

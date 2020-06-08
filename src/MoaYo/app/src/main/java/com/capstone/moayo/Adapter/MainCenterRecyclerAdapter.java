@@ -36,6 +36,11 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     private ArrayList<CategoryDto> sharedBooks = new ArrayList<>();
     private ShareService shareService = ServiceFactoryCreator.getInstance().requestShareService(null);
     private Callable<Integer> likeCallable;
+    private Context mContext;
+
+    public MainCenterRecyclerAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -119,10 +124,10 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BookDetailActivity.class);
+                Intent intent = new Intent(mContext, BookDetailActivity.class);
                 // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
                 intent.putExtra("category", item);
-                v.getContext().startActivity(intent);
+                mContext.startActivity(intent);
             }
         });
     }
