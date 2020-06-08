@@ -105,8 +105,13 @@ public class ConcretePostStorage implements PostStorage {
         boolean result = categoryPostDao.delete(dbHelper, nodeId, postId);
         if(result != true) return "fail to remove.";
 
-        Post removePost = retrievePostById(nodeId, postId);
-        categoryNodeMap.get(nodeId).getPosts().remove(removePost);
+        CategoryNode node = categoryNodeMap.get(nodeId);
+        for(Post post : node.getPosts()) {
+            if(post.getId() == postId) {
+                categoryNodeMap.get(nodeId).getPosts().remove(post);
+                break;
+            }
+        }
 
         List<CategoryPostMapping> mapping = categoryPostDao.selectByPostId(dbHelper, postId);
         if(mapping.size() == 0) postDao.delete(dbHelper, postId);
