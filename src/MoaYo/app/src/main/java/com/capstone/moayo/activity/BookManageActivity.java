@@ -140,7 +140,6 @@ public class BookManageActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()) {
 
             case R.id.activity_manage_ll_share:
-
                 break;
 
             case R.id.activity_manage_ll_like:

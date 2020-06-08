@@ -198,9 +198,6 @@ public class ResultActivity extends AppCompatActivity {
         };
         saveExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
-
-        Paint paint = new Paint();
-
         // 검색 게시물 리사이클러뷰
         RecyclerView result_recycler = findViewById(R.id.activity_result_rc_center);
         result_recycler.setLayoutManager(new GridLayoutManager(this,3));
@@ -228,7 +225,7 @@ public class ResultActivity extends AppCompatActivity {
                             Intent viewIntent = new Intent("android.intent.action.VIEW",
                                     Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
                             v.getContext().startActivity(viewIntent);
-                            Toast.makeText(getApplicationContext(), "single click", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "게시물로 이동합니다", Toast.LENGTH_SHORT).show();
                         }
                         doubleClickFlag = 0;
                     }
@@ -272,7 +269,7 @@ public class ResultActivity extends AppCompatActivity {
                         }
                     };
                     new AsyncExecutor<PostDto>().setCallable(callable).setCallback(callback).execute();
-                    Toast.makeText(getApplicationContext(), "double click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "게시물이 저장되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -286,9 +283,6 @@ public class ResultActivity extends AppCompatActivity {
                 result_adapter.setItems((ArrayList<InstantPost>) searchPost);
                 result_adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
-                result_recycler.setVisibility(View.VISIBLE);
-//                paint.setAlpha(0);
-//                backgrount_layout.setBackgroundColor(paint.getColor());
 
                 for(InstantPost post : result) Log.d("found result", post.toString());
 
@@ -309,10 +303,6 @@ public class ResultActivity extends AppCompatActivity {
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
                 progressBar.setVisibility(View.VISIBLE);
-                result_recycler.setVisibility(View.GONE);
-//                paint.setColor(Color.BLACK);
-//                paint.setAlpha(70);
-//                backgrount_layout.setBackgroundColor(paint.getColor());
             }
         }.setCallable(callable1).setCallback(callback1).execute();
 
@@ -431,6 +421,9 @@ public class ResultActivity extends AppCompatActivity {
             }
             default:
                 onBackPressed();
+//                Intent intent = new Intent(ResultActivity.this, BookDetailActivity.class);
+//                intent.putExtra("category", selectCategory);
+//                startActivity(intent);
                 return true;
         }
 
