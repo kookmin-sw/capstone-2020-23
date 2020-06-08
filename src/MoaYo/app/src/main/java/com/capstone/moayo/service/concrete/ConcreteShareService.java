@@ -171,6 +171,8 @@ public class ConcreteShareService implements ShareService {
                 Timestamp ts = dogamModel.getDate();
                 if(ts != null)
                     categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
+                else
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
                 DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
                 if(mapping != null) categoryDto.setLiked(mapping.isLiked());

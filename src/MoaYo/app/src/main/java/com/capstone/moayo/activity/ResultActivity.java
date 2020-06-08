@@ -311,11 +311,7 @@ public class ResultActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "도감을 가져오는 중입니다...", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                if(!result_recycler.canScrollVertically(-1)) {
-//                    Toast.makeText(getApplicationContext(), "최상단", Toast.LENGTH_SHORT).show();
-//                } else if(!result_recycler.canScrollVertically(1)) {
-//                    Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
-//                }
+                isScrolled = true;
                 if(!result_recycler.canScrollVertically(1)) {
                     Callable<ArrayList<InstantPost>> callable1 = () -> (ArrayList<InstantPost>) searchService.requestData(searchNode.getParent(), searchNode);
                     AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
