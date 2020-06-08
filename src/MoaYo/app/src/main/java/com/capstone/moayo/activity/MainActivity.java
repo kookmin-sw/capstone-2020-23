@@ -35,9 +35,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button createBtn, shareBtn, bookManageBtn, aboutBtn, requestDataBtn, DBButton, findBtn, deleteBtn, getTagBtn;
+    private Button createBtn, shareBtn, bookManageBtn, aboutBtn;
     private BottomSheetDialog bottomSheetDialog;
-
+    private TextView empty_top, empty_center;
 
     private CategoryService categoryService;
     private ShareService shareService;
@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageButton myBookPlus = (ImageButton)findViewById(R.id.myBookPlus);
         ImageButton shareBookPlus = (ImageButton)findViewById(R.id.shareBookPlus);
 
-        TextView emptyView = (TextView) findViewById(R.id.empty_view);
+        empty_top = (TextView) findViewById(R.id.activity_tv_empty_top);
+        empty_center = (TextView) findViewById(R.id.activity_tv_empty_center);
+
 
         myBookPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainTopRecyclerAdapter = new MainTopRecyclerAdapter();
         topRecyclerView.setAdapter(mainTopRecyclerAdapter);
 
+        topRecyclerView.setVisibility(View.VISIBLE);
+        empty_top.setVisibility(View.GONE);
+
         Callable<List<CategoryDto>> myBookcallable = () -> categoryService.findAll();
         AsyncCallback<List<CategoryDto>> myBookcallback = new AsyncCallback<List<CategoryDto>>() {
             @Override
@@ -110,11 +115,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (result.isEmpty()) {
                     topRecyclerView.setVisibility(View.GONE);
-                    emptyView.setVisibility(View.VISIBLE);
+                    empty_top.setVisibility(View.VISIBLE);
                 }
                 else {
                     topRecyclerView.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.GONE);
+                    empty_top.setVisibility(View.GONE);
                 }
             }
 
@@ -151,8 +156,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        mainCenterRecyclerAdapter = new MainCenterRecyclerAdapter();
+        mainCenterRecyclerAdapter = new MainCenterRecyclerAdapter(getApplicationContext());
         centerRecyclerView.setAdapter(mainCenterRecyclerAdapter);
+
+        centerRecyclerView.setVisibility(View.VISIBLE);
+        empty_center.setVisibility(View.GONE);
 
         Callable<List<CategoryDto>> shareBookcallable = () -> shareService.findAll();
         AsyncCallback<List<CategoryDto>> shareBookcallback = new AsyncCallback<List<CategoryDto>>() {
@@ -164,11 +172,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (result.isEmpty()) {
                     centerRecyclerView.setVisibility(View.GONE);
-                    emptyView.setVisibility(View.VISIBLE);
+                    empty_center.setVisibility(View.VISIBLE);
                 }
                 else {
                     centerRecyclerView.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.GONE);
+                    empty_center.setVisibility(View.GONE);
                 }
             }
 

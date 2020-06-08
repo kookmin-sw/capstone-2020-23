@@ -10,6 +10,7 @@
 
     <!--도감 보기 탭을 펼치기 전에 보일 화면-->
     <LinearLayout
+        android:id="@+id/activity_result_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -81,7 +82,7 @@
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/empty_view"
+                        android:id="@+id/activity_result_tv_empty"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:gravity="center"
@@ -128,23 +129,29 @@
 
             </LinearLayout>
 
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/activity_result_pb_circle"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="100dp"
-                android:indeterminate="true"
-                android:progress="1"
-                app:indicatorName="BallSpinFadeLoaderIndicator"
-                app:indicatorColor="@color/colorPrimary"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler2_result"
-                android:scrollbars="horizontal"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/activity_result_pb_circle"
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:progress="1"
+                    app:indicatorName="BallSpinFadeLoaderIndicator"
+                    app:indicatorColor="@color/colorPrimary"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_result_rc_center"
+                    android:scrollbars="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="50dp"
+                    android:clipToPadding="false"/>
+            </FrameLayout>
 
         </LinearLayout>
 
