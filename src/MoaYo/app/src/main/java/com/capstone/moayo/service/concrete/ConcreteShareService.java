@@ -119,13 +119,70 @@ public class ConcreteShareService implements ShareService {
 
     @Override
     public List<CategoryDto> findDogamByWriter(String writer) {
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        try {
+            List<DogamModel> dogamModels = shareStorage.retrieveByWriter(writer);
+            if(dogamModels.isEmpty()) throw new Exception();
 
-        return null;
+            for(DogamModel dogamModel : dogamModels) {
+                String[] de_url = dogamModel.getDescription().split(";");
+                CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
+                categoryDto.setWriter(dogamModel.getWriter());
+                if(de_url.length != 1)
+                    categoryDto.setUrl(de_url[1]);
+                if(dogamModel.getStatus() == 0) categoryDto.setStatus(DogamStatus.Shared_Mutable);
+                else categoryDto.setStatus(DogamStatus.Shared_Immutable);
+
+                categoryDto.setLike(dogamModel.getLike());
+                Timestamp ts = dogamModel.getDate();
+                if(ts != null)
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
+
+                DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
+                if(mapping != null) categoryDto.setLiked(mapping.isLiked());
+                else categoryDto.setLiked(false);
+
+                categoryDtoList.add(categoryDto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryDtoList;
     }
 
     @Override
     public List<CategoryDto> findDogamByKeyword(String keyword) {
-        return null;
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        try {
+            List<DogamModel> dogamModels = shareStorage.retrieveByKeyword(keyword);
+            if(dogamModels.isEmpty()) throw new Exception();
+
+            for(DogamModel dogamModel : dogamModels) {
+                String[] de_url = dogamModel.getDescription().split(";");
+                CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
+                categoryDto.setWriter(dogamModel.getWriter());
+                if(de_url.length != 1)
+                    categoryDto.setUrl(de_url[1]);
+                if(dogamModel.getStatus() == 0) categoryDto.setStatus(DogamStatus.Shared_Mutable);
+                else categoryDto.setStatus(DogamStatus.Shared_Immutable);
+
+                categoryDto.setLike(dogamModel.getLike());
+                Timestamp ts = dogamModel.getDate();
+                if(ts != null)
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
+
+                DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
+                if(mapping != null) categoryDto.setLiked(mapping.isLiked());
+                else categoryDto.setLiked(false);
+
+                categoryDtoList.add(categoryDto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryDtoList;
     }
 
     @Override
