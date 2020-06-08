@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,7 @@ public class ResultActivity extends AppCompatActivity {
     private CategoryService categoryService;
 
     private AVLoadingIndicatorView progressBar;
+    private LinearLayout backgrount_layout;
 
     private List<InstantPost> searchPost;
     private List<PostDto> savePost;
@@ -93,9 +97,10 @@ public class ResultActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.hashtagName);
         textView.setText("# " + searchNode.getTitle());
 
-        TextView emptyView = (TextView) findViewById(R.id.empty_view);
+        TextView emptyView = (TextView) findViewById(R.id.activity_result_tv_empty);
         TextView result_drawer_title = (TextView) findViewById(R.id.result_drawer_title);
         TextView current_tag = (TextView) findViewById(R.id.result_drawer_tag);
+        backgrount_layout = (LinearLayout) findViewById(R.id.activity_result_ll);
 
         result_drawer_title.setText(selectCategory.getTitle());
 
@@ -194,9 +199,8 @@ public class ResultActivity extends AppCompatActivity {
         };
         saveExecutor = (AsyncExecutor) new AsyncExecutor<ArrayList<PostDto>>().setCallable(callable0).setCallback(callback0).execute();
 
-
         // 검색 게시물 리사이클러뷰
-        RecyclerView result_recycler = findViewById(R.id.recycler2_result);
+        RecyclerView result_recycler = findViewById(R.id.activity_result_rc_center);
         result_recycler.setLayoutManager(new GridLayoutManager(this,3));
 
 
@@ -222,7 +226,7 @@ public class ResultActivity extends AppCompatActivity {
                             Intent viewIntent = new Intent("android.intent.action.VIEW",
                                     Uri.parse("https://www.instagram.com/p/" + selected_item.getUrl()));
                             v.getContext().startActivity(viewIntent);
-                            Toast.makeText(getApplicationContext(), "single click", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "게시물로 이동합니다", Toast.LENGTH_SHORT).show();
                         }
                         doubleClickFlag = 0;
                     }
@@ -266,7 +270,7 @@ public class ResultActivity extends AppCompatActivity {
                         }
                     };
                     new AsyncExecutor<PostDto>().setCallable(callable).setCallback(callback).execute();
-                    Toast.makeText(getApplicationContext(), "double click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "게시물이 저장되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -280,6 +284,7 @@ public class ResultActivity extends AppCompatActivity {
                 result_adapter.setItems((ArrayList<InstantPost>) searchPost);
                 result_adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
+
                 for(InstantPost post : result) Log.d("found result", post.toString());
 
             }
@@ -307,15 +312,12 @@ public class ResultActivity extends AppCompatActivity {
         result_recycler.setOnScrollChangeListener(new RecyclerView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
                 if(isScrolled) {
                     Toast.makeText(getApplicationContext(), "도감을 가져오는 중입니다...", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                if(!result_recycler.canScrollVertically(-1)) {
-//                    Toast.makeText(getApplicationContext(), "최상단", Toast.LENGTH_SHORT).show();
-//                } else if(!result_recycler.canScrollVertically(1)) {
-//                    Toast.makeText(getApplicationContext(), "최하단", Toast.LENGTH_SHORT).show();
-//                }
+
                 if(!result_recycler.canScrollVertically(1)) {
                     Callable<ArrayList<InstantPost>> callable1 = () -> (ArrayList<InstantPost>) searchService.requestData(searchNode.getParent(), searchNode);
                     AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
@@ -324,8 +326,10 @@ public class ResultActivity extends AppCompatActivity {
                             searchPost.addAll(result);
                             result_adapter.setItems((ArrayList<InstantPost>) searchPost);
                             result_adapter.notifyDataSetChanged();
+
                             progressBar.setVisibility(View.GONE);
                             isScrolled = false;
+
                             for(InstantPost post : result) Log.d("found result", post.toString());
 
                         }
@@ -345,9 +349,11 @@ public class ResultActivity extends AppCompatActivity {
                         protected void onProgressUpdate(Void... values) {
                             super.onProgressUpdate(values);
                             progressBar.setVisibility(View.VISIBLE);
+                            progressBar.bringToFront();
+//                            result_recycler.setVisibility(View.INVISIBLE);
                         }
                     }.setCallable(callable1).setCallback(callback1).execute();
-                    Toast.makeText(getApplicationContext(), "게시물을 더 가져옵니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "새로운 게시물을 가져옵니다..", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -387,16 +393,6 @@ public class ResultActivity extends AppCompatActivity {
         return foundPost;
     }
 
-
-//    private CategoryNodeDto getDummyRoot (CategoryNodeDto node) {
-//        //첫번째 index의 dummy data 가져옴
-//        if(node.getId() == 1) {
-//            return new CategoryData_Dummy().getItems().get(0).getRootNode();
-//        } else {
-//            return new CategoryData_Dummy().getItems().get(3).getRootNode();
-//        }
-//
-//    }
 
 
     //액션바에 menu_resul.xml 내용 지정
