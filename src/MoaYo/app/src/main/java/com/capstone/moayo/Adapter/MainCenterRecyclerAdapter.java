@@ -22,6 +22,7 @@ import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +37,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView sharedBookPost;
-        TextView nickName, comment;
+        TextView nickName, comment, sharedDate;
         ImageButton like;
         TextView likeCount;
 
@@ -46,6 +47,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
             sharedBookPost = itemView.findViewById(R.id.sharedBookPost);
             nickName = itemView.findViewById(R.id.nickName);
             comment = itemView.findViewById(R.id.comment);
+            sharedDate = itemView.findViewById(R.id.sharedDate);
 
             like = itemView.findViewById(R.id.like);
             likeCount = itemView.findViewById(R.id.likeCount);
@@ -79,6 +81,8 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         vh.likeCount.setText(Integer.toString(item.getLike()));
         if(item.isLiked()) vh.like.setSelected(true);
         else vh.like.setSelected(false);
+        if(item.getTime() != null)
+            vh.sharedDate.setText(TimeUtil.getDate(item.getTime()));
 
         vh.like.setOnClickListener(v-> {
             if(vh.like.isSelected()) likeCallable = () -> shareService.updateLike(item.getId(), false);
