@@ -23,7 +23,10 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.ViewHolder> {
@@ -35,7 +38,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView sharedBookPost;
-        TextView nickName, comment, like_count;
+        TextView nickName, comment, like_count, sharedDate;
         ImageButton like_btn;
 
         ViewHolder(View itemView) {
@@ -46,6 +49,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
             comment = itemView.findViewById(R.id.comment);
             like_btn = (ImageButton) itemView.findViewById(R.id.recycler_share_like);
             like_count = (TextView) itemView.findViewById(R.id.recycler_share_like_count);
+            sharedDate = itemView.findViewById(R.id.sharedDate);
         }
     }
     @NonNull
@@ -76,6 +80,8 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
         vh.like_count.setText(Integer.toString(item.getLike()));
         if(item.isLiked()) vh.like_btn.setSelected(true);
         else vh.like_btn.setSelected(false);
+        if(item.getTime() != null)
+            vh.sharedDate.setText(item.getTime().split("T")[0]);
         vh.like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

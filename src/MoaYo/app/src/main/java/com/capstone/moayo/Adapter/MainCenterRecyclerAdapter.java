@@ -22,6 +22,7 @@ import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.TimeUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +46,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView sharedBookPost;
-        TextView nickName, comment;
+        TextView nickName, comment, sharedDate;
         ImageButton like;
         TextView likeCount, sharedDate;
 
@@ -87,9 +88,10 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         vh.nickName.setText(item.getTitle());
         vh.comment.setText(item.getDescription());
         vh.likeCount.setText(Integer.toString(item.getLike()));
-
+        if(item.isLiked()) vh.like.setSelected(true);
+        else vh.like.setSelected(false);
         if(item.getTime() != null)
-            vh.sharedDate.setText(getDate(item.getTime()));
+            vh.sharedDate.setText(TimeUtil.getDate(item.getTime()));
 
         vh.like.setOnClickListener(v-> {
             if(vh.like.isSelected()) likeCallable = () -> shareService.updateLike(item.getId(), false);
@@ -141,60 +143,5 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     public void setItems(ArrayList<CategoryDto> items) {
         Collections.reverse(items);
         this.sharedBooks = items;
-    }
-
-    private String getDate(String time) {
-        String[] arr = time.split("T");
-        String share_time = arr[0] + " " + arr[1];
-        String date = "";
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date share_date = format.parse(share_time);
-            Date current_date = format.parse(format.format(System.currentTimeMillis()));
-            Log.d("share time", share_date.toString());
-            Log.d("current time", current_date.toString());
-            long diff = (current_date.getTime() - share_date.getTime()) / 1000;
-            diff += 60*60*9;
-            Log.d("different time", Long.toString(diff));
-
-            if(diff < 60) {
-                date = diff + "초 전";
-            } else {
-                diff = diff / 60;
-                if(diff < 60) {
-                    date = diff + "분 전";
-                } else {
-                    diff = diff / 60;
-                    if(diff < 24) {
-                        date = diff + "시간 전";
-                    } else {
-                        diff = diff / 24;
-                        if(diff < 30) {
-                            date = diff + "일 전";
-                        } else {
-                            date = arr[0];
-                        }
-                    }
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-//        Calendar calendar = Calendar.getInstance();
-//        String diff = "";
-//        if(calendar.get(Calendar.SECOND) - share_second < 60) {
-//            diff = calendar.get(Calendar.SECOND) - share_second + " 초전";
-//        } else if(calendar.get(Calendar.MINUTE) - share_minute < 60) {
-//            diff = calendar.get(Calendar.MINUTE) - share_minute +" 분전";
-//        } else if(calendar.get(Calendar.HOUR) - share_hour < 24) {
-//            diff = calendar.get(Calendar.HOUR) - share_hour + " 시전";
-//        } else if(calendar.get(Calendar.DATE) - share_day < 30) {
-//            diff = calendar.get(Calendar.DATE) - share_day + " 일전";
-//        } else {
-//            diff = share_year + "-" + share_month +"-" + share_day;
-//        }
-
-//        return diff;
     }
 }
