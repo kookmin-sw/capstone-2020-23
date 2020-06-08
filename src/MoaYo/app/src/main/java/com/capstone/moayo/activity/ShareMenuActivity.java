@@ -44,6 +44,9 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
     private AlertDialog dialog;
 
     boolean isMenuOpen = false;
+    boolean sortfragment = false; // false = current, true = like
+
+    private List<CategoryDto> categoryDtoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +111,7 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
             public void onResult(List<CategoryDto> result) {
                 adapter.setItems((ArrayList<CategoryDto>) result);
                 adapter.notifyDataSetChanged();
+                categoryDtoList = result;
             }
 
             @Override
@@ -227,7 +231,17 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
 
         switch (id) {
             case R.id.fabSub1:
-                Toast.makeText(this, "정렬 방식 변경 이벤트", Toast.LENGTH_SHORT).show();
+                shareService = ServiceFactoryCreator.getInstance().requestShareService(getApplicationContext());
+                //List<CategoryDto> categoryDtoList = shareService.findAll();
+                if(!sortfragment){
+                    adapter.setItems((ArrayList<CategoryDto>)shareService.sortByLike(categoryDtoList));
+                    adapter.notifyDataSetChanged();
+                    sortfragment = true;
+                }else{
+                    adapter.setItems((ArrayList<CategoryDto>)shareService.sortByTime(categoryDtoList));
+                    adapter.notifyDataSetChanged();
+                    sortfragment = false;
+                }
                 break;
             case R.id.fabSub2:
                 Intent intent = new Intent(ShareMenuActivity.this, NewShareActivity.class);

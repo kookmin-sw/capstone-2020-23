@@ -160,9 +160,9 @@ public class ConcreteShareService implements ShareService {
     public List<CategoryDto> sortByLike(List<CategoryDto> categoryDtos) {
         categoryDtos.sort((o1, o2) -> {
             if(o1.getLike() > o2.getLike())
-                return 1;
-            else
                 return -1;
+            else
+                return 1;
         });
 
         return categoryDtos;
@@ -172,14 +172,25 @@ public class ConcreteShareService implements ShareService {
     public List<CategoryDto> sortByTime(List<CategoryDto> categoryDtos) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         categoryDtos.sort((o1, o2) -> {
-            try {
-                Date date1 = format.parse(o1.getTime());
-                Date date2 = format.parse(o2.getTime());
-                return date1.compareTo(date2);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            //                Date date1 = format.parse(o1.getTime());
+//                Date date2 = format.parse(o2.getTime());
+            if(o1.getTime() != null && o2.getTime() != null){
+                String[] time = o1.getTime().split("T");
+                Date date1 = Timestamp.valueOf(time[0] + " " + time[1]);
+                time = o2.getTime().split("T");
+                Date date2 = Timestamp.valueOf(time[0] + " " + time[1]);
+                return date1.compareTo(date2)*-1;
+            }else{
+                if(o1.getTime() != null || o2.getTime() != null){
+                    if(o1.getTime() != null){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                }else{
+                    return 0;
+                }
             }
-            return  0;
         });
         return categoryDtos;
     }
