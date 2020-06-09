@@ -111,9 +111,10 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
         AsyncCallback<List<CategoryDto>> loadCallback = new AsyncCallback<List<CategoryDto>>() {
             @Override
             public void onResult(List<CategoryDto> result) {
-                adapter.setItems((ArrayList<CategoryDto>) result);
+                adapter.setItems((ArrayList<CategoryDto>) shareService.sortByTime(result));
                 adapter.notifyDataSetChanged();
                 categoryDtoList = result;
+                sortfragment = false;
             }
 
             @Override
@@ -212,7 +213,6 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
                             AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
                                 @Override
                                 public void onResult(List<CategoryDto> result) {
-                                    result = shareService.sortByTime(result);
                                     adapter.setItems((ArrayList<CategoryDto>) result);
                                     adapter.notifyDataSetChanged();
                                     Toast.makeText(getApplicationContext(), String.format("%s '%s' 관련 도감입니다.", type, keyword), Toast.LENGTH_SHORT).show();
@@ -262,10 +262,14 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
                     adapter.setItems((ArrayList<CategoryDto>)shareService.sortByLike(categoryDtoList));
                     adapter.notifyDataSetChanged();
                     sortfragment = true;
+                    Toast.makeText(getApplicationContext(), "좋아요순으로 정렬합니다.",Toast.LENGTH_SHORT).show();
+
                 }else{
                     adapter.setItems((ArrayList<CategoryDto>)shareService.sortByTime(categoryDtoList));
                     adapter.notifyDataSetChanged();
                     sortfragment = false;
+                    Toast.makeText(getApplicationContext(), "최신순으로 정렬합니다.",Toast.LENGTH_SHORT).show();
+
                 }
                 break;
             case R.id.fabSub2:

@@ -84,6 +84,7 @@ public class PageFragment extends Fragment implements OnClickListener {
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
         // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
         intent.putExtra("category", category);
+        intent.putExtra("categoryList", book_list);
         startActivity(intent);
         v.setSelected(false);
 

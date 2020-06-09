@@ -43,6 +43,7 @@ import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 
@@ -51,6 +52,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     private TextView toolbarTitle;
     private TextView detail_text;
     private CategoryDto category;
+    private List<CategoryDto> categoryList;
     private CategoryNodeDto rootNode;
    
     private CustomDialog customDialog;
@@ -91,6 +93,8 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
         TextView detail_text2 = (TextView) findViewById(R.id.detail_text2);
 
         category = (CategoryDto) getIntent().getSerializableExtra("category");
+        categoryList = categoryService.findAll();
+
         isLiked = shareService.findDogamLiked(category.getId());
 
         //create Data
@@ -333,6 +337,12 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.detail_btn_sharing:
                 //TODO: 도감 공유 받기
+                for(CategoryDto categoryDto : categoryList) {
+                    if(category.getId() == categoryDto.getSharedDogamId()) {
+                        Toast.makeText(getApplicationContext(), "해당 도감은 이미 저장된 도감입니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("공유 도감 저장");
                 if(category.getStatus() == DogamStatus.Shared_Immutable)
