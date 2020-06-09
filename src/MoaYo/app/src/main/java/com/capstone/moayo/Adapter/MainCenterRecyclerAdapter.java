@@ -139,7 +139,6 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
     }
 
     public void setItems(ArrayList<CategoryDto> items) {
-        Collections.reverse(items);
         this.sharedBooks = items;
     }
 }

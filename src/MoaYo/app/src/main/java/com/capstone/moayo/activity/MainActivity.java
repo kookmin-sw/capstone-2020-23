@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         centerRecyclerView.setVisibility(View.VISIBLE);
         empty_center.setVisibility(View.GONE);
 
+        //아이템 로드
         Callable<List<CategoryDto>> shareBookcallable = () -> shareService.findAll();
         AsyncCallback<List<CategoryDto>> shareBookcallback = new AsyncCallback<List<CategoryDto>>() {
             @Override
@@ -196,9 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 super.onProgressUpdate(values);
             }
         }.setCallable(shareBookcallable).setCallback(shareBookcallback).execute();
-
-        //아이템 로드
-        mainCenterRecyclerAdapter.setItems(new SharedData_Sample().getItems());
     }
 
 
