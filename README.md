@@ -2,7 +2,7 @@
 
 <br>
 
-[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/)[![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
+[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/) [![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
 
 <br><br>
 
