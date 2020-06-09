@@ -353,7 +353,7 @@ public class ResultActivity extends AppCompatActivity {
 //                            result_recycler.setVisibility(View.INVISIBLE);
                         }
                     }.setCallable(callable1).setCallback(callback1).execute();
-                    Toast.makeText(getApplicationContext(), "새로운 게시물을 가져옵니다..", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

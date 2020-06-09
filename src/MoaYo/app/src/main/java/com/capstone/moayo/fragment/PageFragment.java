@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -14,7 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.capstone.moayo.activity.BookDetailActivity;
 import com.capstone.moayo.R;
-import com.capstone.moayo.service.dto.CategoryDto;;
+import com.capstone.moayo.service.dto.CategoryDto;
+import com.capstone.moayo.util.DogamStatus;;
 
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -58,17 +60,44 @@ public class PageFragment extends Fragment implements OnClickListener {
             int ImageID = getResources().getIdentifier("myBookPost" +i ,"id",getContext().getPackageName());
             CircleImageView circleImageView = (CircleImageView) rootView.findViewById(ImageID);
 
+            int ic_sharing = getResources().getIdentifier("sharing_status" +i ,"id",getContext().getPackageName());
+            int ic_shared = getResources().getIdentifier("shared_status" +i ,"id",getContext().getPackageName());
+
+            ImageView sharing_img = (ImageView) rootView.findViewById(ic_sharing);
+            ImageView shared_img = (ImageView) rootView.findViewById(ic_shared);
+            sharing_img.setVisibility(View.GONE);
+            shared_img.setVisibility(View.GONE);
 
             if (i <= book_list.size()) {
-                bookBtnView.setText(book_list.get(i-1).getTitle());
-                bookBtnView.setTag(book_list.get(i-1));
-                Glide.with(getContext()).load(book_list.get(i-1).getUrl()).into(circleImageView);
+                final CategoryDto book = book_list.get(i-1);
+                bookBtnView.setText((String)book.getTitle());
+                bookBtnView.setTag(book);
+                Glide.with(getContext()).load(book.getUrl()).into(circleImageView);
+
+                switch (book.getStatus()) {
+                    case Sharing:
+                        sharing_img.setVisibility(View.VISIBLE);
+                        shared_img.setVisibility(View.GONE);
+                        break;
+                    case Sharing_Immutable:
+                    case Sharing_Mutable:
+                        sharing_img.setVisibility(View.GONE);
+                        shared_img.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        sharing_img.setVisibility(View.GONE);
+                        shared_img.setVisibility(View.GONE);
+                        break;
+
+                }
 
                 circleImageView.setTag(book_list.get(i-1));
                 circleImageView.setOnClickListener(this);
             } else {
                 bookBtnView.setVisibility(View.INVISIBLE);
                 circleImageView.setVisibility(View.INVISIBLE);
+                sharing_img.setVisibility(View.GONE);
+                shared_img.setVisibility(View.GONE);
             }
         }
 
