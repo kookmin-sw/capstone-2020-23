@@ -223,8 +223,10 @@ public class ConcreteShareService implements ShareService {
         categoryDtos.sort((o1, o2) -> {
             if(o1.getLike() > o2.getLike())
                 return -1;
-            else
+            else if (o1.getLike() < o2.getLike())
                 return 1;
+            else
+                return 0;
         });
 
         return categoryDtos;
