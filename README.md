@@ -1,17 +1,18 @@
 <img src="https://user-images.githubusercontent.com/56514477/84000613-f1368e00-a99f-11ea-8228-b9efec2de252.png">
 
-<br />
+<br>
 
-[![teampage](https://img.shields.io/badge/-TeamPage-181717?logo=GitHub)](https://kookmin-sw.github.io/capstone-2020-23/)
-<br /><br />
-[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/)
-[![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
+[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/) [![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
 
-<br /><br />
+<br><br>
+
+<img src="https://user-images.githubusercontent.com/56514477/84142227-6208a380-aa8f-11ea-8183-57945eb4d3d4.png">
+
+<br/>
 
 # 1. 프로젝트 소개
 
-  <br />
+  <br>
 
 * ## 개요
 
@@ -82,7 +83,7 @@ Most of all, it is a pity that you cannot search by putting multiple search term
 
 So, we decided to create a service called 'MoaYo', which categorizes and searches categories, and collects and displays the search results in the form of illustrated books.
 
-<br />
+<br>
 
 This project aims to provide users with more sophisticated search capabilities for Instagram tag searches.
 
@@ -119,7 +120,7 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
    
      B. Providing Users with Internal Information on Shared Servers
 
-<br />
+<br>
 
 # 3. 소개 영상
 
@@ -127,24 +128,19 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 [![intro](https://user-images.githubusercontent.com/29545214/80134505-d10e6380-85d9-11ea-908e-0eeb7d07616b.png)](https://youtu.be/prg8dxmJ_Wk)
 
-<br /><br />
+<br><br>
 
 - 1차 중간 평가 발표 영상
 
 [![mid](https://user-images.githubusercontent.com/29545214/80134624-f69b6d00-85d9-11ea-98c0-842ecc99f720.png)](https://youtu.be/WNz_1Nq_59w)
 
-<br /><br />
+<br><br>
 
 - 2차 중간 평가 발표 영상
 
   [![second_mid](https://user-images.githubusercontent.com/62831866/83213933-5ddeab00-a19e-11ea-8267-dfd74298bafe.png)](https://youtu.be/-az2lhSyANI)
 
-<br /><br />
-
-- 주요 화면 스크린샷
-<img src="doc/image/스크린샷 2020-05-28 오후 9.59.18.png">
-
-<br />
+<br><br>
 
 # 4. 팀 소개
 
@@ -156,12 +152,12 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 :heavy_check_mark: 팀 지도, 아이디어 컨펌 및 조언, 구현 방향 조언
 
-<br />
+<br>
 
 ### 맹산하
 
 <img src="https://user-images.githubusercontent.com/29545214/77186349-14c30880-6b16-11ea-8e8d-629b71268499.jpeg" width="300" height="300">
-<br />
+<br>
 
 :heavy_check_mark: 팀장, 인스타그램 메타 검색 API 서버 개발, AWS 배포
 
@@ -169,12 +165,12 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 :heavy_check_mark: msh01175@gmail.com
 
-<br />
+<br>
 
 ### 강길웅
 
 <img src="https://user-images.githubusercontent.com/29545214/77186529-5eabee80-6b16-11ea-8482-6ab68f04daa5.jpeg" width="300" height="300">
-<br />
+<br>
 
 :heavy_check_mark: 공유 API 서버 구축 및 앱 데이터 로직 개발
 
@@ -182,12 +178,12 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 :heavy_check_mark: smostr@kookmin.ac.kr
 
-<br />
+<br>
 
 ### 김사라
 
 <img src="https://user-images.githubusercontent.com/29545214/77186575-71bebe80-6b16-11ea-8496-cb7997b8718a.jpeg" width="300" height="300">
-<br />
+<br>
 
 :heavy_check_mark: UI/UX 디자인 기획 및 설계, 프론트엔드 이벤트 핸들링
 
@@ -195,12 +191,12 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 :heavy_check_mark: goddnsdl0716@kookmin.ac.kr
 
-<br />
+<br>
 
 ### 이정현
 
 <img src="https://user-images.githubusercontent.com/29545214/77186609-80a57100-6b16-11ea-9f42-a52effe15266.jpeg" width="300" height="300">
-<br />
+<br>
 
 :heavy_check_mark: UI/UX 디자인 적용 및 구현, 프론트엔드 이벤트 핸들링
 
@@ -208,12 +204,12 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 :heavy_check_mark: labiss96@kookmin.ac.kr
 
-<br />
+<br>
 
 ### 정준권
 
 <img src="https://user-images.githubusercontent.com/29545214/77186635-8b600600-6b16-11ea-9a7e-2f529acca19a.jpeg" width="300" height="300">
-<br />
+<br>
 
 :heavy_check_mark: 안드로이드 백엔드 로직 설계 및 구현
 
