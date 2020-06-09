@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
 
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
 
@@ -26,14 +25,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost1"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost1"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn1"
@@ -54,14 +70,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost2"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost2"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn2"
@@ -82,14 +115,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost3"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost3"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn3"
@@ -117,14 +167,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost4"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost4"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn4"
@@ -145,14 +212,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost5"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost5"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn5"
@@ -173,14 +257,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost6"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost6"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn6"
@@ -209,14 +310,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost7"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost7"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn7"
@@ -237,14 +355,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost8"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost8"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn8"
@@ -265,14 +400,31 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/myBookPost9"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:padding="3dp"
-                    android:background="@drawable/click_book_manage"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@color/colorWhite"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/myBookPost9"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:padding="3dp"
+                        android:background="@drawable/click_book_manage"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/colorWhite"/>
+
+                    <ImageView
+                        android:id="@+id/shared_status9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
+                    <ImageView
+                        android:id="@+id/sharing_status9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_sharing_24dp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/bookBtn9"
