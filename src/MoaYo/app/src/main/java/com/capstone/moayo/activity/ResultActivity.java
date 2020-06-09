@@ -285,6 +285,8 @@ public class ResultActivity extends AppCompatActivity {
         AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
             @Override
             public void onResult(ArrayList<InstantPost> result) {
+                if(result == null)
+                    result = new ArrayList<>();
                 searchPost.addAll(result);
                 result_adapter.setItems((ArrayList<InstantPost>) searchPost);
                 result_adapter.notifyDataSetChanged();
