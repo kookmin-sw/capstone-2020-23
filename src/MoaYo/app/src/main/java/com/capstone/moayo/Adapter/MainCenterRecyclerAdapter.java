@@ -127,7 +127,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
                 Intent intent = new Intent(mContext, BookDetailActivity.class);
                 // intent에 CategoryNode 객체를 담아 DetailActivty로 전달함.
                 intent.putExtra("category", item);
-                mContext.startActivity(intent);
+                mContext.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
     }
