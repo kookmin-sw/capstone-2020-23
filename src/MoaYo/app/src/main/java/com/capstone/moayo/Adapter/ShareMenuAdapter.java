@@ -78,7 +78,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
                 .load(item.getUrl())
                 .into(vh.sharedBookPost);
 
-        vh.nickName.setText(item.getTitle());
+        vh.nickName.setText(item.getWriter());
         vh.comment.setText(item.getDescription());
         vh.like_count.setText(Integer.toString(item.getLike()));
         if(item.isLiked()) vh.like_btn.setSelected(true);

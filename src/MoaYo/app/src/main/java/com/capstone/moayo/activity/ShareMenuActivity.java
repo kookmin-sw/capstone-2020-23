@@ -202,12 +202,14 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
                             switch (type){
                                 case "태그":
                                     search_type_num = 1;
+                                    break;
                                 case "닉네임":
                                     search_type_num = 2;
+                                    break;
                             }
                             //TODO : 도감 검색 백엔드 통신.
                             Callable<List<CategoryDto>> callable;
-                            if(search_type_num==1) callable = () -> shareService.findDogamByKeyword(keyword);
+                            if(search_type_num == 1) callable = () -> shareService.findDogamByKeyword(keyword);
                             else callable = () -> shareService.findDogamByWriter(keyword);
 
                             AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {

@@ -95,6 +95,7 @@ public class ConcreteShareService implements ShareService {
                 String[] de_url = dogamModel.getDescription().split(";");
                 CategoryDto categoryDto = new CategoryDto(dogamModel.getTitle(), de_url[0], dogamModel.getPassword(), null);
                 categoryDto.setId(dogamModel.getId());
+                categoryDto.setWriter(dogamModel.getWriter());
                 if(de_url.length != 1)
                     categoryDto.setUrl(de_url[1]);
                 if(dogamModel.getStatus() == 0) categoryDto.setStatus(DogamStatus.Shared_Mutable);
