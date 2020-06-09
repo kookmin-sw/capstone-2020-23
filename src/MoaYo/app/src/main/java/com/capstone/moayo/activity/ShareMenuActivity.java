@@ -71,7 +71,7 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
         RecyclerView recyclerView = findViewById(R.id.recycler_shareMenu);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
-        adapter = new ShareMenuAdapter();
+        adapter = new ShareMenuAdapter(this);
         recyclerView.setAdapter(adapter);
 
         //floating action menu 선언

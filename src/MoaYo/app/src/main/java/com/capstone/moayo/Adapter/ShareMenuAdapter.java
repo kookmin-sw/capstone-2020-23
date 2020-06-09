@@ -23,17 +23,20 @@ import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.Callable;
 
 public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.ViewHolder> {
 
     private ArrayList<CategoryDto> sharedBooks = new ArrayList<>();
-    private ShareService shareService = ServiceFactoryCreator.getInstance().requestShareService(null);
+    private ShareService shareService;
     Callable<Integer> callable;
+    private Context mContext;
+
+    public ShareMenuAdapter(Context mContext) {
+        this.mContext = mContext;
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(mContext);
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -49,7 +52,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
             comment = itemView.findViewById(R.id.comment);
             like_btn = (ImageButton) itemView.findViewById(R.id.recycler_share_like);
             like_count = (TextView) itemView.findViewById(R.id.recycler_share_like_count);
-            sharedDate = itemView.findViewById(R.id.sharedDate);
+            sharedDate = itemView.findViewById(R.id.share_menu_shared_date);
         }
     }
     @NonNull

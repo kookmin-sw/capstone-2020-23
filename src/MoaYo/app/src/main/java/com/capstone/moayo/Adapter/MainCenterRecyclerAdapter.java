@@ -24,23 +24,20 @@ import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
 import com.capstone.moayo.util.TimeUtil;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.concurrent.Callable;
 
 public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRecyclerAdapter.ViewHolder> {
 
     private ArrayList<CategoryDto> sharedBooks = new ArrayList<>();
-    private ShareService shareService = ServiceFactoryCreator.getInstance().requestShareService(null);
+    private ShareService shareService;
     private Callable<Integer> likeCallable;
     private Context mContext;
 
     public MainCenterRecyclerAdapter(Context mContext) {
         this.mContext = mContext;
+        shareService = ServiceFactoryCreator.getInstance().requestShareService(mContext);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -56,7 +53,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
             sharedBookPost = itemView.findViewById(R.id.sharedBookPost);
             nickName = itemView.findViewById(R.id.nickName);
             comment = itemView.findViewById(R.id.comment);
-            sharedDate = itemView.findViewById(R.id.sharedDate);
+            sharedDate = itemView.findViewById(R.id.main_center_shared_date);
 
             like = itemView.findViewById(R.id.like);
             likeCount = itemView.findViewById(R.id.likeCount);
@@ -90,6 +87,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
         vh.likeCount.setText(Integer.toString(item.getLike()));
         if(item.isLiked()) vh.like.setSelected(true);
         else vh.like.setSelected(false);
+
         if(item.getTime() != null)
             vh.sharedDate.setText(TimeUtil.getDate(item.getTime()));
 

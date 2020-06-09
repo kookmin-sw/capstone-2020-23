@@ -68,7 +68,7 @@
                     android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/sharedDate"
+                    android:id="@+id/main_center_shared_date"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:gravity="bottom"
