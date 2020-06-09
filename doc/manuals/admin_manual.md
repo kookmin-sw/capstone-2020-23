@@ -80,8 +80,32 @@ https://github.com/gilwoong/moayoShare.git
 
   6. `ctrl + D`를 눌러 로그아웃합니다. 서버를 백그라운드로 실행시켰으므로 로그아웃하더라도 서버 프로세스는 종료되지 않습니다.
   
-  
 - Log
   
-  
   로그 파일은 EC2 서버의 `~/nohup.out`에 저장됩니다. `tail -f nohup.out`명령으로 로그를 확인하실 수 있습니다.
+
+### MoaYo Client Manual
+
+- ##### 비즈니스 로직 처리
+
+  - 사용자가 요청한 모든 데이터는 Service Package에서 관리합니다. Service Package는 interface와 구현한 Implementaion, dto 등을 관리합니다.
+
+- ##### 저장관련 처리
+
+  - Service Package에서 내부 데이터베이스에 저장하기 위한 dto 변환, dao 접근을 담당하는 패키지입니다. 또한, HashMap 자료구조를 사용하여 데이터를 관리합니다.
+
+- ##### 서버와의 통신 처리
+
+  - Retrofit2와 GsonConverter를 사용하여 통신합니다. GsonConverter는 객체 형태를 알맞은 Json 형태로 변환해주는 라이브러리입니다. 객체를 Json으로 변환하기 위해서 @SerializedName 어노테이션과 Getter, Setter 메소드를 추가로 입력하면 됩니다. Util에 retrofit 패키지에 있습니다.
+
+- ##### 엔티티 및 dto, dao 관리
+
+  - 데이터베이스에서 관리하는 데이터 클래스인 엔티티와 실제 비즈니스 로직에서 사용되는 dto, 데이터베이스에 저장하기 위한 dao 등은 각각 entity, service, dao 패키지에서 관리하고 있습니다.
+
+- ##### 유틸
+
+  - 각종 Custom Exception과 서버와의 통신을 위한 비동기 처리 유틸 등을 포함하고 있습니다.
+
+- ##### 어플리케이션 의존성 및 버전 업데이트
+
+  - build.gradle의 dependencies에서 원하는 모듈을 추가할 수 있습니다. 또한, versionCode, versionName을 이용하여 버전을 관리할 수 있습니다.
