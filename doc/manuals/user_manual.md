@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+
 # MoaYo User Manual
 
 > MoaYo 어플리케이션 유저 메뉴얼 기술.
