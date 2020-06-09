@@ -135,6 +135,10 @@ public class ResultActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, CLICK_DELAY);
                 } else if (save_double_flag == 2) {
                     save_double_flag = 0;
+                    if(selectCategory.getStatus() == DogamStatus.Shared_Immutable || selectCategory.getStatus() == DogamStatus.Shared_Mutable) {
+                        Toast.makeText(getApplicationContext(), String.format("먼저 도감 '%s'를 저장해야 합니다.", selectCategory.getTitle()), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     PostDto postDto = savePost.get(position);
                     Callable<String> callable = () -> postService.deletePostById(postDto.getCategoryNodeId(), postDto.getId());
                     AsyncCallback<String> callback = new AsyncCallback<String>() {
@@ -156,6 +160,7 @@ public class ResultActivity extends AppCompatActivity {
                         }
                     };
                     new AsyncExecutor<String>().setCallback(callback).setCallable(callable).execute();
+                    Toast.makeText(getApplicationContext(), "게시물이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -312,13 +317,12 @@ public class ResultActivity extends AppCompatActivity {
         result_recycler.setOnScrollChangeListener(new RecyclerView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                if(isScrolled) {
-                    Toast.makeText(getApplicationContext(), "도감을 가져오는 중입니다...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                isScrolled = true;
                 if(!result_recycler.canScrollVertically(1)) {
+                    if(isScrolled) {
+                        Toast.makeText(getApplicationContext(), "도감을 가져오는 중입니다...", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    isScrolled = true;
                     Callable<ArrayList<InstantPost>> callable1 = () -> (ArrayList<InstantPost>) searchService.requestData(searchNode.getParent(), searchNode);
                     AsyncCallback<ArrayList<InstantPost>> callback1 = new AsyncCallback<ArrayList<InstantPost>>() {
                         @Override
@@ -353,6 +357,7 @@ public class ResultActivity extends AppCompatActivity {
 //                            result_recycler.setVisibility(View.INVISIBLE);
                         }
                     }.setCallable(callable1).setCallback(callback1).execute();
+                    Toast.makeText(getApplicationContext(), "게시물을 추가로 가져옵니다.", Toast.LENGTH_SHORT).show();
 
                 }
             }
