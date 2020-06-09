@@ -1,6 +1,8 @@
 <img src="https://user-images.githubusercontent.com/56514477/84000613-f1368e00-a99f-11ea-8228-b9efec2de252.png">
-[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/)
-[![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
+
+<br>
+
+[![slack](https://img.shields.io/badge/chat%20on-Slack-4A154B)](https://capstone23workspace.slack.com/)[![notion](https://img.shields.io/badge/spec-Notion-282828)](https://www.notion.so/capstone23workspace)
 
 <br><br>
 
