@@ -1,6 +1,7 @@
 package com.capstone.moayo.activity;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -99,13 +100,14 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
         //create Data
         if(category.getRootNode() == null) {
+            Context context = this;
             Callable<CategoryDto> callable = () -> shareService.findDogamById(category.getId());
             AsyncCallback<CategoryDto> callback = new AsyncCallback<CategoryDto>() {
                 @Override
                 public void onResult(CategoryDto result) {
                     category = result;
                     toolbarTitle.setText(category.getTitle());
-                    myList.setAdapter(new BookExpandableAdapter(getApplicationContext(), category));
+                    myList.setAdapter(new BookExpandableAdapter(context, category));
                     dogamStatus = category.getStatus();
                     rootNode = category.getRootNode();
                     detail_text.setText(rootNode.getTitle() + "");

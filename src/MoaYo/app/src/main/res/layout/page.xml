@@ -38,17 +38,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -83,17 +83,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -128,17 +128,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -180,17 +180,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -225,17 +225,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -270,17 +270,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -323,17 +323,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -368,17 +368,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
@@ -413,17 +413,17 @@
                         app:civ_border_color="@color/colorWhite"/>
 
                     <ImageView
-                        android:id="@+id/shared_status9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/ic_shared_24dp" />
-                    <ImageView
                         android:id="@+id/sharing_status9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@drawable/ic_sharing_24dp" />
+                    <ImageView
+                        android:id="@+id/shared_status9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_shared_24dp" />
                 </FrameLayout>
 
                 <TextView
