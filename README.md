@@ -6,7 +6,9 @@
 
 <br><br>
 
+<img src="https://user-images.githubusercontent.com/56514477/84140839-2e2c7e80-aa8d-11ea-81e0-416d56fe0d5c.png">
 
+<br/>
 
 # 1. 프로젝트 소개
 
