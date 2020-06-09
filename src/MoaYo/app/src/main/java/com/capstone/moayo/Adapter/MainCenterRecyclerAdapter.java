@@ -111,7 +111,7 @@ public class MainCenterRecyclerAdapter extends RecyclerView.Adapter<MainCenterRe
 
                 @Override
                 public void exceptionOccured(Exception e) {
-                    Log.e("error in MainCenterRecyclerAdapter", e.toString());
+                    Log.e("MainCenterRecycler", e.toString());
                 }
 
                 @Override

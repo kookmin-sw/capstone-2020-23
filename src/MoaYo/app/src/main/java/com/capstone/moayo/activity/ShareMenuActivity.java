@@ -212,6 +212,7 @@ public class ShareMenuActivity extends AppCompatActivity implements View.OnClick
                             AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
                                 @Override
                                 public void onResult(List<CategoryDto> result) {
+                                    result = shareService.sortByTime(result);
                                     adapter.setItems((ArrayList<CategoryDto>) result);
                                     adapter.notifyDataSetChanged();
                                     Toast.makeText(getApplicationContext(), String.format("%s '%s' 관련 도감입니다.", type, keyword), Toast.LENGTH_SHORT).show();

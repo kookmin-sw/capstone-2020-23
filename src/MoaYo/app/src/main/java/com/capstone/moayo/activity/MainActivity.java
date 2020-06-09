@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResult(List<CategoryDto> result) {
 //                Log.d("----------------category found----------------" , result.toString());
+                result = shareService.sortByTime(result);
                 mainTopRecyclerAdapter.setItems((ArrayList<CategoryDto>) result);
                 mainTopRecyclerAdapter.notifyDataSetChanged();
 
