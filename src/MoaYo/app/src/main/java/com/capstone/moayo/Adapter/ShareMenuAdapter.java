@@ -84,7 +84,7 @@ public class ShareMenuAdapter extends RecyclerView.Adapter<ShareMenuAdapter.View
         if(item.isLiked()) vh.like_btn.setSelected(true);
         else vh.like_btn.setSelected(false);
         if(item.getTime() != null)
-            vh.sharedDate.setText(item.getTime().split("T")[0]);
+            vh.sharedDate.setText(item.getTime().split(" ")[0]);
         vh.like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

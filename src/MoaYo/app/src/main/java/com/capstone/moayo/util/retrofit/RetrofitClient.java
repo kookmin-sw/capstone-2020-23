@@ -1,7 +1,11 @@
 package com.capstone.moayo.util.retrofit;
 
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.Date;
 
 public class RetrofitClient {
     private static Retrofit search_retrofit = null;
@@ -20,9 +24,11 @@ public class RetrofitClient {
 
     public static Retrofit getShareClient(String baseUrl) {
         if(share_retrofit == null) {
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(Date.class, new GsonDateFormatAdapter());
             share_retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(builder.create()))
                     .build();
         }
 

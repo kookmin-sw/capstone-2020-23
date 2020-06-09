@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ConcreteShareService implements ShareService {
     private ShareStorage shareStorage;
@@ -100,9 +101,11 @@ public class ConcreteShareService implements ShareService {
                 else categoryDto.setStatus(DogamStatus.Shared_Immutable);
 
                 categoryDto.setLike(dogamModel.getLike());
+                TimeZone.getTimeZone("Asia/Seoul");
                 Timestamp ts = dogamModel.getDate();
+//                ts.s
                 if(ts != null)
-                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss").format(ts));
+                    categoryDto.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
 
                 DogamLikeMapping mapping = shareStorage.retrieveLiked(dogamModel.getId());
                 if(mapping != null) categoryDto.setLiked(mapping.isLiked());
@@ -234,9 +237,9 @@ public class ConcreteShareService implements ShareService {
             //                Date date1 = format.parse(o1.getTime());
 //                Date date2 = format.parse(o2.getTime());
             if(o1.getTime() != null && o2.getTime() != null){
-                String[] time = o1.getTime().split("T");
+                String[] time = o1.getTime().split(" ");
                 Date date1 = Timestamp.valueOf(time[0] + " " + time[1]);
-                time = o2.getTime().split("T");
+                time = o2.getTime().split(" ");
                 Date date2 = Timestamp.valueOf(time[0] + " " + time[1]);
                 return date1.compareTo(date2)*-1;
             }else{
