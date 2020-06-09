@@ -27,6 +27,7 @@ import com.capstone.moayo.service.concrete.ServiceFactoryCreator;
 import com.capstone.moayo.service.dto.CategoryDto;
 import com.capstone.moayo.util.Async.AsyncCallback;
 import com.capstone.moayo.util.Async.AsyncExecutor;
+import com.capstone.moayo.util.DogamStatus;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class NewShareActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         spinner_list = new ArrayList<>();
+        categories = new ArrayList<>();
 
         nickname = (EditText) findViewById(R.id.activity_share_et_nickname);
         password = (EditText) findViewById(R.id.activity_share_et_password);
@@ -90,9 +92,15 @@ public class NewShareActivity extends AppCompatActivity {
         AsyncCallback<List<CategoryDto>> callback = new AsyncCallback<List<CategoryDto>>() {
             @Override
             public void onResult(List<CategoryDto> result) {
-                categories = result;
-                for (CategoryDto elem : result) {
+                for(CategoryDto categoryDto : result) {
+                    if(categoryDto.getStatus() == DogamStatus.NonShare) categories.add(categoryDto);
+                }
+                for (CategoryDto elem : categories) {
                     spinner_list.add(elem.getTitle());
+                }
+                if(spinner_list.isEmpty()) {
+                    spinner_list.add("공유할 도감이 없습니다.");
+                    submit_btn.setEnabled(false);
                 }
                 spinner_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_list);
                 spinner.setAdapter(spinner_adapter);
