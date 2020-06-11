@@ -142,9 +142,15 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 
 <br><br>
 
+- 최종 평가 발표 영상
+
+[![final](https://user-images.githubusercontent.com/42925501/84388822-29ec9680-ac30-11ea-9db8-61141d5e3217.PNG)](https://youtu.be/EIPXzs_OWP4)
+
+<br><br>
+
 - MoaYo 최종 시연영상
 
-[![final](https://user-images.githubusercontent.com/42925501/84387150-839f9180-ac2d-11ea-9928-4269fec59e1a.PNG)](https://youtu.be/uSFyP8YSAAc)
+[![moayo](https://user-images.githubusercontent.com/42925501/84387150-839f9180-ac2d-11ea-9928-4269fec59e1a.PNG)](https://youtu.be/uSFyP8YSAAc)
 
 <br><br>
 
