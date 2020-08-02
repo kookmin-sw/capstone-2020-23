@@ -55,7 +55,7 @@
   3. 생성된 실행 파일을 인증서를 이용하여 EC2 서버로 보냅니다.
 
      ```bash
-     $ scp -i ~/.ssh/a.pem instacrawler ubuntu@ec2-13-125-96-172.ap-northeast-2.compute.amazonaws.com
+     $ scp -i ~/.ssh/a.pem instacrawler ubuntu@ec2-13-125-96-172.ap-northeast-2.compute.amazonaws.com:~
      ```
 
   
