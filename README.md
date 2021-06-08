@@ -171,11 +171,11 @@ The goal of the project is to create/manage 'Dogam' by the user, provide a searc
 <img src="https://user-images.githubusercontent.com/29545214/77186349-14c30880-6b16-11ea-8e8d-629b71268499.jpeg" width="300" height="300">
 <br>
 
-:heavy_check_mark: 팀장, 인스타그램 메타 검색 API 서버 개발, AWS 배포
+:heavy_check_mark: 인스타그램 메타 검색 API 서버 개발, 서비스 배포
 
-:heavy_check_mark: [Github](https://github.com/joshua-dev)
+:heavy_check_mark: [Github](https://github.com/maengsanha)
 
-:heavy_check_mark: msh01175@gmail.com
+:heavy_check_mark: msh0117@kookmin.ac.kr
 
 <br>
 
